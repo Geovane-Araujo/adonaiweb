@@ -9,7 +9,7 @@ const http = Vue.http
 http.options.root = 'http://192.168.1.106:8089/adonai/'
 
 Object.keys(Services).map(service => {
-  services[service] = Vue.resouce('', {}, Services[service])
+  Services[service] = Vue.resource('', {}, Services[service])
 })
 var auth = 'Authorization'
 const Token = token => {
