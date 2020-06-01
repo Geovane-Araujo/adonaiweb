@@ -1,7 +1,15 @@
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 @import url('https://fonts.googleapis.com/css2?family=Mandali&display=swap');
 @import "toastr";
+@import '../../../node_modules/material-design-icons/iconfont/material-icons.css';
+@import '../../../node_modules/vue-sidebar-menu/dist/vue-sidebar-menu.css';
+@import url('https://kit.fontawesome.com/your-code-number.js');
 
 *{
   font-family: 'Mandali', sans-serif;
 }
+
+.material-icons.md-18 { font-size: 18px }
+.material-icons.md-24 { font-size: 24px }
+.material-icons.md-36 { font-size: 36px }
+.material-icons.md-48 { font-size: 48px }

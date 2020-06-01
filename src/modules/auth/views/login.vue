@@ -70,13 +70,13 @@ export default {
 <style scoped lang="scss">
 .login-page {
     height: 100vh;
-    background-image: url(https://cdn.pixabay.com/photo/2017/07/02/16/33/church-2464899_960_720.jpg);
+    background-image: url(https://cdn.pixabay.com/photo/2016/01/19/17/49/bible-1149924_960_720.jpg);
     background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
     .card {
-        width: 30%;
+        width: 50%;
     }
 }
 </style>
