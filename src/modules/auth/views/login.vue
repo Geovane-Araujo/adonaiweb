@@ -76,7 +76,7 @@ export default {
     align-items: center;
     justify-content: center;
     .card {
-        width: 50%;
+        width: 50vh;
     }
 }
 </style>

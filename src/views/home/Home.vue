@@ -1,14 +1,32 @@
 <template>
-  <div class="menu">
-      <sidebar-menu :menu="menu" class="container">
-        <span slot="toggle-icon" class="material-icons">menu</span>
-        <span slot="dropdown-icon" class="material-icons">expand_more</span>
-      </sidebar-menu>
+  <div>
+    <div id="demo" :class="[{ 'collapsed' : collapsed }, { 'onmobile' : isOnMobile }]">
+      <div class="demo">
+        <div class="containerb">
+          <nav class="navbar navbar-dark bg-dark">
+            <div class="topo">
+              <h2 >AdonaiSoft</h2><h3 align="right">{{ user.nome }}</h3>
+            </div>
+           </nav>
+        </div>
+      </div>
+      <router-view />
+    </div>
+    <sidebar-menu :menu="menu"
+      :collapsed="collapsed"
+      :show-one-child="true"
+      widthCollapsed="50px"
+      width="250px"
+      class="container"
+      @toggle-collapse="onToggleCollapse"
+      @item-click="onItemClick">
+    </sidebar-menu>
+    <div v-if="isOnMobile && !collapsed" class="sidebar-overlay" @click="collapsed = true"></div>
   </div>
 </template>
 
 <script>
-
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -16,7 +34,6 @@ export default {
         {
           header: true,
           title: 'Adonai Soft Web',
-          collapsed: true,
           hiddenOnCollapse: true
         },
         {
@@ -28,7 +45,6 @@ export default {
           href: '',
           title: 'Secretaria',
           icon: 'far fa-address-book',
-          hiddenOnCollapse: false,
           child: [
             {
               href: '/',
@@ -86,12 +102,7 @@ export default {
           child: [
             {
               href: '/',
-              title: 'Cadastro Igreja',
-              disabled: false
-            },
-            {
-              href: '/',
-              title: 'Configuração Global',
+              title: 'Escola Bíblica',
               disabled: false
             }
           ]
@@ -103,7 +114,12 @@ export default {
           child: [
             {
               href: '/',
-              title: 'Escola Bíblica',
+              title: 'Cadastro Igreja',
+              disabled: false
+            },
+            {
+              href: '/',
+              title: 'Configuração Global',
               disabled: false
             }
           ]
@@ -125,7 +141,8 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      collapsed: false
     }
   },
   mounted () {
@@ -151,22 +168,68 @@ export default {
         this.collapsed = false
       }
     }
+  },
+  computed: {
+    ...mapState('auth', ['user'])
   }
 }
 </script>
 <style lang="scss" scoped>
-.menu {
-  height: 100vh;
-  background-image: url(https://cdn.pixabay.com/photo/2019/07/14/07/24/jesus-4336337_960_720.jpg);
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+body,
+html {
+  margin: 0;
+  padding: 0;
 }
+h2 {
+  color: #f2f4f7;
+}
+.topo {
+  vertical-align: middle;
+}
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+body {
+  background-color: #f2f4f7;
+  color: #262626;
+}
+#demo {
+  padding-left: 250px;
+  transition: 0.3s ease;
+}
+#demo.collapsed {
+  padding-left: 50px;
+}
+#demo.onmobile {
+  padding-left: 50px;
+}
+
 .container {
   background-color: rgba(0,0,0,0.7);
   margin: 0px;
   padding-left: 0px;
   padding-right: 0px;
 }
+
+.sidebar-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  opacity: 0.5;
+  z-index: 900;
+}
+.demo {
+  padding: 5px;
+}
+.container {
+  max-width: 1300px;
+}
+
 </style>
