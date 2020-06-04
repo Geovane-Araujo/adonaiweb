@@ -3,14 +3,17 @@
     <div id="demo" :class="[{ 'collapsed' : collapsed }, { 'onmobile' : isOnMobile }]">
       <div class="demo">
         <div class="containerb">
-          <nav class="navbar navbar-dark bg-dark">
-            <div class="topo">
-              <h2 >AdonaiSoft</h2><h3 align="right">{{ user.nome }}</h3>
+          <nav class="navbar">
+            <div class="Esquerdo">
+              <h2 >AdonaiSoft</h2>
+            </div>
+            <div class="Direito">
+              <h4>Seja Bem Vindo(a) {{ user.nome }}</h4>
             </div>
            </nav>
         </div>
       </div>
-      <router-view />
+      <router-view/>
     </div>
     <sidebar-menu :menu="menu"
       :collapsed="collapsed"
@@ -37,7 +40,7 @@ export default {
           hiddenOnCollapse: true
         },
         {
-          href: '',
+          href: '/dashboard',
           title: 'Dashboard',
           icon: 'fas fa-poll'
         },
@@ -179,19 +182,26 @@ body,
 html {
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 h2 {
   color: #f2f4f7;
 }
-.topo {
-  vertical-align: middle;
+#router {
+  vertical-align: top;
+  background-color: rosybrown;
+  margin-top: 5px;
+  height: 10vh;
 }
-.avatar {
-    vertical-align: middle;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 20px;
+.navbar{
+  background-color: rgba(0,0,0,0.7);
+}
+.Esquerdo {
+  float: left;
+}
+.Direito {
+  float: right;
+  color: #f2f4f7;
 }
 body {
   background-color: #f2f4f7;
@@ -213,6 +223,7 @@ body {
   margin: 0px;
   padding-left: 0px;
   padding-right: 0px;
+  padding-bottom: 0px;
 }
 
 .sidebar-overlay {
@@ -227,9 +238,11 @@ body {
 }
 .demo {
   padding: 5px;
+  display: flexbox;
 }
 .container {
   max-width: 1300px;
+  vertical-align: top;
 }
 
 </style>
