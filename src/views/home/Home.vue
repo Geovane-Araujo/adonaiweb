@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="home">
     <div id="demo" :class="[{ 'collapsed' : collapsed }, { 'onmobile' : isOnMobile }]">
       <div class="demo">
         <div class="containerb">
@@ -13,6 +13,9 @@
            </nav>
         </div>
       </div>
+      <div>
+      </div>
+      <h1>Tese </h1>
       <router-view/>
     </div>
     <sidebar-menu :menu="menu"
@@ -22,9 +25,11 @@
       width="250px"
       class="container"
       @toggle-collapse="onToggleCollapse"
-      @item-click="onItemClick">
-    </sidebar-menu>
-    <div v-if="isOnMobile && !collapsed" class="sidebar-overlay" @click="collapsed = true"></div>
+      @item-click="onItemClick"
+    />
+    <div v-if="isOnMobile && !collapsed"
+    class="sidebar-overlay"
+    @click="collapsed = true"/>
   </div>
 </template>
 
