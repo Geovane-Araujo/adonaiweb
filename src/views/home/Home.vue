@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <div id="demo" :class="[{ 'collapsed' : collapsed }, { 'onmobile' : isOnMobile }]">
+    <div id="demo" :class="{ 'collapsed' : collapsed }">
       <div class="demo">
         <div class="containerb">
           <nav class="navbar">
@@ -13,10 +13,9 @@
            </nav>
         </div>
       </div>
-      <div>
+      <div class="router">
+        <router-view/>
       </div>
-      <h1>Tese </h1>
-      <router-view/>
     </div>
     <sidebar-menu :menu="menu"
       :collapsed="collapsed"
@@ -27,7 +26,7 @@
       @toggle-collapse="onToggleCollapse"
       @item-click="onItemClick"
     />
-    <div v-if="isOnMobile && !collapsed"
+    <div v-if="!collapsed"
     class="sidebar-overlay"
     @click="collapsed = true"/>
   </div>
@@ -36,6 +35,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+  name: 'App',
   data () {
     return {
       menu: [
@@ -50,27 +50,36 @@ export default {
           icon: 'fas fa-poll'
         },
         {
+          href: '/agenda',
+          title: 'Agenda',
+          icon: 'far fa-calendar-alt',
+          badge: {
+            text: '2',
+            class: 'vsm--badge_default'
+          }
+        },
+        {
           href: '',
           title: 'Secretaria',
           icon: 'far fa-address-book',
           child: [
             {
-              href: '/',
+              href: '',
               title: 'Membros',
               disabled: false
             },
             {
-              href: '/',
+              href: '',
               title: 'Visitantes',
               disabled: false
             },
             {
-              href: '/',
+              href: '',
               title: 'Igrejas',
               disabled: false
             },
             {
-              href: '/',
+              href: '',
               title: 'Aniversariantes',
               disabled: false
             }
@@ -78,26 +87,21 @@ export default {
         },
         {
           href: '',
-          title: 'Agenda',
-          icon: 'far fa-calendar-alt'
-        },
-        {
-          href: '',
           title: 'Financeiro',
           icon: 'fas fa-hand-holding-usd',
           child: [
             {
-              href: '/',
+              href: '',
               title: 'Entradas',
               disabled: false
             },
             {
-              href: '/',
+              href: '',
               title: 'Despesas',
               disabled: false
             },
             {
-              href: '/',
+              href: '',
               title: 'Caixas',
               disabled: false
             }
@@ -109,7 +113,7 @@ export default {
           icon: 'fas fa-graduation-cap',
           child: [
             {
-              href: '/',
+              href: '',
               title: 'Escola Bíblica',
               disabled: false
             }
@@ -121,31 +125,44 @@ export default {
           icon: 'fas fa-wrench',
           child: [
             {
-              href: '/',
+              href: '',
               title: 'Cadastro Igreja',
               disabled: false
             },
             {
-              href: '/',
+              href: '',
+              title: 'Usuários',
+              disabled: false
+            },
+            {
+              href: '',
               title: 'Configuração Global',
               disabled: false
             }
           ]
         },
         {
-          href: '',
           title: 'Cadastros Gerais',
           icon: 'fab fa-wpforms',
           child: [
             {
-              href: '/',
-              title: 'Bancos',
-              disabled: false
+              title: 'Secretaria',
+              child: [
+                {
+                  title: 'Cargos',
+                  href: '/cargo'
+                }
+              ]
             },
             {
-              href: '/',
-              title: 'Tipos de Contas',
-              disabled: false
+              title: 'Financeiro',
+              child: [
+                {
+                  href: '',
+                  title: 'Tipos de Contas',
+                  disabled: false
+                }
+              ]
             }
           ]
         }
@@ -163,9 +180,6 @@ export default {
       this.collapsed = collapsed
     },
     onItemClick (event, item) {
-      console.log('onItemClick')
-      // console.log(event)
-      // console.log(item)
     },
     onResize () {
       if (window.innerWidth <= 767) {
@@ -222,7 +236,6 @@ body {
 #demo.onmobile {
   padding-left: 50px;
 }
-
 .container {
   background-color: rgba(0,0,0,0.7);
   margin: 0px;
@@ -230,7 +243,6 @@ body {
   padding-right: 0px;
   padding-bottom: 0px;
 }
-
 .sidebar-overlay {
   position: fixed;
   width: 100%;
@@ -249,5 +261,7 @@ body {
   max-width: 1300px;
   vertical-align: top;
 }
-
+.router {
+  padding: 5px;
+}
 </style>
