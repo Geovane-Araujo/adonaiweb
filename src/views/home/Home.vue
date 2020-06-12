@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <div id="demo" :class="{ 'collapsed' : collapsed }">
+    <div id="demo" :class="[{'collapsed' : collapsed}, {'onmobile' : isOnMobile}]">
       <div class="demo">
         <div class="containerb">
           <nav class="navbar">
@@ -26,7 +26,7 @@
       @toggle-collapse="onToggleCollapse"
       @item-click="onItemClick"
     />
-    <div v-if="!collapsed"
+    <div v-if="isOnMobile && !collapsed"
     class="sidebar-overlay"
     @click="collapsed = true"/>
   </div>

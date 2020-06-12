@@ -70,7 +70,7 @@ export default {
 <style scoped lang="scss">
 .login-page {
     height: 100vh;
-    background-image: url(https://cdn.pixabay.com/photo/2016/01/19/17/49/bible-1149924_960_720.jpg);
+    background-image: url(https://cdn.pixabay.com/photo/2019/07/14/07/24/jesus-4336337_960_720.jpg);
     background-size: cover;
     display: flex;
     align-items: center;
