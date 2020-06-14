@@ -10,3 +10,9 @@ export const ActionSetCargo = ({ dispatch }) => {
 export const ActionCargo = ({ commit }, payload) => {
   commit(types.SET_CARGO, payload)
 }
+
+export const SalvarCargo = ({ dispatch }, payload) => {
+  return services.cargo.cargoSalvar(payload).then(res => {
+    dispatch('ActionCargo', res.data)
+  })
+}

@@ -13,8 +13,8 @@
            </nav>
         </div>
       </div>
-      <div class="router">
-        <router-view/>
+      <div >
+        <router-view class="router"/>
       </div>
     </div>
     <sidebar-menu :menu="menu"
@@ -167,7 +167,8 @@ export default {
           ]
         }
       ],
-      collapsed: false
+      collapsed: false,
+      isOnMobile: false
     }
   },
   mounted () {
@@ -206,11 +207,10 @@ html {
 h2 {
   color: #f2f4f7;
 }
-#router {
-  vertical-align: top;
+.router {
   background-color: rosybrown;
   margin-top: 5px;
-  height: 10vh;
+  height: 90vh;
 }
 .navbar{
   background-color: rgba(0,0,0,0.7);
@@ -232,6 +232,9 @@ body {
 }
 #demo.collapsed {
   padding-left: 50px;
+}
+.v-sidebar-menu {
+  box-shadow: blueviolet;
 }
 #demo.onmobile {
   padding-left: 50px;

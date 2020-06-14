@@ -42,6 +42,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import util from '../../../assets/scss/util'
 
 export default {
   data: () => ({
@@ -58,9 +59,10 @@ export default {
     async submit () {
       try {
         await this.ActionLogin(this.form)
+        this.$toastr.success('Seja Bem Vindo', 'AdonaiSoft - Web', util.toast)
         this.$router.push({ name: 'home' })
       } catch (err) {
-        alert('O dados de Autenticação estão inválidos')
+        this.$toastr.error('Verifique os dados de autenticação', 'AdonaiSoft - Web', util.toast)
       }
     }
   }
