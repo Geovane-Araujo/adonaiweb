@@ -3,12 +3,14 @@
     <div class="container-fluid">
       <div class="row bg-ligth">
         <div class="col-lg-12">
-          <p>Cadastro de Cargos</p>
+          <p>Cadastro de Clientes (Administrativo)</p>
         </div>
       </div>
       <div class="tre">
-        <button class="btn btn-outline-info" @click="openModal=true">
-          <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
+        <button
+        class="btn btn-outline-info"
+        @click="openModal=true; limparCampos(item);">
+        <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
         </button>
       </div>
       <hr class="bg-info" >
@@ -18,16 +20,20 @@
             <thead>
               <tr class="text-left bg-info txt-light" style="height: 10px;">
                 <th>ID</th>
-                <th>Descricao</th>
+                <th>Nome Igreja</th>
+                <th>CNPJ</th>
+                <th>DB</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr class="text-left" v-for="item in cargo" :key="item.id">
+              <tr class="text-left" v-for="item in cliente" :key="item.id">
                 <td >{{ item.id }}</td>
-                <td>{{ item.descricao }}</td>
+                <td>{{ item.igreja }}</td>
+                <td>{{ item.cnpj }}</td>
+                <td>{{ item.db }}</td>
                 <td>
-                  <a href="#" @click="openModal =true; form.id = item.id; form.descricao = item.descricao; form.edit=true;form.add=false " class="text-success"><i class="fas fa-edit"></i></a>
+                  <a href="#" @click="openModal =true; povoar(item); form.edit= true;form.del=false;form.add=false " class="text-success"><i class="fas fa-edit"></i></a>
                   &nbsp;
                   <a href="#" @click="deleteModal=true; form.id = item.id; form.edit=false;form.add=false; form.del = true" class="text-danger"><i class="far fa-trash-alt"></i></a>
                 </td>
@@ -43,7 +49,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Cadastro Cargo</h5>
+            <h5 class="modal-title">Cadastro Igrejas Clientes</h5>
             <button type="button" class="close"  @click="openModal=false">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -52,11 +58,25 @@
             <form @submit.prevent="submit()">
               <div class="form-group">
                 <input type="text"
-                name="descricao"
+                name="igreja"
                 autocomplete="off"
                 class="form-control"
-                placeholder="Descricao"
-                v-model="form.descricao">
+                placeholder="Nome Igreja ou Instituição"
+                v-model="form.igreja">
+                <br>
+                <input type="text"
+                name="cnpj"
+                autocomplete="off"
+                class="form-control"
+                placeholder="CNPJ/CPF"
+                v-model="form.cnpj">
+                <br>
+                <input type="text"
+                name="cnpj"
+                autocomplete="off"
+                class="form-control"
+                placeholder="DB"
+                v-model="form.db">
               </div>
               <div class="form-group">
                 <button class="btn btn-outline-info float-right" >Salvar</button>
@@ -100,19 +120,21 @@ export default {
       edit: false,
       del: false,
       id: '',
-      descricao: ''
+      igreja: '',
+      db: '',
+      cnpj: ''
     }
   }),
   mounted () {
-    this.ActionSetCargo()
+    this.ActionSetCliente()
   },
   methods: {
-    ...mapActions('cargo', ['ActionSetCargo']),
-    ...mapActions('cargo', ['SalvarCargo']),
+    ...mapActions('cliente', ['ActionSetCliente']),
+    ...mapActions('cliente', ['SalvarCliente']),
     async submit () {
       try {
-        await this.SalvarCargo(this.form)
-        this.ActionSetCargo()
+        await this.SalvarCliente(this.form)
+        this.ActionSetCliente()
         if (this.form.add === true) {
           this.status = 'Salvo com Sucesso'
         } else if (this.form.edit === true) {
@@ -120,25 +142,33 @@ export default {
         } else {
           this.status = 'Excluido com Sucesso'
         }
-        this.$toastr.success(this.status, 'Cadastro de Cargos', util.toast)
+        this.$toastr.success(this.status, 'Cadastro de Clientes', util.toast)
         this.limparCampos(this.form)
       } catch (err) {
-        this.$toastr.warning(err, 'Falha ao Salvar', util.toast)
+        this.$toastr.error(err, 'Falha ao Salvar', util.toast)
       }
     },
     limparCampos (form) {
-      form.descricao = ''
+      form.igreja = ''
       form.edit = false
       form.del = false
       form.add = true
       form.id = ''
+      form.db = ''
+      form.cnpj = ''
+    },
+    povoar (form) {
+      this.form.igreja = form.igreja
+      this.form.id = form.id
+      this.form.db = form.db
+      this.form.cnpj = form.cnpj
     }
   },
   computed: {
-    ...mapState('cargo', ['cargo'])
+    ...mapState('cliente', ['cliente'])
   },
   props: {
-    cargos: { type: Object, required: true }
+    clientes: { type: Object, required: true }
   }
 }
 </script>

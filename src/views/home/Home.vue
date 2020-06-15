@@ -21,7 +21,7 @@
       :collapsed="collapsed"
       :show-one-child="true"
       widthCollapsed="50px"
-      width="250px"
+      width="240px"
       class="container"
       @toggle-collapse="onToggleCollapse"
       @item-click="onItemClick"
@@ -34,6 +34,8 @@
 
 <script>
 import { mapState } from 'vuex'
+import util from '../../assets/scss/util'
+
 export default {
   name: 'App',
   data () {
@@ -159,12 +161,18 @@ export default {
               child: [
                 {
                   href: '',
-                  title: 'Tipos de Contas',
-                  disabled: false
+                  title: 'Tipos de Contas'
                 }
               ]
             }
           ]
+        },
+        {
+          title: 'Clientes',
+          icon: 'far fa-id-card',
+          href: 'cliente',
+          hidden: util.validamenu
+
         }
       ],
       collapsed: false,
@@ -174,6 +182,7 @@ export default {
   mounted () {
     this.onResize()
     window.addEventListener('resize', this.onResize)
+    this.validar()
   },
   methods: {
     onToggleCollapse (collapsed) {
@@ -190,6 +199,14 @@ export default {
         this.isOnMobile = false
         this.collapsed = false
       }
+    },
+    validar () {
+      if (this.auth.user.auth === '9999') {
+        util.validamenu = false
+      } else {
+        util.validamenu = true
+      }
+      return util.validamenu
     }
   },
   computed: {

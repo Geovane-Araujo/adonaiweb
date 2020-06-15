@@ -2,6 +2,7 @@ import dash from '../dashboard/dashboard.vue'
 import home from './Home.vue'
 import agenda from '../agenda/agenda.vue'
 import cargo from '../cargo/cargo'
+import cliente from '../clientes/cliente.vue'
 
 export default [
   {
@@ -23,6 +24,11 @@ export default [
         path: 'cargo',
         name: 'cargo',
         component: cargo
+      },
+      {
+        path: 'cliente',
+        name: 'cliente',
+        component: cliente
       }
     ]
   }

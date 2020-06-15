@@ -1,0 +1,1 @@
+export const SET_CLIENTE = 'CLIENTE/SET_CLIENTE'
