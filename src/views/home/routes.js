@@ -3,6 +3,7 @@ import home from './Home.vue'
 import agenda from '../agenda/agenda.vue'
 import cargo from '../cargo/cargo'
 import cliente from '../clientes/cliente.vue'
+import usuario from '../usuario/usuario.vue'
 
 export default [
   {
@@ -29,6 +30,11 @@ export default [
         path: 'cliente',
         name: 'cliente',
         component: cliente
+      },
+      {
+        path: 'usuario',
+        name: 'usuario',
+        component: usuario
       }
     ]
   }

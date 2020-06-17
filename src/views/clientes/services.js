@@ -1,4 +1,4 @@
 export default {
-  clienteListar: { method: 'get', url: 'Cliente' },
-  clienteSalvar: { method: 'post', url: 'Cliente' }
+  clienteListar: { method: 'get', url: 'cliente' },
+  clienteSalvar: { method: 'post', url: 'cliente' }
 }

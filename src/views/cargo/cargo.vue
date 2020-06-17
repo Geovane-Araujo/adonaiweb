@@ -138,7 +138,7 @@ export default {
     ...mapState('cargo', ['cargo'])
   },
   props: {
-    cargos: { type: Object, required: true }
+    cargos: { type: Object, required: false }
   }
 }
 </script>

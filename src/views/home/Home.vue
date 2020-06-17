@@ -132,7 +132,7 @@ export default {
               disabled: false
             },
             {
-              href: '',
+              href: '/usuario',
               title: 'Usuários',
               disabled: false
             },
@@ -182,7 +182,6 @@ export default {
   mounted () {
     this.onResize()
     window.addEventListener('resize', this.onResize)
-    this.validar()
   },
   methods: {
     onToggleCollapse (collapsed) {
