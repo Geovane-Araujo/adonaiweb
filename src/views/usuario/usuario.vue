@@ -27,7 +27,7 @@
                 <td >{{ item.id }}</td>
                 <td>{{ item.nomeUsuario }}</td>
                 <td>
-                  <a href="#" @click="openModal =true; povoar(item);form.id = item.id; form.edit=true;form.add=false " class="text-success"><i class="fas fa-edit"></i></a>
+                  <a href="#" @click="openModal =true;form.id = item.id; form.edit=true;form.add=false;povoar(item); " class="text-success"><i class="fas fa-edit"></i></a>
                   &nbsp;
                   <a href="#" @click="deleteModal=true; form.id = item.id; form.edit=false;form.add=false; form.del = true" class="text-danger"><i class="far fa-trash-alt"></i></a>
                 </td>
@@ -44,7 +44,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Cadastro Usuario</h5>
-            <button type="button" class="close"  @click="openModal=false">
+            <button type="button" class="close"  @click="openModal=false;limparCampos (form)">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -79,53 +79,59 @@
                 </div>
                 <h6 class="text-danger">Permissões:</h6>
                 <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    v-model="form.permissaoUsuario.membro">
-                    <label class="form-check-label">Membros</label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      v-model="form.permissaoUsuario.membro">
+                    <span>Membros</span>
+                  </label>
+                </div>
+                <span class="form-check form-check-inline">
+                  <label>
+                    <input
+                      type="checkbox"
+                      v-model="form.permissaoUsuario.despesas">
+                    <span>Despesas</span>
+                  </label>
+                </span>
+                <span class="form-check form-check-inline">
+                   <label>
+                    <input
+                      type="checkbox"
+                      v-model="form.permissaoUsuario.multiIgreja">
+                    <span>Multi-Igreja</span>
+                  </label>
+                </span>
+                <p></p>
+                <div class="form-check form-check-inline">
+                  <label>
+                    <input
+                      type="checkbox"
+                      v-model="form.permissaoUsuario.relatorios">
+                    <span>Relatórios</span>
+                  </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    v-model="form.permissaoUsuario.despesas">
-                    <label class="form-check-label">Despesas</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    v-model="form.permissaoUsuario.entradas">
-                    <label class="form-check-label">Entradas</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    v-model="form.permissaoUsuario.caixa">
-                    <label class="form-check-label">Caixa</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    v-model="form.permissaoUsuario.multiIgreja">
-                    <label class="form-check-label">Multi-Igreja</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
+                  <label>
+                    <input
                     type="checkbox"
                     v-model="form.permissaoUsuario.usuarios">
-                    <label class="form-check-label">Usuários</label>
+                    <span>Usuários</span>
+                  </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    v-model="form.permissaoUsuario.relatorios">
-                    <label class="form-check-label">Relatórios</label>
+                  <label>
+                    <input type="checkbox"
+                    v-model="form.permissaoUsuario.caixa">
+                    <span>Caixas</span>
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <label>
+                    <input type="checkbox"
+                    v-model="form.permissaoUsuario.entradas">
+                    <span>Entradas</span>
+                  </label>
                 </div>
               </div>
               <div class="form-group">
@@ -197,6 +203,8 @@ export default {
     async submit () {
       try {
         await this.SalvarUsuario(this.form)
+        this.ActionSetUsuario()
+
         if (this.form.add === true) {
           this.status = 'Salvo com Sucesso'
         } else if (this.form.edit === true) {
@@ -206,7 +214,6 @@ export default {
           this.status = 'Excluido com Sucesso'
         }
         this.$toastr.success(this.status, 'Cadastro de Clientes', util.toast)
-        this.ActionSetUsuario()
         this.limparCampos(this.form)
       } catch (err) {
         this.$toastr.error(err, 'Cadastro de Usuários', util.toast)
@@ -220,14 +227,14 @@ export default {
       form.nomeUsuario = ''
       form.senha = ''
       form.confirmarSenha = ''
-      form.permissaoUsuario.idPessoa = ''
-      form.permissaoUsuario.membro = ''
-      form.permissaoUsuario.despesas = ''
-      form.permissaoUsuario.entradas = ''
-      form.permissaoUsuario.caixa = ''
-      form.permissaoUsuario.multiIgreja = ''
-      form.permissaoUsuario.relatorios = ''
-      form.permissaoUsuario.usuarios = ''
+      form.permissaoUsuario.idPessoa = 0
+      form.permissaoUsuario.membro = 0
+      form.permissaoUsuario.despesas = 0
+      form.permissaoUsuario.entradas = 0
+      form.permissaoUsuario.caixa = 0
+      form.permissaoUsuario.multiIgreja = 0
+      form.permissaoUsuario.relatorios = 0
+      form.permissaoUsuario.usuarios = 0
     },
     povoar (form) {
       this.form.id = form.id

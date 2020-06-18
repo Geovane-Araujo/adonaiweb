@@ -4,6 +4,7 @@ import agenda from '../agenda/agenda.vue'
 import cargo from '../cargo/cargo'
 import cliente from '../clientes/cliente.vue'
 import usuario from '../usuario/usuario.vue'
+import tipoconta from '../tipoconta/tipoconta.vue'
 
 export default [
   {
@@ -35,6 +36,11 @@ export default [
         path: 'usuario',
         name: 'usuario',
         component: usuario
+      },
+      {
+        path: 'tipoconta',
+        name: 'tipoconta',
+        component: tipoconta
       }
     ]
   }

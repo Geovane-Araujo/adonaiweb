@@ -22,7 +22,7 @@
       :show-one-child="true"
       widthCollapsed="50px"
       width="240px"
-      class="container"
+      class="containersidebar"
       @toggle-collapse="onToggleCollapse"
       @item-click="onItemClick"
     />
@@ -160,7 +160,7 @@ export default {
               title: 'Financeiro',
               child: [
                 {
-                  href: '',
+                  href: '/tipoconta',
                   title: 'Tipos de Contas'
                 }
               ]
@@ -255,7 +255,7 @@ body {
 #demo.onmobile {
   padding-left: 50px;
 }
-.container {
+.containersidebar {
   background-color: rgba(0,0,0,0.7);
   margin: 0px;
   padding-left: 0px;

@@ -12,6 +12,7 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import VueToastr2 from 'vue-toastr-2'
 import 'vue-toastr-2/dist/vue-toastr-2.min.css'
+import 'materialize-css/dist/css/materialize.css'
 
 import './assets/scss/app.scss'
 
