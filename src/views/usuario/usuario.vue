@@ -78,57 +78,63 @@
                   </div>
                 </div>
                 <h6 class="text-danger">Permissões:</h6>
-                <div class="form-check form-check-inline">
+                <div class="form-check-inline">
                   <label>
                     <input
                       type="checkbox"
+                      value="0"
                       v-model="form.permissaoUsuario.membro">
                     <span>Membros</span>
                   </label>
                 </div>
-                <span class="form-check form-check-inline">
+                <span class="form-check-inline">
                   <label>
                     <input
                       type="checkbox"
+                      value="0"
                       v-model="form.permissaoUsuario.despesas">
                     <span>Despesas</span>
                   </label>
                 </span>
-                <span class="form-check form-check-inline">
+                <span class="form-check-inline">
                    <label>
                     <input
                       type="checkbox"
+                      value="0"
                       v-model="form.permissaoUsuario.multiIgreja">
                     <span>Multi-Igreja</span>
                   </label>
                 </span>
                 <p></p>
-                <div class="form-check form-check-inline">
+                <div class="form-check-inline">
                   <label>
                     <input
                       type="checkbox"
+                      value="0"
                       v-model="form.permissaoUsuario.relatorios">
                     <span>Relatórios</span>
                   </label>
                 </div>
-                <div class="form-check form-check-inline">
+                <div class="form-check-inline">
                   <label>
                     <input
                     type="checkbox"
+                    value="0"
                     v-model="form.permissaoUsuario.usuarios">
                     <span>Usuários</span>
                   </label>
                 </div>
-                <div class="form-check form-check-inline">
+                <div class="form-check-inline">
                   <label>
                     <input type="checkbox"
                     v-model="form.permissaoUsuario.caixa">
                     <span>Caixas</span>
                   </label>
                 </div>
-                <div class="form-check form-check-inline">
+                <div class="form-check-inline">
                   <label>
                     <input type="checkbox"
+                    value="0"
                     v-model="form.permissaoUsuario.entradas">
                     <span>Entradas</span>
                   </label>

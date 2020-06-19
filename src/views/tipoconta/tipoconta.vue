@@ -27,9 +27,9 @@
               <tr class="text-left" v-for="item in tipoconta" :key="item.id">
                 <td >{{ item.id }}</td>
                 <td>{{ item.descricao }}</td>
-                <td>{{ item.contexto }}</td>
+                <td>{{ alterar(item.contexto) }}</td>
                 <td>
-                  <a href="#" @click="openModal =true; form.id = item.id; form.descricao = item.descricao;  form.edit=true;form.add=false " class="text-success"><i class="fas fa-edit"></i></a>
+                  <a href="#" @click="openModal =true; form.id = item.id; form.descricao = item.descricao; form.contexto = item.contexto;  form.edit=true;form.add=false " class="text-success"><i class="fas fa-edit"></i></a>
                   &nbsp;
                   <a href="#" @click="deleteModal=true; form.id = item.id; form.edit=false;form.add=false; form.del = true" class="text-danger"><i class="far fa-trash-alt"></i></a>
                 </td>
@@ -59,16 +59,13 @@
                 class="form-control"
                 placeholder="Descricao"
                 v-model="form.descricao">
+                <br>
+                <label>Contexto da Conta</label>
+                <select class="browser-default" v-model="form.contexto">
+                  <option value="0">Entradas</option>
+                  <option value="1">Despesas</option>
+                </select>
               </div>
-                <div class="input-field col s12">
-                  <select>
-                    <option value="">Choose your option</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
-                  </select>
-                  <label>Materialize Select</label>
-                </div>
               <div class="form-group">
                 <button class="btn btn-outline-info float-right" >Salvar</button>
               </div>
@@ -112,7 +109,7 @@ export default {
       del: false,
       id: '',
       descricao: '',
-      contexto: ''
+      contexto: 0
     }
   }),
   mounted () {
@@ -144,7 +141,15 @@ export default {
       form.del = false
       form.add = true
       form.id = ''
-      form.contexto = ''
+      form.contexto = 0
+    },
+    alterar (form) {
+      if (form === 1) {
+        form = 'Despesas'
+      } else {
+        form = 'Entradas'
+      }
+      return form
     }
   },
   computed: {
