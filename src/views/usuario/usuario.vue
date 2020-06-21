@@ -188,6 +188,7 @@ export default {
       confirmarSenha: '',
       motivo: '',
       retorno: '',
+      idpessoa: '',
       permissaoUsuario: {
         idPessoa: 0,
         membro: 0,
@@ -230,6 +231,7 @@ export default {
       form.del = false
       form.add = true
       form.id = ''
+      form.idpessoa = ''
       form.nomeUsuario = ''
       form.senha = ''
       form.confirmarSenha = ''
@@ -246,6 +248,7 @@ export default {
       this.form.id = form.id
       this.form.nomeUsuario = form.nomeUsuario
       this.form.senha = form.senha
+      this.form.idpessoa = form.idpessoa
       this.form.permissaoUsuario.idPessoa = form.permissaoUsuario.idPessoa
       this.form.confirmarSenha = form.confirmarSenha
       this.form.permissaoUsuario.membro = form.permissaoUsuario.membro
