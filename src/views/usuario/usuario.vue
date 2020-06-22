@@ -25,7 +25,7 @@
             <tbody>
               <tr class="text-left" v-for="item in usuario" :key="item.id">
                 <td >{{ item.id }}</td>
-                <td>{{ item.nomeUsuario }}</td>
+                <td>{{ item.login }}</td>
                 <td>
                   <a href="#" @click="openModal =true;form.id = item.id; form.edit=true;form.add=false;povoar(item); " class="text-success"><i class="fas fa-edit"></i></a>
                   &nbsp;
@@ -57,7 +57,7 @@
                     autocomplete="off"
                     class="form-control"
                     placeholder="NomeUsuario / Login "
-                    v-model="form.nomeUsuario ">
+                    v-model="form.login ">
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-6">
@@ -183,7 +183,7 @@ export default {
       edit: false,
       del: false,
       id: '',
-      nomeUsuario: '',
+      login: '',
       senha: '',
       confirmarSenha: '',
       motivo: '',
@@ -232,7 +232,7 @@ export default {
       form.add = true
       form.id = ''
       form.idpessoa = ''
-      form.nomeUsuario = ''
+      form.login = ''
       form.senha = ''
       form.confirmarSenha = ''
       form.permissaoUsuario.idPessoa = 0
@@ -246,7 +246,7 @@ export default {
     },
     povoar (form) {
       this.form.id = form.id
-      this.form.nomeUsuario = form.nomeUsuario
+      this.form.login = form.login
       this.form.senha = form.senha
       this.form.idpessoa = form.idpessoa
       this.form.permissaoUsuario.idPessoa = form.permissaoUsuario.idPessoa

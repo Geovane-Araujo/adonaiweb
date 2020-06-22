@@ -5,6 +5,7 @@ import cargo from '../cargo/cargo'
 import cliente from '../clientes/cliente.vue'
 import usuario from '../usuario/usuario.vue'
 import tipoconta from '../tipoconta/tipoconta.vue'
+import membro from '../membro/membro.vue'
 
 export default [
   {
@@ -41,6 +42,11 @@ export default [
         path: 'tipoconta',
         name: 'tipoconta',
         component: tipoconta
+      },
+      {
+        path: 'membro',
+        name: 'membro',
+        component: membro
       }
     ]
   }

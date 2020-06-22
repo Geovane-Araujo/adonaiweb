@@ -12,7 +12,9 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import VueToastr2 from 'vue-toastr-2'
 import 'vue-toastr-2/dist/vue-toastr-2.min.css'
-import 'materialize-css/dist/css/materialize.css'
+// import 'materialize-css/dist/css/materialize.css'
+import datasearch from './components/datasearch.vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 import './assets/scss/app.scss'
 
@@ -24,6 +26,10 @@ Vue.use(toast)
 Vue.use(VueSidebarMenu)
 Vue.use(Vuetify)
 Vue.use(VueToastr2)
+Vue.use(datasearch)
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
 
 new Vue({
   router,

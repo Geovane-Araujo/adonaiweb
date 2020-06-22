@@ -66,7 +66,7 @@ export default {
           icon: 'far fa-address-book',
           child: [
             {
-              href: '',
+              href: '/membro',
               title: 'Membros',
               disabled: false
             },

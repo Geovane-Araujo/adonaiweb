@@ -1,5 +1,5 @@
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
-@import url('https://fonts.googleapis.com/css2?family=Mandali&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 @import "toastr";
 @import '../../../node_modules/material-design-icons/iconfont/material-icons.css';
 @import '../../../node_modules/vue-sidebar-menu/dist/vue-sidebar-menu.css';
@@ -7,9 +7,11 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 @import '~@fullcalendar/core/main.css';
 @import '~@fullcalendar/daygrid/main.css';
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
 
 *{
-  font-family: 'Mandali', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .material-icons.md-18 { font-size: 18px }
