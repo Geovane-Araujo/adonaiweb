@@ -7,8 +7,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 @import '~@fullcalendar/core/main.css';
 @import '~@fullcalendar/daygrid/main.css';
-@import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
+@import '~vue2-datepicker/scss/index.scss';
+@import "vue-sidebar-menu/src/scss/vue-sidebar-menu.scss";
 
 *{
   font-family: 'Roboto', sans-serif;
@@ -18,3 +19,7 @@
 .material-icons.md-24 { font-size: 24px }
 .material-icons.md-36 { font-size: 36px }
 .material-icons.md-48 { font-size: 48px }
+
+$namespace: 'xmx';
+$default-color: #555;
+$primary-color: #17a71e;

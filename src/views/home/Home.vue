@@ -21,7 +21,7 @@
       :collapsed="collapsed"
       :show-one-child="true"
       widthCollapsed="50px"
-      width="240px"
+      width="220px"
       class="containersidebar"
       @toggle-collapse="onToggleCollapse"
       @item-click="onItemClick"
@@ -243,7 +243,7 @@ body {
   color: #262626;
 }
 #demo {
-  padding-left: 250px;
+  padding-left: 220px;
   transition: 0.3s ease;
 }
 #demo.collapsed {

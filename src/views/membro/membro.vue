@@ -46,7 +46,7 @@
 
     <!-- modal -->
     <div id="overlay" v-if=openModal>
-      <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-dialog modal-dialog-centered modal-lg ">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Cadastro de Membros</h5>
@@ -55,44 +55,157 @@
             </button>
           </div>
           <div class="modal-body">
-            <div>
+            <div class="row">
               <b-tabs content-class="mt-3">
                 <b-tab title="Principal" active>
-                  <b-container class="bv-example-row">
-                    <b-col>
-                      <div>
-                        <b-avatar src="https://placekitten.com/300/300" size="10rem"></b-avatar>
+                  <form action="" enctype="multipart/form-data" class="form form-vertical">
+                    <div class="row">
+                      <div class="col-sm-4 text-center" >
+                        <div class="kv-avatar">
+                          <div class="file-loading">
+                            <b-avatar v-bind:src="form.imagem" size="9rem"></b-avatar>
+                          </div>
+                        </div>
+                        <div class="kv-avatar-hint">
+                          <br>
+                          <b-form-file id="form-image" v-model="form.imagem" :disabled="busy" accept="image/*"></b-form-file>
+                        </div>
                       </div>
-                    </b-col>
-                    <b-col>
-                      <b-rol>
-                        <div>
-                          <b-form inline>
-                              <label class="sr-only" for="inline-form-input-name">Name</label>
-                              <b-input style="width: 550px;"
-                              class="mb-2 mr-sm-2 mb-sm-0"
-                              placeholder="Nome Completo">
-                              </b-input>
-                            </b-form>
+                      <div class="col-sm-8">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <input type="text"
+                                class="form-control"
+                                style="width:500px;"
+                                placeholder="Nome Completo">
+                            </div>
                           </div>
-                          <div>
-                              <b-form inline>
-                              <label class="sr-only" for="inline-form-input-name">Name</label>
-                              <b-input style="width: 550px;"
-                              class="mb-2 mr-sm-2 mb-sm-0"
-                              placeholder="Nome Completo">
-                              </b-input>
-                            </b-form>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <v-date-picker
+                                v-model="date"
+                                placeholder="Data Nascimento"
+                                />
+                            </div>
                           </div>
-                      </b-rol>
-                    </b-col>
-                  </b-container>
+                          <div class="col-md-5">
+                            <div class="form-group">
+                              <b-form-select
+                                id="inline-form-custom-select-pref"
+                                class="mb-sm-1"
+                                style="width:230px;"
+                                :options="[{ text: 'Estado Civil', value: null }, 'Solteiro(a)', 'Casado(a)', 'União Estável','Divorciado(a)','Viuvo(a)']"
+                                :value="null"
+                              ></b-form-select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <div class="input-group mb-6">
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Cargo"
+                                v-model="form.descricao"
+                                aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1">
+                                      <a href="#" @click="openDatasearch=true;" class="text-info"><i class="fas fa-search"></i></a>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <b-form-textarea
+                          id="textarea"
+                          v-model="text"
+                          placeholder="Observações"
+                          rows="2"
+                          max-rows="3"
+                        ></b-form-textarea>
+                      </div>
+                    </div>
+                  </form>
                 </b-tab>
-                <b-tab title="Enderecos"><p>I'm the second tab</p></b-tab>
+                <b-tab title="Enderecos">
+                  <form action="" enctype="multipart/form-data" class="form form-vertical">
+                    <div class="row">
+                      <div class="col-sm-4 text-center" >
+                        <div class="kv-avatar">
+                          <div class="file-loading">
+                            <b-avatar v-model="form.imgagem" size="9rem"></b-avatar>
+                          </div>
+                        </div>
+                        <div class="kv-avatar-hint">
+                          <small>Selecione a Imagem até 200kb</small>
+                        </div>
+                      </div>
+                      <div class="col-sm-8">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <input type="text"
+                                class="form-control"
+                                style="width:500px;"
+                                placeholder="Nome Completo">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <v-date-picker
+                                value="Data Nascimento"
+                                />
+                            </div>
+                          </div>
+                          <div class="col-md-5">
+                            <div class="form-group">
+                              <b-form-select
+                                id="inline-form-custom-select-pref"
+                                class="mb-sm-1"
+                                style="width:230px;"
+                                :options="[{ text: 'Estado Civil', value: null }, 'Solteiro(a)', 'Casado(a)', 'União Estável','Divorciado(a)','Viuvo(a)']"
+                                :value="null"
+                              ></b-form-select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <div class="input-group mb-6">
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Cargo"
+                                v-model="form.descricao"
+                                aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1">
+                                      <a href="#" @click="openDatasearch=true;" class="text-info"><i class="fas fa-search"></i></a>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <b-form-textarea
+                          id="textarea"
+                          v-model="text"
+                          placeholder="Observações"
+                          rows="2"
+                          max-rows="3"
+                        ></b-form-textarea>
+                      </div>
+                    </div>
+                  </form>
+                </b-tab>
                 <b-tab title="Telefones"><p>I'm a disabled tab!</p></b-tab>
                 <b-tab title="Emails"><p>I'm a disabled tab!</p></b-tab>
               </b-tabs>
             </div>
+            <button class="btn btn-outline-info float-right" >Salvar</button>
           </div>
         </div>
       </div>
@@ -102,14 +215,14 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
+            <h5 class="text-danger">Deseja realmente Excluir ?</h5>
             <button type="button" class="close"  @click="deleteModal=false">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body p-4">
-            <h5 class="text-danger">Deseja realmente Excluir ?</h5>
-            <button class="btn" btn-outline-danger @click="submit(); deleteModal=false;" >Sim</button>
-            <button class="btn" btn-outline-success float-right @click="deleteModal=false">Não</button>
+            <button class="btn btn-outline-danger" @click="submit(); deleteModal=false;" >Sim</button>
+            <button class="btn btn-outline-success float-right" @click="deleteModal=false">Não</button>
           </div>
         </div>
       </div>
