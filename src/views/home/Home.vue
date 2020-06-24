@@ -24,7 +24,6 @@
       width="220px"
       class="containersidebar"
       @toggle-collapse="onToggleCollapse"
-      @item-click="onItemClick"
     />
     <div v-if="isOnMobile && !collapsed"
     class="sidebar-overlay"
@@ -187,8 +186,6 @@ export default {
     onToggleCollapse (collapsed) {
       console.log(collapsed)
       this.collapsed = collapsed
-    },
-    onItemClick (event, item) {
     },
     onResize () {
       if (window.innerWidth <= 767) {

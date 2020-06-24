@@ -9,7 +9,7 @@
       <div class="tre">
         <button
         class="btn btn-outline-info"
-        @click="openModal=true; limparCampos(item);">
+        @click="openModal=true">
         <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
         </button>
       </div>
@@ -60,33 +60,34 @@
                 <b-tab title="Principal" active>
                   <form action="" enctype="multipart/form-data" class="form form-vertical">
                     <div class="row">
-                      <div class="col-sm-4 text-center" >
+                      <div class="col-sm-3 text-center" >
                         <div class="kv-avatar">
                           <div class="file-loading">
-                            <b-avatar v-bind:src="form.imagem" size="9rem"></b-avatar>
+                            <b-avatar ref="myFiles" size="6rem"></b-avatar>
                           </div>
                         </div>
-                        <div class="kv-avatar-hint">
-                          <br>
-                          <b-form-file id="form-image" v-model="form.imagem" :disabled="busy" accept="image/*"></b-form-file>
+                        <div class="col-sm-4 text-center">
+                          <label for='selecao-arquivo' class="material-icons">perm_media</label>
+                          <input id='selecao-arquivo' @change="previewFiles" ref="myFiles" type='file'>
                         </div>
                       </div>
-                      <div class="col-sm-8">
+                      <div class="col-sm-9">
                         <div class="row">
                           <div class="col-md-12">
                             <div class="form-group">
                               <input type="text"
                                 class="form-control"
-                                style="width:500px;"
+                                style="width:580px;"
                                 placeholder="Nome Completo">
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
-                              <v-date-picker
-                                v-model="date"
-                                placeholder="Data Nascimento"
-                                />
+                              <b-form-datepicker
+                              id="datepicker-placeholder"
+                              placeholder="Data Batismo"
+                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                              local="pt-br"></b-form-datepicker>
                             </div>
                           </div>
                           <div class="col-md-5">
@@ -94,15 +95,15 @@
                               <b-form-select
                                 id="inline-form-custom-select-pref"
                                 class="mb-sm-1"
-                                style="width:230px;"
+                                style="width:275px;"
                                 :options="[{ text: 'Estado Civil', value: null }, 'Solteiro(a)', 'Casado(a)', 'União Estável','Divorciado(a)','Viuvo(a)']"
                                 :value="null"
                               ></b-form-select>
                             </div>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                             <div class="form-group">
-                              <div class="input-group mb-6">
+                              <div class="input-group mb-4">
                                 <input type="text"
                                 class="form-control"
                                 placeholder="Cargo"
@@ -116,12 +117,30 @@
                               </div>
                             </div>
                           </div>
+                          <div class="col-md-5">
+                            <div class="form-group">
+                              <b-form-datepicker
+                              id="datepicker-placeholder"
+                              placeholder="Data Batismo"
+                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                              local="pt-br"></b-form-datepicker>
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <b-form-checkbox
+                                  id="checkbox-1"
+                                  v-model="status"
+                                  name="checkbox-1"
+                                  value="accepted"
+                                  unchecked-value="not_accepted"
+                                >Ativo
+                                </b-form-checkbox>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-12">
                         <b-form-textarea
                           id="textarea"
-                          v-model="text"
                           placeholder="Observações"
                           rows="2"
                           max-rows="3"
@@ -130,73 +149,93 @@
                     </div>
                   </form>
                 </b-tab>
+                <!-- Endereços -->
                 <b-tab title="Enderecos">
                   <form action="" enctype="multipart/form-data" class="form form-vertical">
                     <div class="row">
-                      <div class="col-sm-4 text-center" >
-                        <div class="kv-avatar">
-                          <div class="file-loading">
-                            <b-avatar v-model="form.imgagem" size="9rem"></b-avatar>
-                          </div>
-                        </div>
-                        <div class="kv-avatar-hint">
-                          <small>Selecione a Imagem até 200kb</small>
-                        </div>
-                      </div>
-                      <div class="col-sm-8">
+                     <div class="col-sm-12">
                         <div class="row">
-                          <div class="col-md-12">
+                          <div class="col-md-2">
+                            <div class="input-group mb-4">
+                              <input type="text"
+                              class="form-control"
+                              placeholder="Cep"
+                              style="margin-left:5px;"
+                              v-model="form.descricao">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <a href="#" class="text-info"><i class="fas fa-search"></i></a>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-8">
                             <div class="form-group">
                               <input type="text"
                                 class="form-control"
-                                style="width:500px;"
-                                placeholder="Nome Completo">
+                                placeholder="Endereço Principal">
                             </div>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-2">
                             <div class="form-group">
-                              <v-date-picker
-                                value="Data Nascimento"
-                                />
+                              <input type="text"
+                                class="form-control"
+                                style="margin-right:0px;width: 100px;"
+                                placeholder="Numero">
                             </div>
                           </div>
-                          <div class="col-md-5">
+                          <div class="col-md-4">
                             <div class="form-group">
-                              <b-form-select
-                                id="inline-form-custom-select-pref"
-                                class="mb-sm-1"
-                                style="width:230px;"
-                                :options="[{ text: 'Estado Civil', value: null }, 'Solteiro(a)', 'Casado(a)', 'União Estável','Divorciado(a)','Viuvo(a)']"
-                                :value="null"
-                              ></b-form-select>
+                              <input type="text"
+                                style="margin-left:5px;"
+                                class="form-control"
+                                placeholder="Bairro Principal">
                             </div>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                             <div class="form-group">
-                              <div class="input-group mb-6">
+                              <input type="text"
+                                class="form-control"
+                                placeholder="Complemento Principal">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <div class="input-group mb-2">
                                 <input type="text"
                                 class="form-control"
-                                placeholder="Cargo"
+                                placeholder="Cidade"
+                                style="width: 100px;"
                                 v-model="form.descricao"
                                 aria-describedby="basic-addon1">
                                 <div class="input-group-prepend">
                                   <span class="input-group-text" id="basic-addon1">
-                                      <a href="#" @click="openDatasearch=true;" class="text-info"><i class="fas fa-search"></i></a>
+                                      <a href="#" class="text-info"><i class="fas fa-search"></i></a>
                                   </span>
                                 </div>
                               </div>
                             </div>
                           </div>
+                          <div class="col-md-5">
+                            <div class="form-group">
+                              <b-form-datepicker
+                              id="datepicker-placeholder"
+                              placeholder="Data Batismo"
+                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                              local="pt-br"></b-form-datepicker>
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <b-form-checkbox
+                                  id="checkbox-1"
+                                  v-model="status"
+                                  name="checkbox-1"
+                                  value="accepted"
+                                  unchecked-value="not_accepted"
+                                >Ativo
+                                </b-form-checkbox>
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-12">
-                        <b-form-textarea
-                          id="textarea"
-                          v-model="text"
-                          placeholder="Observações"
-                          rows="2"
-                          max-rows="3"
-                        ></b-form-textarea>
                       </div>
                     </div>
                   </form>
@@ -248,11 +287,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="text-left" v-for="item in cargo" :key="item.id">
-                    <td >{{ item.id }}</td>
-                    <td>{{ item.descricao }}</td>
+                  <tr class="text-left" v-for="carg in cargo" :key="carg.id">
+                    <td >{{ carg.id }}</td>
+                    <td>{{ carg.descricao }}</td>
                     <td>
-                      <a href="#" class="text-success" @click="form.descricao = item.descricao;form.idCargo=item.idcargo; openDatasearch=false; "><i class="far fa-check-square"></i></a>
+                      <a href="#" class="text-success" @click="form.descricao = carg.descricao;form.idCargo=carg.idcargo; openDatasearch=false; "><i class="far fa-check-square"></i></a>
                     </td>
                   </tr>
                 </tbody>
@@ -324,7 +363,8 @@ export default {
       ],
       retorno: '',
       motivo: ''
-    }
+    },
+    imagem: []
   }),
   mounted () {
     this.ActionSetMembro()
@@ -504,6 +544,9 @@ export default {
 
       this.form.retorno = ''
       this.form.motivo = ''
+    },
+    previewFiles (event) {
+      this.imagem = this.$refs.myFiles.files
     }
   },
   computed: {
@@ -521,8 +564,19 @@ export default {
     max-height:90vh;
     overflow-y:auto;
 }
+label {
+  background-color: #3498db;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  margin: 10px;
+  padding: 6px 20px
+}
 p {
   font-size: 30px;
+}
+input[type='file'] {
+  display: none
 }
 .membro {
   border-radius: 10px;
