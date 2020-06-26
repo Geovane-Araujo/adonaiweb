@@ -46,137 +46,63 @@
 
     <!-- modal -->
     <div id="overlay" v-if=openModal>
-      <div class="modal-dialog modal-dialog-centered modal-lg ">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Cadastro de Membros</h5>
-            <button type="button" class="close"  @click="openModal=false">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <b-tabs content-class="mt-3">
+        <div class="modal-dialog modal-dialog-centered modal-lg ">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Cadastro de Membros</h5>
+              <button type="button" class="close"  @click="openModal=false">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <b-tabs content-class="mt-1">
                 <b-tab title="Principal" active>
                   <form action="" enctype="multipart/form-data" class="form form-vertical">
-                    <div class="row">
-                      <div class="col-sm-3 text-center" >
-                        <div class="kv-avatar">
+                    <b-container>
+                      <b-row class="text-center">
+                        <b-col cols="2">
                           <div class="file-loading">
-                            <b-avatar ref="myFiles" size="6rem"></b-avatar>
+                            <b-avatar ref="myFiles"
+                            size="5rem"></b-avatar>
                           </div>
-                        </div>
-                        <div class="col-sm-4 text-center">
-                          <label for='selecao-arquivo' class="material-icons">perm_media</label>
-                          <input id='selecao-arquivo' @change="previewFiles" ref="myFiles" type='file'>
-                        </div>
-                      </div>
-                      <div class="col-sm-9">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <input type="text"
-                                class="form-control"
-                                style="width:580px;"
-                                placeholder="Nome Completo">
-                            </div>
+                          <label  for='selecao-arquivo' class="material-icons">perm_media</label>
+                          <input  id='selecao-arquivo' @change="previewFiles" ref="myFiles" type='file'>
+                        </b-col>
+                        <b-col cols="10" >
+                          <div class="col-sm-12">
+                            <input type="text"
+                            class="form-control"
+                            placeholder="Nome Completo">
                           </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <b-form-datepicker
-                              id="datepicker-placeholder"
-                              placeholder="Data Batismo"
-                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                              local="pt-br"></b-form-datepicker>
-                            </div>
-                          </div>
-                          <div class="col-md-5">
-                            <div class="form-group">
-                              <b-form-select
-                                id="inline-form-custom-select-pref"
-                                class="mb-sm-1"
-                                style="width:275px;"
-                                :options="[{ text: 'Estado Civil', value: null }, 'Solteiro(a)', 'Casado(a)', 'União Estável','Divorciado(a)','Viuvo(a)']"
-                                :value="null"
-                              ></b-form-select>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <div class="input-group mb-4">
-                                <input type="text"
-                                class="form-control"
-                                placeholder="Cargo"
-                                v-model="form.descricao"
-                                aria-describedby="basic-addon1">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text" id="basic-addon1">
-                                      <a href="#" @click="openDatasearch=true;" class="text-info"><i class="fas fa-search"></i></a>
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-5">
-                            <div class="form-group">
-                              <b-form-datepicker
-                              id="datepicker-placeholder"
-                              placeholder="Data Batismo"
-                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                              local="pt-br"></b-form-datepicker>
-                            </div>
-                          </div>
-                          <div class="col-md-2">
-                            <b-form-checkbox
-                                  id="checkbox-1"
-                                  v-model="status"
-                                  name="checkbox-1"
-                                  value="accepted"
-                                  unchecked-value="not_accepted"
-                                >Ativo
-                                </b-form-checkbox>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <b-form-textarea
-                          id="textarea"
-                          placeholder="Observações"
-                          rows="2"
-                          max-rows="3"
-                        ></b-form-textarea>
-                      </div>
-                    </div>
+                        </b-col>
+                      </b-row>
+                    </b-container>
                   </form>
                 </b-tab>
                 <!-- Endereços -->
                 <b-tab title="Enderecos">
                   <form action="" enctype="multipart/form-data" class="form form-vertical">
                     <div class="row">
-                     <div class="col-sm-12">
+                    <div class="col-md-12">
                         <div class="row">
-                          <div class="col-md-2">
-                            <div class="input-group mb-4">
-                              <input type="text"
-                              class="form-control"
-                              placeholder="Cep"
-                              style="margin-left:5px;"
-                              v-model="form.descricao">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <a href="#" class="text-info"><i class="fas fa-search"></i></a>
-                                </span>
-                              </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <b-input-group style="margin-left:10px;">
+                                <b-form-input placeholder="CEP" ></b-form-input>
+                                  <b-input-group-append v-mask="'###.###.###-##'">
+                                  <b-button variant="outline-info" class="material-icons">search</b-button>
+                                </b-input-group-append>
+                              </b-input-group>
                             </div>
                           </div>
-                          <div class="col-md-8">
+                          <div class="col-sm-7">
                             <div class="form-group">
                               <input type="text"
                                 class="form-control"
                                 placeholder="Endereço Principal">
                             </div>
                           </div>
-                          <div class="col-md-2">
+                          <div class="col-sm-2">
                             <div class="form-group">
                               <input type="text"
                                 class="form-control"
@@ -184,70 +110,105 @@
                                 placeholder="Numero">
                             </div>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-sm-4">
                             <div class="form-group">
                               <input type="text"
-                                style="margin-left:5px;"
+                                style="margin-left:10px;width: 100%;"
                                 class="form-control"
                                 placeholder="Bairro Principal">
                             </div>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-sm-4">
                             <div class="form-group">
                               <input type="text"
                                 class="form-control"
                                 placeholder="Complemento Principal">
                             </div>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-sm-4">
                             <div class="form-group">
-                              <div class="input-group mb-2">
-                                <input type="text"
+                              <b-input-group >
+                                <b-form-input placeholder="Cidade"></b-form-input>
+                                <b-input-group-append>
+                                  <b-button variant="outline-info" style="margin-right:10px;" class="material-icons">search</b-button>
+                                </b-input-group-append>
+                              </b-input-group>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Endereço Secundário -->
+                      <hr class="bg-info" >
+                      <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <b-input-group style="margin-left:10px;">
+                                <b-form-input placeholder="CEP" ></b-form-input>
+                                <b-input-group-append v-mask="'###.###.###-##'">
+                                  <b-button variant="outline-info" class="material-icons">search</b-button>
+                                </b-input-group-append>
+                              </b-input-group>
+                            </div>
+                          </div>
+                          <div class="col-sm-7">
+                            <div class="form-group">
+                              <input type="text"
                                 class="form-control"
-                                placeholder="Cidade"
-                                style="width: 100px;"
-                                v-model="form.descricao"
-                                aria-describedby="basic-addon1">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text" id="basic-addon1">
-                                      <a href="#" class="text-info"><i class="fas fa-search"></i></a>
-                                  </span>
-                                </div>
-                              </div>
+                                placeholder="Endereço Outro">
                             </div>
                           </div>
-                          <div class="col-md-5">
+                          <div class="col-sm-2">
                             <div class="form-group">
-                              <b-form-datepicker
-                              id="datepicker-placeholder"
-                              placeholder="Data Batismo"
-                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                              local="pt-br"></b-form-datepicker>
+                              <input type="text"
+                                class="form-control"
+                                style="margin-right:0px;width: 100px;"
+                                placeholder="Numero">
                             </div>
                           </div>
-                          <div class="col-md-2">
-                            <b-form-checkbox
-                                  id="checkbox-1"
-                                  v-model="status"
-                                  name="checkbox-1"
-                                  value="accepted"
-                                  unchecked-value="not_accepted"
-                                >Ativo
-                                </b-form-checkbox>
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <input type="text"
+                                style="margin-left:10px;width: 100%;"
+                                class="form-control"
+                                placeholder="Bairro Outro">
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <input type="text"
+                                class="form-control"
+                                placeholder="Complemento Outro">
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <b-input-group >
+                                <b-form-input placeholder="Cidade Outro"></b-form-input>
+                                <b-input-group-append>
+                                  <b-button variant="outline-info" style="margin-right:10px;" class="material-icons">search</b-button>
+                                </b-input-group-append>
+                              </b-input-group>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </form>
                 </b-tab>
-                <b-tab title="Telefones"><p>I'm a disabled tab!</p></b-tab>
-                <b-tab title="Emails"><p>I'm a disabled tab!</p></b-tab>
+                <b-tab title="Observações">
+                  <b-form-textarea
+                    id="textarea"
+                    placeholder="Observações"
+                    rows="15"
+                    max-rows="3"
+                  ></b-form-textarea>
+                </b-tab>
               </b-tabs>
+              <button type="button" class="btn btn-outline-info float-right">Salvar</button>
             </div>
-            <button class="btn btn-outline-info float-right" >Salvar</button>
           </div>
         </div>
-      </div>
     </div>
     <!-- modal excluir -->
     <div id="overlay" v-if=deleteModal>
