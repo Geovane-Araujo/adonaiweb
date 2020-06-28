@@ -31,7 +31,7 @@
                 <td >{{ item.id }}</td>
                 <td>{{ item.nome }}</td>
                 <td>{{ item.endereco[0].endereco + ", " + item.endereco[0].bairro + ", " + item.endereco[0].numero}}</td>
-                <td>{{ item.dataNascimento }}</td>
+                <td>{{ item.telefone[0].telefone + "/" + item.telefone[1].telefone }}</td>
                 <td>
                   <a href="#" @click="openModal =true; povoar(item); form.edit= true;form.del=false;form.add=false"  class="text-success"><i class="fas fa-edit"></i></a>
                   &nbsp;
@@ -65,17 +65,99 @@
                             <b-avatar ref="myFiles"
                             size="5rem"></b-avatar>
                           </div>
-                          <label  for='selecao-arquivo' class="material-icons">perm_media</label>
-                          <input  id='selecao-arquivo' @change="previewFiles" ref="myFiles" type='file'>
+                          <label for='selecao-arquivo' class="material-icons">perm_media</label>
+                          <input id='selecao-arquivo' @change="previewFiles" ref="myFiles" type='file'>
                         </b-col>
                         <b-col cols="10" >
-                          <div class="col-sm-12">
-                            <input type="text"
-                            class="form-control"
-                            placeholder="Nome Completo">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <input type="text"
+                              class="form-control"
+                              style="width:620px"
+                              v-model="form.nome"
+                              placeholder="Nome Completo">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-4">
+                              <b-form-datepicker
+                              id="datepicker-placeholder"
+                              placeholder="Data Nasc."
+                              v-model="form.dataNascimento"
+                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                              local="pt-br"></b-form-datepicker>
+                            </div>
+                            <div class="col-sm-4">
+                              <b-form-select
+                              :options="[{ text: 'Estado Civil', value: null }, 'Solteiro(a)', 'Casado(a)', 'União Estável','Divorciado(a)','Viuvo(a)']"
+                              :value="null"
+                              v-model="form.estadoCivil"
+                              ></b-form-select>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="input-group mb-4">
+                                <input type="text"
+                                class="form-control"
+                                style="width:50px;"
+                                placeholder="Cargo"
+                                v-model="form.cargo"
+                                aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1">
+                                    <a href="#" @click="openDatasearch=true;" class="text-info"><i class="fas fa-search"></i></a>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <b-form-datepicker
+                              id="datepicker-placeholder"
+                              placeholder="Data Batismo"
+                              v-model="form.dataBatismo"
+                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                              local="pt-br"></b-form-datepicker>
+                            </div>
+                            <div class="col-md-2">
+                              <b-form-checkbox
+                                id="checkbox-1"
+                                v-model="form.ativo"
+                                name="checkbox-1"
+                                value="accepted"
+                                unchecked-value="not_accepted"
+                                >Ativo
+                                </b-form-checkbox>
+                              </div>
                           </div>
                         </b-col>
                       </b-row>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <input type="text"
+                            class="form-control"
+                            v-model="form.telefone[0].telefone"
+                            placeholder="Telefone Residencial">
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text"
+                            class="form-control"
+                            placeholder="Telefone Celular">
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text"
+                            class="form-control"
+                            placeholder="Telefone Comercial">
+                        </div>
+                        <div class="col-md-6">
+                          <input type="text"
+                            class="form-control"
+                            placeholder="E-mail">
+                        </div>
+                        <div class="col-md-6">
+                          <input type="text"
+                            class="form-control"
+                            placeholder="E-mail 2">
+                        </div>
+                      </div>
                     </b-container>
                   </form>
                 </b-tab>
@@ -89,7 +171,7 @@
                             <div class="form-group">
                               <b-input-group style="margin-left:10px;">
                                 <b-form-input placeholder="CEP" ></b-form-input>
-                                  <b-input-group-append v-mask="'###.###.###-##'">
+                                  <b-input-group-append >
                                   <b-button variant="outline-info" class="material-icons">search</b-button>
                                 </b-input-group-append>
                               </b-input-group>
@@ -144,8 +226,8 @@
                           <div class="col-sm-3">
                             <div class="form-group">
                               <b-input-group style="margin-left:10px;">
-                                <b-form-input placeholder="CEP" ></b-form-input>
-                                <b-input-group-append v-mask="'###.###.###-##'">
+                                <b-form-input placeholder="CEP"></b-form-input>
+                                <b-input-group-append>
                                   <b-button variant="outline-info" class="material-icons">search</b-button>
                                 </b-input-group-append>
                               </b-input-group>
@@ -478,12 +560,12 @@ export default {
       this.form.endereco[2].complemto = form.endereco[2].complemto
       this.form.endereco[2].tipo = form.endereco[2].tipo
 
-      this.form.telefone[0].id = form.telefone[0].id
+      // this.form.telefone[0].id = form.telefone[0].id
       this.form.telefone[0].idPessoa = form.telefone[0].idPessoa
       this.form.telefone[0].telefone = form.telefone[0].telefone
       this.form.telefone[0].tipo = form.telefone[0].tipo
 
-      this.form.telefone[1].id = form.telefone[1].id
+      // this.form.telefone[1].id = form.telefone[1].id
       this.form.telefone[1].idPessoa = form.telefone[1].idPessoa
       this.form.telefone[1].telefone = form.telefone[1].telefone
       this.form.telefone[1].tipo = form.telefone[1].tipo
