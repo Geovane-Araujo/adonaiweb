@@ -1,8 +1,8 @@
 <template>
   <div class="membro">
     <loading :active.sync="isLoading"
-      :is-full-page="fullPage">
-    </loading>
+        :can-cancel="true"
+        :is-full-page="fullPage"></loading>
     <div class="container-fluid">
       <div class="row bg-ligth">
         <div class="col-lg-12">
@@ -70,6 +70,7 @@
                         <b-col cols="2">
                           <div class="file-loading">
                             <b-avatar ref="myFiles"
+                            v-model="form.imagem"
                             size="5rem"></b-avatar>
                           </div>
                           <label for='selecao-arquivo' class="material-icons">perm_media</label>
@@ -182,7 +183,7 @@
                                 <b-input-group style="margin-left:10px;">
                                   <b-form-input placeholder="CEP" v-model="form.endereco[0].cep" ></b-form-input>
                                     <b-input-group-append >
-                                    <b-button variant="outline-info" class="material-icons">search</b-button>
+                                    <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 1)">search</b-button>
                                   </b-input-group-append>
                                 </b-input-group>
                               </div>
@@ -242,7 +243,7 @@
                                 <b-input-group style="margin-left:10px;">
                                   <b-form-input placeholder="CEP" v-model="form.endereco[1].cep"></b-form-input>
                                   <b-input-group-append>
-                                    <b-button variant="outline-info" class="material-icons">search</b-button>
+                                    <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 2)">search</b-button>
                                   </b-input-group-append>
                                 </b-input-group>
                               </div>
@@ -286,7 +287,7 @@
                                 <b-input-group >
                                   <b-form-input placeholder="Cidade Outro" v-model="form.endereco[1].cidade"></b-form-input>
                                   <b-input-group-append>
-                                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons">search</b-button>
+                                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="buscarCidade(cidade, pagina, i);openCidade=true;">search</b-button>
                                   </b-input-group-append>
                                 </b-input-group>
                               </div>
@@ -364,6 +365,56 @@
         </div>
       </div>
     </div>
+    <!-- Modal para seleção da Cidade-->
+    <div class="cargodts">
+      <div id="overlay" v-if=openCidade>
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6>Selecione o Cargo</h6>
+              <button type="button" class="close"  @click="openCidade=false">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <b-form-input class="mr-sm-2" placeholder="Search"></b-form-input>
+              <br>
+              <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
+                <thead>
+                  <tr class="text-left bg-info txt-light" style="height: 10px;">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>UF</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="text-left" v-for="city in cidade" :key="city.id">
+                    <td >{{ city.id }}</td>
+                    <td>{{ city.cidade }}</td>
+                    <td>{{ city.uf }}</td>
+                    <td>
+                      <a href="#" class="text-success" @click="form.cidade = city.nome;form.idcidade=city.id; openDatasearch=false; "><i class="far fa-check-square"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="row">
+                <b-input-group >
+                  <b-input-group-append>
+                    <b-button variant="outline-info" style="margin-left:10px;" class="material-icons" @click="openCidade=true">chevron_left</b-button>
+                  </b-input-group-append>
+                  <b-form-input v-model="pagina" class="col-sm-1 text-center"></b-form-input>
+                  <b-input-group-append>
+                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="openCidade=true">chevron_right</b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -372,12 +423,18 @@ import { mapActions, mapState } from 'vuex'
 import util from '../../assets/scss/util'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import axios from 'axios'
+var moment = require('moment')
+var data = new Date()
 
 export default {
   data: () => ({
     openModal: false,
+    openCidade: false,
     deleteModal: false,
     isLoading: false,
+    i: 0,
+    pagina: 1,
     fullPage: true,
     openDatasearch: false,
     status: '',
@@ -403,20 +460,20 @@ export default {
           idPessoa: '',
           endereco: '',
           bairro: '',
-          idCidade: '0',
+          idCidade: 0,
           cidade: '',
           numero: '',
           uf: '',
           cep: '',
           complemento: '',
-          tipo: '0'
+          tipo: 0
         },
         {
           id: '',
           idPessoa: '',
           endereco: '',
           bairro: '',
-          idCidade: '0',
+          idCidade: 0,
           cidade: '',
           numero: '',
           uf: '',
@@ -430,7 +487,7 @@ export default {
           id: '',
           idPessoa: '',
           telefone: '',
-          tipo: '0'
+          tipo: 0
         },
         {
           id: '',
@@ -450,7 +507,7 @@ export default {
           id: '',
           iPpessoa: '',
           email: '',
-          tipo: '0'
+          tipo: 0
         },
         {
           id: '',
@@ -460,9 +517,10 @@ export default {
         }
       ],
       retorno: '',
-      motivo: ''
+      motivo: '',
+      moment: moment(data).format('YYYY-MM-DD h:mm:ss')
     },
-    imagem: []
+    cidade: []
   }),
   mounted () {
     this.isLoading = true
@@ -572,6 +630,7 @@ export default {
       this.form.estadoCivil = form.estadoCivil
       this.form.imagem = form.imagem
       this.form.batizado = form.batizado
+      this.moment = moment(data).format('YYYY-MM-DD h:mm:ss')
 
       this.form.endereco[0].id = form.endereco[0].id
       this.form.endereco[0].idPessoa = form.endereco[0].idPessoa
@@ -635,15 +694,45 @@ export default {
       }
     },
     previewFiles (event) {
-      this.imagem = this.$refs.myFiles.files
+      console.log(this.$refs)
+      // this.form.imagem = this.$refs.myFiles.value
     },
     buscarCargo () {
       this.ActionSetCargo()
+    },
+    buscarcep (cep, form, local) {
+      axios.get('https://viacep.com.br/ws/' + cep + '/json').then(function (response) {
+        if (local === 1) {
+          form.endereco[0].endereco = response.data.logradouro
+          form.endereco[0].bairro = response.data.bairro
+          form.endereco[0].cidade = response.data.localidade
+          form.endereco[0].uf = response.data.uf
+        } else {
+          form.endereco[1].endereco = response.data.logradouro
+          form.endereco[1].bairro = response.data.bairro
+          form.endereco[1].cidade = response.data.localidade
+          form.endereco[1].uf = response.data.uf
+        }
+      })
+    },
+    buscarCidade (cidade, pagina, i) {
+      console.log(cidade)
+      axios.get('http://localhost:8089/adonai/cidade/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(function (response) {
+        /* for (cidade in response.data) {
+          cidade[i].id = response.data[i].id
+          cidade[i].cidade = response.data[i].cidade
+          cidade[i].uf = response.data[i].uf
+          i = i + 1
+        } */
+        cidade = response.data
+        console.log(cidade)
+      })
     }
   },
   computed: {
     ...mapState('membro', ['membro']),
-    ...mapState('cargo', ['cargo'])
+    ...mapState('cargo', ['cargo']),
+    ...mapState('auth', ['user'])
   },
   props: {
     membros: { type: Object, required: false },

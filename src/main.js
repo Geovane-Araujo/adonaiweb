@@ -29,6 +29,7 @@ Vue.use(datasearch)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(Loading)
+Vue.use(require('vue-moment'))
 
 new Vue({
   router,
