@@ -1,6 +1,6 @@
 export default {
   toast: {
-    positionClass: 'toast-top-right'
+    positionClass: 'toast-bottom-right'
   },
   validamenu: false
 }

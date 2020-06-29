@@ -11,9 +11,11 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import VueToastr2 from 'vue-toastr-2'
 import 'vue-toastr-2/dist/vue-toastr-2.min.css'
-// import 'materialize-css/dist/css/materialize.css'
 import datasearch from './components/datasearch.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
+
 import './assets/scss/app.scss'
 
 window.toastr = require('toastr')
@@ -26,6 +28,7 @@ Vue.use(VueToastr2)
 Vue.use(datasearch)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(Loading)
 
 new Vue({
   router,

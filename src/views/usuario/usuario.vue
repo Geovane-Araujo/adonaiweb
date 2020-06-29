@@ -79,65 +79,68 @@
                 </div>
                 <h6 class="text-danger">Permissões:</h6>
                 <div class="form-check-inline">
-                  <label>
-                    <input
-                      type="checkbox"
-                      value="0"
-                      v-model="form.permissaoUsuario.membro">
-                    <span>Membros</span>
-                  </label>
+                  <b-form-checkbox
+                    id="checkbox-1"
+                    v-model="form.permissaoUsuario.membro"
+                    value="1"
+                    unchecked-value="0"
+                    >Membros
+                  </b-form-checkbox>
                 </div>
                 <span class="form-check-inline">
-                  <label>
-                    <input
-                      type="checkbox"
-                      value="0"
-                      v-model="form.permissaoUsuario.despesas">
-                    <span>Despesas</span>
-                  </label>
+                  <b-form-checkbox
+                    id="checkbox-2"
+                    v-model="form.permissaoUsuario.despesas"
+                    value="1"
+                    unchecked-value="0"
+                    >Despesas
+                  </b-form-checkbox>
                 </span>
                 <span class="form-check-inline">
-                   <label>
-                    <input
-                      type="checkbox"
-                      value="0"
-                      v-model="form.permissaoUsuario.multiIgreja">
-                    <span>Multi-Igreja</span>
-                  </label>
+                   <b-form-checkbox
+                    id="checkbox-3"
+                    v-model="form.permissaoUsuario.multiIgreja"
+                    value="1"
+                    unchecked-value="0"
+                    >Multi-Igreja
+                  </b-form-checkbox>
                 </span>
                 <p></p>
                 <div class="form-check-inline">
-                  <label>
-                    <input
-                      type="checkbox"
-                      value="0"
-                      v-model="form.permissaoUsuario.relatorios">
-                    <span>Relatórios</span>
-                  </label>
+                  <b-form-checkbox
+                    id="checkbox-4"
+                    v-model="form.permissaoUsuario.relatorios"
+                    value="1"
+                    unchecked-value="0"
+                    >Relatórios
+                  </b-form-checkbox>
                 </div>
                 <div class="form-check-inline">
-                  <label>
-                    <input
-                    type="checkbox"
-                    value="0"
-                    v-model="form.permissaoUsuario.usuarios">
-                    <span>Usuários</span>
-                  </label>
+                  <b-form-checkbox
+                    id="checkbox-5"
+                    v-model="form.permissaoUsuario.usuarios"
+                    value="1"
+                    unchecked-value="0"
+                    >Usuários
+                  </b-form-checkbox>
                 </div>
                 <div class="form-check-inline">
-                  <label>
-                    <input type="checkbox"
-                    v-model="form.permissaoUsuario.caixa">
-                    <span>Caixas</span>
-                  </label>
+                  <b-form-checkbox
+                    id="checkbox-6"
+                    v-model="form.permissaoUsuario.caixa"
+                    value="1"
+                    unchecked-value="0"
+                    >Caixas
+                  </b-form-checkbox>
                 </div>
                 <div class="form-check-inline">
-                  <label>
-                    <input type="checkbox"
-                    value="0"
-                    v-model="form.permissaoUsuario.entradas">
-                    <span>Entradas</span>
-                  </label>
+                  <b-form-checkbox
+                    id="checkbox-7"
+                    v-model="form.permissaoUsuario.entradas"
+                    value="1"
+                    unchecked-value="0"
+                    >Entradas
+                  </b-form-checkbox>
                 </div>
               </div>
               <div class="form-group">
