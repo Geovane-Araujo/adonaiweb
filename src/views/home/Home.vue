@@ -31,7 +31,7 @@
   </div>
 </template>
 
-<script>
+<script lang="js">
 import { mapState } from 'vuex'
 import util from '../../assets/scss/util'
 
@@ -46,12 +46,12 @@ export default {
           hiddenOnCollapse: true
         },
         {
-          href: '/dashboard',
+          href: '',
           title: 'Dashboard',
           icon: 'fas fa-poll'
         },
         {
-          href: '/agenda',
+          href: '',
           title: 'Agenda',
           icon: 'far fa-calendar-alt',
           badge: {
@@ -76,12 +76,34 @@ export default {
             },
             {
               href: '',
-              title: 'Igrejas',
+              title: 'Aniversariantes',
               disabled: false
             },
             {
               href: '',
-              title: 'Aniversariantes',
+              title: 'Congregações',
+              disabled: false
+            }
+          ]
+        },
+        {
+          href: '',
+          title: 'Pastoral',
+          icon: 'far fa-address-book',
+          child: [
+            {
+              href: '',
+              title: 'Novos Convertidos',
+              disabled: false
+            },
+            {
+              href: '',
+              title: 'Pedidos de Orações',
+              disabled: false
+            },
+            {
+              href: '',
+              title: 'Solicitações de Visitas',
               disabled: false
             }
           ]
@@ -139,6 +161,11 @@ export default {
               href: '',
               title: 'Configuração Global',
               disabled: false
+            },
+            {
+              href: '',
+              title: 'Auditoria de Ações',
+              disabled: false
             }
           ]
         },
@@ -165,13 +192,6 @@ export default {
               ]
             }
           ]
-        },
-        {
-          title: 'Clientes',
-          icon: 'far fa-id-card',
-          href: 'cliente',
-          hidden: util.validamenu
-
         }
       ],
       collapsed: false,

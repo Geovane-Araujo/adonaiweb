@@ -1,0 +1,1 @@
+export const SET_MEMBRO = 'MEMBRO/SET_MEMBRO'
