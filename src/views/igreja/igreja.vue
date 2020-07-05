@@ -6,7 +6,7 @@
           <p>Cadastro de Igreja</p>
           <button
             class="btn btn-outline-info"
-            @click="form.del=false;form.add=false;form.edit=false;openModal=true;">
+            @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
           </button>
           <hr class="bg-info">
@@ -64,7 +64,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <form>
+              <form method="POST">
                 <b-tabs content-class="mt-1">
                   <b-tab title="Principal" active>
                     <b-container>
@@ -98,7 +98,7 @@
                                 v-mask="'###.###.###-##'"
                                 v-model="form.cnpj"
                                 class="form-control"
-                                @click="verificar(doc)"
+                                @click="validate(doc, 1, form.cnpj)"
                                 placeholder="CNPJ/CPF">
                             </div>
                             <div class="col-sm-6">
@@ -111,14 +111,14 @@
                             <div class="col-sm-6">
                               <input
                                 type="text"
-                                v-model="form.Tesoureiro"
+                                v-model="form.tesoureiro"
                                 class="form-control"
                                 placeholder="Tesoureiro">
                             </div>
                             <div class="col-sm-6">
                               <input
                                 type="text"
-                                v-model="form.Tesoureiro"
+                                v-model="form.secretario"
                                 class="form-control"
                                 placeholder="Secretário(a)">
                             </div>
@@ -182,7 +182,7 @@
                         <div class="col-sm-6">
                           <input
                             type="text"
-                            v-model="form.Vice"
+                            v-model="form.vice"
                             class="form-control"
                             placeholder="Pastor Vice">
                         </div>
@@ -192,21 +192,21 @@
                           <input type="text"
                             class="form-control"
                             v-mask="'(##)####-#####'"
-                            v-model="form.telefone[2].telefone"
+                            v-model="form.telefone[3].telefone"
                             placeholder="Telefone Principal">
                         </div>
                         <div class="col-md-4">
                           <input type="text"
                             class="form-control"
                             v-mask="'(##)####-#####'"
-                            v-model="form.telefone[3].telefone"
+                            v-model="form.telefone[4].telefone"
                             placeholder="Telefone Celular">
                         </div>
                         <div class="col-md-4">
                           <input type="text"
                             class="form-control"
                             v-mask="'(##)####-#####'"
-                            v-model="form.telefone[4].telefone"
+                            v-model="form.telefone[5].telefone"
                             placeholder="Telefone Outros">
                         </div>
                         <div class="col-md-6">
@@ -406,7 +406,6 @@
                           </div>
                           <div class="col-sm-12">
                             <b-form-textarea
-                              id="textarea"
                               placeholder="Cabeçalho Relatórios"
                               rows="3"
                               v-model="form.textoRelatorio"
@@ -415,7 +414,6 @@
                           </div>
                           <div class="col-sm-12">
                             <b-form-textarea
-                              id="textarea"
                               placeholder="Observações"
                               rows="3"
                               v-model="form.observacoes"
@@ -444,7 +442,7 @@
             </button>
           </div>
           <div class="modal-body p-4">
-            <button class="btn btn-outline-danger" @click="submit();deleteModal=false;" >Sim</button>
+            <button class="btn btn-outline-danger" @click="save (form);deleteModal=false;" >Sim</button>
             <button class="btn btn-outline-success float-right" @click="deleteModal=false">Não</button>
           </div>
         </div>
@@ -688,9 +686,8 @@ export default {
     this.isLoading = false
   },
   methods: {
-    save (form) {
-      this.form = JSON.stringify(form)
-      axios.post('http://192.168.1.106:8089/adonai/igreja', { form }, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+    async save (form) {
+      await axios.post('http://192.168.1.106:8089/adonai/igreja', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data === 'success') {
           if (this.form.add === true) {
             this.status = 'Salvo com Sucesso'
@@ -700,7 +697,8 @@ export default {
             this.status = 'Excluido com Sucesso'
           }
           this.$toastr.success(this.status, 'Cadastro de Membros', util.toast)
-          this.cleanForm(this.form)
+          this.get(this.pagina)
+          this.cleanForm()
           if (this.form.edit) {
             this.openModal = false
           }
@@ -712,10 +710,8 @@ export default {
     validate (doc, tipo, form) {
       if (tipo === 1) {
         if (doc === 'CNPJ') {
-          this.place = 'CNPJ'
           this.mascara = '##.###.###/####-##'
         } else {
-          this.place = 'CPF'
           this.mascara = '###.###.###-##'
         }
       } else {
@@ -731,99 +727,99 @@ export default {
         this.igreja = res.data
       })
     },
-    cleanForm (form) {
-      form.id = ''
-      form.nome = ''
-      form.idPessoa = ''
-      form.observacoes = ''
-      form.imagem = []
-      form.cnpjcpf = ''
-      form.pastorResponsavel = ''
-      form.secretario = ''
-      form.tesoureiro = ''
-      form.tipo = 0
-      form.igrejaSede = ''
-      form.textoRelatorio = ''
-      form.smtp = ''
-      form.porta = ''
-      form.emailmala = ''
-      form.senha = ''
-      form.usuario = ''
-      form.autenticacao = ''
-      form.vice = ''
-      form.presidente = ''
+    cleanForm () {
+      this.form.id = ''
+      this.form.nome = ''
+      this.form.idPessoa = ''
+      this.form.observacoes = ''
+      this.form.imagem = []
+      this.form.cnpjcpf = ''
+      this.form.pastorResponsavel = ''
+      this.form.secretario = ''
+      this.form.tesoureiro = ''
+      this.form.tipo = 0
+      this.form.igrejaSede = ''
+      this.form.textoRelatorio = ''
+      this.form.smtp = ''
+      this.form.porta = ''
+      this.form.emailmala = ''
+      this.form.senha = ''
+      this.form.usuario = ''
+      this.form.autenticacao = ''
+      this.form.vice = ''
+      this.form.presidente = ''
 
-      form.endereco[0].id = ''
-      form.endereco[0].idPessoa = ''
-      form.endereco[0].endereco = ''
-      form.endereco[0].bairro = ''
-      form.endereco[0].idCidade = ''
-      form.endereco[0].cidade = ''
-      form.endereco[0].numero = ''
-      form.endereco[0].uf = ''
-      form.endereco[0].cep = ''
-      form.endereco[0].complemto = ''
-      form.endereco[0].tipo = 0
+      this.form.endereco[0].id = ''
+      this.form.endereco[0].idPessoa = ''
+      this.form.endereco[0].endereco = ''
+      this.form.endereco[0].bairro = ''
+      this.form.endereco[0].idCidade = ''
+      this.form.endereco[0].cidade = ''
+      this.form.endereco[0].numero = ''
+      this.form.endereco[0].uf = ''
+      this.form.endereco[0].cep = ''
+      this.form.endereco[0].complemto = ''
+      this.form.endereco[0].tipo = 0
 
-      form.endereco[1].id = ''
-      form.endereco[1].idPessoa = ''
-      form.endereco[1].endereco = ''
-      form.endereco[1].bairro = ''
-      form.endereco[1].idCidade = ''
-      form.endereco[1].cidade = ''
-      form.endereco[1].numero = ''
-      form.endereco[1].uf = ''
-      form.endereco[1].cep = ''
-      form.endereco[1].complemto = ''
-      form.endereco[1].tipo = 1
+      this.form.endereco[1].id = ''
+      this.form.endereco[1].idPessoa = ''
+      this.form.endereco[1].endereco = ''
+      this.form.endereco[1].bairro = ''
+      this.form.endereco[1].idCidade = ''
+      this.form.endereco[1].cidade = ''
+      this.form.endereco[1].numero = ''
+      this.form.endereco[1].uf = ''
+      this.form.endereco[1].cep = ''
+      this.form.endereco[1].complemto = ''
+      this.form.endereco[1].tipo = 1
 
-      form.telefone[0].id = ''
-      form.telefone[0].idPessoa = ''
-      form.telefone[0].telefone = ''
-      form.telefone[0].tipo = 0
+      this.form.telefone[0].id = ''
+      this.form.telefone[0].idPessoa = ''
+      this.form.telefone[0].telefone = ''
+      this.form.telefone[0].tipo = 0
 
-      form.telefone[1].id = ''
-      form.telefone[1].idPessoa = ''
-      form.telefone[1].telefone = ''
-      form.telefone[1].tipo = 1
+      this.form.telefone[1].id = ''
+      this.form.telefone[1].idPessoa = ''
+      this.form.telefone[1].telefone = ''
+      this.form.telefone[1].tipo = 1
 
-      form.telefone[2].id = ''
-      form.telefone[2].idPessoa = ''
-      form.telefone[2].telefone = ''
-      form.telefone[2].tipo = 2
+      this.form.telefone[2].id = ''
+      this.form.telefone[2].idPessoa = ''
+      this.form.telefone[2].telefone = ''
+      this.form.telefone[2].tipo = 2
 
-      form.telefone[3].id = ''
-      form.telefone[3].idPessoa = ''
-      form.telefone[3].telefone = ''
-      form.telefone[3].tipo = 3
+      this.form.telefone[3].id = ''
+      this.form.telefone[3].idPessoa = ''
+      this.form.telefone[3].telefone = ''
+      this.form.telefone[3].tipo = 3
 
-      form.telefone[4].id = ''
-      form.telefone[4].idPessoa = ''
-      form.telefone[4].telefone = ''
-      form.telefone[4].tipo = 4
+      this.form.telefone[4].id = ''
+      this.form.telefone[4].idPessoa = ''
+      this.form.telefone[4].telefone = ''
+      this.form.telefone[4].tipo = 4
 
-      form.telefone[5].id = ''
-      form.telefone[5].idPessoa = ''
-      form.telefone[5].telefone = ''
-      form.telefone[5].tipo = 5
+      this.form.telefone[5].id = ''
+      this.form.telefone[5].idPessoa = ''
+      this.form.telefone[5].telefone = ''
+      this.form.telefone[5].tipo = 5
 
-      form.email[0].id = ''
-      form.email[0].idPessoa = ''
-      form.email[0].email = ''
-      form.email[0].tipo = 0
+      this.form.email[0].id = ''
+      this.form.email[0].idPessoa = ''
+      this.form.email[0].email = ''
+      this.form.email[0].tipo = 0
 
-      form.email[1].id = ''
-      form.email[1].idPessoa = ''
-      form.email[1].email = ''
-      form.email[1].tipo = 1
+      this.form.email[1].id = ''
+      this.form.email[1].idPessoa = ''
+      this.form.email[1].email = ''
+      this.form.email[1].tipo = 1
 
-      form.email[3].id = ''
-      form.email[3].idPessoa = ''
-      form.email[3].email = ''
-      form.email[3].tipo = 3
+      this.form.email[3].id = ''
+      this.form.email[3].idPessoa = ''
+      this.form.email[3].email = ''
+      this.form.email[3].tipo = 3
 
-      form.retorno = ''
-      form.motivo = ''
+      this.form.retorno = ''
+      this.form.motivo = ''
     },
     read (form) {
       this.form.id = form.id
@@ -856,7 +852,7 @@ export default {
       this.form.endereco[0].numero = form.endereco[0].numero
       this.form.endereco[0].uf = form.endereco[0].uf
       this.form.endereco[0].cep = form.endereco[0].cep
-      this.form.endereco[0].complemto = form.endereco[0].complemto
+      this.form.endereco[0].complemento = form.endereco[0].complemento
       this.form.endereco[0].tipo = 0
 
       this.form.endereco[1].id = form.endereco[1].id
@@ -868,7 +864,7 @@ export default {
       this.form.endereco[1].numero = form.endereco[1].numero
       this.form.endereco[1].uf = form.endereco[1].uf
       this.form.endereco[1].cep = form.endereco[1].cep
-      this.form.endereco[1].complemto = form.endereco[1].complemto
+      this.form.endereco[1].complemento = form.endereco[1].complemento
       this.form.endereco[1].tipo = 1
 
       this.form.telefone[0].id = form.telefone[0].id
@@ -910,6 +906,11 @@ export default {
       this.form.email[1].idPessoa = form.email[1].idPessoa
       this.form.email[1].email = form.email[1].email
       this.form.email[1].tipo = 1
+
+      this.form.email[2].id = form.email[2].id
+      this.form.email[2].idPessoa = form.email[2].idPessoa
+      this.form.email[2].email = form.email[2].email
+      this.form.email[2].tipo = 2
 
       this.form.email[3].id = form.email[3].id
       this.form.email[3].idPessoa = form.email[3].idPessoa
@@ -956,7 +957,6 @@ export default {
     },
     getIgreja (id) {
       axios.get('http://192.168.1.106:8089/adonai/igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        console.log(res.data)
         this.read(res.data)
       })
     }
