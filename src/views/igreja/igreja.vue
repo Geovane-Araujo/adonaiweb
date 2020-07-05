@@ -1,26 +1,19 @@
 <template>
   <div class="membro">
-    <loading :active.sync="isLoading"
-        :can-cancel="true"
-        :is-full-page="fullPage"></loading>
     <div class="container-fluid">
-      <div class="row bg-ligth">
-        <div class="col-lg-12">
-          <p>Cadastro de Membros</p>
-        </div>
-      </div>
-      <div class="tre">
-        <button
-        class="btn btn-outline-info"
-        @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
-        <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
-        </button>
-      </div>
-      <hr class="bg-info" >
       <div class="row">
+        <div class="col-sm-12">
+          <p>Cadastro de Igreja</p>
+          <button
+            class="btn btn-outline-info"
+            @click="form.del=false;form.add=false;form.edit=false;openModal=true;">
+            <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
+          </button>
+          <hr class="bg-info">
+        </div>
         <div class="col-lg-12">
-          <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
-            <thead>
+          <table class="table table-botdered table-striped table-sm table-hover table-fixed">
+            <thead  style="max-height:10vh; overflow-y:auto;">
               <tr class="text-left bg-info txt-light style=height: 10px;">
                 <th>ID</th>
                 <th>Nome Membro</th>
@@ -32,15 +25,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="text-left" v-for="item in membro" :key="item.id">
+              <tr class="text-left" v-for="item in igreja" :key="item.id">
                 <td >{{ item.id }}</td>
                 <td>{{ item.nome }}</td>
-                <td>{{ item.endereco[0].endereco }}</td>
-                <td>{{ item.endereco[0].bairro }}</td>
-                <td>{{ item.endereco[0].numero }}</td>
-                <td>{{ item.telefone[0].telefone }}</td>
+                <td>{{ item.enderecoPrincipal }}</td>
+                <td>{{ item.bairroPrincipal }}</td>
+                <td>{{ item.numeroPrincipal }}</td>
+                <td>{{ item.telefonePrincipal }}</td>
                 <td>
-                  <a href="#" @click="openModal =true;  form.edit= true;form.del=false;form.add=false; povoar(item);"  class="text-success"><i class="fas fa-edit"></i></a>
+                  <a href="#" @click="getIgreja (item.id);  form.edit= true;form.del=false;form.add=false;"  class="text-success"><i class="fas fa-edit"></i></a>
                   &nbsp;
                   <a href="#" @click="deleteModal=true; form.idPessoa = item.idPessoa; form.id = item.id; form.edit=false;form.add=false; form.del = true" class="text-danger"><i class="far fa-trash-alt"></i></a>
                 </td>
@@ -48,16 +41,25 @@
             </tbody>
           </table>
         </div>
+        <div class="col-sm-5">
+          <b-input-group >
+              <button class="btn btn-outline-info" @click="pagina = pagina - 1;b (pagina)"><i class="fas fa-caret-left"></i></button>
+              <b-form-input v-model="pagina" class="col-sm-1 text-center"></b-form-input>
+              <button class="btn btn-outline-info"  @click="pagina = pagina + 1;b (pagina)"><i class="fas fa-caret-right"></i></button>
+              <b-form-input placeholder="buscar"  style="margin-left:10px" class="col-sm-5"></b-form-input>
+              <b-button variant="outline-info" class="material-icons">search</b-button>
+          </b-input-group>
+        </div>
       </div>
     </div>
 
-    <!-- modal -->
+    <!-- modal para cadastro-->
     <div id="overlay" v-if=openModal>
         <div class="modal-dialog modal-dialog-centered modal-lg ">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Cadastro de Membros</h5>
-              <button type="button" class="close"  @click="limparCampos(form); openModal=false;">
+              <h5 class="modal-title">Cadastro de Igreja</h5>
+              <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -70,7 +72,6 @@
                         <b-col cols="2">
                           <div class="file-loading">
                             <b-avatar ref="myFiles"
-                            v-model="form.imagem"
                             size="5rem"></b-avatar>
                           </div>
                           <label for='selecao-arquivo' class="material-icons">perm_media</label>
@@ -83,59 +84,55 @@
                               class="form-control"
                               style="width:620px"
                               v-model="form.nome"
-                              placeholder="Nome Completo">
+                              placeholder="Nome Igreja">
                             </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-4">
-                              <b-form-datepicker
-                              placeholder="Data Nasc."
-                              v-model="form.dataNascimento"
-                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                              local="pt-br"></b-form-datepicker>
-                            </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-2">
                               <b-form-select
-                              :options="[{ text: 'Estado Civil', value: null }, 'Solteiro(a)', 'Casado(a)', 'União Estável','Divorciado(a)','Viuvo(a)']"
-                              v-model="form.estadoCivil"
+                              :options="[{ text: 'CNPJ', value: 'CNPJ' }, 'CPF']"
+                              v-model="doc"
                               ></b-form-select>
                             </div>
-                            <div class="col-sm-5">
-                              <div class="form-group">
-                                <b-input-group >
-                                  <b-form-input placeholder="Cargo" v-model="form.cargo" @click="openDatasearch=true;"></b-form-input>
-                                  <b-input-group-append>
-                                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="openDatasearch=true;">search</b-button>
-                                  </b-input-group-append>
-                                </b-input-group>
-                              </div>
+                            <div class="col-sm-4">
+                              <input
+                                type="text"
+                                v-mask="'###.###.###-##'"
+                                v-model="form.cnpj"
+                                class="form-control"
+                                @click="verificar(doc)"
+                                placeholder="CNPJ/CPF">
                             </div>
-                            <div class="col-md-4">
-                              <b-form-datepicker
-                              placeholder="Data Batismo"
-                              v-model="form.dataBatismo"
-                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                              local="pt-br"></b-form-datepicker>
+                            <div class="col-sm-6">
+                              <input
+                                type="text"
+                                v-model="form.pastorResponsavel"
+                                class="form-control"
+                                placeholder="Pastor Responsável">
                             </div>
-                            <div class="col-md-2">
-                              <b-form-checkbox
-                                id="checkbox-1"
-                                v-model="form.ativo"
-                                value="1"
-                                unchecked-value="0"
-                                >Ativo
-                                </b-form-checkbox>
+                            <div class="col-sm-6">
+                              <input
+                                type="text"
+                                v-model="form.Tesoureiro"
+                                class="form-control"
+                                placeholder="Tesoureiro">
+                            </div>
+                            <div class="col-sm-6">
+                              <input
+                                type="text"
+                                v-model="form.Tesoureiro"
+                                class="form-control"
+                                placeholder="Secretário(a)">
                             </div>
                           </div>
                         </b-col>
                       </b-row>
+                      <H6 class="text-success">Dados de Contatos</H6>
                       <div class="row">
                         <div class="col-md-4">
                           <input type="text"
                             class="form-control"
                             v-mask="'(##)####-#####'"
                             v-model="form.telefone[0].telefone"
-                            placeholder="Telefone Residencial">
+                            placeholder="Telefone Principal">
                         </div>
                         <div class="col-md-4">
                           <input type="text"
@@ -149,33 +146,102 @@
                             class="form-control"
                             v-mask="'(##)####-#####'"
                             v-model="form.telefone[2].telefone"
-                            placeholder="Telefone Comercial">
+                            placeholder="Telefone Outros">
                         </div>
                         <div class="col-md-6">
                           <input type="text"
                             class="form-control"
                             v-model="form.email[0].email"
-                            placeholder="E-mail">
+                            placeholder="E-mail Principal">
                         </div>
                         <div class="col-md-6">
                           <input type="text"
                             class="form-control"
                             v-model="form.email[1].email"
-                            placeholder="E-mail 2">
+                            placeholder="E-mail Outros">
                         </div>
                       </div>
                     </b-container>
                   </b-tab>
+                  <b-tab title="Igreja Sede">
+                    <b-col cols="12" >
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <input type="text"
+                          class="form-control"
+                          v-model="form.igrejaSede"
+                          placeholder="Nome Igreja Sede">
+                        </div>
+                        <div class="col-sm-6">
+                          <input
+                            type="text"
+                            v-model="form.presidente"
+                            class="form-control"
+                            placeholder="Pastor Presidente">
+                        </div>
+                        <div class="col-sm-6">
+                          <input
+                            type="text"
+                            v-model="form.Vice"
+                            class="form-control"
+                            placeholder="Pastor Vice">
+                        </div>
+                        <H6 class="text-success" style="padding-left:10px;">Dados de Contatos</H6>
+                        <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                        <div class="col-md-4">
+                          <input type="text"
+                            class="form-control"
+                            v-mask="'(##)####-#####'"
+                            v-model="form.telefone[2].telefone"
+                            placeholder="Telefone Principal">
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text"
+                            class="form-control"
+                            v-mask="'(##)####-#####'"
+                            v-model="form.telefone[3].telefone"
+                            placeholder="Telefone Celular">
+                        </div>
+                        <div class="col-md-4">
+                          <input type="text"
+                            class="form-control"
+                            v-mask="'(##)####-#####'"
+                            v-model="form.telefone[4].telefone"
+                            placeholder="Telefone Outros">
+                        </div>
+                        <div class="col-md-6">
+                          <input type="text"
+                            class="form-control"
+                            v-model="form.email[2].email"
+                            placeholder="E-mail Principal">
+                        </div>
+                        <div class="col-md-6">
+                          <input type="text"
+                            class="form-control"
+                            v-model="form.email[3].email"
+                            placeholder="E-mail Outros">
+                        </div>
+                        <H6 class="text-success" style="padding-left:20px;"> </H6>
+                        <H6 class="text-success" style="padding-left:20px;"> </H6>
+                        <H6 class="text-success" style="padding-left:20px;"> </H6>
+                      </div>
+                      </div>
+                    </b-col>
+                  </b-tab>
                   <!-- Endereços -->
                   <b-tab title="Enderecos">
-                    <form action="" enctype="multipart/form-data" class="form form-vertical">
+                    <form>
                       <div class="row">
-                      <div class="col-md-12">
+                      <H6 class="text-success" style="padding-left:20px;">Endereço Local</H6>
+                      <div class="col-sm-12">
                           <div class="row">
                             <div class="col-sm-3">
                               <div class="form-group">
                                 <b-input-group style="margin-left:10px;">
-                                  <b-form-input placeholder="CEP" v-model="form.endereco[0].cep" ></b-form-input>
+                                  <b-form-input
+                                    placeholder="CEP"
+                                    v-model="form.endereco[0].cep" v-mask="'#####-###'">
+                                  </b-form-input>
                                     <b-input-group-append >
                                     <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 1)">search</b-button>
                                   </b-input-group-append>
@@ -187,7 +253,7 @@
                                 <input type="text"
                                   class="form-control"
                                   v-model="form.endereco[0].endereco"
-                                  placeholder="Endereço Principal">
+                                  placeholder="Endereço Local">
                               </div>
                             </div>
                             <div class="col-sm-2">
@@ -205,7 +271,7 @@
                                   style="margin-left:10px;width: 100%;"
                                   class="form-control"
                                   v-model="form.endereco[0].bairro"
-                                  placeholder="Bairro Principal">
+                                  placeholder="Bairro Local">
                               </div>
                             </div>
                             <div class="col-sm-4">
@@ -213,7 +279,7 @@
                                 <input type="text"
                                   class="form-control"
                                   v-model="form.endereco[0].complemento"
-                                  placeholder="Complemento Principal">
+                                  placeholder="Complemento Local">
                               </div>
                             </div>
                             <div class="col-sm-4">
@@ -231,11 +297,15 @@
                         <!-- Endereço Secundário -->
                         <hr class="bg-info" >
                         <div class="col-md-12">
+                          <H6 class="text-success" style="padding-left:10px;">Endereço Sede</H6>
                           <div class="row">
                             <div class="col-sm-3">
                               <div class="form-group">
                                 <b-input-group style="margin-left:10px;">
-                                  <b-form-input placeholder="CEP" v-model="form.endereco[1].cep"></b-form-input>
+                                  <b-form-input
+                                    placeholder="CEP Sede"
+                                    v-model="form.endereco[1].cep" v-mask="'#####-###'">
+                                  </b-form-input>
                                   <b-input-group-append>
                                     <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 2)">search</b-button>
                                   </b-input-group-append>
@@ -247,7 +317,7 @@
                                 <input type="text"
                                   class="form-control"
                                   v-model="form.endereco[1].endereco"
-                                  placeholder="Endereço Outro">
+                                  placeholder="Endereço Sede">
                               </div>
                             </div>
                             <div class="col-sm-2">
@@ -265,7 +335,7 @@
                                   style="margin-left:10px;width: 100%;"
                                   class="form-control"
                                   v-model="form.endereco[1].bairro"
-                                  placeholder="Bairro Outro">
+                                  placeholder="Bairro Sede">
                               </div>
                             </div>
                             <div class="col-sm-4">
@@ -273,13 +343,13 @@
                                 <input type="text"
                                   class="form-control"
                                   v-model="form.endereco[1].complemento"
-                                  placeholder="Complemento Outro">
+                                  placeholder="Complemento Sede">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="form-group">
                                 <b-input-group >
-                                  <b-form-input placeholder="Cidade Outro" v-model="form.endereco[1].cidade" @click="campocidade = 1;buscarCidade(pagina);openCidade=true;"></b-form-input>
+                                  <b-form-input placeholder="Cidade Sede" v-model="form.endereco[1].cidade" @click="campocidade = 1;buscarCidade(pagina);openCidade=true;"></b-form-input>
                                   <b-input-group-append>
                                     <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="campocidade = 1;buscarCidade(pagina);openCidade=true;">search</b-button>
                                   </b-input-group-append>
@@ -291,18 +361,74 @@
                       </div>
                     </form>
                   </b-tab>
-                  <b-tab title="Observações">
-                    <b-form-textarea
-                      id="textarea"
-                      placeholder="Observações"
-                      rows="15"
-                      v-model="form.observacoes"
-                      max-rows="3"
-                    ></b-form-textarea>
+                  <b-tab title="Configurações">
+                    <b-col cols="12" >
+                      <H6 class="text-success">Configurações de Mala Direta</H6>
+                      <div class="row">
+                          <div class="col-sm-5">
+                            <input type="e-mail"
+                            class="form-control"
+                            v-model="form.emailmala"
+                            placeholder="Email">
+                          </div>
+                          <div class="col-sm-5">
+                            <input
+                              type="text"
+                              v-model="form.smtp"
+                              class="form-control"
+                              placeholder="SMPT">
+                          </div>
+                          <div class="col-sm-2">
+                            <input
+                              type="text"
+                              v-model="form.porta"
+                              class="form-control"
+                              placeholder="Porta">
+                        </div>
+                        <div class="row" style="padding-left: 10px;padding-right: 10px;">
+                          <div class="col-md-4">
+                            <input type="text"
+                              class="form-control"
+                              v-model="form.usuario"
+                              placeholder="Usuário">
+                          </div>
+                          <div class="col-md-4">
+                            <input type="password"
+                              class="form-control"
+                              v-model="form.senha"
+                              placeholder="senha">
+                          </div>
+                          <div class="col-md-4">
+                            <b-form-select
+                              :options="[{ text: 'Não Requer', value: 'Não Requer' }, 'SSL', 'TSL']"
+                              v-model="form.autenticacao"
+                              ></b-form-select>
+                          </div>
+                          <div class="col-sm-12">
+                            <b-form-textarea
+                              id="textarea"
+                              placeholder="Cabeçalho Relatórios"
+                              rows="3"
+                              v-model="form.textoRelatorio"
+                              max-rows="3"
+                            ></b-form-textarea>
+                          </div>
+                          <div class="col-sm-12">
+                            <b-form-textarea
+                              id="textarea"
+                              placeholder="Observações"
+                              rows="3"
+                              v-model="form.observacoes"
+                              max-rows="3"
+                            ></b-form-textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </b-col>
                   </b-tab>
                 </b-tabs>
               </form>
-              <button type="button" class="btn btn-outline-info float-right" @click="validar(form)">Salvar</button>
+              <button type="button" class="btn btn-outline-info float-right" @click="validate(doc, 0, form)">Salvar</button>
             </div>
           </div>
         </div>
@@ -345,7 +471,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="text-left" v-for="carg in cargo" :key="carg.id">
+                  <tr class="text-left" v-for="carg in nCargos" :key="carg.id">
                     <td >{{ carg.id }}</td>
                     <td>{{ carg.descricao }}</td>
                     <td>
@@ -413,9 +539,8 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import util from '../../assets/scss/util'
-import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 var moment = require('moment')
@@ -430,8 +555,8 @@ export default {
       isLoading: false,
       campocidade: 0,
       pagina: 1,
-      fullPage: true,
       openDatasearch: false,
+      doc: 'CNPJ',
       status: '',
       form: {
         add: true,
@@ -440,15 +565,24 @@ export default {
         id: '',
         nome: '',
         idPessoa: '',
-        dataNascimento: '',
-        ativo: '',
-        idCargo: '',
-        cargo: '',
         observacoes: '',
-        dataBatismo: '',
-        estadoCivil: null,
-        imagem: '',
-        batizado: '',
+        imagem: [],
+        cnpjcpf: '',
+        pastorResponsavel: '',
+        secretario: '',
+        tesoureiro: '',
+        tipo: 0,
+        igrejaSede: '',
+        textoRelatorio: '',
+        smtp: '',
+        porta: '',
+        emailmala: '',
+        senha: '',
+        usuario: '',
+        autenticacao: 'Não Requer',
+        fone: '',
+        vice: '',
+        presidente: '',
         endereco: [
           {
             id: '',
@@ -495,6 +629,24 @@ export default {
             idPessoa: '',
             telefone: '',
             tipo: 2
+          },
+          {
+            id: '',
+            idPessoa: '',
+            telefone: '',
+            tipo: 3
+          },
+          {
+            id: '',
+            idPessoa: '',
+            telefone: '',
+            tipo: 4
+          },
+          {
+            id: '',
+            idPessoa: '',
+            telefone: '',
+            tipo: 5
           }
         ],
         email: [
@@ -509,57 +661,97 @@ export default {
             iPpessoa: '',
             email: '',
             tipo: 1
+          },
+          {
+            id: '',
+            iPpessoa: '',
+            email: '',
+            tipo: 2
+          },
+          {
+            id: '',
+            iPpessoa: '',
+            email: '',
+            tipo: 3
           }
         ],
-        retorno: '',
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD h:mm:ss')
       },
-      cidade: []
+      cidade: [],
+      igreja: []
     }
   },
   mounted () {
     this.isLoading = true
-    this.ActionSetMembro()
+    this.get(this.pagina)
     this.isLoading = false
   },
   methods: {
-    ...mapActions('membro', ['ActionSetMembro']),
-    ...mapActions('membro', ['SalvarMembro']),
-    ...mapActions('cargo', ['ActionSetCargo']),
-    async submit () {
-      try {
-        await this.SalvarMembro(this.form)
-        this.ActionSetMembro()
-        if (this.form.add === true) {
-          this.status = 'Salvo com Sucesso'
-        } else if (this.form.edit === true) {
-          this.status = 'Alterado com Sucesso'
+    save (form) {
+      this.form = JSON.stringify(form)
+      axios.post('http://192.168.1.106:8089/adonai/igreja', { form }, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data === 'success') {
+          if (this.form.add === true) {
+            this.status = 'Salvo com Sucesso'
+          } else if (this.form.edit === true) {
+            this.status = 'Alterado com Sucesso'
+          } else {
+            this.status = 'Excluido com Sucesso'
+          }
+          this.$toastr.success(this.status, 'Cadastro de Membros', util.toast)
+          this.cleanForm(this.form)
+          if (this.form.edit) {
+            this.openModal = false
+          }
         } else {
-          this.status = 'Excluido com Sucesso'
+          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
         }
-        this.$toastr.success(this.status, 'Cadastro de Membros', util.toast)
-        this.limparCampos(this.form)
-        if (this.form.edit) {
-          this.openModal = false
+      })
+    },
+    validate (doc, tipo, form) {
+      if (tipo === 1) {
+        if (doc === 'CNPJ') {
+          this.place = 'CNPJ'
+          this.mascara = '##.###.###/####-##'
+        } else {
+          this.place = 'CPF'
+          this.mascara = '###.###.###-##'
         }
-      } catch (err) {
-        this.$toastr.error(err, 'Falha ao Salvar', util.toast)
+      } else {
+        if (this.form.nome === '') {
+          this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+        } else {
+          this.save(form)
+        }
       }
     },
-    limparCampos (form) {
+    get (pagina) {
+      axios.get('http://192.168.1.106:8089/adonai/igrejagrid/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.igreja = res.data
+      })
+    },
+    cleanForm (form) {
       form.id = ''
       form.nome = ''
       form.idPessoa = ''
-      form.dataNascimento = ''
-      form.ativo = ''
-      form.idCargo = ''
-      form.cargo = ''
       form.observacoes = ''
-      form.dataBatismo = ''
-      form.estadoCivil = null
-      form.imagem = ''
-      form.batizado = ''
+      form.imagem = []
+      form.cnpjcpf = ''
+      form.pastorResponsavel = ''
+      form.secretario = ''
+      form.tesoureiro = ''
+      form.tipo = 0
+      form.igrejaSede = ''
+      form.textoRelatorio = ''
+      form.smtp = ''
+      form.porta = ''
+      form.emailmala = ''
+      form.senha = ''
+      form.usuario = ''
+      form.autenticacao = ''
+      form.vice = ''
+      form.presidente = ''
 
       form.endereco[0].id = ''
       form.endereco[0].idPessoa = ''
@@ -571,7 +763,7 @@ export default {
       form.endereco[0].uf = ''
       form.endereco[0].cep = ''
       form.endereco[0].complemto = ''
-      form.endereco[0].tipo = ''
+      form.endereco[0].tipo = 0
 
       form.endereco[1].id = ''
       form.endereco[1].idPessoa = ''
@@ -583,50 +775,77 @@ export default {
       form.endereco[1].uf = ''
       form.endereco[1].cep = ''
       form.endereco[1].complemto = ''
-      form.endereco[1].tipo = ''
+      form.endereco[1].tipo = 1
 
       form.telefone[0].id = ''
       form.telefone[0].idPessoa = ''
       form.telefone[0].telefone = ''
-      form.telefone[0].tipo = ''
+      form.telefone[0].tipo = 0
 
       form.telefone[1].id = ''
       form.telefone[1].idPessoa = ''
       form.telefone[1].telefone = ''
-      form.telefone[1].tipo = ''
+      form.telefone[1].tipo = 1
 
       form.telefone[2].id = ''
       form.telefone[2].idPessoa = ''
       form.telefone[2].telefone = ''
-      form.telefone[2].tipo = ''
+      form.telefone[2].tipo = 2
+
+      form.telefone[3].id = ''
+      form.telefone[3].idPessoa = ''
+      form.telefone[3].telefone = ''
+      form.telefone[3].tipo = 3
+
+      form.telefone[4].id = ''
+      form.telefone[4].idPessoa = ''
+      form.telefone[4].telefone = ''
+      form.telefone[4].tipo = 4
+
+      form.telefone[5].id = ''
+      form.telefone[5].idPessoa = ''
+      form.telefone[5].telefone = ''
+      form.telefone[5].tipo = 5
 
       form.email[0].id = ''
       form.email[0].idPessoa = ''
       form.email[0].email = ''
-      form.email[0].tipo = ''
+      form.email[0].tipo = 0
 
       form.email[1].id = ''
       form.email[1].idPessoa = ''
       form.email[1].email = ''
-      form.email[1].tipo = ''
+      form.email[1].tipo = 1
+
+      form.email[3].id = ''
+      form.email[3].idPessoa = ''
+      form.email[3].email = ''
+      form.email[3].tipo = 3
 
       form.retorno = ''
       form.motivo = ''
     },
-    povoar (form) {
+    read (form) {
       this.form.id = form.id
       this.form.nome = form.nome
       this.form.idPessoa = form.idPessoa
-      this.form.dataNascimento = form.dataNascimento
-      this.form.ativo = form.ativo
-      this.form.idCargo = form.idCargo
-      this.form.cargo = form.cargo
       this.form.observacoes = form.observacoes
-      this.form.dataBatismo = form.dataBatismo
-      this.form.estadoCivil = form.estadoCivil
       this.form.imagem = form.imagem
-      this.form.batizado = form.batizado
-      this.moment = moment(data).format('YYYY-MM-DD h:mm:ss')
+      this.form.cnpjcpf = form.cnpjcpf
+      this.form.pastorResponsavel = form.pastorResponsavel
+      this.form.secretario = form.secretario
+      this.form.tesoureiro = form.tesoureiro
+      this.form.tipo = 0
+      this.form.igrejaSede = form.igrejaSede
+      this.form.textoRelatorio = form.textoRelatorio
+      this.form.smtp = form.smtp
+      this.form.porta = form.porta
+      this.form.emailmala = form.emailmala
+      this.form.senha = form.senha
+      this.form.usuario = form.usuario
+      this.form.autenticacao = form.autenticacao
+      this.form.vice = form.vice
+      this.form.presidente = form.presidente
 
       this.form.endereco[0].id = form.endereco[0].id
       this.form.endereco[0].idPessoa = form.endereco[0].idPessoa
@@ -667,6 +886,21 @@ export default {
       this.form.telefone[2].telefone = form.telefone[2].telefone
       this.form.telefone[2].tipo = 2
 
+      this.form.telefone[3].id = form.telefone[3].id
+      this.form.telefone[3].idPessoa = form.telefone[3].idPessoa
+      this.form.telefone[3].telefone = form.telefone[3].telefone
+      this.form.telefone[3].tipo = 3
+
+      this.form.telefone[4].id = form.telefone[4].id
+      this.form.telefone[4].idPessoa = form.telefone[4].idPessoa
+      this.form.telefone[4].telefone = form.telefone[4].telefone
+      this.form.telefone[4].tipo = 4
+
+      this.form.telefone[5].id = form.telefone[5].id
+      this.form.telefone[5].idPessoa = form.telefone[5].idPessoa
+      this.form.telefone[5].telefone = form.telefone[5].telefone
+      this.form.telefone[5].tipo = 5
+
       this.form.email[0].id = form.email[0].id
       this.form.email[0].idPessoa = form.email[0].idPessoa
       this.form.email[0].email = form.email[0].email
@@ -677,62 +911,58 @@ export default {
       this.form.email[1].email = form.email[1].email
       this.form.email[1].tipo = 1
 
-      this.form.retorno = ''
-      this.form.motivo = ''
-    },
-    validar (form) {
-      if (form.nome === '') {
-        this.$toastr.error('Por favor preencha o campo Nome Completo', 'Campos Inválidos', util.toast)
-      } else if (form.idCargo === '') {
-        this.$toastr.error('Por favor preencha o campo Cargo', 'Campos Inválidos', util.toast)
-      } else {
-        this.submit()
-      }
+      this.form.email[3].id = form.email[3].id
+      this.form.email[3].idPessoa = form.email[3].idPessoa
+      this.form.email[3].email = form.email[3].email
+      this.form.email[3].tipo = 3
+
+      this.form.retorno = form.retorno
+      this.form.motivo = form.motivo
+      this.openModal = true
     },
     previewFiles (event) {
       console.log(this.$refs)
       // this.form.imagem = this.$refs.myFiles.value
     },
-    buscarCargo () {
-      this.ActionSetCargo()
-    },
     buscarcep (cep, form, local) {
-      axios.get('https://viacep.com.br/ws/' + cep + '/json').then(function (response) {
-        if (local === 1) {
-          form.endereco[0].endereco = response.data.logradouro
-          form.endereco[0].bairro = response.data.bairro
-          form.endereco[0].cidade = response.data.localidade
-          form.endereco[0].uf = response.data.uf
-        } else {
-          form.endereco[1].endereco = response.data.logradouro
-          form.endereco[1].bairro = response.data.bairro
-          form.endereco[1].cidade = response.data.localidade
-          form.endereco[1].uf = response.data.uf
-        }
-      })
+      if (cep === '') {
+        this.$toastr.warning('Por Favor preencha o campo cep', 'Aviso', util.toast)
+      } else {
+        cep = cep.replace('-', '')
+        axios.get('https://viacep.com.br/ws/' + cep + '/json').then(function (response) {
+          if (local === 1) {
+            form.endereco[0].endereco = response.data.logradouro
+            form.endereco[0].bairro = response.data.bairro
+            form.endereco[0].cidade = response.data.localidade
+            form.endereco[0].uf = response.data.uf
+          } else {
+            form.endereco[1].endereco = response.data.logradouro
+            form.endereco[1].bairro = response.data.bairro
+            form.endereco[1].cidade = response.data.localidade
+            form.endereco[1].uf = response.data.uf
+          }
+        })
+      }
     },
     buscarCidade (pagina) {
-      axios.get('http://localhost:8089/adonai/cidade/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      axios.get('http://192.168.1.106:8089/adonai/cidade/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.cidade = res.data
       })
     },
     buscarCidadeKey (cidade) {
-      axios.get('http://localhost:8089/adonai/cidadekey/' + cidade, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      axios.get('http://192.168.1.106:8089/adonai/cidadekey/' + cidade, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.cidade = res.data
+      })
+    },
+    getIgreja (id) {
+      axios.get('http://192.168.1.106:8089/adonai/igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        console.log(res.data)
+        this.read(res.data)
       })
     }
   },
   computed: {
-    ...mapState('membro', ['membro']),
-    ...mapState('cargo', ['cargo']),
     ...mapState('auth', ['user'])
-  },
-  props: {
-    membros: { type: Object, required: false },
-    cargos: { type: Object, required: false }
-  },
-  components: {
-    Loading
   }
 }
 </script>
@@ -754,6 +984,9 @@ p {
 }
 input[type='file'] {
   display: none
+}
+.table-sm {
+  padding: 2px;
 }
 .membro {
   border-radius: 10px;

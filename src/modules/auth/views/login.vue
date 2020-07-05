@@ -5,12 +5,23 @@
             <div class="card-header">Adonai Soft Login</div>
             <div class="card-body">
                 <div class="form-group">
-                    <input
-                    type="text"
-                    v-mask="'###.###.###-##'"
-                    v-model="form.cnpj"
-                    class="form-control"
-                    placeholder="CPF">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <b-form-select
+                      :options="[{ text: 'CNPJ', value: 'CNPJ' }, 'CPF']"
+                      v-model="doc"
+                      ></b-form-select>
+                    </div>
+                    <div class="col-sm-9">
+                      <input
+                        type="text"
+                        v-mask="mascara"
+                        v-model="form.cnpj"
+                        class="form-control"
+                        @click="verificar(doc)"
+                        :placeholder="place">
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                     <input
@@ -52,7 +63,10 @@ export default {
       senha: '',
       auth: '',
       token: navigator.name
-    }
+    },
+    mascara: '##.###.###/####-##',
+    place: 'CNPJ',
+    doc: 'CNPJ'
   }),
   methods: {
     ...mapActions('auth', ['ActionLogin']),
@@ -63,6 +77,15 @@ export default {
         this.$router.push({ name: 'home' })
       } catch (err) {
         this.$toastr.error('Verifique os dados de Autenticação', 'AdonaiSoft - Web', util.toast)
+      }
+    },
+    verificar (doc) {
+      if (doc === 'CNPJ') {
+        this.place = 'CNPJ'
+        this.mascara = '##.###.###/####-##'
+      } else {
+        this.place = 'CPF'
+        this.mascara = '###.###.###-##'
       }
     }
   }

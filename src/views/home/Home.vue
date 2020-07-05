@@ -148,7 +148,7 @@ export default {
           icon: 'fas fa-wrench',
           child: [
             {
-              href: '',
+              href: '/igreja',
               title: 'Cadastro Igreja',
               disabled: false
             },

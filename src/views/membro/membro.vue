@@ -1,26 +1,19 @@
 <template>
   <div class="membro">
-    <loading :active.sync="isLoading"
-        :can-cancel="true"
-        :is-full-page="fullPage"></loading>
     <div class="container-fluid">
-      <div class="row bg-ligth">
-        <div class="col-lg-12">
-          <p>Cadastro de Membros</p>
-        </div>
-      </div>
-      <div class="tre">
-        <button
-        class="btn btn-outline-info"
-        @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
-        <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
-        </button>
-      </div>
-      <hr class="bg-info" >
       <div class="row">
+        <div class="col-sm-12">
+          <p>Cadastro de Membros</p>
+          <button
+            class="btn btn-outline-info"
+            @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
+            <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
+          </button>
+          <hr class="bg-info">
+        </div>
         <div class="col-lg-12">
-          <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
-            <thead>
+          <table class="table table-botdered table-striped table-sm table-hover table-fixed">
+            <thead  style="max-height:10vh; overflow-y:auto;">
               <tr class="text-left bg-info txt-light style=height: 10px;">
                 <th>ID</th>
                 <th>Nome Membro</th>
@@ -35,12 +28,12 @@
               <tr class="text-left" v-for="item in membro" :key="item.id">
                 <td >{{ item.id }}</td>
                 <td>{{ item.nome }}</td>
-                <td>{{ item.endereco[0].endereco }}</td>
-                <td>{{ item.endereco[0].bairro }}</td>
-                <td>{{ item.endereco[0].numero }}</td>
-                <td>{{ item.telefone[0].telefone }}</td>
+                <td>{{ item.enderecoPrincipal }}</td>
+                <td>{{ item.bairroPrincipal }}</td>
+                <td>{{ item.numeroPrincipal }}</td>
+                <td>{{ item.telefonePrincipal }}</td>
                 <td>
-                  <a href="#" @click="openModal =true;  form.edit= true;form.del=false;form.add=false; povoar(item);"  class="text-success"><i class="fas fa-edit"></i></a>
+                  <a href="#" @click="buscarmembro(item.id); form.edit= true;form.del=false;form.add=false; buscarmembro(item.id);"  class="text-success"><i class="fas fa-edit"></i></a>
                   &nbsp;
                   <a href="#" @click="deleteModal=true; form.idPessoa = item.idPessoa; form.id = item.id; form.edit=false;form.add=false; form.del = true" class="text-danger"><i class="far fa-trash-alt"></i></a>
                 </td>
@@ -48,10 +41,19 @@
             </tbody>
           </table>
         </div>
+        <div class="col-sm-5">
+          <b-input-group >
+              <button class="btn btn-outline-info" @click="pagina = pagina - 1;b (pagina)"><i class="fas fa-caret-left"></i></button>
+              <b-form-input v-model="pagina" class="col-sm-1 text-center"></b-form-input>
+              <button class="btn btn-outline-info"  @click="pagina = pagina + 1;b (pagina)"><i class="fas fa-caret-right"></i></button>
+              <b-form-input placeholder="buscar"  style="margin-left:10px" class="col-sm-5"></b-form-input>
+              <b-button variant="outline-info" class="material-icons">search</b-button>
+          </b-input-group>
+        </div>
       </div>
     </div>
 
-    <!-- modal -->
+    <!-- modal para cadastro-->
     <div id="overlay" v-if=openModal>
         <div class="modal-dialog modal-dialog-centered modal-lg ">
           <div class="modal-content">
@@ -103,7 +105,7 @@
                             <div class="col-sm-5">
                               <div class="form-group">
                                 <b-input-group >
-                                  <b-form-input placeholder="Cargo" v-model="form.cargo" @click="openDatasearch=true;"></b-form-input>
+                                  <b-form-input placeholder="Cargo" v-model="form.cargo" @click="openDatasearch=true;buscarCargo();"></b-form-input>
                                   <b-input-group-append>
                                     <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="openDatasearch=true;">search</b-button>
                                   </b-input-group-append>
@@ -345,7 +347,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="text-left" v-for="carg in cargo" :key="carg.id">
+                  <tr class="text-left" v-for="carg in nCargos" :key="carg.id">
                     <td >{{ carg.id }}</td>
                     <td>{{ carg.descricao }}</td>
                     <td>
@@ -415,8 +417,8 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import util from '../../assets/scss/util'
-import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import membro from './store/state'
 import axios from 'axios'
 var moment = require('moment')
 var data = new Date()
@@ -515,7 +517,8 @@ export default {
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD h:mm:ss')
       },
-      cidade: []
+      cidade: [],
+      nCargos: []
     }
   },
   mounted () {
@@ -526,7 +529,6 @@ export default {
   methods: {
     ...mapActions('membro', ['ActionSetMembro']),
     ...mapActions('membro', ['SalvarMembro']),
-    ...mapActions('cargo', ['ActionSetCargo']),
     async submit () {
       try {
         await this.SalvarMembro(this.form)
@@ -571,7 +573,7 @@ export default {
       form.endereco[0].uf = ''
       form.endereco[0].cep = ''
       form.endereco[0].complemto = ''
-      form.endereco[0].tipo = ''
+      form.endereco[0].tipo = 0
 
       form.endereco[1].id = ''
       form.endereco[1].idPessoa = ''
@@ -583,32 +585,32 @@ export default {
       form.endereco[1].uf = ''
       form.endereco[1].cep = ''
       form.endereco[1].complemto = ''
-      form.endereco[1].tipo = ''
+      form.endereco[1].tipo = 1
 
       form.telefone[0].id = ''
       form.telefone[0].idPessoa = ''
       form.telefone[0].telefone = ''
-      form.telefone[0].tipo = ''
+      form.telefone[0].tipo = 0
 
       form.telefone[1].id = ''
       form.telefone[1].idPessoa = ''
       form.telefone[1].telefone = ''
-      form.telefone[1].tipo = ''
+      form.telefone[1].tipo = 1
 
       form.telefone[2].id = ''
       form.telefone[2].idPessoa = ''
       form.telefone[2].telefone = ''
-      form.telefone[2].tipo = ''
+      form.telefone[2].tipo = 2
 
       form.email[0].id = ''
       form.email[0].idPessoa = ''
       form.email[0].email = ''
-      form.email[0].tipo = ''
+      form.email[0].tipo = 0
 
       form.email[1].id = ''
       form.email[1].idPessoa = ''
       form.email[1].email = ''
-      form.email[1].tipo = ''
+      form.email[1].tipo = 1
 
       form.retorno = ''
       form.motivo = ''
@@ -679,6 +681,7 @@ export default {
 
       this.form.retorno = ''
       this.form.motivo = ''
+      this.openModal = true
     },
     validar (form) {
       if (form.nome === '') {
@@ -694,7 +697,9 @@ export default {
       // this.form.imagem = this.$refs.myFiles.value
     },
     buscarCargo () {
-      this.ActionSetCargo()
+      axios.get('http://192.168.1.106:8089/adonai/CargoGet', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.nCargos = res.data
+      })
     },
     buscarcep (cep, form, local) {
       axios.get('https://viacep.com.br/ws/' + cep + '/json').then(function (response) {
@@ -712,14 +717,22 @@ export default {
       })
     },
     buscarCidade (pagina) {
-      axios.get('http://localhost:8089/adonai/cidade/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      axios.get('http://192.168.1.106:8089/adonai/cidade/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.cidade = res.data
       })
     },
     buscarCidadeKey (cidade) {
-      axios.get('http://localhost:8089/adonai/cidadekey/' + cidade, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      axios.get('http://192.168.1.106:8089/adonai/cidadekey/' + cidade, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.cidade = res.data
       })
+    },
+    buscarmembro (id) {
+      axios.get('http://192.168.1.106:8089/adonai/membro/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.povoar(res.data)
+      })
+    },
+    b (pagina) {
+      membro.reloadmembro(pagina, this.user.token)
     }
   },
   computed: {
@@ -730,9 +743,6 @@ export default {
   props: {
     membros: { type: Object, required: false },
     cargos: { type: Object, required: false }
-  },
-  components: {
-    Loading
   }
 }
 </script>
@@ -754,6 +764,9 @@ p {
 }
 input[type='file'] {
   display: none
+}
+.table-sm {
+  padding: 2px;
 }
 .membro {
   border-radius: 10px;

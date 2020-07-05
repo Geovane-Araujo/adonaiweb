@@ -6,6 +6,7 @@ import cliente from '../clientes/cliente.vue'
 import usuario from '../usuario/usuario.vue'
 import tipoconta from '../tipoconta/tipoconta.vue'
 import membro from '../membro/membro.vue'
+import igreja from '../igreja/igreja.vue'
 
 export default [
   {
@@ -47,6 +48,11 @@ export default [
         path: 'membro',
         name: 'membro',
         component: membro
+      },
+      {
+        path: 'igreja',
+        name: 'igreja',
+        component: igreja
       }
     ]
   }
