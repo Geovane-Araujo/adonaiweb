@@ -127,6 +127,10 @@ export default {
               href: '',
               title: 'Caixas',
               disabled: false
+            },
+            {
+              href: '/contasbancarias',
+              title: 'Contas Bancárias'
             }
           ]
         },

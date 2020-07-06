@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <p>Cadastro de Igreja</p>
+          <p>Cadastro de Visitantes</p>
           <button
             class="btn btn-outline-info"
             @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
@@ -25,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="text-left" v-for="item in igreja" :key="item.id">
+              <tr class="text-left" v-for="item in visitantes" :key="item.id">
                 <td >{{ item.id }}</td>
                 <td>{{ item.nome }}</td>
                 <td>{{ item.enderecoPrincipal }}</td>
@@ -33,7 +33,7 @@
                 <td>{{ item.numeroPrincipal }}</td>
                 <td>{{ item.telefonePrincipal }}</td>
                 <td>
-                  <a href="#" @click="getIgreja (item.id);  form.edit= true;form.del=false;form.add=false;"  class="text-success"><i class="fas fa-edit"></i></a>
+                  <a href="#" @click="getVisitantes (item.id);  form.edit= true;form.del=false;form.add=false;"  class="text-success"><i class="fas fa-edit"></i></a>
                   &nbsp;
                   <a href="#" @click="deleteModal=true; form.idPessoa = item.idPessoa; form.id = item.id; form.edit=false;form.add=false; form.del = true" class="text-danger"><i class="far fa-trash-alt"></i></a>
                 </td>
@@ -58,7 +58,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg ">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Cadastro de Igreja</h5>
+              <h5 class="modal-title">Cadastro de Visitantes</h5>
               <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -82,8 +82,9 @@
                             <div class="col-sm-12">
                               <input type="text"
                               class="form-control"
+                              style="width:620px"
                               v-model="form.nome"
-                              placeholder="Nome Igreja">
+                              placeholder="Nome Visitantes">
                             </div>
                             <div class="col-sm-2">
                               <b-form-select
@@ -260,7 +261,7 @@
                                 <input type="text"
                                   class="form-control"
                                   v-model="form.endereco[0].numero"
-                                  style="margin-right:10px;"
+                                  style="margin-right:0px;width: 100px;"
                                   placeholder="Numero">
                               </div>
                             </div>
@@ -286,7 +287,7 @@
                                 <b-input-group >
                                   <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade" @click="campocidade = 0;buscarCidade(pagina);openCidade=true;"></b-form-input>
                                   <b-input-group-append>
-                                    <b-button variant="outline-info" class="material-icons" @click="campocidade = 0;buscarCidade(pagina);openCidade=true;">search</b-button>
+                                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="campocidade = 0;buscarCidade(pagina);openCidade=true;">search</b-button>
                                   </b-input-group-append>
                                 </b-input-group>
                               </div>
@@ -443,6 +444,41 @@
           <div class="modal-body p-4">
             <button class="btn btn-outline-danger" @click="save (form);deleteModal=false;" >Sim</button>
             <button class="btn btn-outline-success float-right" @click="deleteModal=false">Não</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal para seleção do cargo -->
+    <div class="cargodts">
+      <div id="overlay" v-if=openDatasearch>
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close"  @click="openDatasearch=false">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h6>Selecione o Cargo</h6>
+              <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
+                <thead>
+                  <tr class="text-left bg-info txt-light" style="height: 10px;">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="text-left" v-for="carg in nCargos" :key="carg.id">
+                    <td >{{ carg.id }}</td>
+                    <td>{{ carg.descricao }}</td>
+                    <td>
+                      <a href="#" class="text-success" @click="form.cargo = carg.descricao;form.idCargo=carg.id; openDatasearch=false; "><i class="far fa-check-square"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -660,7 +696,7 @@ export default {
           } else {
             this.status = 'Excluido com Sucesso'
           }
-          this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
+          this.$toastr.success(this.status, 'Cadastro de Membros', util.toast)
           this.get(this.pagina)
           this.cleanForm()
           if (this.form.edit) {
