@@ -176,7 +176,7 @@
                           <div class="row">
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <b-input-group style="margin-left:10px;">
+                                <b-input-group>
                                   <b-form-input placeholder="CEP" v-model="form.endereco[0].cep" ></b-form-input>
                                     <b-input-group-append >
                                     <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 1)">search</b-button>
@@ -197,14 +197,12 @@
                                 <input type="text"
                                   class="form-control"
                                   v-model="form.endereco[0].numero"
-                                  style="margin-right:0px;width: 100px;"
                                   placeholder="Numero">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="form-group">
                                 <input type="text"
-                                  style="margin-left:10px;width: 100%;"
                                   class="form-control"
                                   v-model="form.endereco[0].bairro"
                                   placeholder="Bairro Principal">
@@ -223,7 +221,7 @@
                                 <b-input-group >
                                   <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade" @click="campocidade = 0;buscarCidade(pagina);openCidade=true;"></b-form-input>
                                   <b-input-group-append>
-                                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="campocidade = 0;buscarCidade(pagina);openCidade=true;">search</b-button>
+                                    <b-button variant="outline-info" class="material-icons" @click="campocidade = 0;buscarCidade(pagina);openCidade=true;">search</b-button>
                                   </b-input-group-append>
                                 </b-input-group>
                               </div>
@@ -236,7 +234,7 @@
                           <div class="row">
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <b-input-group style="margin-left:10px;">
+                                <b-input-group>
                                   <b-form-input placeholder="CEP" v-model="form.endereco[1].cep"></b-form-input>
                                   <b-input-group-append>
                                     <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 2)">search</b-button>
@@ -257,14 +255,12 @@
                                 <input type="text"
                                   class="form-control"
                                   v-model="form.endereco[1].numero"
-                                  style="margin-right:0px;width: 100px;"
                                   placeholder="Numero">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="form-group">
                                 <input type="text"
-                                  style="margin-left:10px;width: 100%;"
                                   class="form-control"
                                   v-model="form.endereco[1].bairro"
                                   placeholder="Bairro Outro">

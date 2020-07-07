@@ -70,7 +70,7 @@ export default {
               disabled: false
             },
             {
-              href: '',
+              href: '/visitantes',
               title: 'Visitantes',
               disabled: false
             },

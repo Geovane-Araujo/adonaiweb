@@ -2,12 +2,12 @@ import dash from '../dashboard/dashboard.vue'
 import home from './Home.vue'
 import agenda from '../agenda/agenda.vue'
 import cargo from '../cargo/cargo'
-import cliente from '../clientes/cliente.vue'
 import usuario from '../usuario/usuario.vue'
 import tipoconta from '../tipoconta/tipoconta.vue'
 import membro from '../membro/membro.vue'
 import igreja from '../igreja/igreja.vue'
 import contasbancarias from '../contasbancarias/contasbancarias.vue'
+import visitantes from '../visitantes/visitantes.vue'
 
 export default [
   {
@@ -29,11 +29,6 @@ export default [
         path: 'cargo',
         name: 'cargo',
         component: cargo
-      },
-      {
-        path: 'cliente',
-        name: 'cliente',
-        component: cliente
       },
       {
         path: 'usuario',
@@ -59,6 +54,11 @@ export default [
         path: 'contasbancarias',
         name: 'contasbancarias',
         component: contasbancarias
+      },
+      {
+        path: 'visitantes',
+        name: 'visitantes',
+        component: visitantes
       }
     ]
   }
