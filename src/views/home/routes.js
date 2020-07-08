@@ -8,6 +8,7 @@ import membro from '../membro/membro.vue'
 import igreja from '../igreja/igreja.vue'
 import contasbancarias from '../contasbancarias/contasbancarias.vue'
 import visitantes from '../visitantes/visitantes.vue'
+import aniversariantes from '../aniversariantes/aniversariantes.vue'
 
 export default [
   {
@@ -59,6 +60,11 @@ export default [
         path: 'visitantes',
         name: 'visitantes',
         component: visitantes
+      },
+      {
+        path: 'aniversariantes',
+        name: 'aniversariantes',
+        component: aniversariantes
       }
     ]
   }

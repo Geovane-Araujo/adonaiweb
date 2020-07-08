@@ -52,19 +52,19 @@
           </div>
           <div class="modal-body">
             <form @submit.prevent="submit()">
-              <div class="form-group">
+              <div class="col-sm-12">
                 <input type="text"
                 name="descricao"
                 autocomplete="off"
                 class="form-control"
                 placeholder="Descricao"
                 v-model="form.descricao">
-                <br>
-                <label>Contexto da Conta</label>
-                <select class="browser-default" v-model="form.contexto">
-                  <option value="0">Entradas</option>
-                  <option value="1">Despesas</option>
-                </select>
+              </div>
+              <div class="col-sm-12">
+                <b-form-select
+                :options="[{ text: 'Receitas', value: 0 }, {text: 'Despesas', value: 1}]"
+                v-model="form.contexto"
+                ></b-form-select>
               </div>
               <div class="form-group">
                 <button class="btn btn-outline-info float-right" >Salvar</button>
@@ -94,71 +94,7 @@
   </div>
 </template>
 
-<script>
-import { mapActions, mapState } from 'vuex'
-import util from '../../assets/scss/util'
-
-export default {
-  data: () => ({
-    openModal: false,
-    deleteModal: false,
-    status: '',
-    form: {
-      add: true,
-      edit: false,
-      del: false,
-      id: '',
-      descricao: '',
-      contexto: 0
-    }
-  }),
-  mounted () {
-    this.ActionSetTipoconta()
-  },
-  methods: {
-    ...mapActions('tipoconta', ['ActionSetTipoconta']),
-    ...mapActions('tipoconta', ['SalvarTipoconta']),
-    async submit () {
-      try {
-        await this.SalvarTipoconta(this.form)
-        this.ActionSetTipoconta()
-        if (this.form.add === true) {
-          this.status = 'Salvo com Sucesso'
-        } else if (this.form.edit === true) {
-          this.status = 'Alterado com Sucesso'
-        } else {
-          this.status = 'Excluido com Sucesso'
-        }
-        this.$toastr.success(this.status, 'Cadastro de Tipocontas', util.toast)
-        this.limparCampos(this.form)
-      } catch (err) {
-        this.$toastr.warning(err, 'Falha ao Salvar', util.toast)
-      }
-    },
-    limparCampos (form) {
-      form.descricao = ''
-      form.edit = false
-      form.del = false
-      form.add = true
-      form.id = ''
-      form.contexto = 0
-    },
-    alterar (form) {
-      if (form === 1) {
-        form = 'Despesas'
-      } else {
-        form = 'Entradas'
-      }
-      return form
-    }
-  },
-  computed: {
-    ...mapState('tipoconta', ['tipoconta'])
-  },
-  props: {
-    tipocontas: { type: Object, required: false }
-  }
-}
+<script src="./tipoconta.js">
 </script>
 <style lang="scss" scoped>
 .table-overflow {

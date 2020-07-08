@@ -1,10 +1,12 @@
 import { mapState } from 'vuex'
-import util from '../../assets/scss/util'
+import axios from 'axios'
+import adonai from '../router/services'
 
 export default {
   name: 'App',
   data () {
     return {
+      aniversariantes: '2',
       menu: [
         {
           header: true,
@@ -41,9 +43,12 @@ export default {
               disabled: false
             },
             {
-              href: '',
+              href: '/aniversariantes',
               title: 'Aniversariantes',
-              disabled: false
+              badge: {
+                text: this.aniversariantes,
+                class: 'vsm--badge_default'
+              }
             },
             {
               href: '',
@@ -129,11 +134,6 @@ export default {
             },
             {
               href: '',
-              title: 'Configuração Global',
-              disabled: false
-            },
-            {
-              href: '',
               title: 'Auditoria de Ações',
               disabled: false
             }
@@ -171,6 +171,7 @@ export default {
   mounted () {
     this.onResize()
     window.addEventListener('resize', this.onResize)
+    this.contaraniversariante()
   },
   methods: {
     onToggleCollapse (collapsed) {
@@ -186,13 +187,10 @@ export default {
         this.collapsed = false
       }
     },
-    validar () {
-      if (this.auth.user.auth === '9999') {
-        util.validamenu = false
-      } else {
-        util.validamenu = true
-      }
-      return util.validamenu
+    contaraniversariante () {
+      axios.get(adonai.url + 'aniversariantes', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.aniversariantes = res.data.quantidade
+      })
     }
   },
   computed: {

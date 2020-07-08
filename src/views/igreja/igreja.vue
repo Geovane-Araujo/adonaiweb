@@ -95,9 +95,9 @@
                               <input
                                 type="text"
                                 v-mask="'###.###.###-##'"
-                                v-model="form.cnpj"
+                                v-model="form.cnpjcpf"
                                 class="form-control"
-                                @click="validate(doc, 1, form.cnpj)"
+                                @click="validate(doc, 1, form.cnpjcpf)"
                                 placeholder="CNPJ/CPF">
                             </div>
                             <div class="col-sm-6">
