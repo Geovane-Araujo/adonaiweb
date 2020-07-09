@@ -1,9 +1,9 @@
 <template>
-  <div class="visitantes">
+  <div class="novoconvertido">
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <p>Cadastro de Visitantes</p>
+          <p>Cadastro de Novos Convertidos</p>
           <button
             class="btn btn-outline-info"
             @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
@@ -33,7 +33,7 @@
                 <td>{{ item.numeroPrincipal }}</td>
                 <td>{{ item.telefonePrincipal }}</td>
                 <td>
-                  <a href="#" @click="getVisitantes (item.id);  form.edit= true;form.del=false;form.add=false;"  class="text-success"><i class="fas fa-edit"></i></a>
+                  <a href="#" @click="getNovoCById (item.id);  form.edit= true;form.del=false;form.add=false;"  class="text-success"><i class="fas fa-edit"></i></a>
                   &nbsp;
                   <a href="#" @click="deleteModal=true; form.idPessoa = item.idPessoa; form.id = item.id; form.edit=false;form.add=false; form.del = true" class="text-danger"><i class="far fa-trash-alt"></i></a>
                 </td>
@@ -58,7 +58,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg ">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Cadastro de Visitantes</h5>
+              <h5 class="modal-title">Cadastro de Novos Convertidos</h5>
               <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -66,11 +66,18 @@
             <div class="modal-body">
               <form method="POST">
                 <div class="row">
-                  <div class="col-sm-12">
+                  <div class="col-sm-8">
                     <input type="text"
                     v-model="form.nome"
                     class="form-control"
                     placeholder="Nome Completo">
+                  </div>
+                  <div class="col-sm-4">
+                    <b-form-datepicker
+                    placeholder="Data Conv."
+                    v-model="form.dataConversao"
+                    :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                    local="pt-br"></b-form-datepicker>
                   </div>
                   <div class="col-sm-3">
                     <input type="text"
@@ -235,7 +242,7 @@
   </div>
 </template>
 
-<script src="./visitantes.js">
+<script src="./novoconvertido.js">
 </script>
 <style lang=scss scoped>
 .table-overflow {
@@ -259,7 +266,7 @@ input[type='file'] {
 .table-sm {
   padding: 2px;
 }
-.visitantes {
+.novoconvertido {
   border-radius: 10px;
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
   background-color: rgba($color: #ffffff, $alpha: 0.9);

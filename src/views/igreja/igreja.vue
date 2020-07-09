@@ -1,5 +1,5 @@
 <template>
-  <div class="membro">
+  <div class="igreja">
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
@@ -15,12 +15,12 @@
           <table class="table table-botdered table-striped table-sm table-hover table-fixed">
             <thead  style="max-height:10vh; overflow-y:auto;">
               <tr class="text-left bg-info txt-light style=height: 10px;">
-                <th>ID</th>
-                <th>Nome Membro</th>
-                <th>Endereco</th>
-                <th>Bairro</th>
-                <th>Numero</th>
-                <th>Telefone</th>
+                <th bgcolor="#17a2b8">ID</th>
+                <th bgcolor="#17a2b8">Nome Membro</th>
+                <th bgcolor="#17a2b8">Endereco</th>
+                <th bgcolor="#17a2b8">Bairro</th>
+                <th bgcolor="#17a2b8">Numero</th>
+                <th bgcolor="#17a2b8">Telefone</th>
                 <th></th>
               </tr>
             </thead>
@@ -503,10 +503,6 @@
 <script src="./igreja.js">
 </script>
 <style lang=scss scoped>
-.table-overflow {
-    max-height:90vh;
-    overflow-y:auto;
-}
 label {
   background-color: #3498db;
   border-radius: 5px;
@@ -524,14 +520,12 @@ input[type='file'] {
 .table-sm {
   padding: 2px;
 }
-.membro {
+.igreja {
   border-radius: 10px;
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
-  background-color: rgba($color: #ffffff, $alpha: 0.7);
+  background-color: rgba($color: #ffffff, $alpha: 0.9);
   margin: 5px;
-  padding: 1px;
-  max-height:89vh;
-  overflow-y:auto;
+  overflow:auto;
 }
 #overlay {
   position: fixed;

@@ -99,7 +99,7 @@ p {
 .cargo {
   border-radius: 10px;
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
-  background-color: rgba($color: #ffffff, $alpha: 0.7);
+  background-color: rgba($color: #ffffff, $alpha: 0.9);
   margin: 5px;
   padding: 1px;
   max-height:89vh;

@@ -51,57 +51,19 @@
 </form>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-import util from '../../../assets/scss/util'
-
-export default {
-  data: () => ({
-    form: {
-      cnpj: '',
-      nome: '',
-      senha: '',
-      auth: '',
-      token: navigator.name
-    },
-    mascara: '##.###.###/####-##',
-    place: 'CNPJ',
-    doc: 'CNPJ'
-  }),
-  methods: {
-    ...mapActions('auth', ['ActionLogin']),
-    async submit () {
-      try {
-        await this.ActionLogin(this.form)
-        this.$toastr.success('Seja BEm Vindo(a)', 'AdonaiSoft - Web', util.toast)
-        this.$router.push({ name: 'home' })
-      } catch (err) {
-        this.$toastr.error('Verifique os dados de Autenticação', 'AdonaiSoft - Web', util.toast)
-      }
-    },
-    verificar (doc) {
-      if (doc === 'CNPJ') {
-        this.place = 'CNPJ'
-        this.mascara = '##.###.###/####-##'
-      } else {
-        this.place = 'CPF'
-        this.mascara = '###.###.###-##'
-      }
-    }
-  }
-}
+<script src="./login.js">
 </script>
 
 <style scoped lang="scss">
 .login-page {
     height: 100vh;
-    background-image: url(https://cdn.pixabay.com/photo/2019/07/14/07/24/jesus-4336337_960_720.jpg);
+    background-image: url(https://cdn.pixabay.com/photo/2017/02/16/23/46/book-2073023_960_720.jpg);
     background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
     .card {
-        width: 50vh;
+        width: 60vh;
     }
 }
 </style>

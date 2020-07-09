@@ -34,13 +34,11 @@ export default {
           child: [
             {
               href: '/membro',
-              title: 'Membros',
-              disabled: false
+              title: 'Membros'
             },
             {
               href: '/visitantes',
-              title: 'Visitantes',
-              disabled: false
+              title: 'Visitantes'
             },
             {
               href: '/aniversariantes',
@@ -63,7 +61,7 @@ export default {
           icon: 'far fa-address-book',
           child: [
             {
-              href: '',
+              href: '/novoconvertido',
               title: 'Novos Convertidos',
               disabled: false
             },

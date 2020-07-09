@@ -44,9 +44,9 @@ h2 {
   color: #f2f4f7;
 }
 .router {
-  background-color: rosybrown;
   margin-top: 5px;
   height: 90vh;
+  overflow-y: 'auto';
 }
 .navbar{
   background-color: rgba(0,0,0,0.7);
@@ -69,28 +69,20 @@ body {
 #demo.collapsed {
   padding-left: 50px;
 }
-.v-sidebar-menu {
-  box-shadow: blueviolet;
-}
 #demo.onmobile {
   padding-left: 50px;
 }
 .containersidebar {
   background-color: rgba(0,0,0,0.7);
+ /*  background-image: url(https://cdn.pixabay.com/photo/2018/06/29/22/45/wheat-3506758_960_720.jpg); */
+  background-size: cover;
   margin: 0px;
   padding-left: 0px;
   padding-right: 0px;
   padding-bottom: 0px;
 }
-.sidebar-overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: #000;
-  opacity: 0.5;
-  z-index: 900;
+.v-sidebar-menu .vsm--dropdown>.vsm--list:visited {
+  color: aqua;
 }
 .demo {
   padding: 5px;
