@@ -49,7 +49,7 @@ export default {
               }
             },
             {
-              href: '',
+              href: '/congregacao',
               title: 'Congregações',
               disabled: false
             }
