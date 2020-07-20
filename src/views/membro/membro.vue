@@ -83,13 +83,12 @@
                             <div class="col-sm-12">
                               <input type="text"
                               class="form-control"
-                              style="width:620px"
                               v-model="form.nome"
                               placeholder="Nome Completo">
                             </div>
                           </div>
                           <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                               <b-form-datepicker
                               placeholder="Data Nasc."
                               v-model="form.dataNascimento"

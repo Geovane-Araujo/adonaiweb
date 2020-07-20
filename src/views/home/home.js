@@ -58,7 +58,7 @@ export default {
         {
           href: '',
           title: 'Pastoral',
-          icon: 'far fa-address-book',
+          icon: 'fas fa-bible',
           child: [
             {
               href: '/novoconvertido',
@@ -83,12 +83,12 @@ export default {
           icon: 'fas fa-hand-holding-usd',
           child: [
             {
-              href: '',
+              href: '/receitas',
               title: 'Entradas',
               disabled: false
             },
             {
-              href: '',
+              href: '/despesas',
               title: 'Despesas',
               disabled: false
             },

@@ -15,6 +15,7 @@ import datasearch from './components/datasearch.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import adonaigrid from '../src/components/grid.vue'
 
 import './assets/scss/app.scss'
 
@@ -30,6 +31,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(Loading)
 Vue.use(require('vue-moment'))
+Vue.component('adonaigrid', adonaigrid)
 
 new Vue({
   router,

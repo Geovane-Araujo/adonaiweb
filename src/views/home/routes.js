@@ -9,6 +9,8 @@ import visitantes from '../visitantes/visitantes.vue'
 import aniversariantes from '../aniversariantes/aniversariantes.vue'
 import novoconvertido from '../novoconvertido/novoconvertido.vue'
 import congregacao from '../congregacao/congregacao.vue'
+import despesas from '../duplicatas/despesas.vue'
+import receitas from '../duplicatas/receitas.vue'
 
 export default [
   {
@@ -65,6 +67,16 @@ export default [
         path: 'congregacao',
         name: 'congregacao',
         component: congregacao
+      },
+      {
+        path: 'despesas',
+        name: 'despesas',
+        component: despesas
+      },
+      {
+        path: 'receitas',
+        name: 'receitas',
+        component: receitas
       }
     ]
   }
