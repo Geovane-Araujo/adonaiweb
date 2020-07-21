@@ -6,20 +6,13 @@
             <div class="card-body">
                 <div class="form-group">
                   <div class="row">
-                    <div class="col-sm-3">
-                      <b-form-select
-                      :options="[{ text: 'CNPJ', value: 'CNPJ' }, 'CPF']"
-                      v-model="doc"
-                      ></b-form-select>
-                    </div>
-                    <div class="col-sm-9">
-                      <input
+                    <div class="col-sm-12">
+                      <the-mask
                         type="text"
-                        v-mask="mascara"
+                        the-mask :mask="['###.###.###-##', '##.###.###/####-##']"
                         v-model="form.cnpj"
                         class="form-control"
-                        @click="verificar(doc)"
-                        :placeholder="place">
+                        :placeholder="place"/>
                     </div>
                   </div>
                 </div>

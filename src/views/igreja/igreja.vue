@@ -85,20 +85,13 @@
                               v-model="form.nome"
                               placeholder="Nome Igreja">
                             </div>
-                            <div class="col-sm-2">
-                              <b-form-select
-                              :options="[{ text: 'CNPJ', value: 'CNPJ' }, 'CPF']"
-                              v-model="doc"
-                              ></b-form-select>
-                            </div>
-                            <div class="col-sm-4">
-                              <input
+                            <div class="col-sm-5">
+                              <the-mask
                                 type="text"
-                                v-mask="'###.###.###-##'"
+                                the-mask :mask="['###.###.###-##', '##.###.###/####-##']"
                                 v-model="form.cnpjcpf"
                                 class="form-control"
-                                @click="validate(doc, 1, form.cnpjcpf)"
-                                placeholder="CNPJ/CPF">
+                                placeholder="CNPJ/CPF"/>
                             </div>
                             <div class="col-sm-6">
                               <input

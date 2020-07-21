@@ -42,7 +42,15 @@ export default {
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
       },
       cidade: [],
-      duplicata: []
+      duplicata: [],
+      currency: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'R$ ',
+        suffix: '',
+        precision: 2,
+        masked: false
+      }
     }
   },
   mounted () {

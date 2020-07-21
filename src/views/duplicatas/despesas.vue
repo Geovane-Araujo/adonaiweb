@@ -32,19 +32,94 @@
         <div class="modal-dialog modal-dialog-centered modal-lg ">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Cadastro de Igreja</h5>
+              <h5 class="modal-title">Lançamento de Despesa</h5>
               <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <form method="POST">
+                <b-container>
+                  <b-row class="text-center">
+                    <b-col cols="12">
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <b-form-datepicker
+                            placeholder="Data Emissao"
+                            v-model="form.dataEmissao"
+                            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                            local="pt-br"></b-form-datepicker>
+                        </div>
+                        <div class="col-sm-4">
+                          <b-form-datepicker
+                            placeholder="Data Vencimento."
+                            v-model="form.Vencimento"
+                            :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                            local="pt-br"></b-form-datepicker>
+                        </div>
+                        <div class="col-sm-4">
+                          <b-input-group>
+                            <b-form-input placeholder="Tipo"
+                            v-model="form.descrconta"
+                            ></b-form-input>
+                              <b-input-group-append >
+                              <b-button variant="outline-info" class="material-icons" @click="openDatasearch=true">search</b-button>
+                            </b-input-group-append>
+                          </b-input-group>
+                        </div>
+                        <div class="col-sm-7">
+                          <input type="text"
+                          class="form-control"
+                          placeholder="Descricao"
+                          v-model="form.descricao">
+                        </div>
+                        <div class="col-sm-4 mb-0">
+                          <money  type="text"
+                          class="form-control"
+                          v-bind="currency"
+                          placeholder="Valor"
+                          v-model="form.valor"/>
+                        </div>
+                        <div class="col-sm-6">
+                          <b-input-group>
+                            <b-form-input placeholder="Nome"
+                            v-model="form.nome"
+                            ></b-form-input>
+                              <b-input-group-append >
+                              <b-button variant="outline-info" class="material-icons" >search</b-button>
+                            </b-input-group-append>
+                          </b-input-group>
+                        </div>
+                        <div class="col-sm-6">
+                          <b-input-group>
+                            <b-form-input placeholder="Caixa/Conta"
+                            v-model="form.desccaixa"
+                            ></b-form-input>
+                              <b-input-group-append >
+                              <b-button variant="outline-info" class="material-icons" >search</b-button>
+                            </b-input-group-append>
+                          </b-input-group>
+                        </div>
+                        <div class="col-sm-12">
+                           <b-form-textarea
+                              placeholder="Observações"
+                              rows="2"
+                              v-model="form.observacoes"
+                              max-rows="2"
+                            ></b-form-textarea>
+                        </div>
+                      </div>
+                    </b-col>
+                  </b-row>
+                </b-container>
               </form>
-              <button type="button" class="btn btn-outline-info float-right" @click="validate(doc, 0, form)">Salvar</button>
+              <button type="button" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(doc, 0, form)">Lançar e Quitar</button>
+              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(doc, 0, form)">Lançar</button>
             </div>
           </div>
         </div>
     </div>
+    <adonaidatasearch v-if="openDatasearch" v-bind:cabecalho="['ID','Descricao']" v-bind:registros="duplicata" v-bind:form="form"></adonaidatasearch>
     <!-- modal excluir -->
     <div id="overlay" v-if=deleteModal>
       <div class="modal-dialog modal-dialog-centered">
