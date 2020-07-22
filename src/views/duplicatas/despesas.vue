@@ -13,16 +13,11 @@
         </div>
         <div class="col-lg-12">
           <!-- table -->
-          <adonaigrid v-bind:titulos="['ID','nome','Descricao','Valor','DataEmis.','DataVenc.','DataPag','Status']" v-bind:registros="duplicata" v-bind:form="form"></adonaigrid>
-        </div>
-        <div class="col-sm-5">
-          <b-input-group >
-              <button class="btn btn-outline-info" @click="pagina = pagina - 1;b (pagina)"><i class="fas fa-caret-left"></i></button>
-              <b-form-input v-model="pagina" class="col-sm-1 text-center"></b-form-input>
-              <button class="btn btn-outline-info"  @click="pagina = pagina + 1;b (pagina)"><i class="fas fa-caret-right"></i></button>
-              <b-form-input placeholder="buscar"  style="margin-left:10px" class="col-sm-5"></b-form-input>
-              <b-button variant="outline-info" class="material-icons">search</b-button>
-          </b-input-group>
+          <adonaigrid :titulos="['ID','nome','Descricao','Valor','DataEmis.','DataVenc.','DataPag','Status']"
+          :registros="duplicata"
+          :form="form"
+          :getbyId="getbyId"
+          :save="save"></adonaigrid>
         </div>
       </div>
     </div>
@@ -46,14 +41,14 @@
                         <div class="col-sm-4">
                           <b-form-datepicker
                             placeholder="Data Emissao"
-                            v-model="form.dataEmissao"
+                            v-model="form.dataemissao"
                             :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                             local="pt-br"></b-form-datepicker>
                         </div>
                         <div class="col-sm-4">
                           <b-form-datepicker
                             placeholder="Data Vencimento."
-                            v-model="form.Vencimento"
+                            v-model="form.dataVencimento"
                             :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                             local="pt-br"></b-form-datepicker>
                         </div>
@@ -63,7 +58,7 @@
                             v-model="form.descrconta"
                             ></b-form-input>
                               <b-input-group-append >
-                              <b-button variant="outline-info" class="material-icons" @click="openDatasearch=true">search</b-button>
+                              <b-button variant="outline-info" class="material-icons" @click="open=true">search</b-button>
                             </b-input-group-append>
                           </b-input-group>
                         </div>
@@ -113,31 +108,18 @@
                   </b-row>
                 </b-container>
               </form>
-              <button type="button" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(doc, 0, form)">Lançar e Quitar</button>
-              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(doc, 0, form)">Lançar</button>
+              <button type="button" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(form)">Lançar e Quitar</button>
+              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form)">Lançar</button>
             </div>
           </div>
         </div>
     </div>
-    <adonaidatasearch v-if="openDatasearch" v-bind:cabecalho="['ID','Descricao']" v-bind:registros="duplicata" v-bind:form="form"></adonaidatasearch>
-    <!-- modal excluir -->
-    <div id="overlay" v-if=deleteModal>
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="text-danger">Deseja realmente Excluir ?</h5>
-            <button type="button" class="close"  @click="deleteModal=false">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body p-4">
-            <button class="btn btn-outline-danger" @click="save (form);deleteModal=false;" >Sim</button>
-            <button class="btn btn-outline-success float-right" @click="deleteModal=false">Não</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal para seleção da Cidade-->
+    <adonaidatasearch
+    :title="'Selecione o Tipo'"
+    :cabecalho="['ID','Descricao']"
+    :registros="duplicata"
+    :form="form" v-bind:openDatasearch="open"
+    :destroy="destroy"></adonaidatasearch>
   </div>
 </template>
 

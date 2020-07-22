@@ -1,4 +1,23 @@
 export default {
   name: 'adonaigrid',
-  props: ['titulos', 'registros', 'form']
+  data () {
+    return {
+      deleteModal: false
+    }
+  },
+  props: {
+    titulos: {
+      type: Array,
+      required: true
+    },
+    registros: {
+      type: Array,
+      required: true
+    },
+    form: {
+      type: Object
+    },
+    getbyId: Function,
+    save: Function
+  }
 }

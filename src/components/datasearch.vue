@@ -1,11 +1,12 @@
 <template>
+<transition>
   <div class="cargodts">
-      <div id="overlay" v-if=openDatasearch>
+      <div id="overlay" v-if="openDatasearch">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h6>Selecione o {{ titulo }}</h6>
-              <button type="button" class="close"  @click="openCidade=false">
+              <h6>Selecione o {{ title }}</h6>
+              <button type="button" class="close"  @click="destroy ()">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -31,11 +32,11 @@
               <div class="row">
                 <b-input-group >
                   <b-input-group-append>
-                    <b-button variant="outline-info" style="margin-left:10px;" class="material-icons" @click="pagina = pagina - 1;buscarCidade (pagina)">chevron_left</b-button>
+                    <b-button variant="outline-info" style="margin-left:10px;" class="material-icons" >chevron_left</b-button>
                   </b-input-group-append>
-                  <b-form-input v-model="pagina" class="col-sm-1 text-center"></b-form-input>
+                  <b-form-input  class="col-sm-1 text-center"></b-form-input>
                   <b-input-group-append>
-                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="pagina = pagina + 1;buscarCidade (pagina)">chevron_right</b-button>
+                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons">chevron_right</b-button>
                   </b-input-group-append>
                 </b-input-group>
               </div>
@@ -44,10 +45,43 @@
         </div>
       </div>
     </div>
+  </transition>
 </template>
 
 <script src="./datasearch.js">
 </script>
 
 <style lang="scss" scoped>
+label {
+  background-color: #3498db;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  margin: 10px;
+  padding: 6px 20px
+}
+p {
+  font-size: 30px;
+}
+input[type='file'] {
+  display: none
+}
+.table-sm {
+  padding: 2px;
+}
+.despesas {
+  border-radius: 10px;
+  box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
+  background-color: rgba($color: #ffffff, $alpha: 0.9);
+  margin: 5px;
+  overflow:auto;
+}
+#overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba($color: #000000, $alpha: 0.7);
+}
 </style>

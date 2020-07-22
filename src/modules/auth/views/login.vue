@@ -12,7 +12,7 @@
                         the-mask :mask="['###.###.###-##', '##.###.###/####-##']"
                         v-model="form.cnpj"
                         class="form-control"
-                        :placeholder="place"/>
+                        placeholder="CNPJ/CPF"/>
                     </div>
                   </div>
                 </div>

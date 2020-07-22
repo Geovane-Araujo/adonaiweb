@@ -10,7 +10,7 @@ export default {
   data () {
     return {
       openModal: false,
-      openDatasearch: false,
+      open: false,
       deleteModal: false,
       isLoading: false,
       campocidade: 0,
@@ -69,19 +69,23 @@ export default {
             this.status = 'Excluido com Sucesso'
           }
           this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
-          this.get(this.pagina)
+          this.getDuplicata(this.pagina)
           this.cleanForm()
-          if (this.form.edit) {
-            this.openModal = false
-          }
+          this.openModal = false
         } else {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
         }
       })
     },
-    validate (doc, tipo, form) {
-      if (this.form.nome === '') {
-        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+    validate (form) {
+      if (this.form.descricao === '') {
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+      } else if (this.form.tipo === '') {
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+      } else if (this.form.desccaixa === '') {
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+      } else if (this.form.valor === '') {
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
       } else {
         this.save(form)
       }
@@ -141,10 +145,13 @@ export default {
       this.form.motivo = form.motivo
       this.openModal = true
     },
-    getDuplicatabyId (id) {
-      axios.get('http://192.168.1.106:8089/adonai/igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+    getbyId (id) {
+      axios.get(adonai.url + 'duplicata/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.read(res.data)
       })
+    },
+    destroy () {
+      this.open = false
     }
   },
   computed: {
