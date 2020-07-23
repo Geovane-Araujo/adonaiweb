@@ -1,18 +1,27 @@
 import axios from 'axios'
+import { mapState } from 'vuex'
 import adonai from '../views/router/services'
 
 export default {
   name: 'adonaidatasearch',
   data () {
     return {
+      registros: [],
+      route: '',
+      pagina: 1
     }
   },
   methods: {
-    getTipo (pagina, contexto) {
-      axios.get(adonai.url + 'duplicata/' + pagina + '/' + contexto, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data)
+    dataSearch (route, pagina, contexto) {
+      axios.get(adonai.url + route + '/' + pagina + '/' + contexto, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.registros = res.data
+        this.route = route
+        this.contexto = contexto
       })
     }
+  },
+  computed: {
+    ...mapState('auth', ['user'])
   },
   props: {
     title: {
@@ -23,8 +32,8 @@ export default {
       type: Array,
       required: true
     },
-    registros: {
-      type: Array,
+    form: {
+      type: Object,
       required: true
     },
     openDatasearch: {

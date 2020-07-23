@@ -11,10 +11,12 @@ export default {
     return {
       openModal: false,
       open: false,
-      deleteModal: false,
-      isLoading: false,
-      campocidade: 0,
+      ds: {
+        grid: [],
+        title: ''
+      },
       pagina: 1,
+      tipo: 1,
       status: '',
       form: {
         add: true,
@@ -40,7 +42,6 @@ export default {
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
       },
-      cidade: [],
       duplicata: [],
       currency: {
         decimal: ',',
@@ -94,6 +95,24 @@ export default {
       axios.get(adonai.url + 'duplicata/' + pagina + '/' + 1, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.duplicata = res.data
       })
+    },
+    datasearch (route) {
+      if (route === 1) {
+        this.ds.grid = ['ID', 'Nome']
+        this.ds.title = 'Membro'
+        this.$refs.teste.dataSearch('membro', 1, 0)
+        this.open = true
+      } else if (route === 2) {
+        this.ds.grid = ['ID', 'Descricao']
+        this.ds.title = 'Tipo Conta'
+        this.$refs.teste.dataSearch('tipo', 1, 0)
+        this.open = true
+      } else if (route === 3) {
+        this.ds.grid = ['ID', 'Descricao']
+        this.ds.title = 'Caixa'
+        this.$refs.teste.dataSearch('caixa', 1, 0)
+        this.open = true
+      }
     },
     cleanForm () {
       this.form.add = true
@@ -150,7 +169,17 @@ export default {
         this.read(res.data)
       })
     },
-    destroy () {
+    destroy (route, id, nome) {
+      if (route === 1) {
+        this.form.nome = nome
+        this.form.idMembro = id
+      } else if (route === 2) {
+        this.form.descrconta = nome
+        this.form.idtipo = id
+      }// else if (route === 3) {
+      this.form.desccaixa = nome
+      this.form.idCaixaMovimento = id
+      // }
       this.open = false
     }
   },

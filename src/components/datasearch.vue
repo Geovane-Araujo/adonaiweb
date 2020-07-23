@@ -6,7 +6,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h6>Selecione o {{ title }}</h6>
-              <button type="button" class="close"  @click="destroy ()">
+              <button type="button" class="close"  @click="registros=[];destroy (0, '', '')">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -22,9 +22,9 @@
                 </thead>
                 <tbody style="overflow-y: scroll;height: 150px;">
                   <tr class="text-left" v-for="registro in registros" :key="registro.id">
-                    <td  v-for="item in registro" :key="item.id"></td>
+                    <td  v-for="item in registro" :key="item.id"> {{ item }}</td>
                     <td>
-                      <a href="#" class="text-success" @click="ds=item.id; descricao=item.descricao; openDatasearch=false; "><i class="far fa-check-square"></i></a>
+                      <a href="#" class="text-success" @click="destroy (route, registro.id, registro.descricao);"><i class="far fa-check-square"></i></a>
                     </td>
                   </tr>
                 </tbody>
@@ -32,11 +32,11 @@
               <div class="row">
                 <b-input-group >
                   <b-input-group-append>
-                    <b-button variant="outline-info" style="margin-left:10px;" class="material-icons" >chevron_left</b-button>
+                    <b-button variant="outline-info" style="margin-left:10px;" class="material-icons" @click="pagina = pagina - 1;dataSearch (route,pagina,contexto)">chevron_left</b-button>
                   </b-input-group-append>
-                  <b-form-input  class="col-sm-1 text-center"></b-form-input>
+                  <b-form-input  class="col-sm-1 text-center" v-model="pagina"></b-form-input>
                   <b-input-group-append>
-                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons">chevron_right</b-button>
+                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="pagina = pagina + 1;dataSearch (route,pagina,contexto)">chevron_right</b-button>
                   </b-input-group-append>
                 </b-input-group>
               </div>

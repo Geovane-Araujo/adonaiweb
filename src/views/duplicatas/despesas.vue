@@ -58,7 +58,7 @@
                             v-model="form.descrconta"
                             ></b-form-input>
                               <b-input-group-append >
-                              <b-button variant="outline-info" class="material-icons" @click="open=true">search</b-button>
+                              <b-button variant="outline-info" class="material-icons" @click="datasearch (2);">search</b-button>
                             </b-input-group-append>
                           </b-input-group>
                         </div>
@@ -81,7 +81,7 @@
                             v-model="form.nome"
                             ></b-form-input>
                               <b-input-group-append >
-                              <b-button variant="outline-info" class="material-icons" >search</b-button>
+                              <b-button variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
                             </b-input-group-append>
                           </b-input-group>
                         </div>
@@ -91,7 +91,7 @@
                             v-model="form.desccaixa"
                             ></b-form-input>
                               <b-input-group-append >
-                              <b-button variant="outline-info" class="material-icons" >search</b-button>
+                              <b-button variant="outline-info" class="material-icons" @click="datasearch (3);" >search</b-button>
                             </b-input-group-append>
                           </b-input-group>
                         </div>
@@ -115,11 +115,11 @@
         </div>
     </div>
     <adonaidatasearch
-    :title="'Selecione o Tipo'"
-    :cabecalho="['ID','Descricao']"
-    :registros="duplicata"
+    :title="ds.title"
+    :cabecalho="ds.grid"
     :form="form" v-bind:openDatasearch="open"
-    :destroy="destroy"></adonaidatasearch>
+    :destroy="destroy"
+    ref="teste"/>
   </div>
 </template>
 
