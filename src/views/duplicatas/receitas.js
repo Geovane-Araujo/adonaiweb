@@ -10,12 +10,13 @@ export default {
   data () {
     return {
       openModal: false,
-      openCidade: false,
-      deleteModal: false,
-      isLoading: false,
-      campocidade: 0,
+      open: false,
+      ds: {
+        grid: [],
+        title: ''
+      },
       pagina: 1,
-      openDatasearch: false,
+      tipo: 0,
       status: '',
       form: {
         add: true,
@@ -41,7 +42,6 @@ export default {
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
       },
-      cidade: [],
       duplicata: [],
       currency: {
         decimal: ',',
@@ -70,20 +70,30 @@ export default {
             this.status = 'Excluido com Sucesso'
           }
           this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
-          this.get(this.pagina)
+          this.getDuplicata(this.pagina)
           this.cleanForm()
-          if (this.form.edit) {
-            this.openModal = false
-          }
+          this.openModal = false
         } else {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
         }
       })
     },
-    validate (doc, tipo, form) {
-      if (this.form.nome === '') {
-        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+    validate (form, quitar) {
+      if (this.form.descricao === '') {
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+      } else if (this.form.tipo === '') {
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+      } else if (this.form.desccaixa === '') {
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+      } else if (this.form.valor === '') {
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
       } else {
+        if (quitar === 1) {
+          form.dataPagamento = new Date()
+          form.status = 0
+        } else {
+          form.status = 1
+        }
         this.save(form)
       }
     },
@@ -91,6 +101,24 @@ export default {
       axios.get(adonai.url + 'duplicata/' + pagina + '/' + 0, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.duplicata = res.data
       })
+    },
+    datasearch (route) {
+      if (route === 1) {
+        this.ds.grid = ['ID', 'Nome']
+        this.ds.title = 'Membro'
+        this.$refs.teste.dataSearch('membro', 1, 0)
+        this.open = true
+      } else if (route === 2) {
+        this.ds.grid = ['ID', 'Descricao']
+        this.ds.title = 'Tipo Conta'
+        this.$refs.teste.dataSearch('tipo', 1, 0)
+        this.open = true
+      } else if (route === 3) {
+        this.ds.grid = ['ID', 'Descricao']
+        this.ds.title = 'Caixa'
+        this.$refs.teste.dataSearch('caixa', 1, 0)
+        this.open = true
+      }
     },
     cleanForm () {
       this.form.add = true
@@ -142,10 +170,23 @@ export default {
       this.form.motivo = form.motivo
       this.openModal = true
     },
-    getDuplicatabyId (id) {
-      axios.get('http://192.168.1.106:8089/adonai/igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+    getbyId (id) {
+      axios.get(adonai.url + 'duplicata/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.read(res.data)
       })
+    },
+    destroy (route, registro) {
+      if (route === 'membro') {
+        this.form.nome = registro.nome
+        this.form.idMembro = registro.id
+      } else if (route === 'tipo') {
+        this.form.descrconta = registro.descricao
+        this.form.idtipo = registro.id
+      } else {
+        this.form.desccaixa = registro.descricao
+        this.form.idCaixaMovimento = registro.id
+      }
+      this.open = false
     }
   },
   computed: {

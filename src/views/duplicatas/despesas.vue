@@ -108,8 +108,8 @@
                   </b-row>
                 </b-container>
               </form>
-              <button type="button" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(form)">Lançar e Quitar</button>
-              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form)">Lançar</button>
+              <button type="button" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(form, 1)">Lançar e Quitar</button>
+              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form, 0)">Lançar</button>
             </div>
           </div>
         </div>
@@ -132,13 +132,10 @@ label {
   color: #fff;
   cursor: pointer;
   margin: 10px;
-  padding: 6px 20px
+  padding: 6px 20px;
 }
 p {
   font-size: 30px;
-}
-input[type='file'] {
-  display: none
 }
 .table-sm {
   padding: 2px;

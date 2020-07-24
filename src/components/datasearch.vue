@@ -24,7 +24,7 @@
                   <tr class="text-left" v-for="registro in registros" :key="registro.id">
                     <td  v-for="item in registro" :key="item.id"> {{ item }}</td>
                     <td>
-                      <a href="#" class="text-success" @click="destroy (route, registro.id, registro.descricao);"><i class="far fa-check-square"></i></a>
+                      <a href="#" class="text-success" @click="destroy (route, registro);"><i class="far fa-check-square"></i></a>
                     </td>
                   </tr>
                 </tbody>

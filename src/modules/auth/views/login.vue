@@ -50,7 +50,7 @@
 <style scoped lang="scss">
 .login-page {
     height: 100vh;
-    background-image: url(https://cdn.pixabay.com/photo/2017/02/16/23/46/book-2073023_960_720.jpg);
+    background-image: url('/static/banner.mp4');
     background-size: cover;
     display: flex;
     align-items: center;

@@ -31,7 +31,7 @@ export default {
         status: '',
         valor: '',
         observacoes: '',
-        tipo: 0,
+        tipo: 1,
         idCaixaMovimento: '',
         idMembro: '',
         nome: '',
@@ -78,7 +78,7 @@ export default {
         }
       })
     },
-    validate (form) {
+    validate (form, quitar) {
       if (this.form.descricao === '') {
         this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
       } else if (this.form.tipo === '') {
@@ -88,6 +88,12 @@ export default {
       } else if (this.form.valor === '') {
         this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
       } else {
+        if (quitar === 1) {
+          form.dataPagamento = new Date()
+          form.status = 0
+        } else {
+          form.status = 1
+        }
         this.save(form)
       }
     },
@@ -105,7 +111,7 @@ export default {
       } else if (route === 2) {
         this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Tipo Conta'
-        this.$refs.teste.dataSearch('tipo', 1, 0)
+        this.$refs.teste.dataSearch('tipo', 1, 1)
         this.open = true
       } else if (route === 3) {
         this.ds.grid = ['ID', 'Descricao']
@@ -169,17 +175,17 @@ export default {
         this.read(res.data)
       })
     },
-    destroy (route, id, nome) {
-      if (route === 1) {
-        this.form.nome = nome
-        this.form.idMembro = id
-      } else if (route === 2) {
-        this.form.descrconta = nome
-        this.form.idtipo = id
-      }// else if (route === 3) {
-      this.form.desccaixa = nome
-      this.form.idCaixaMovimento = id
-      // }
+    destroy (route, registro) {
+      if (route === 'membro') {
+        this.form.nome = registro.nome
+        this.form.idMembro = registro.id
+      } else if (route === 'tipo') {
+        this.form.descrconta = registro.descricao
+        this.form.idtipo = registro.id
+      } else {
+        this.form.desccaixa = registro.descricao
+        this.form.idCaixaMovimento = registro.id
+      }
       this.open = false
     }
   },
