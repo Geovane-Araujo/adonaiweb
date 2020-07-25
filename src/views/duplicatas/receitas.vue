@@ -42,6 +42,7 @@
                           <b-form-datepicker
                             placeholder="Data Emissao"
                             v-model="form.dataemissao"
+                            v-bind:disabled="(form.status == 0)"
                             :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                             local="pt-br"></b-form-datepicker>
                         </div>
@@ -49,6 +50,7 @@
                           <b-form-datepicker
                             placeholder="Data Vencimento."
                             v-model="form.dataVencimento"
+                            v-bind:disabled="(form.status == 0)"
                             :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
                             local="pt-br"></b-form-datepicker>
                         </div>
@@ -56,9 +58,10 @@
                           <b-input-group>
                             <b-form-input placeholder="Tipo"
                             v-model="form.descrconta"
+                            v-bind:disabled="(form.status == 0)"
                             ></b-form-input>
                               <b-input-group-append >
-                              <b-button variant="outline-info" class="material-icons" @click="datasearch (2);">search</b-button>
+                              <b-button variant="outline-info" class="material-icons" v-bind:disabled="(form.status == 0)" @click="datasearch (2);">search</b-button>
                             </b-input-group-append>
                           </b-input-group>
                         </div>
@@ -66,12 +69,14 @@
                           <input type="text"
                           class="form-control"
                           placeholder="Descricao"
+                          v-bind:disabled="(form.status == 0)"
                           v-model="form.descricao">
                         </div>
                         <div class="col-sm-4 mb-0">
                           <money  type="text"
                           class="form-control"
                           v-bind="currency"
+                          v-bind:disabled="(form.status == 0)"
                           placeholder="Valor"
                           v-model="form.valor"/>
                         </div>
@@ -79,9 +84,10 @@
                           <b-input-group>
                             <b-form-input placeholder="Nome"
                             v-model="form.nome"
+                            v-bind:disabled="(form.status == 0)"
                             ></b-form-input>
                               <b-input-group-append >
-                              <b-button variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
+                              <b-button variant="outline-info" class="material-icons" v-bind:disabled="(form.status == 0)" @click="datasearch (1);" >search</b-button>
                             </b-input-group-append>
                           </b-input-group>
                         </div>
@@ -89,9 +95,10 @@
                           <b-input-group>
                             <b-form-input placeholder="Caixa/Conta"
                             v-model="form.desccaixa"
+                            v-bind:disabled="(form.status == 0)"
                             ></b-form-input>
                               <b-input-group-append >
-                              <b-button variant="outline-info" class="material-icons" @click="datasearch (3);" >search</b-button>
+                              <b-button variant="outline-info" class="material-icons" v-bind:disabled="(form.status == 0)" @click="datasearch (3);" >search</b-button>
                             </b-input-group-append>
                           </b-input-group>
                         </div>
@@ -108,8 +115,9 @@
                   </b-row>
                 </b-container>
               </form>
-              <button type="button" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(form, 1)">Lançar e Quitar</button>
-              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form, 0)">Lançar</button>
+              <button type="button" id="estornar" class="btn btn-outline-info float-left" style="margin-left:10px;" v-bind:disabled="(form.status == 1)" @click="validate(form, 2)">Estornar</button>
+              <button type="button" class="btn btn-outline-info float-right" style="margin-left:10px;" v-bind:disabled="(form.status == 0)" @click="validate(form, 1)">Lançar e Quitar</button>
+              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" v-bind:disabled="(form.status == 0)" @click="validate(form, 0)">Lançar</button>
             </div>
           </div>
         </div>

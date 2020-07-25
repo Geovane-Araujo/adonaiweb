@@ -18,15 +18,14 @@
         </tr>
       </tbody>
     </table>
-    <div class="col-sm-5 float-right" style="margin-right:0px">
-      <b-input-group >
-          <button class="btn btn-outline-info" ><i class="fas fa-caret-left"></i></button>
-          <b-form-input  class="col-sm-1 text-center"></b-form-input>
-          <button class="btn btn-outline-info"  ><i class="fas fa-caret-right"></i></button>
-          <b-form-input placeholder="buscar"  style="margin-left:10px" class="col-sm-5"></b-form-input>
-          <b-button variant="outline-info" class="material-icons">search</b-button>
-      </b-input-group>
-    </div>
+    <b-input-group class="col-sm-5">
+        <button class="btn btn-outline-info" v-bind:disabled="(pagina == 1)"><i class="fas fa-caret-left"></i></button>
+        <b-form-input  class="col-sm-1 text-center" v-model="pagina"></b-form-input>
+        <button class="btn btn-outline-info" v-bind:disabled="(pagina == 1)" ><i class="fas fa-caret-right"></i></button>
+        <b-form-input placeholder="buscar" style="margin-left:10px" class="col-sm-5"></b-form-input>
+        <b-button variant="outline-info" class="material-icons">search</b-button>
+    </b-input-group>
+
     <div id="overlay" v-if=deleteModal>
       <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">

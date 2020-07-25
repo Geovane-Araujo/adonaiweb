@@ -10,6 +10,7 @@ export default {
   data () {
     return {
       openModal: false,
+      disabled: 'disabled',
       open: false,
       ds: {
         grid: [],
@@ -17,7 +18,7 @@ export default {
       },
       pagina: 1,
       tipo: 0,
-      status: '',
+      status: 1,
       form: {
         add: true,
         edit: false,
@@ -60,38 +61,44 @@ export default {
   },
   methods: {
     async save (form) {
-      await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data === 'success') {
-          if (this.form.add === true) {
-            this.status = 'Salvo com Sucesso'
-          } else if (this.form.edit === true) {
-            this.status = 'Alterado com Sucesso'
+      if (form.del === true && form.dataPagamento === '') {
+        this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSpft diz:', util.toast)
+      } else {
+        await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          if (res.data === 'success') {
+            if (this.form.add === true) {
+              this.status = 'Salvo com Sucesso'
+            } else if (this.form.edit === true) {
+              this.status = 'Alterado com Sucesso'
+            } else {
+              this.status = 'Excluido com Sucesso'
+            }
+            this.$toastr.success(this.status, 'AdonaiSpft diz:', util.toast)
+            this.getDuplicata(this.pagina)
+            this.cleanForm()
+            this.openModal = false
           } else {
-            this.status = 'Excluido com Sucesso'
+            this.$toastr.error(res.data, 'AdonaiSpft diz:', util.toast)
           }
-          this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
-          this.getDuplicata(this.pagina)
-          this.cleanForm()
-          this.openModal = false
-        } else {
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
-        }
-      })
+        })
+      }
     },
     validate (form, quitar) {
       if (this.form.descricao === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
       } else if (this.form.tipo === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
       } else if (this.form.desccaixa === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
       } else if (this.form.valor === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
       } else {
         if (quitar === 1) {
           form.dataPagamento = new Date()
           form.status = 0
-        } else {
+        } else if (quitar === 0) {
+          form.status = 1
+        } else if (quitar === 2) {
           form.status = 1
         }
         this.save(form)
@@ -130,7 +137,7 @@ export default {
       this.form.dataVencimento = ''
       this.form.dataPagamento = ''
       this.form.iUsuarioInclusao = ''
-      this.form.status = ''
+      this.form.status = 1
       this.form.valor = ''
       this.form.observacoes = ''
       this.form.tipo = 0
@@ -156,8 +163,8 @@ export default {
       this.form.iUsuarioInclusao = form.iUsuarioInclusao
       this.form.status = form.status
       this.form.valor = form.valor
+      this.form.tipo = 0
       this.form.observacoes = form.tipo
-      this.form.tipo = 1
       this.form.idCaixaMovimento = form.idCaixaMovimento
       this.form.idMembro = form.idMembro
       this.form.nome = form.nome

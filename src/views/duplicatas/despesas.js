@@ -17,7 +17,7 @@ export default {
       },
       pagina: 1,
       tipo: 1,
-      status: '',
+      status: 1,
       form: {
         add: true,
         edit: false,
@@ -28,7 +28,7 @@ export default {
         dataVencimento: '',
         dataPagamento: '',
         iUsuarioInclusao: '',
-        status: '',
+        status: 1,
         valor: '',
         observacoes: '',
         tipo: 1,
@@ -60,38 +60,44 @@ export default {
   },
   methods: {
     async save (form) {
-      await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data === 'success') {
-          if (this.form.add === true) {
-            this.status = 'Salvo com Sucesso'
-          } else if (this.form.edit === true) {
-            this.status = 'Alterado com Sucesso'
+      if (form.del === true && form.dataPagamento === '') {
+        this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSpft diz:', util.toast)
+      } else {
+        await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          if (res.data === 'success') {
+            if (this.form.add === true) {
+              this.status = 'Salvo com Sucesso'
+            } else if (this.form.edit === true) {
+              this.status = 'Alterado com Sucesso'
+            } else {
+              this.status = 'Excluido com Sucesso'
+            }
+            this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
+            this.getDuplicata(this.pagina)
+            this.cleanForm()
+            this.openModal = false
           } else {
-            this.status = 'Excluido com Sucesso'
+            this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           }
-          this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
-          this.getDuplicata(this.pagina)
-          this.cleanForm()
-          this.openModal = false
-        } else {
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
-        }
-      })
+        })
+      }
     },
     validate (form, quitar) {
       if (this.form.descricao === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
       } else if (this.form.tipo === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
       } else if (this.form.desccaixa === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
       } else if (this.form.valor === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'Falha ao Salvar', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
       } else {
         if (quitar === 1) {
           form.dataPagamento = new Date()
           form.status = 0
-        } else {
+        } else if (quitar === 0) {
+          form.status = 1
+        } else if (quitar === 2) {
           form.status = 1
         }
         this.save(form)
@@ -130,7 +136,7 @@ export default {
       this.form.dataVencimento = ''
       this.form.dataPagamento = ''
       this.form.iUsuarioInclusao = ''
-      this.form.status = ''
+      this.form.status = 1
       this.form.valor = ''
       this.form.observacoes = ''
       this.form.tipo = 0

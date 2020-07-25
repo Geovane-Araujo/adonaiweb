@@ -2,7 +2,8 @@ export default {
   name: 'adonaigrid',
   data () {
     return {
-      deleteModal: false
+      deleteModal: false,
+      pagina: 1
     }
   },
   props: {
