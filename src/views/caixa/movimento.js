@@ -25,25 +25,20 @@ export default {
         del: false,
         id: '',
         descricao: '',
-        dataemissao: '',
-        dataVencimento: '',
-        dataPagamento: '',
-        iUsuarioInclusao: '',
-        status: 1,
-        valor: '',
-        observacoes: '',
-        tipo: 0,
-        idCaixaMovimento: '',
-        idMembro: '',
-        nome: '',
-        descrconta: '',
-        descstatus: '',
-        desccaixa: '',
-        idtipo: '',
-        motivo: '',
+        idCaixa: '',
+        saldo: '',
+        idbanco: '',
+        saldoInicial: '',
+        dataAbertura: '',
+        dataFechamento: '',
+        despesas: '',
+        receitas: '',
+        idPessoaFechamento: '',
+        status: '',
+        retorno: '',
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
       },
-      duplicata: [],
+      caixamovimento: [],
       currency: {
         decimal: ',',
         thousands: '.',
@@ -56,7 +51,7 @@ export default {
   },
   mounted () {
     this.isLoading = true
-    this.getDuplicata(this.pagina)
+    this.get()
     this.isLoading = false
   },
   methods: {
@@ -74,7 +69,7 @@ export default {
               this.status = 'Excluido com Sucesso'
             }
             this.$toastr.success(this.status, 'AdonaiSpft diz:', util.toast)
-            this.getDuplicata(this.pagina)
+            this.get()
             this.cleanForm()
             this.openModal = false
           } else {
@@ -83,30 +78,16 @@ export default {
         })
       }
     },
-    validate (form, quitar) {
+    validate (form) {
       if (this.form.descricao === '') {
         this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
-      } else if (this.form.tipo === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
-      } else if (this.form.desccaixa === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
-      } else if (this.form.valor === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
       } else {
-        if (quitar === 1) {
-          form.dataPagamento = new Date()
-          form.status = 0
-        } else if (quitar === 0) {
-          form.status = 1
-        } else if (quitar === 2) {
-          form.status = 1
-        }
         this.save(form)
       }
     },
-    getDuplicata (pagina) {
-      axios.get(adonai.url + 'duplicata/' + pagina + '/' + 0, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.duplicata = res.data
+    get () {
+      axios.get(adonai.url + 'caixamovimento', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.caixamovimento = res.data
       })
     },
     datasearch (route) {
@@ -114,16 +95,6 @@ export default {
         this.ds.grid = ['ID', 'Nome']
         this.ds.title = 'Membro'
         this.$refs.teste.dataSearch('membro', 1, 0)
-        this.open = true
-      } else if (route === 2) {
-        this.ds.grid = ['ID', 'Descricao']
-        this.ds.title = 'Tipo Conta'
-        this.$refs.teste.dataSearch('tipo', 1, 0)
-        this.open = true
-      } else if (route === 3) {
-        this.ds.grid = ['ID', 'Descricao']
-        this.ds.title = 'Caixa'
-        this.$refs.teste.dataSearch('caixa', 1, 0)
         this.open = true
       }
     },
@@ -133,21 +104,15 @@ export default {
       this.form.del = false
       this.form.id = ''
       this.form.descricao = ''
-      this.form.dataemissao = ''
-      this.form.dataVencimento = ''
-      this.form.dataPagamento = ''
-      this.form.iUsuarioInclusao = ''
-      this.form.status = 1
-      this.form.valor = ''
-      this.form.observacoes = ''
-      this.form.tipo = 0
-      this.form.idCaixaMovimento = ''
-      this.form.idMembro = ''
-      this.form.nome = ''
-      this.form.descrconta = ''
-      this.form.descstatus = ''
-      this.form.desccaixa = ''
-      this.form.idtipo = ''
+      this.form.dataAbertura = ''
+      this.form.dataFechamento = ''
+      this.form.saldoInicial = ''
+      this.form.idbanco = ''
+      this.form.idCaixa = ''
+      this.form.receitas = 0
+      this.form.despesas = 0
+      this.form.idPessoaFechamento = ''
+      this.form.status = ''
       this.form.retorno = ''
       this.form.motivo = ''
     },
@@ -157,28 +122,23 @@ export default {
       this.form.del = form.del
       this.form.id = form.id
       this.form.descricao = form.descricao
-      this.form.dataemissao = form.dataemissao
-      this.form.dataVencimento = form.dataVencimento
-      this.form.dataPagamento = form.dataPagamento
-      this.form.iUsuarioInclusao = form.iUsuarioInclusao
+      this.form.dataAbertura = form.dataAbertura
+      this.form.dataFechamento = form.dataFechamento
+      this.form.saldoInicial = 0
+      this.form.saldo = 0
+      this.form.idbanco = form.idbanco
+      this.form.idCaixa = form.idCaixa
+      this.form.receitas = 0
+      this.form.despesas = 0
+      this.form.idPessoaFechamento = form.idPessoaFechamento
       this.form.status = form.status
-      this.form.valor = form.valor
-      this.form.tipo = 0
-      this.form.observacoes = form.tipo
-      this.form.idCaixaMovimento = form.idCaixaMovimento
-      this.form.idMembro = form.idMembro
-      this.form.nome = form.nome
-      this.form.descrconta = form.descrconta
-      this.form.descstatus = form.descstatus
-      this.form.desccaixa = form.desccaixa
-      this.form.idtipo = form.idtipo
 
       this.form.retorno = form.retorno
-      this.form.motivo = form.motivo
+      this.form.moment = moment(data).format('YYYY-MM-DD HH:mm:ss')
       this.openModal = true
     },
     getbyId (id) {
-      axios.get(adonai.url + 'duplicata/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      axios.get(adonai.url + 'caixamovimento/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.read(res.data)
       })
     },

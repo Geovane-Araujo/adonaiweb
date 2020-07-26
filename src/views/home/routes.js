@@ -11,6 +11,8 @@ import novoconvertido from '../novoconvertido/novoconvertido.vue'
 import congregacao from '../congregacao/congregacao.vue'
 import despesas from '../duplicatas/despesas.vue'
 import receitas from '../duplicatas/receitas.vue'
+import caixa from '../caixa/caixa.vue'
+import movimento from '../caixa/movimento.vue'
 
 export default [
   {
@@ -77,6 +79,16 @@ export default [
         path: 'receitas',
         name: 'receitas',
         component: receitas
+      },
+      {
+        path: 'caixa',
+        name: 'caixa',
+        component: caixa
+      },
+      {
+        path: 'movimento',
+        name: 'movimento',
+        component: movimento
       }
     ]
   }

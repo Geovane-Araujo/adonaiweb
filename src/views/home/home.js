@@ -95,7 +95,17 @@ export default {
             {
               href: '',
               title: 'Caixas',
-              disabled: false
+              child: [
+                {
+                  href: '/caixa',
+                  title: 'Caixas'
+                },
+                {
+                  href: '/movimento',
+                  title: 'Movimentação',
+                  disabled: false
+                }
+              ]
             },
             {
               href: '/contasbancarias',

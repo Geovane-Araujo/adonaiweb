@@ -2,7 +2,7 @@
 <div>
   <table class="table table-botdered table-striped table-sm table-hover table-fixed">
       <thead  style="max-height:10vh; overflow-y:auto;">
-        <tr class="text-left bg-info txt-light style=height: 10px;">
+        <tr class="text-left text-light text-light" style="background-color: #5e8a75">
           <th v-for="title in titulos" :key="title.ID">{{ title }}</th>
           <th></th>
         </tr>
@@ -72,5 +72,13 @@ input[type='file'] {
   left: 0;
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);
+}
+button {
+  color: #5e8a75;
+  border-color:#5e8a75;
+}
+button:hover {
+  background-color: #5e8a75;
+  border-color:#5e8a75;
 }
 </style>

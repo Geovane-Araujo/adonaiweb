@@ -8,7 +8,8 @@ export default {
     return {
       registros: [],
       route: '',
-      pagina: 1
+      pagina: 1,
+      contexto: ''
     }
   },
   methods: {
@@ -17,6 +18,12 @@ export default {
         this.registros = res.data
         this.route = route
         this.contexto = contexto
+      })
+    },
+    dataSearch1 (route, pagina) {
+      axios.get(adonai.url + route + '/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.registros = res.data
+        this.route = route
       })
     }
   },

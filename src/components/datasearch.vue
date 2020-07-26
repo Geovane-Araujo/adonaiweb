@@ -11,11 +11,11 @@
               </button>
             </div>
             <div class="modal-body">
-              <b-form-input class="mr-sm-2" placeholder="Buscar"  @keyup.enter="descricao;"></b-form-input>
+              <b-form-input class="mr-sm-2" placeholder="Buscar" v-model="contexto"  @keyup.enter="dataSearchLike (route, pagina, contexto)"></b-form-input>
               <br>
               <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
                 <thead>
-                  <tr class="text-left bg-info txt-light" style="height: 10px;">
+                  <tr class="text-left text-light" style="background-color: #5e8a75">
                     <th v-for="itcabe in cabecalho" :key="itcabe.ID">{{ itcabe }}</th>
                     <th></th>
                   </tr>
@@ -63,9 +63,6 @@ label {
 p {
   font-size: 30px;
 }
-input[type='file'] {
-  display: none
-}
 .table-sm {
   padding: 2px;
 }
@@ -83,5 +80,13 @@ input[type='file'] {
   left: 0;
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);
+}
+button {
+  color: #5e8a75;
+  border-color:#5e8a75;
+}
+button:hover {
+  background-color: #5e8a75;
+  border-color:#5e8a75;
 }
 </style>

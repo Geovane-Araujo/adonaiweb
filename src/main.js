@@ -18,6 +18,7 @@ import adonaigrid from '../src/components/grid.vue'
 import adonaidatasearch from '../src/components/datasearch.vue'
 import VueTheMask from 'vue-the-mask'
 import money from 'v-money'
+import VueTippy, { TippyComponent } from 'vue-tippy'
 import './assets/scss/app.scss'
 
 window.toastr = require('toastr')
@@ -33,6 +34,8 @@ Vue.use(Loading)
 Vue.use(VueTheMask)
 Vue.use(money, { precision: 4 })
 Vue.use(require('vue-moment'))
+Vue.use(VueTippy)
+Vue.component('tippy', TippyComponent)
 Vue.component('adonaigrid', adonaigrid)
 Vue.component('adonaidatasearch', adonaidatasearch)
 
