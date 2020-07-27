@@ -10,7 +10,12 @@ export default {
   data () {
     return {
       openModal: false,
+      openDetail: false,
+      openloading: false,
       disabled: 'disabled',
+      abertura: false,
+      fechamento: false,
+      title: '',
       open: false,
       ds: {
         grid: [],
@@ -27,16 +32,21 @@ export default {
         descricao: '',
         idCaixa: '',
         saldo: '',
-        idbanco: '',
+        conferido: '',
         saldoInicial: '',
         dataAbertura: '',
         dataFechamento: '',
-        despesas: '',
-        receitas: '',
         idPessoaFechamento: '',
         status: '',
         retorno: '',
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
+      },
+      saldos: {
+        despesas: '',
+        receitas: '',
+        saldoinicial: '',
+        saldototal: '',
+        detalhes: []
       },
       caixamovimento: [],
       currency: {
@@ -55,20 +65,11 @@ export default {
     this.isLoading = false
   },
   methods: {
-    async save (form) {
-      if (form.del === true && form.dataPagamento === '') {
-        this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSpft diz:', util.toast)
-      } else {
-        await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+    async save (form, abertura) {
+      if (abertura === true) {
+        await axios.post(adonai.url + 'caixaabrir', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data === 'success') {
-            if (this.form.add === true) {
-              this.status = 'Salvo com Sucesso'
-            } else if (this.form.edit === true) {
-              this.status = 'Alterado com Sucesso'
-            } else {
-              this.status = 'Excluido com Sucesso'
-            }
-            this.$toastr.success(this.status, 'AdonaiSpft diz:', util.toast)
+            this.$toastr.success('Caixa Aberto com Sucesso', 'AdonaiSoft diz:', util.toast)
             this.get()
             this.cleanForm()
             this.openModal = false
@@ -76,25 +77,68 @@ export default {
             this.$toastr.error(res.data, 'AdonaiSpft diz:', util.toast)
           }
         })
+      } else {
+        await axios.post(adonai.url + 'caixafechar', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          if (res.data === 'success') {
+            this.$toastr.success('Caixa Fechado com Sucesso', 'AdonaiSoft diz:', util.toast)
+            this.get()
+            this.cleanForm()
+            this.openModal = false
+          } else {
+            this.$toastr.error(res.data, 'AdonaiSoft diz:', util.toast)
+          }
+        })
       }
     },
     validate (form) {
-      if (this.form.descricao === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+      if (form.idCaixa === '' && form.id === '') {
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSft diz:', util.toast)
       } else {
-        this.save(form)
+        if (this.abertura === true) {
+          form.dataAbertura = moment(data).format('YYYY-MM-DD')
+          form.idPessoaFechamento = this.user.id
+        } else {
+          form.dataFechamento = moment(data).format('YYYY-MM-DD')
+          form.idPessoaFechamento = this.user.id
+        }
+        this.save(form, this.abertura)
       }
     },
     get () {
+      this.openloading = true
       axios.get(adonai.url + 'caixamovimento', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.caixamovimento = res.data
       })
+      this.openloading = false
+    },
+    getSaldos (idcaixa, tipo) {
+      if (tipo === 1) {
+        axios.get(adonai.url + 'caixasaldos/' + idcaixa + '/' + this.user.id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          if (res.data.permite === 0) {
+            this.$toastr.error('Usuário não autorizado a ver saldos', 'AdonaiSoft diz:', util.toast)
+          } else {
+            this.saldos.receitas = res.data.receitas
+            this.saldos.despesas = res.data.despesas
+            this.saldos.saldoinicial = res.data.saldoinicial
+            this.saldos.saldototal = res.data.saldototal
+          }
+        })
+      } else {
+        axios.get(adonai.url + 'caixasaldosdetalhe/' + idcaixa + '/' + this.user.id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          if (res.data.permite === 0) {
+            this.$toastr.error('Usuário não autorizado a ver saldos', 'AdonaiSoft diz:', util.toast)
+          } else {
+            this.saldos.detalhes = res.data.saldos
+            this.openDetail = true
+          }
+        })
+      }
     },
     datasearch (route) {
       if (route === 1) {
-        this.ds.grid = ['ID', 'Nome']
-        this.ds.title = 'Membro'
-        this.$refs.teste.dataSearch('membro', 1, 0)
+        this.ds.grid = ['ID', 'Caixa']
+        this.ds.title = 'Caixas'
+        this.$refs.teste.dataSearch('caixa', 1, 0)
         this.open = true
       }
     },
@@ -126,11 +170,8 @@ export default {
       this.form.dataFechamento = form.dataFechamento
       this.form.saldoInicial = 0
       this.form.saldo = 0
-      this.form.idbanco = form.idbanco
       this.form.idCaixa = form.idCaixa
-      this.form.receitas = 0
-      this.form.despesas = 0
-      this.form.idPessoaFechamento = form.idPessoaFechamento
+      this.form.idPessoaFechamento = this.user.id
       this.form.status = form.status
 
       this.form.retorno = form.retorno
@@ -143,16 +184,8 @@ export default {
       })
     },
     destroy (route, registro) {
-      if (route === 'membro') {
-        this.form.nome = registro.nome
-        this.form.idMembro = registro.id
-      } else if (route === 'tipo') {
-        this.form.descrconta = registro.descricao
-        this.form.idtipo = registro.id
-      } else {
-        this.form.desccaixa = registro.descricao
-        this.form.idCaixaMovimento = registro.id
-      }
+      this.form.descricao = registro.descricao
+      this.form.idCaixa = registro.id
       this.open = false
     }
   },

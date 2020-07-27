@@ -11,7 +11,7 @@
         <div class="col-lg-12">
           <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
             <thead>
-              <tr class="text-left bg-info txt-light" style="height: 10px;">
+              <tr class="text-left text-light text-light" style="background-color: #5e8a75">
                 <th>Nome</th>
                 <th>Data Nascimento</th>
                 <th>Telefone</th>

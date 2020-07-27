@@ -16,7 +16,7 @@
         <div class="col-lg-12">
           <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
             <thead>
-              <tr class="text-left bg-info txt-light" style="height: 10px;">
+              <tr class="text-left text-light" style="background-color: #5e8a75">
                 <th>ID</th>
                 <th>Descricao</th>
                 <th></th>
@@ -112,5 +112,13 @@ p {
   left: 0;
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);
+}
+button {
+  color: #5e8a75;
+  border-color:#5e8a75;
+}
+button:hover {
+  background-color: #5e8a75;
+  border-color:#5e8a75;
 }
 </style>

@@ -1,7 +1,7 @@
 <template id="adonaigrid">
-<div>
+<div style="padding-left:0px;">
   <table class="table table-botdered table-striped table-sm table-hover table-fixed">
-      <thead  style="max-height:10vh; overflow-y:auto;">
+      <thead  style="overflow-y:auto;">
         <tr class="text-left text-light text-light" style="background-color: #5e8a75">
           <th v-for="title in titulos" :key="title.ID">{{ title }}</th>
           <th></th>
@@ -18,13 +18,15 @@
         </tr>
       </tbody>
     </table>
-    <b-input-group class="col-sm-5">
+    <footer class="footer" >
+      <b-input-group class="col-sm-12" style="padding-left: 0px;">
         <button class="btn btn-outline-info" v-bind:disabled="(pagina == 1)"><i class="fas fa-caret-left"></i></button>
         <b-form-input  class="col-sm-1 text-center" v-model="pagina"></b-form-input>
         <button class="btn btn-outline-info" v-bind:disabled="(pagina == 1)" ><i class="fas fa-caret-right"></i></button>
         <b-form-input placeholder="buscar" style="margin-left:10px" class="col-sm-5"></b-form-input>
         <b-button variant="outline-info" class="material-icons">search</b-button>
-    </b-input-group>
+      </b-input-group>
+    </footer>
 
     <div id="overlay" v-if=deleteModal>
       <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -49,7 +51,6 @@
 </script>
 <style lang="scss" scoped>
 label {
-  background-color: #3498db;
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
@@ -58,9 +59,6 @@ label {
 }
 p {
   font-size: 30px;
-}
-input[type='file'] {
-  display: none
 }
 .table-sm {
   padding: 2px;
@@ -75,10 +73,17 @@ input[type='file'] {
 }
 button {
   color: #5e8a75;
-  border-color:#5e8a75;
+  border-color:#050505;
 }
 button:hover {
   background-color: #5e8a75;
   border-color:#5e8a75;
+}
+footer {
+  position: fixed;
+  bottom:10px;
+}
+.footer {
+  box-shadow:2px rgba(0, 0, 0, 0.25);
 }
 </style>

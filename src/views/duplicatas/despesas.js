@@ -122,7 +122,7 @@ export default {
       } else if (route === 3) {
         this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Caixa'
-        this.$refs.teste.dataSearch('caixa', 1, 0)
+        this.$refs.teste.dataSearch('caixa', 1, 1)
         this.open = true
       }
     },
