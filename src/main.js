@@ -20,6 +20,7 @@ import VueTheMask from 'vue-the-mask'
 import money from 'v-money'
 import VueTippy, { TippyComponent } from 'vue-tippy'
 import loader from 'vue-ui-preloader'
+import jsPDF from 'jspdf'
 import './assets/scss/app.scss'
 
 window.toastr = require('toastr')
@@ -37,12 +38,21 @@ Vue.use(money, { precision: 4 })
 Vue.use(require('vue-moment'))
 Vue.use(VueTippy)
 Vue.use(loader)
+Vue.use(jsPDF)
 Vue.component('tippy', TippyComponent)
 Vue.component('adonaigrid', adonaigrid)
 Vue.component('adonaidatasearch', adonaidatasearch)
 
-new Vue({
+Vue.config.debug = false
+Vue.config.devtools = false
+Vue.config.silent = true
+
+var adonaisoft = new Vue({
+  data: {
+    img: null
+  },
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+export default { adonaisoft }

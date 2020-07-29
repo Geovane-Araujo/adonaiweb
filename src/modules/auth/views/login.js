@@ -14,10 +14,16 @@ export default {
     place: 'CNPJ',
     doc: 'CNPJ'
   }),
+  mounted () {
+    if (localStorage.getItem('cnpj') !== '') {
+      this.form.cnpj = localStorage.getItem('cnpj')
+    }
+  },
   methods: {
     ...mapActions('auth', ['ActionLogin']),
     async submit () {
       try {
+        localStorage.setItem('cnpj', this.form.cnpj)
         await this.ActionLogin(this.form)
         this.$toastr.success('Seja BEm Vindo(a)', 'AdonaiSoft - Web', util.toast)
         this.$router.push({ name: 'home' })

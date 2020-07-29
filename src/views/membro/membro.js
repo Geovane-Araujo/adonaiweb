@@ -1,6 +1,7 @@
 import { mapActions, mapState } from 'vuex'
 import util from '../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import adonai from '../router/services'
 import membro from './store/state'
 import axios from 'axios'
 var moment = require('moment')
@@ -12,7 +13,7 @@ export default {
       openModal: false,
       openCidade: false,
       deleteModal: false,
-      isLoading: false,
+      openloading: false,
       campocidade: 0,
       pagina: 1,
       fullPage: true,
@@ -101,7 +102,8 @@ export default {
         moment: moment(data).format('YYYY-MM-DD h:mm:ss')
       },
       cidade: [],
-      nCargos: []
+      nCargos: [],
+      a: null
     }
   },
   mounted () {
@@ -275,13 +277,33 @@ export default {
         this.submit()
       }
     },
-    previewFiles (event) {
-      console.log(this.$refs)
-      // this.form.imagem = this.$refs.myFiles.value
+    previewFiles: function () {
+      var file = document.querySelector('input[type=file]').files[0]
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = function (e) {
+        this.a = e.target.result
+        sessionStorage.setItem('img', this.a)
+      }
+    },
+    img: function () {
+      this.a = sessionStorage.getItem('img')
+      this.form.imagem = this.a
+      sessionStorage.setItem('img', '')
     },
     buscarCargo () {
       axios.get('http://192.168.1.106:8089/adonai/CargoGet', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.nCargos = res.data
+      })
+    },
+    imprimir () {
+      this.openloading = true
+      axios.get(adonai.url + 'imprimir', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.openloading = false
+        var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes,resizable,screenX=50,screenY=50,width=850,height=1050'
+        var a = '<embed width=100% height=100% type="application/pdf" src="data:application/pdf;base64,' + escape(res.data) + ' "></embed>'
+        var print = window.open('', 'PDF', winparams)
+        print.document.write(a)
       })
     },
     buscarcep (cep, form, local) {

@@ -1,5 +1,6 @@
 <template>
   <div class="membro">
+    <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
@@ -8,6 +9,11 @@
             class="btn btn-outline-info"
             @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
+          </button>
+          <button
+            class="btn btn-outline-info float-right"
+            @click="imprimir()">
+            <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir
           </button>
           <hr class="bg-info">
         </div>
@@ -71,12 +77,11 @@
                       <b-row class="text-center">
                         <b-col cols="2">
                           <div class="file-loading">
-                            <b-avatar ref="myFiles"
-                            v-model="form.imagem"
+                            <b-avatar :src="a" ref="myFiles"
                             size="5rem"></b-avatar>
                           </div>
                           <label for='selecao-arquivo' class="material-icons">perm_media</label>
-                          <input id='selecao-arquivo' @change="previewFiles" ref="myFiles" type='file'>
+                          <input id='selecao-arquivo' @change="previewFiles();img();"  accept="image/*" type='file'>
                         </b-col>
                         <b-col cols="10" >
                           <div class="row">

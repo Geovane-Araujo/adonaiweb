@@ -76,7 +76,7 @@
                                 </thead>
                                 <tbody>
                                   <tr class="text-left" v-for="users in form.usuariospermissoes" :key="users.id">
-                                    <td>{{ users.idUsuario }}</td>
+                                    <td>{{ users.idsuario }}</td>
                                     <td>{{ users.nome }}</td>
                                     <td class="text-center" >
                                       <input class="form-check-input"
@@ -84,7 +84,7 @@
                                       checked="1"
                                       unchecked="0"
                                       :value="users.permissao"
-                                      :id="user.idUsuario"
+                                      :id="user.idusuario"
                                       v-model="users.permissao">
                                     </td>
                                   </tr>

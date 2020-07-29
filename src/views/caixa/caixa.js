@@ -31,7 +31,7 @@ export default {
         usuariospermissoes: [
           {
             id: '',
-            idUsuario: '',
+            idusuario: '',
             idcaixa: '',
             permissao: '',
             nome: ''
@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     async save (form) {
+      form.moment = moment(data).format('YYYY-MM-DD HH:mm:ss')
       await axios.post(adonai.url + 'caixa', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data === 'success') {
           if (this.form.add === true) {
@@ -87,6 +88,7 @@ export default {
             form.usuariospermissoes[this.selected].permissao = 1
           }
         }
+        form.moment = moment(data).format('YYYY-MM-DD HH:mm:ss')
         this.save(form)
       }
     },
