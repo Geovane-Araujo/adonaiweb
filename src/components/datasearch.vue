@@ -11,7 +11,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <b-form-input class="mr-sm-2" placeholder="Buscar" v-model="contexto"  @keyup.enter="dataSearchLike (route, pagina, contexto)"></b-form-input>
+              <b-form-input class="mr-sm-2" placeholder="Buscar" v-model="contexto"  @keyup.enter="dataSearch (route, pagina, contexto)"></b-form-input>
               <br>
               <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
                 <thead>
@@ -24,7 +24,7 @@
                   <tr class="text-left" v-for="registro in registros" :key="registro.id">
                     <td  v-for="item in registro" :key="item.id"> {{ item }}</td>
                     <td>
-                      <a href="#" class="text-success" @click="destroy (route, registro);"><i class="far fa-check-square"></i></a>
+                      <a href="#" class="text-success" @click="destroy (route, registro, params);"><i class="far fa-check-square"></i></a>
                     </td>
                   </tr>
                 </tbody>

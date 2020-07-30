@@ -7,17 +7,25 @@ export default {
   data () {
     return {
       registros: [],
+      params: '',
       route: '',
       pagina: 1,
       contexto: ''
     }
   },
   methods: {
-    dataSearch (route, pagina, contexto) {
+    dataSearch (route, pagina, contexto, params) {
+      if (contexto === '') {
+        contexto = 'a'
+      }
       axios.get(adonai.url + route + '/' + pagina + '/' + contexto, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.registros = res.data
         this.route = route
+        if (contexto === 'a') {
+          contexto = ''
+        }
         this.contexto = contexto
+        this.params = params
       })
     },
     dataSearch1 (route, pagina) {

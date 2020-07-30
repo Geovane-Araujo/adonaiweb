@@ -1,5 +1,5 @@
 <template>
-  <div class="despesas">
+  <div class="caixas">
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
@@ -129,7 +129,7 @@ p {
 .table-sm {
   padding: 2px;
 }
-.despesas {
+.caixas {
   border-radius: 10px;
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
   background-color: rgba($color: #ffffff, $alpha: 0.9);

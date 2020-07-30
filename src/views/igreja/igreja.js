@@ -1,6 +1,7 @@
 import { mapState } from 'vuex'
 import util from '../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import adonai from '../router/services'
 import axios from 'axios'
 var moment = require('moment')
 var data = new Date()
@@ -9,13 +10,13 @@ export default {
   data () {
     return {
       openModal: false,
-      openCidade: false,
-      deleteModal: false,
-      isLoading: false,
-      campocidade: 0,
-      pagina: 1,
-      openDatasearch: false,
-      doc: 'CNPJ',
+      openloading: false,
+      open: false,
+      ds: {
+        grid: [],
+        title: '',
+        params: ''
+      },
       status: '',
       form: {
         add: true,
@@ -137,18 +138,17 @@ export default {
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
       },
-      cidade: [],
       igreja: []
     }
   },
   mounted () {
-    this.isLoading = true
+    this.openloading = true
     this.get(this.pagina)
-    this.isLoading = false
   },
   methods: {
     async save (form) {
-      await axios.post('http://192.168.1.106:8089/adonai/igreja', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      this.openloading = true
+      await axios.post(adonai.url + 'igreja', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data === 'success') {
           if (this.form.add === true) {
             this.status = 'Salvo com Sucesso'
@@ -160,32 +160,25 @@ export default {
           this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
           this.get(this.pagina)
           this.cleanForm()
-          if (this.form.edit) {
-            this.openModal = false
-          }
+          this.openloading = true
+          this.openModal = false
         } else {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.openloading = true
         }
       })
     },
     validate (doc, tipo, form) {
-      if (tipo === 1) {
-        if (doc === 'CNPJ') {
-          this.mascara = '##.###.###/####-##'
-        } else {
-          this.mascara = '###.###.###-##'
-        }
+      if (this.form.nome === '') {
+        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
       } else {
-        if (this.form.nome === '') {
-          this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
-        } else {
-          this.save(form)
-        }
+        this.save(form)
       }
     },
     get (pagina) {
-      axios.get('http://192.168.1.106:8089/adonai/igrejagrid/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      axios.get(adonai.url + 'igrejagrid/' + 1, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.igreja = res.data
+        this.openloading = false
       })
     },
     cleanForm () {
@@ -406,20 +399,28 @@ export default {
         })
       }
     },
-    buscarCidade (pagina) {
-      axios.get('http://192.168.1.106:8089/adonai/cidade/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.cidade = res.data
-      })
-    },
-    buscarCidadeKey (cidade) {
-      axios.get('http://192.168.1.106:8089/adonai/cidadekey/' + cidade, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.cidade = res.data
-      })
-    },
-    getIgreja (id) {
-      axios.get('http://192.168.1.106:8089/adonai/igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+    getbyId (id) {
+      this.openloading = true
+      axios.get(adonai.url + 'igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.read(res.data)
+        this.openloading = false
       })
+    },
+    datasearch (params) {
+      this.ds.grid = ['ID', 'Nome Cidade', 'UF', '']
+      this.ds.title = 'Cidades'
+      this.$refs.teste.dataSearch('cidade', 1, 'a', params)
+      this.open = true
+    },
+    destroy (route, registro, params) {
+      if (params === 0) {
+        this.form.endereco[0].cidade = registro.cidade
+        this.form.endereco[0].idCidade = registro.id
+      } else {
+        this.form.endereco[1].cidade = registro.cidade
+        this.form.endereco[1].idCidade = registro.id
+      }
+      this.open = false
     }
   },
   computed: {

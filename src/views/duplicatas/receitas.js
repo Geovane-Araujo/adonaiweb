@@ -109,24 +109,7 @@ export default {
         this.duplicata = res.data
       })
     },
-    datasearch (route) {
-      if (route === 1) {
-        this.ds.grid = ['ID', 'Nome']
-        this.ds.title = 'Membro'
-        this.$refs.teste.dataSearch('membro', 1, 0)
-        this.open = true
-      } else if (route === 2) {
-        this.ds.grid = ['ID', 'Descricao']
-        this.ds.title = 'Tipo Conta'
-        this.$refs.teste.dataSearch('tipo', 1, 0)
-        this.open = true
-      } else if (route === 3) {
-        this.ds.grid = ['ID', 'Descricao']
-        this.ds.title = 'Caixa'
-        this.$refs.teste.dataSearch('caixa', 1, 1)
-        this.open = true
-      }
-    },
+
     cleanForm () {
       this.form.add = true
       this.form.edit = false
@@ -181,6 +164,24 @@ export default {
       axios.get(adonai.url + 'duplicata/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.read(res.data)
       })
+    },
+    datasearch (route) {
+      if (route === 1) {
+        this.ds.grid = ['ID', 'Nome']
+        this.ds.title = 'Membro'
+        this.$refs.teste.dataSearch('membro', 1, 0)
+        this.open = true
+      } else if (route === 2) {
+        this.ds.grid = ['ID', 'Descricao']
+        this.ds.title = 'Tipo Conta'
+        this.$refs.teste.dataSearch('tipo', 1, 0)
+        this.open = true
+      } else if (route === 3) {
+        this.ds.grid = ['ID', 'Descricao']
+        this.ds.title = 'Caixa'
+        this.$refs.teste.dataSearch('caixa', 1, 1)
+        this.open = true
+      }
     },
     destroy (route, registro) {
       if (route === 'membro') {

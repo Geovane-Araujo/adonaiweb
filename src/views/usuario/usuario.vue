@@ -1,5 +1,6 @@
 <template>
   <div class="usuario">
+    <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row bg-ligth">
         <div class="col-lg-12">
@@ -10,32 +11,16 @@
         <button class="btn btn-outline-info" @click="openModal=true">
           <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
         </button>
+        <hr class="bg-info" >
       </div>
-      <hr class="bg-info" >
-      <div class="row">
-        <div class="col-lg-12">
-          <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
-            <thead>
-              <tr class="text-left bg-info txt-light" style="height: 10px;">
-                <th>ID</th>
-                <th>Nome</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="text-left" v-for="item in usuario" :key="item.id">
-                <td >{{ item.id }}</td>
-                <td>{{ item.login }}</td>
-                <td>
-                  <a href="#" @click="openModal =true;form.id = item.id; form.edit=true;form.add=false;povoar(item); " class="text-success"><i class="fas fa-edit"></i></a>
-                  &nbsp;
-                  <a href="#" @click="deleteModal=true; form.id = item.id; form.edit=false;form.add=false; form.del = true" class="text-danger"><i class="far fa-trash-alt"></i></a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="col-lg-12">
+          <!-- table -->
+          <adonaigrid :titulos="['ID','Nome','']"
+          :registros="usuarios"
+          :form="form"
+          :getbyId="getbyId"
+          :save="save"></adonaigrid>
         </div>
-      </div>
     </div>
 
     <!-- Tela cadastro -->
@@ -44,12 +29,12 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Cadastro Usuario</h5>
-            <button type="button" class="close"  @click="openModal=false;limparCampos (form)">
+            <button type="button" class="close"  @click="openModal=false;clean (form)">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body p-4">
-            <form @submit.prevent="submit()">
+            <form method="POST">
               <div>
                 <div class="form-group">
                   <input type="text"
@@ -143,36 +128,17 @@
                   </b-form-checkbox>
                 </div>
               </div>
-              <div class="form-group">
-                <button class="btn btn-outline-info float-right" >Salvar</button>
-              </div>
             </form>
+            <button class="btn btn-outline-info float-right" @click="validate(form)" >Salvar</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Tela excluir -->
-    <div id="overlay" v-if="deleteModal">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close"  @click="deleteModal=false">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body p-4">
-            <h5 class="text-danger">Deseja realmente Excluir ?</h5>
-            <button class="btn btn-outline-danger" @click="submit(); deleteModal=false;" >Sim</button>
-            <button class="btn btn-outline-success float-right" @click="deleteModal=false">Não</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
-<script src="./usuario.js">
+<script src="./routes.js">
 </script>
 <style lang="scss" scoped>
 .table-overflow {
@@ -187,9 +153,7 @@ p {
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
   background-color: rgba($color: #ffffff, $alpha: 0.9);
   margin: 5px;
-  padding: 1px;
-  max-height:89vh;
-  overflow-y:auto;
+  overflow:auto;
 }
 #overlay {
   position: fixed;
@@ -198,5 +162,13 @@ p {
   left: 0;
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);
+}
+button {
+  color: #5e8a75;
+  border-color:#5e8a75;
+}
+button:hover {
+  background-color: #5e8a75;
+  border-color:#5e8a75;
 }
 </style>

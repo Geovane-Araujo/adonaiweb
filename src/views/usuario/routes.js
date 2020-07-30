@@ -1,10 +1,18 @@
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import util from '../../assets/scss/util'
+import adonai from '../router/services'
+import axios from 'axios'
 
 export default {
   data: () => ({
     openModal: false,
-    deleteModal: false,
+    openloading: false,
+    open: false,
+    ds: {
+      grid: [],
+      title: '',
+      params: ''
+    },
     status: '',
     form: {
       add: true,
@@ -27,34 +35,44 @@ export default {
         usuarios: 0,
         relatorios: 0
       }
-    }
+    },
+    usuarios: []
   }),
   mounted () {
-    this.ActionSetUsuario()
+    this.openloading = true
+    this.get()
   },
   methods: {
-    ...mapActions('usuario', ['ActionSetUsuario']),
-    ...mapActions('usuario', ['SalvarUsuario']),
-    async submit () {
-      try {
-        await this.SalvarUsuario(this.form)
-        this.ActionSetUsuario()
-
-        if (this.form.add === true) {
-          this.status = 'Salvo com Sucesso'
-        } else if (this.form.edit === true) {
-          this.status = 'Alterado com Sucesso'
+    async save (form) {
+      this.openloading = true
+      await axios.post(adonai.url + 'usuario', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data === 'success') {
+          if (this.form.add === true) {
+            this.status = 'Salvo com Sucesso'
+          } else if (this.form.edit === true) {
+            this.status = 'Alterado com Sucesso'
+          } else {
+            this.status = 'Excluido com Sucesso'
+          }
+          this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
+          this.get(1)
+          this.clean()
+          this.openloading = true
           this.openModal = false
         } else {
-          this.status = 'Excluido com Sucesso'
+          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.openloading = true
         }
-        this.$toastr.success(this.status, 'Cadastro de Clientes', util.toast)
-        this.limparCampos(this.form)
-      } catch (err) {
-        this.$toastr.error(err, 'Cadastro de Usuários', util.toast)
+      })
+    },
+    validate (form) {
+      if (this.form.nome === '') {
+        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+      } else {
+        this.save(form)
       }
     },
-    limparCampos (form) {
+    clean (form) {
       form.edit = false
       form.del = false
       form.add = true
@@ -72,7 +90,7 @@ export default {
       form.permissaoUsuario.relatorios = 0
       form.permissaoUsuario.usuarios = 0
     },
-    povoar (form) {
+    read (form) {
       this.form.id = form.id
       this.form.login = form.login
       this.form.senha = form.senha
@@ -86,10 +104,25 @@ export default {
       this.form.permissaoUsuario.multiIgreja = form.permissaoUsuario.multiIgreja
       this.form.permissaoUsuario.relatorios = form.permissaoUsuario.relatorios
       this.form.permissaoUsuario.usuarios = form.permissaoUsuario.usuarios
+      this.openModal = true
+    },
+    get () {
+      axios.get(adonai.url + 'usuario/' + 1 + '/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.usuarios = res.data
+        this.openloading = false
+      })
+    },
+    getbyId (id) {
+      this.openloading = true
+      axios.get(adonai.url + 'usuariobyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.read(res.data)
+        this.openloading = false
+      })
     }
   },
   computed: {
-    ...mapState('usuario', ['usuario'])
+    ...mapState('usuario', ['usuario']),
+    ...mapState('auth', ['user'])
   },
   props: {
     usuarios: { type: Object, required: false }
