@@ -1,8 +1,7 @@
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import util from '../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../router/services'
-import membro from './store/state'
 import axios from 'axios'
 var moment = require('moment')
 var data = new Date()
@@ -11,13 +10,14 @@ export default {
   data () {
     return {
       openModal: false,
-      openCidade: false,
       deleteModal: false,
       openloading: false,
+      open: false,
+      ds: {
+        grid: [],
+        title: ''
+      },
       campocidade: 0,
-      pagina: 1,
-      fullPage: true,
-      openDatasearch: false,
       status: '',
       form: {
         add: true,
@@ -101,40 +101,38 @@ export default {
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD h:mm:ss')
       },
-      cidade: [],
-      nCargos: [],
+      membros: [],
       a: null
     }
   },
   mounted () {
-    this.isLoading = true
-    this.ActionSetMembro()
-    this.isLoading = false
+    this.openloading = true
+    this.get()
   },
   methods: {
-    ...mapActions('membro', ['ActionSetMembro']),
-    ...mapActions('membro', ['SalvarMembro']),
-    async submit () {
-      try {
-        await this.SalvarMembro(this.form)
-        this.ActionSetMembro()
-        if (this.form.add === true) {
-          this.status = 'Salvo com Sucesso'
-        } else if (this.form.edit === true) {
-          this.status = 'Alterado com Sucesso'
-        } else {
-          this.status = 'Excluido com Sucesso'
-        }
-        this.$toastr.success(this.status, 'Cadastro de Membros', util.toast)
-        this.limparCampos(this.form)
-        if (this.form.edit) {
+    async save (form) {
+      this.openloading = true
+      await axios.post(adonai.url + 'membro', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data === 'success') {
+          if (this.form.add === true) {
+            this.status = 'Salvo com Sucesso'
+          } else if (this.form.edit === true) {
+            this.status = 'Alterado com Sucesso'
+          } else {
+            this.status = 'Excluido com Sucesso'
+          }
+          this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
+          this.get(1)
+          this.cleanForm(form)
+          this.openloading = true
           this.openModal = false
+        } else {
+          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.openloading = false
         }
-      } catch (err) {
-        this.$toastr.error(err, 'Falha ao Salvar', util.toast)
-      }
+      })
     },
-    limparCampos (form) {
+    cleanForm (form) {
       form.id = ''
       form.nome = ''
       form.idPessoa = ''
@@ -274,9 +272,10 @@ export default {
       } else if (form.idCargo === '') {
         this.$toastr.error('Por favor preencha o campo Cargo', 'Campos Inválidos', util.toast)
       } else {
-        this.submit()
+        this.save(form)
       }
     },
+
     previewFiles: function () {
       var file = document.querySelector('input[type=file]').files[0]
       var reader = new FileReader()
@@ -290,11 +289,6 @@ export default {
       this.a = sessionStorage.getItem('img')
       this.form.imagem = this.a
       sessionStorage.setItem('img', '')
-    },
-    buscarCargo () {
-      axios.get('http://192.168.1.106:8089/adonai/CargoGet', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.nCargos = res.data
-      })
     },
     imprimir () {
       this.openloading = true
@@ -321,28 +315,44 @@ export default {
         }
       })
     },
-    buscarCidade (pagina) {
-      axios.get('http://192.168.1.106:8089/adonai/cidade/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.cidade = res.data
-      })
-    },
-    buscarCidadeKey (cidade) {
-      axios.get('http://192.168.1.106:8089/adonai/cidadekey/' + cidade, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.cidade = res.data
-      })
-    },
-    buscarmembro (id) {
-      axios.get('http://192.168.1.106:8089/adonai/membro/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+    getbyId (id) {
+      this.openloading = true
+      axios.get(adonai.url + 'membro/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.povoar(res.data)
+        this.openloading = false
       })
+    }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
+    datasearch (route, params) {
+      if (route === 1) {
+        this.ds.grid = ['ID', 'Nome Cidade', 'UF', '']
+        this.ds.title = 'Cidades'
+        this.$refs.expl.dataSearch('cidade', 1, 'a', params)
+        this.open = true
+      } else if (route === 2) {
+        this.ds.grid = ['ID', 'Descrição']
+        this.ds.title = 'Cargos'
+        this.$refs.expl.dataSearch('cargos', 1, 'a')
+        this.open = true
+      }
     },
-    b (pagina) {
-      membro.reloadmembro(pagina, this.user.token)
+    destroy (route, registro, params) {
+      if (route === 'cidade') {
+        this.form.endereco[params].cidade = registro.cidade
+        this.form.endereco[params].idCidade = registro.id
+      } else {
+        this.form.cargo = registro.descricao
+        this.form.idCargo = registro.id
+      }
+      this.open = false
+    },
+    get () {
+      axios.get(adonai.url + 'membros/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.membros = res.data
+        this.openloading = false
+      })
     }
   },
   computed: {
-    ...mapState('membro', ['membro']),
-    ...mapState('cargo', ['cargo']),
     ...mapState('auth', ['user'])
   },
   props: {

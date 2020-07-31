@@ -143,7 +143,7 @@ export default {
   },
   mounted () {
     this.openloading = true
-    this.get(this.pagina)
+    this.get(1)
   },
   methods: {
     async save (form) {
@@ -180,6 +180,7 @@ export default {
         this.igreja = res.data
         this.openloading = false
       })
+      /* this.$refs.expl.explorer('igrejagrid',1,'') */
     },
     cleanForm () {
       this.form.id = ''
@@ -409,7 +410,7 @@ export default {
     datasearch (params) {
       this.ds.grid = ['ID', 'Nome Cidade', 'UF', '']
       this.ds.title = 'Cidades'
-      this.$refs.teste.dataSearch('cidade', 1, 'a', params)
+      this.$refs.cmp.dataSearch('cidade', 1, 'a', params)
       this.open = true
     },
     destroy (route, registro, params) {

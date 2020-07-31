@@ -127,7 +127,7 @@
     :cabecalho="ds.grid"
     :form="form" v-bind:openDatasearch="open"
     :destroy="destroy"
-    ref="teste"/>
+    ref="cmp"/>
   </div>
 </template>
 
@@ -162,5 +162,13 @@ p {
   left: 0;
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);
+}
+button {
+  color: #5e8a75;
+  border-color:#5e8a75;
+}
+button:hover {
+  background-color: #5e8a75;
+  border-color:#5e8a75;
 }
 </style>

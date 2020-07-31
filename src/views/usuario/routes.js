@@ -56,7 +56,7 @@ export default {
           }
           this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
           this.get(1)
-          this.clean()
+          this.clean(form)
           this.openloading = true
           this.openModal = false
         } else {
@@ -111,6 +111,9 @@ export default {
         this.usuarios = res.data
         this.openloading = false
       })
+      /* this.openloading = true
+      this.$refs.expl.explorer('igrejagrid', 1, '')
+      this.openloading = false */
     },
     getbyId (id) {
       this.openloading = true

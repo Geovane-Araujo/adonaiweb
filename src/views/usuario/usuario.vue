@@ -2,25 +2,24 @@
   <div class="usuario">
     <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
-      <div class="row bg-ligth">
-        <div class="col-lg-12">
+      <div class="row">
+        <div class="col-sm-12">
           <p>Cadastro de Usuários</p>
+          <button class="btn btn-outline-info" @click="openModal=true">
+            <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
+          </button>
+          <hr class="bg-info" >
         </div>
-      </div>
-      <div class="tre">
-        <button class="btn btn-outline-info" @click="openModal=true">
-          <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
-        </button>
-        <hr class="bg-info" >
-      </div>
-      <div class="col-lg-12">
+        <div class="col-lg-12">
           <!-- table -->
-          <adonaigrid :titulos="['ID','Nome','']"
+          <adonaigrid :titulos="['ID','Nome']"
           :registros="usuarios"
           :form="form"
           :getbyId="getbyId"
-          :save="save"></adonaigrid>
+          :save="save"
+          ref="expl"></adonaigrid>
         </div>
+      </div>
     </div>
 
     <!-- Tela cadastro -->
@@ -29,7 +28,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Cadastro Usuario</h5>
-            <button type="button" class="close"  @click="openModal=false;clean (form)">
+            <button type="button" class="close"  @click="openModal=false;clean (form);">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>

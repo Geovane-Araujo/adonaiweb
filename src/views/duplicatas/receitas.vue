@@ -163,4 +163,12 @@ p {
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);
 }
+button {
+  color: #5e8a75;
+  border-color:#5e8a75;
+}
+button:hover {
+  background-color: #5e8a75;
+  border-color:#5e8a75;
+}
 </style>

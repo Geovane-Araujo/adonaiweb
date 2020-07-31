@@ -11,7 +11,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <b-form-input class="mr-sm-2" placeholder="Buscar" v-model="contexto"  @keyup.enter="dataSearch (route, pagina, contexto)"></b-form-input>
+              <b-form-input class="mr-sm-2" placeholder="Buscar" v-model="contexto"  @keyup.enter="dataSearch (route, pagina, contexto, params)"></b-form-input>
               <br>
               <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
                 <thead>
@@ -32,11 +32,11 @@
               <div class="row">
                 <b-input-group >
                   <b-input-group-append>
-                    <b-button variant="outline-info" style="margin-left:10px;" class="material-icons" @click="pagina = pagina - 1;dataSearch (route,pagina,contexto)">chevron_left</b-button>
+                    <b-button variant="outline-info" style="margin-left:10px;" class="material-icons" @click="pagina = pagina - 1;dataSearch (route,pagina,contexto,params)">chevron_left</b-button>
                   </b-input-group-append>
                   <b-form-input  class="col-sm-1 text-center" v-model="pagina"></b-form-input>
                   <b-input-group-append>
-                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="pagina = pagina + 1;dataSearch (route,pagina,contexto)">chevron_right</b-button>
+                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="pagina = pagina + 1;dataSearch (route,pagina,contexto,params)">chevron_right</b-button>
                   </b-input-group-append>
                 </b-input-group>
               </div>

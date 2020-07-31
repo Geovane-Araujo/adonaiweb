@@ -18,7 +18,8 @@
           :registros="igreja"
           :form="form"
           :getbyId="getbyId"
-          :save="save"></adonaigrid>
+          :save="save"
+          ref="expl"></adonaigrid>
         </div>
       </div>
     </div>
@@ -398,7 +399,7 @@
     :cabecalho="ds.grid"
     :form="form" v-bind:openDatasearch="open"
     :destroy="destroy"
-    ref="teste"/>
+    ref="cmp"/>
   </div>
 </template>
 

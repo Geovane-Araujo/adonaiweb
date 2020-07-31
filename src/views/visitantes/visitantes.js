@@ -18,7 +18,6 @@ export default {
         title: ''
       },
       campocidade: 0,
-      pagina: 1,
       status: '',
       form: {
         add: true,
@@ -74,7 +73,7 @@ export default {
   },
   mounted () {
     this.openloading = true
-    this.get(this.pagina)
+    this.get(1)
   },
   methods: {
     async save (form) {
@@ -89,7 +88,7 @@ export default {
             this.status = 'Excluido com Sucesso'
           }
           this.$toastr.success(this.status, 'Cadastro de Membros', util.toast)
-          this.get(this.pagina)
+          this.get(1)
           this.cleanForm()
           this.openloading = false
           if (this.form.edit) {

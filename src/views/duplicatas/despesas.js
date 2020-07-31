@@ -112,17 +112,17 @@ export default {
       if (route === 1) {
         this.ds.grid = ['ID', 'Nome']
         this.ds.title = 'Membro'
-        this.$refs.teste.dataSearch('membro', 1, 0)
+        this.$refs.cmp.dataSearch('membro', 1, 0)
         this.open = true
       } else if (route === 2) {
         this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Tipo Conta'
-        this.$refs.teste.dataSearch('tipo', 1, 1)
+        this.$refs.cmp.dataSearch('tipo', 1, 1)
         this.open = true
       } else if (route === 3) {
         this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Caixa'
-        this.$refs.teste.dataSearch('caixa', 1, 1)
+        this.$refs.cmp.dataSearch('caixa', 1, 1)
         this.open = true
       }
     },
