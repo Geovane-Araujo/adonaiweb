@@ -12,7 +12,6 @@ import 'vuetify/dist/vuetify.min.css'
 import VueToastr2 from 'vue-toastr-2'
 import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonaigrid from '../src/components/grid.vue'
 import adonaidatasearch from '../src/components/datasearch.vue'
@@ -32,7 +31,6 @@ Vue.use(Vuetify)
 Vue.use(VueToastr2)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-Vue.use(Loading)
 Vue.use(VueTheMask)
 Vue.use(money, { precision: 4 })
 Vue.use(require('vue-moment'))

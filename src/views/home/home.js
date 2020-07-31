@@ -14,7 +14,7 @@ export default {
           hiddenOnCollapse: true
         },
         {
-          href: '',
+          href: '/',
           title: 'Dashboard',
           icon: 'fas fa-poll'
         },

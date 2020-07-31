@@ -25,8 +25,8 @@ export default {
       try {
         localStorage.setItem('cnpj', this.form.cnpj)
         await this.ActionLogin(this.form)
-        this.$toastr.success('Seja BEm Vindo(a)', 'AdonaiSoft - Web', util.toast)
-        this.$router.push({ name: 'home' })
+        this.$toastr.success('Seja Bem Vindo(a)', 'AdonaiSoft - Web', util.toast)
+        this.$router.push({ name: 'home', path: '/dashboard' })
       } catch (err) {
         this.$toastr.error('Verifique os dados de Autenticação', 'AdonaiSoft - Web', util.toast)
       }

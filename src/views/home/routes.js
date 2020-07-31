@@ -13,11 +13,13 @@ import despesas from '../duplicatas/despesas.vue'
 import receitas from '../duplicatas/receitas.vue'
 import caixa from '../caixa/caixa.vue'
 import movimento from '../caixa/movimento.vue'
+import dashboard from '../dashboard/dashboard.vue'
 
 export default [
   {
     path: '/',
     name: 'home',
+    redirect: { name: 'dashboard', params: { name: 'dashboard' } },
     component: home,
     children: [
       {
@@ -89,6 +91,11 @@ export default [
         path: 'movimento',
         name: 'movimento',
         component: movimento
+      },
+      {
+        path: 'dashboard',
+        name: 'dashboard',
+        component: dashboard
       }
     ]
   }
