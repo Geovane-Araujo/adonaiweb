@@ -128,7 +128,7 @@ export default {
         {
           href: '',
           title: 'Configurações',
-          icon: 'fas fa-wrench',
+          icon: 'fab fa-whmcs',
           child: [
             {
               href: '/igreja',

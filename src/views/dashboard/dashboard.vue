@@ -7,20 +7,90 @@
           <p>DashBoard</p>
           <hr class="bg-info">
           <div class="row">
-            <div class="col-sm-4">
-              <div class="col-sm-12" style="background-color: #6e4c4c;">
-                <h4 class="text-light">Membros</h4>
+            <div class="col-sm-3">
+              <div class="col-sm-12" style="background-color: #ffffff;">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <i class="fas fa-users fa-3x"
+                    aria-hidden="true"
+                    style="color:#b36a5e; text-align:center;"></i>
+                    <hr class="bg-info">
+                  </div>
+                  <div class="col-sm-6">
+                      <h6 style="text-align: center;">Membros</h6>
+                      <h1 style="text-align: center; font-size: 40px; ">65</h1>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col-sm-4">
-              <div class="col-sm-12" style="background-color: #6e4c4c;">
-                <h4 class="text-light">Visitantes</h4>
+            <div class="col-sm-3">
+              <div class="col-sm-12" style="background-color: #ffffff;">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <i class="fas fa-chart-line fa-3x"
+                    aria-hidden="true"
+                    style="color:#16697a; text-align:center;"></i>
+                    <hr class="bg-info">
+                  </div>
+                  <div class="col-sm-6">
+                      <h6 style="text-align: center;">Entradas</h6>
+                      <h1 style="text-align: center; font-size: 20px; ">R$ 655,00</h1>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col-sm-4">
-              <div class="col-sm-12" style="background-color: #6e4c4c;">
-                <h4 class="text-light">Total de Membros</h4>
+            <div class="col-sm-3">
+              <div class="col-sm-12" style="background-color: #ffffff;">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <i class="fas fa-chart-line fa-rotate-180 fa-3x"
+                    aria-hidden="true"
+                    style="color:#ffa62b; text-align:center;"></i>
+                    <hr class="bg-info">
+                  </div>
+                  <div class="col-sm-6">
+                      <h6 style="text-align: center;">Despesas</h6>
+                      <h1 style="text-align: center; font-size: 20px; ">R$ 65,00</h1>
+                  </div>
+                </div>
               </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="col-sm-12" style="background-color: #ffffff;">
+               <div class="row">
+                  <div class="col-sm-6">
+                    <i class="far fa-address-book fa-3x"
+                    aria-hidden="true"
+                    style="color:#5a189a; text-align:center;"></i>
+                    <hr class="bg-info">
+                  </div>
+                  <div class="col-sm-6">
+                      <h6 style="text-align: center;">Compromissos</h6>
+                      <h1 style="text-align: center; font-size: 40px; ">65</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="bg-info">
+          <div class="col-sm-12">
+            <barchart
+            :label="cabe_finan"
+            :datasets="dataset_finan"></barchart>
+          </div>
+          <hr class="bg-info">
+          <div class="row">
+            <div class="col-sm-6">
+              <piechart
+              :label="cabe_tipos"
+              :datasets="dataset_tipos">
+              </piechart>
+            </div>
+            <div class="col-sm-6">
+              <dougchart
+              :label="cabe_tipos"
+              :datasets="dataset_tipos">
+              </dougchart>
             </div>
           </div>
         </div>

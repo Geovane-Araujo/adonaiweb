@@ -9,6 +9,7 @@
 @import '~@fullcalendar/daygrid/main.css';
 @import 'node_modules/bootstrap-vue/src/index.scss';
 
+
 *{
   font-family: 'Roboto', sans-serif;
 }
@@ -21,3 +22,9 @@
 $namespace: 'xmx';
 $default-color: #555;
 $primary-color: #17a71e;
+
+$palette1: #033249;
+$palette2: #5e8a75;
+$palette3: #c4b5a0;
+$palette4: #e9e6e1;
+$palette5: #f7f7f7;
