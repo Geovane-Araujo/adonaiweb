@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     async save (form) {
-      if (form.del === true && form.dataPagamento === '') {
+      if (form.del === true && form.dataPagamento !== '') {
         this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSpft diz:', util.toast)
       } else {
         await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -147,7 +147,7 @@ export default {
       this.form.status = form.status
       this.form.valor = form.valor
       this.form.tipo = 0
-      this.form.observacoes = form.tipo
+      this.form.observacoes = form.observacoes
       this.form.idCaixaMovimento = form.idCaixaMovimento
       this.form.idMembro = form.idMembro
       this.form.nome = form.nome

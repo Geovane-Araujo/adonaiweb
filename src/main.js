@@ -24,6 +24,8 @@ import jsPDF from 'jspdf'
 import barchart from '../src/components/barchart'
 import piechart from '../src/components/pie'
 import doughnut from '../src/components/doughnut'
+import FullCalendar from 'vue-full-calendar'
+import 'fullcalendar/dist/fullcalendar.min.css'
 import './assets/scss/app.scss'
 
 window.toastr = require('toastr')
@@ -42,6 +44,7 @@ Vue.use(VueTippy)
 Vue.use(loader)
 Vue.use(jsPDF)
 Vue.use(VueCharts)
+Vue.use(FullCalendar)
 Vue.component('tippy', TippyComponent)
 Vue.component('adonaigrid', adonaigrid)
 Vue.component('adonaidatasearch', adonaidatasearch)

@@ -12,14 +12,16 @@ export default {
       require: true
     }
   },
-  mounted () {
-    this.renderChart({
-      labels: this.label,
-      datasets: this.datasets
-    },
-    {
-      responsive: true,
-      maintainAspectRatio: false
-    })
+  methods: {
+    render (label, datasets) {
+      this.renderChart({
+        labels: label,
+        datasets: datasets
+      },
+      {
+        responsive: true,
+        maintainAspectRatio: false
+      })
+    }
   }
 }

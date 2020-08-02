@@ -19,7 +19,7 @@ export default {
           icon: 'fas fa-poll'
         },
         {
-          href: '',
+          href: '/agenda',
           title: 'Agenda',
           icon: 'far fa-calendar-alt',
           badge: {

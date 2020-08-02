@@ -14,6 +14,7 @@ import receitas from '../duplicatas/receitas.vue'
 import caixa from '../caixa/caixa.vue'
 import movimento from '../caixa/movimento.vue'
 import dashboard from '../dashboard/dashboard.vue'
+import agenda from '../agenda/agenda.vue'
 
 export default [
   {
@@ -96,6 +97,11 @@ export default [
         path: 'dashboard',
         name: 'dashboard',
         component: dashboard
+      },
+      {
+        path: 'agenda',
+        name: 'agenda',
+        component: agenda
       }
     ]
   }

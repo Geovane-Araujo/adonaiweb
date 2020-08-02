@@ -12,13 +12,13 @@
                 <div class="row">
                   <div class="col-sm-6">
                     <i class="fas fa-users fa-3x"
-                    aria-hidden="true"
-                    style="color:#b36a5e; text-align:center;"></i>
+                      aria-hidden="true"
+                      style="color:#b36a5e; text-align:center;"></i>
                     <hr class="bg-info">
                   </div>
                   <div class="col-sm-6">
                       <h6 style="text-align: center;">Membros</h6>
-                      <h1 style="text-align: center; font-size: 40px; ">65</h1>
+                      <h1 style="text-align: center; font-size: 40px; ">{{ membros }}</h1>
                   </div>
                 </div>
               </div>
@@ -34,7 +34,7 @@
                   </div>
                   <div class="col-sm-6">
                       <h6 style="text-align: center;">Entradas</h6>
-                      <h1 style="text-align: center; font-size: 20px; ">R$ 655,00</h1>
+                      <h1 style="text-align: center; font-size: 20px; ">{{ entradas }}</h1>
                   </div>
                 </div>
               </div>
@@ -50,7 +50,7 @@
                   </div>
                   <div class="col-sm-6">
                       <h6 style="text-align: center;">Despesas</h6>
-                      <h1 style="text-align: center; font-size: 20px; ">R$ 65,00</h1>
+                      <h1 style="text-align: center; font-size: 20px; ">{{ despesas }}</h1>
                   </div>
                 </div>
               </div>
@@ -66,7 +66,7 @@
                   </div>
                   <div class="col-sm-6">
                       <h6 style="text-align: center;">Compromissos</h6>
-                      <h1 style="text-align: center; font-size: 40px; ">65</h1>
+                      <h1 style="text-align: center; font-size: 40px; ">1</h1>
                   </div>
                 </div>
               </div>
@@ -76,20 +76,20 @@
           <div class="col-sm-12">
             <barchart
             :label="cabe_finan"
-            :datasets="dataset_finan"></barchart>
+            :datasets="dataset_finan" ref="year"></barchart>
           </div>
           <hr class="bg-info">
           <div class="row">
             <div class="col-sm-6">
               <piechart
-              :label="cabe_tipos"
-              :datasets="dataset_tipos">
+              :label="cabe_tipos_entradas"
+              :datasets="dataset_tipos_entradas" ref="rec">
               </piechart>
             </div>
             <div class="col-sm-6">
               <dougchart
-              :label="cabe_tipos"
-              :datasets="dataset_tipos">
+              :label="cabe_tipos_despesas"
+              :datasets="dataset_tipos_despesas" ref="des">
               </dougchart>
             </div>
           </div>
