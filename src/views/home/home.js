@@ -68,12 +68,14 @@ export default {
             {
               href: '',
               title: 'Pedidos de Orações',
-              disabled: false
+              disabled: false,
+              hidden: true
             },
             {
               href: '',
               title: 'Solicitações de Visitas',
-              disabled: false
+              disabled: false,
+              hidden: true
             }
           ]
         },
@@ -116,6 +118,7 @@ export default {
         {
           href: '',
           title: 'Escola',
+          hidden: true,
           icon: 'fas fa-graduation-cap',
           child: [
             {

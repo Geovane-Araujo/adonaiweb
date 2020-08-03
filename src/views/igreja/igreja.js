@@ -142,8 +142,7 @@ export default {
     }
   },
   mounted () {
-    this.openloading = true
-    this.get(1)
+    this.get()
   },
   methods: {
     async save (form) {
@@ -157,8 +156,9 @@ export default {
           } else {
             this.status = 'Excluido com Sucesso'
           }
+          this.openModal = false
           this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
-          this.get(this.pagina)
+          this.get()
           this.cleanForm()
           this.openloading = true
           this.openModal = false
@@ -175,8 +175,9 @@ export default {
         this.save(form)
       }
     },
-    get (pagina) {
-      axios.get(adonai.url + 'igrejagrid/' + 1, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+    get () {
+      this.openloading = true
+      axios.get(adonai.url + 'igrejagrid/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.igreja = res.data
         this.openloading = false
       })
@@ -375,10 +376,6 @@ export default {
       this.form.retorno = form.retorno
       this.form.motivo = form.motivo
       this.openModal = true
-    },
-    previewFiles (event) {
-      console.log(this.$refs)
-      // this.form.imagem = this.$refs.myFiles.value
     },
     buscarcep (cep, form, local) {
       if (cep === '') {

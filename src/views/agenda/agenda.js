@@ -2,8 +2,6 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../router/services'
-import 'fullcalendar/dist/locale/pt-br'
-import 'fullcalendar/dist/fullcalendar.css'
 var moment = require('moment')
 
 export default {

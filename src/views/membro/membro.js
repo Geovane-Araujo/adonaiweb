@@ -106,7 +106,6 @@ export default {
     }
   },
   mounted () {
-    this.openloading = true
     this.get()
   },
   methods: {
@@ -346,6 +345,7 @@ export default {
       this.open = false
     },
     get () {
+      this.openloading = true
       axios.get(adonai.url + 'membros/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.membros = res.data
         this.openloading = false

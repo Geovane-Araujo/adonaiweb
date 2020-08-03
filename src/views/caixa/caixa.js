@@ -58,24 +58,28 @@ export default {
   },
   methods: {
     async save (form) {
-      form.moment = moment(data).format('YYYY-MM-DD HH:mm:ss')
-      await axios.post(adonai.url + 'caixa', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data === 'success') {
-          if (this.form.add === true) {
-            this.status = 'Salvo com Sucesso'
-          } else if (this.form.edit === true) {
-            this.status = 'Alterado com Sucesso'
+      if (form.del === true && form.id < 0) {
+        this.$toastr.info('Não é permitido Excluir Registros Padrões do Sistema', 'AdonaiSoft Diz:', util.toast)
+      } else {
+        form.moment = moment(data).format('YYYY-MM-DD HH:mm:ss')
+        await axios.post(adonai.url + 'caixa', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          if (res.data === 'success') {
+            if (this.form.add === true) {
+              this.status = 'Salvo com Sucesso'
+            } else if (this.form.edit === true) {
+              this.status = 'Alterado com Sucesso'
+            } else {
+              this.status = 'Excluido com Sucesso'
+            }
+            this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
+            this.get(1)
+            this.cleanForm()
+            this.openModal = false
           } else {
-            this.status = 'Excluido com Sucesso'
+            this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           }
-          this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
-          this.get(1)
-          this.cleanForm()
-          this.openModal = false
-        } else {
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
-        }
-      })
+        })
+      }
     },
     validate (form, quitar) {
       if (this.form.descricao === '') {
@@ -105,7 +109,7 @@ export default {
     datasearch (route) {
       this.ds.grid = ['ID', 'Descricao']
       this.ds.title = 'Contas Bancárias'
-      this.$refs.teste.dataSearch1('searchconta', 1)
+      this.$refs.teste.dataSearch('searchconta', 1, 'a')
       this.open = true
     },
     cleanForm () {

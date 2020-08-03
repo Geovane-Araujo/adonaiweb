@@ -10,12 +10,13 @@ export default {
   data () {
     return {
       openModal: false,
-      openCidade: false,
-      deleteModal: false,
-      isLoading: false,
-      campocidade: 0,
-      pagina: 1,
-      openDatasearch: false,
+      openloading: false,
+      open: false,
+      ds: {
+        grid: [],
+        title: '',
+        params: ''
+      },
       status: '',
       form: {
         add: true,
@@ -66,7 +67,6 @@ export default {
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
       },
-      cidade: [],
       congregacao: []
     }
   },
@@ -77,6 +77,7 @@ export default {
   },
   methods: {
     async save (form) {
+      this.openloading = true
       await axios.post(adonai.url + 'congregacao', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data === 'success') {
           if (this.form.add === true) {
@@ -87,13 +88,13 @@ export default {
             this.status = 'Excluido com Sucesso'
           }
           this.$toastr.success(this.status, 'AdonaiSoft', util.toast)
-          this.get(this.pagina)
+          this.get()
           this.cleanForm()
-          if (this.form.edit) {
-            this.openModal = false
-          }
+          this.openModal = false
+          this.openloading = false
         } else {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.openloading = false
         }
       })
     },
@@ -104,9 +105,11 @@ export default {
         this.save(form)
       }
     },
-    get (pagina) {
-      axios.get(adonai.url + 'congregacao/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+    get () {
+      this.openloading = true
+      axios.get(adonai.url + 'congregacao/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.congregacao = res.data
+        this.openloading = false
       })
     },
     cleanForm () {
@@ -197,24 +200,33 @@ export default {
         })
       }
     },
-    buscarCidade (pagina) {
-      axios.get(adonai.url + 'cidade/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.cidade = res.data
-      })
-    },
-    buscarCidadeKey (cidade) {
-      axios.get(adonai.url + 'cidadekey/' + cidade, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.cidade = res.data
-      })
-    },
-    getNovoCById (id) {
+    getbyId (id) {
+      this.openloading = true
       axios.get(adonai.url + 'congregacaobyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.motivo === 'success') {
           this.read(res.data)
+          this.openloading = false
         } else {
           this.$toastr.error(res.data, 'AdonaiSoft', util.toast)
+          this.openloading = false
         }
       })
+    },
+    datasearch (params) {
+      this.ds.grid = ['ID', 'Nome Cidade', 'UF', '']
+      this.ds.title = 'Cidades'
+      this.$refs.cmp.dataSearch('cidade', 1, 'a', params)
+      this.open = true
+    },
+    destroy (route, registro, params) {
+      if (params === 0) {
+        this.form.endereco[0].cidade = registro.cidade
+        this.form.endereco[0].idCidade = registro.id
+      } else {
+        this.form.endereco[1].cidade = registro.cidade
+        this.form.endereco[1].idCidade = registro.id
+      }
+      this.open = false
     }
   },
   computed: {

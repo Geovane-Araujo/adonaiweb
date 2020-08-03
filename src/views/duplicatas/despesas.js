@@ -112,7 +112,7 @@ export default {
       if (route === 1) {
         this.ds.grid = ['ID', 'Nome']
         this.ds.title = 'Membro'
-        this.$refs.cmp.dataSearch('membro', 1, 0)
+        this.$refs.cmp.dataSearch('membro', 1, 'a')
         this.open = true
       } else if (route === 2) {
         this.ds.grid = ['ID', 'Descricao']

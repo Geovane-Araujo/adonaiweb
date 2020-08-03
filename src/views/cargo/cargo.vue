@@ -1,39 +1,23 @@
 <template>
   <div class="cargo">
+    <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row bg-ligth">
         <div class="col-lg-12">
           <p>Cadastro de Cargos</p>
+          <button class="btn btn-outline-info" @click="cleanForm(form); openModal=true">
+            <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
+          </button>
+          <hr class="bg-info" >
         </div>
-      </div>
-      <div class="tre">
-        <button class="btn btn-outline-info" @click="openModal=true">
-          <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
-        </button>
-      </div>
-      <hr class="bg-info" >
-      <div class="row">
         <div class="col-lg-12">
-          <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
-            <thead>
-              <tr class="text-left text-light" style="background-color: #5e8a75">
-                <th>ID</th>
-                <th>Descricao</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="text-left" v-for="item in cargo" :key="item.id">
-                <td >{{ item.id }}</td>
-                <td>{{ item.descricao }}</td>
-                <td>
-                  <a href="#" @click="openModal =true; form.id = item.id; form.descricao = item.descricao; form.edit=true;form.add=false " class="text-success"><i class="fas fa-edit"></i></a>
-                  &nbsp;
-                  <a href="#" @click="deleteModal=true; form.id = item.id; form.edit=false;form.add=false; form.del = true" class="text-danger"><i class="far fa-trash-alt"></i></a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <!-- table -->
+          <adonaigrid :titulos="['ID','Descricao']"
+          :registros="cargos"
+          :form="form"
+          :getbyId="getbyId"
+          :save="save"
+          ref="expl"></adonaigrid>
         </div>
       </div>
     </div>
@@ -44,12 +28,12 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Cadastro Cargo</h5>
-            <button type="button" class="close"  @click="openModal=false">
+            <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body p-4">
-            <form @submit.prevent="submit()">
+            <form>
               <div class="form-group">
                 <input type="text"
                 name="descricao"
@@ -58,27 +42,8 @@
                 placeholder="Descricao"
                 v-model="form.descricao">
               </div>
-              <div class="form-group">
-                <button class="btn btn-outline-info float-right" >Salvar</button>
-              </div>
             </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- modal excluir -->
-    <div id="overlay" v-if="deleteModal">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close"  @click="deleteModal=false">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body p-4">
-            <h5 class="text-danger">Deseja realmente Excluir ?</h5>
-            <button class="btn btn-outline-danger" @click="submit(); deleteModal=false;" >Sim</button>
-            <button class="btn btn-outline-success float-right" @click="deleteModal=false">Não</button>
+            <button class="btn btn-outline-info float-right" @click="validate (form)" >Salvar</button>
           </div>
         </div>
       </div>
@@ -101,9 +66,7 @@ p {
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
   background-color: rgba($color: #ffffff, $alpha: 0.9);
   margin: 5px;
-  padding: 1px;
-  max-height:89vh;
-  overflow-y:auto;
+  overflow:auto;
 }
 #overlay {
   position: fixed;

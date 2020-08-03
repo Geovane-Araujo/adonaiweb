@@ -25,6 +25,7 @@ import barchart from '../src/components/barchart'
 import piechart from '../src/components/pie'
 import doughnut from '../src/components/doughnut'
 import FullCalendar from 'vue-full-calendar'
+import 'fullcalendar/dist/locale/pt-br'
 import 'fullcalendar/dist/fullcalendar.min.css'
 import './assets/scss/app.scss'
 

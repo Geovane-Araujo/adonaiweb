@@ -7,6 +7,7 @@ export default {
     return {
       pagina: 1,
       openModal: false,
+      openloading: false,
       aniversariantes: [],
       form: {
         nome: '',
@@ -21,8 +22,10 @@ export default {
   },
   methods: {
     buscaraniversariante () {
+      this.openloading = true
       axios.get(adonai.url + 'aniversariantes/' + this.pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.aniversariantes = res.data
+        this.openloading = false
       })
     },
     enviarMensagem (form) {

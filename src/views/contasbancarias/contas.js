@@ -1,7 +1,6 @@
 import { mapState } from 'vuex'
 import util from '../../assets/scss/util'
-// import scr from './contas'
-import url from '../router/services'
+import adonai from '../router/services'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 var moment = require('moment')
@@ -11,14 +10,14 @@ export default {
   data () {
     return {
       openModal: false,
-      deleteModal: false,
-      openBanco: false,
-      isLoading: false,
-      pagina: 1,
-      ibanco: '',
-      openDatasearch: false,
+      openloading: false,
+      open: false,
+      ds: {
+        grid: [],
+        title: '',
+        params: ''
+      },
       status: '',
-      bancos: [],
       contasbancarias: [],
       form: {
         add: true,
@@ -37,31 +36,33 @@ export default {
     }
   },
   mounted () {
-    this.isLoading = true
-    this.get(this.pagina)
-    this.isLoading = false
+    this.get()
   },
   methods: {
     async save (form) {
-      await axios.post(url.url + 'contabancaria', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data === 'success') {
-          if (this.form.add === true) {
-            this.status = 'Salvo com Sucesso'
-          } else if (this.form.edit === true) {
-            this.status = 'Alterado com Sucesso'
+      if (form.del === true && form.id < 0) {
+        this.$toastr.info('Não é permitido Excluir Registros Padrões do Sistema', 'AdonaiSoft Diz:', util.toast)
+      } else {
+        this.openloading = true
+        await axios.post(adonai.url + 'contabancaria', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          if (res.data === 'success') {
+            if (this.form.add === true) {
+              this.status = 'Salvo com Sucesso'
+            } else if (this.form.edit === true) {
+              this.status = 'Alterado com Sucesso'
+            } else {
+              this.status = 'Excluido com Sucesso'
+            }
+            this.$toastr.success(this.status, 'Cadastro de Contas Bancárias', util.toast)
+            this.get()
+            this.openloading = false
+            this.cleanForm()
           } else {
-            this.status = 'Excluido com Sucesso'
+            this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+            this.openloading = false
           }
-          this.$toastr.success(this.status, 'Cadastro de Contas Bancárias', util.toast)
-          this.get(this.pagina)
-          this.cleanForm()
-          if (this.form.edit) {
-            this.openModal = false
-          }
-        } else {
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
-        }
-      })
+        })
+      }
     },
     validate (form) {
       if (this.form.nome === '') {
@@ -70,9 +71,11 @@ export default {
         this.save(form)
       }
     },
-    get (pagina) {
-      axios.get(url.url + 'contabancaria/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+    get () {
+      this.openloading = true
+      axios.get(adonai.url + 'searchconta/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.contasbancarias = res.data
+        this.openloading = false
       })
     },
     cleanForm () {
@@ -97,20 +100,23 @@ export default {
 
       this.openModal = true
     },
-    buscarBanco (pagina) {
-      if (this.form.nomeBanco === '') {
-        this.ibanco = 'a'
-      } else {
-        this.ibanco = this.form.nomeBanco
-      }
-      axios.get(url.url + 'bancos/' + pagina + '/' + this.ibanco, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.bancos = res.data
+    getbyId (id) {
+      this.openloading = true
+      axios.get(adonai.url + 'conta/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.read(res.data)
+        this.openloading = false
       })
     },
-    getConta (id) {
-      axios.get(url.url + 'conta/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data)
-      })
+    datasearch () {
+      this.ds.grid = ['ID', 'Descriçao']
+      this.ds.title = 'Bancos'
+      this.$refs.expl.dataSearch('bancos', 1, 'a')
+      this.open = true
+    },
+    destroy (route, registro) {
+      this.form.nomeBanco = registro.nome
+      this.form.idbanco = registro.id
+      this.open = false
     }
   },
   computed: {

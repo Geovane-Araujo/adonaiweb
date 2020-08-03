@@ -3,6 +3,7 @@ import util from '../../../assets/scss/util'
 
 export default {
   data: () => ({
+    openloading: false,
     form: {
       cnpj: '',
       nome: '',
@@ -23,10 +24,12 @@ export default {
     ...mapActions('auth', ['ActionLogin']),
     async submit () {
       try {
+        this.openloading = true
         localStorage.setItem('cnpj', this.form.cnpj)
         await this.ActionLogin(this.form)
+        this.openloading = false
         this.$toastr.success('Seja Bem Vindo(a)', 'AdonaiSoft - Web', util.toast)
-        this.$router.push({ name: 'home', path: '/dashboard' })
+        this.$router.push({ name: 'home' })
       } catch (err) {
         this.$toastr.error('Verifique os dados de Autenticação', 'AdonaiSoft - Web', util.toast)
       }

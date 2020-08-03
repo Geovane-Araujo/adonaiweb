@@ -17,7 +17,7 @@
       :collapsed="collapsed"
       :show-one-child="true"
       widthCollapsed="50px"
-      width="220px"
+      width="200px"
       class="containersidebar"
       @toggle-collapse="onToggleCollapse"
     />
@@ -64,7 +64,7 @@ h2 {
   color: #f2f4f7;
 }
 #demo {
-  padding-left: 220px;
+  padding-left: 200px;
   height: 100%;
   transition: 0.3s ease;
 }
@@ -78,7 +78,7 @@ h2 {
   background-color: rgba(3,50,73,0.7);
  /*  background-image: url(https://cdn.pixabay.com/photo/2018/06/29/22/45/wheat-3506758_960_720.jpg); */
   background-size: cover;
-  margin: 0px;
+  margin-top: 0px;
   padding-left: 0px;
   padding-right: 0px;
   padding-bottom: 0px;
