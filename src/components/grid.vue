@@ -1,9 +1,9 @@
 <template id="adonaigrid">
 <div style="padding-left:0px;">
-  <table class="table table-botdered table-striped table-sm table-hover table-fixed">
+  <table class=" table table-botdered table-striped table-sm table-hover table-fixed">
       <thead  style="overflow-y:auto;">
         <tr class="text-left text-light text-light" style="background-color: #5e8a75">
-          <th v-for="title in titulos" :key="title.ID">{{ title }}</th>
+          <th  v-for="title in titulos" :key="title.ID">{{ title }}</th>
           <th></th>
         </tr>
       </thead>
@@ -57,6 +57,11 @@ label {
   margin: 10px;
   padding: 6px 20px
 }
+tr {
+  line-height: 14px;
+  font-size: 13px;
+}
+
 p {
   font-size: 30px;
 }
