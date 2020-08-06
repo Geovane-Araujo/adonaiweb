@@ -347,8 +347,13 @@ export default {
     get () {
       this.openloading = true
       axios.get(adonai.url + 'membros/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.membros = res.data
-        this.openloading = false
+        if (res.data.ret === 'success') {
+          this.membros = res.data.membros
+          this.openloading = false
+        } else {
+          this.openloading = false
+          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+        }
       })
     }
   },
