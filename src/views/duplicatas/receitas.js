@@ -11,6 +11,7 @@ export default {
     return {
       openModal: false,
       disabled: 'disabled',
+      openloading: false,
       open: false,
       ds: {
         grid: [],
@@ -55,12 +56,11 @@ export default {
     }
   },
   mounted () {
-    this.isLoading = true
     this.getDuplicata(this.pagina)
-    this.isLoading = false
   },
   methods: {
     async save (form) {
+      this.openloading = true
       if (form.del === true && form.dataPagamento !== '') {
         this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSpft diz:', util.toast)
       } else {
@@ -77,6 +77,7 @@ export default {
             this.getDuplicata(this.pagina)
             this.cleanForm()
             this.openModal = false
+            this.openloading = false
           } else {
             this.$toastr.error(res.data, 'AdonaiSpft diz:', util.toast)
           }
@@ -105,8 +106,10 @@ export default {
       }
     },
     getDuplicata (pagina) {
+      this.openloading = true
       axios.get(adonai.url + 'duplicata/' + pagina + '/' + 0, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.duplicata = res.data
+        this.openloading = false
       })
     },
 
@@ -161,8 +164,10 @@ export default {
       this.openModal = true
     },
     getbyId (id) {
+      this.openloading = true
       axios.get(adonai.url + 'duplicata/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.read(res.data)
+        this.openloading = false
       })
     },
     datasearch (route) {

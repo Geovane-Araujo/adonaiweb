@@ -1,5 +1,6 @@
 <template>
   <div class="caixas">
+     <loader v-show="openloading" object="#ff9633" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">

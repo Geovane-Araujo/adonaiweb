@@ -11,6 +11,7 @@ export default {
     return {
       openModal: false,
       open: false,
+      openloading: false,
       caixa: [],
       ds: {
         grid: [],
@@ -52,12 +53,11 @@ export default {
     }
   },
   mounted () {
-    this.isLoading = true
     this.get(1)
-    this.isLoading = false
   },
   methods: {
     async save (form) {
+      this.openloading = true
       if (form.del === true && form.id < 0) {
         this.$toastr.info('Não é permitido Excluir Registros Padrões do Sistema', 'AdonaiSoft Diz:', util.toast)
       } else {
@@ -75,6 +75,7 @@ export default {
             this.get(1)
             this.cleanForm()
             this.openModal = false
+            this.openloading = false
           } else {
             this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           }
@@ -97,9 +98,11 @@ export default {
       }
     },
     get (pagina) {
+      this.openloading = true
       axios.get(adonai.url + 'caixaloadbypg/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.caixa = res.data
       })
+      this.openloading = false
     },
     getusers () {
       axios.get(adonai.url + 'users', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -144,9 +147,11 @@ export default {
       this.openModal = true
     },
     getbyId (id) {
+      this.openloading = true
       axios.get(adonai.url + 'caixabyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.read(res.data)
       })
+      this.openloading = false
     },
     destroy (route, registro) {
       this.form.nome = registro.descricao
