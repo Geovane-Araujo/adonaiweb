@@ -12,7 +12,7 @@
           </button>
           <button
             class="btn btn-outline-info float-right"
-            @click="imprimir()">
+            @click="imprimir('report/pessoas/membrolist.jrxml')">
             <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir
           </button>
           <hr class="bg-info">

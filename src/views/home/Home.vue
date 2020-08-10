@@ -4,10 +4,11 @@
       <div class="containerb">
         <nav class="navbar">
           <div class="Esquerdo">
-            <h2 >AdonaiSoft</h2>
+            <h3>{{ user.igreja.nome }}</h3>
           </div>
           <div class="Direito">
-            <h4>Seja Bem Vindo(a) {{ user.nome }}</h4>
+            <b-avatar src="https://placekitten.com/300/300" ></b-avatar>
+            <h4 class="float-right" style="margin-left: 10px;">{{ user.nome }}</h4>
           </div>
           </nav>
           <router-view class="router"/>
@@ -44,7 +45,7 @@ html {
   width: 100%;
   overflow: hidden;
 }
-h2 {
+h3 {
   color: #f2f4f7;
 }
 .containerb {

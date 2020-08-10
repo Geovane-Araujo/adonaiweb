@@ -11,6 +11,7 @@ export const ActionLogin = ({ dispatch }, payload) => {
 
 export const ActionUser = ({ commit }, payload) => {
   commit(types.SET_USER, payload)
+  console.log(payload)
 }
 
 export const ActionToken = ({ commit }, payload) => {

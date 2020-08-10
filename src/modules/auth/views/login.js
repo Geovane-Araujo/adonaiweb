@@ -31,6 +31,7 @@ export default {
         this.$toastr.success('Seja Bem Vindo(a)', 'AdonaiSoft - Web', util.toast)
         this.$router.push({ name: 'home' })
       } catch (err) {
+        this.openloading = false
         this.$toastr.error('Verifique os dados de Autenticação', 'AdonaiSoft - Web', util.toast)
       }
     },

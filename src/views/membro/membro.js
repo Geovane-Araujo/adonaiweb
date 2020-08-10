@@ -289,9 +289,9 @@ export default {
       this.form.imagem = this.a
       sessionStorage.setItem('img', '')
     },
-    imprimir () {
+    imprimir (relatorio) {
       this.openloading = true
-      axios.get(adonai.url + 'imprimir', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      axios.post(adonai.url + 'imprimir', relatorio, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.openloading = false
         var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes,resizable,screenX=50,screenY=50,width=850,height=1050'
         var a = '<embed width=100% height=100% type="application/pdf" src="data:application/pdf;base64,' + escape(res.data) + ' "></embed>'
