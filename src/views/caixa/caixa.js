@@ -19,6 +19,11 @@ export default {
       },
       tipo: 1,
       status: 1,
+      explorer: {
+        route: 'menu_pessoas_caixa',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       form: {
         add: true,
         edit: false,
@@ -53,7 +58,7 @@ export default {
     }
   },
   mounted () {
-    this.get(1)
+    this.$refs.grid.get(this.explorer)
   },
   methods: {
     async save (form) {
@@ -72,11 +77,12 @@ export default {
               this.status = 'Excluido com Sucesso'
             }
             this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
-            this.get(1)
             this.cleanForm()
             this.openModal = false
             this.openloading = false
+            this.$refs.grid.get(this.explorer)
           } else {
+            this.openloading = false
             this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           }
         })
@@ -97,16 +103,10 @@ export default {
         this.save(form)
       }
     },
-    get (pagina) {
-      this.openloading = true
-      axios.get(adonai.url + 'caixaloadbypg/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.caixa = res.data
-      })
-      this.openloading = false
-    },
     getusers () {
       axios.get(adonai.url + 'users', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.form.usuariospermissoes = res.data
+        this.openloading = false
       })
     },
     datasearch (route) {

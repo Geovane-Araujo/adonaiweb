@@ -7,18 +7,19 @@
           <p>Despesas</p>
           <button
             class="btn btn-outline-info"
-            @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
+            @click="form.del=false;form.add=true;form.edit=false;lancar=true,estornar=false;openModal=true;">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
           </button>
           <hr class="bg-info">
         </div>
         <div class="col-lg-12">
           <!-- table -->
-          <adonaigrid :titulos="['ID','nome','Descricao','Valor','DataEmis.','DataVenc.','DataPag','Status']"
-          :registros="duplicata"
+          <adonaigrid :titulos="['ID','nome','Descricao','Valor','DataEmis.','DataVenc.','DataPag','Status','Tipo','Caixa']"
           :form="form"
           :getbyId="getbyId"
-          :save="save"></adonaigrid>
+          :save="save"
+          :explorer="explorer"
+          ref="grid"></adonaigrid>
         </div>
       </div>
     </div>
@@ -116,9 +117,9 @@
                   </b-row>
                 </b-container>
               </form>
-              <button type="button" class="btn btn-outline-info float-left" style="margin-left:10px;" @click="validate(form, 0)">Estornar</button>
-              <button type="button" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(form, 1)">Lançar e Quitar</button>
-              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form, 0)">Lançar</button>
+              <button type="button" v-show="estornar" class="btn btn-outline-info float-left" style="margin-left:10px;" @click="validate(form, 0)">Estornar</button>
+              <button type="button" v-show="lancar" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(form, 1)">Lançar e Quitar</button>
+              <button type="button" v-show="lancar" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form, 0)">Lançar</button>
             </div>
           </div>
         </div>

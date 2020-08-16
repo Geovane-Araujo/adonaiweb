@@ -12,6 +12,13 @@ export default {
       openModal: false,
       disabled: 'disabled',
       openloading: false,
+      estornar: false,
+      lancar: false,
+      explorer: {
+        route: 'menu_duplicata_receita',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       open: false,
       ds: {
         grid: [],
@@ -56,13 +63,14 @@ export default {
     }
   },
   mounted () {
-    this.getDuplicata(this.pagina)
+    this.$refs.grid.get(this.explorer)
   },
   methods: {
     async save (form) {
       this.openloading = true
       if (form.del === true && form.dataPagamento !== '') {
         this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSpft diz:', util.toast)
+        this.openloading = false
       } else {
         await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data === 'success') {
@@ -73,13 +81,13 @@ export default {
             } else {
               this.status = 'Excluido com Sucesso'
             }
-            this.$toastr.success(this.status, 'AdonaiSpft diz:', util.toast)
-            this.getDuplicata(this.pagina)
+            this.$toastr.success(this.status, 'AdonaiSoft diz:', util.toast)
             this.cleanForm()
             this.openModal = false
             this.openloading = false
+            this.$refs.grid.get(this.explorer)
           } else {
-            this.$toastr.error(res.data, 'AdonaiSpft diz:', util.toast)
+            this.$toastr.error(res.data, 'AdonaiSoft diz:', util.toast)
           }
         })
       }
@@ -105,14 +113,6 @@ export default {
         this.save(form)
       }
     },
-    getDuplicata (pagina) {
-      this.openloading = true
-      axios.get(adonai.url + 'duplicata/' + pagina + '/' + 0, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.duplicata = res.data
-        this.openloading = false
-      })
-    },
-
     cleanForm () {
       this.form.add = true
       this.form.edit = false
@@ -148,6 +148,13 @@ export default {
       this.form.dataPagamento = form.dataPagamento
       this.form.iUsuarioInclusao = form.iUsuarioInclusao
       this.form.status = form.status
+      if (form.status === 0) {
+        this.estornar = true
+        this.lancar = false
+      } else {
+        this.estornar = false
+        this.lancar = true
+      }
       this.form.valor = form.valor
       this.form.tipo = 0
       this.form.observacoes = form.observacoes
@@ -166,7 +173,7 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'duplicata/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data)
+        this.read(res.data.obj)
         this.openloading = false
       })
     },

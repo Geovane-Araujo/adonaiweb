@@ -12,13 +12,17 @@ export default {
       openModal: false,
       openloading: false,
       open: false,
+      explorer: {
+        route: 'menu_contas_bancarias',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       ds: {
         grid: [],
         title: '',
         params: ''
       },
       status: '',
-      contasbancarias: [],
       form: {
         add: true,
         edit: false,
@@ -36,7 +40,7 @@ export default {
     }
   },
   mounted () {
-    this.get()
+    this.$refs.grid.get(this.explorer)
   },
   methods: {
     async save (form) {
@@ -54,9 +58,10 @@ export default {
               this.status = 'Excluido com Sucesso'
             }
             this.$toastr.success(this.status, 'Cadastro de Contas Bancárias', util.toast)
-            this.get()
             this.openloading = false
+            this.openModal = false
             this.cleanForm()
+            this.$refs.grid.get(this.explorer)
           } else {
             this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
             this.openloading = false
@@ -70,13 +75,6 @@ export default {
       } else {
         this.save(form)
       }
-    },
-    get () {
-      this.openloading = true
-      axios.get(adonai.url + 'searchconta/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.contasbancarias = res.data
-        this.openloading = false
-      })
     },
     cleanForm () {
       this.form.id = ''

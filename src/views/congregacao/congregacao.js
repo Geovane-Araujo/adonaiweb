@@ -12,6 +12,11 @@ export default {
       openModal: false,
       openloading: false,
       open: false,
+      explorer: {
+        route: 'menu_pessoas_congregacao',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       ds: {
         grid: [],
         title: '',
@@ -66,14 +71,11 @@ export default {
         ],
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
-      },
-      congregacao: []
+      }
     }
   },
   mounted () {
-    this.isLoading = true
-    this.get(this.pagina)
-    this.isLoading = false
+    this.$refs.grid.get(this.explorer)
   },
   methods: {
     async save (form) {
@@ -88,10 +90,10 @@ export default {
             this.status = 'Excluido com Sucesso'
           }
           this.$toastr.success(this.status, 'AdonaiSoft', util.toast)
-          this.get()
           this.cleanForm()
           this.openModal = false
           this.openloading = false
+          this.$refs.grid.get(this.explorer)
         } else {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           this.openloading = false
@@ -104,13 +106,6 @@ export default {
       } else {
         this.save(form)
       }
-    },
-    get () {
-      this.openloading = true
-      axios.get(adonai.url + 'congregacao/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.congregacao = res.data
-        this.openloading = false
-      })
     },
     cleanForm () {
       this.form.id = ''

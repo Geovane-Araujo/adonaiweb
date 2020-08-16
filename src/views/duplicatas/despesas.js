@@ -11,6 +11,13 @@ export default {
     return {
       openModal: false,
       open: false,
+      estornar: false,
+      lancar: false,
+      explorer: {
+        route: 'menu_duplicata_despesa',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       ds: {
         grid: [],
         title: ''
@@ -55,13 +62,14 @@ export default {
     }
   },
   mounted () {
-    this.getDuplicata(this.pagina)
+    this.$refs.grid.get(this.explorer)
   },
   methods: {
     async save (form) {
       this.openloading = true
       if (form.del === true && form.dataPagamento !== '') {
         this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSpft diz:', util.toast)
+        this.openloading = false
       } else {
         await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data === 'success') {
@@ -72,11 +80,11 @@ export default {
             } else {
               this.status = 'Excluido com Sucesso'
             }
-            this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
-            this.getDuplicata(this.pagina)
+            this.$toastr.success(this.status, 'AdonaiSoft Diz:', util.toast)
             this.cleanForm()
             this.openModal = false
             this.openloading = false
+            this.$refs.grid.get(this.explorer)
           } else {
             this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           }
@@ -103,13 +111,6 @@ export default {
         }
         this.save(form)
       }
-    },
-    getDuplicata (pagina) {
-      this.openloading = true
-      axios.get(adonai.url + 'duplicata/' + pagina + '/' + 1, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.duplicata = res.data
-        this.openloading = false
-      })
     },
     datasearch (route) {
       if (route === 1) {
@@ -164,6 +165,13 @@ export default {
       this.form.dataPagamento = form.dataPagamento
       this.form.iUsuarioInclusao = form.iUsuarioInclusao
       this.form.status = form.status
+      if (form.status === 0) {
+        this.estornar = true
+        this.lancar = false
+      } else {
+        this.estornar = false
+        this.lancar = true
+      }
       this.form.valor = form.valor
       this.form.observacoes = form.observacoes
       this.form.tipo = 1
@@ -182,7 +190,7 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'duplicata/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data)
+        this.read(res.data.obj)
         this.openloading = false
       })
     },

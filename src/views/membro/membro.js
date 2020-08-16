@@ -13,6 +13,11 @@ export default {
       deleteModal: false,
       openloading: false,
       open: false,
+      explorer: {
+        route: 'menu_pessoa_membros',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       ds: {
         grid: [],
         title: ''
@@ -97,6 +102,9 @@ export default {
             tipo: 1
           }
         ],
+        criterios: {
+          criterios: ''
+        },
         retorno: '',
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD h:mm:ss')
@@ -106,7 +114,7 @@ export default {
     }
   },
   mounted () {
-    this.get()
+    this.$refs.grid.get(this.explorer)
   },
   methods: {
     async save (form) {
@@ -121,10 +129,10 @@ export default {
             this.status = 'Excluido com Sucesso'
           }
           this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
-          this.get(1)
-          this.cleanForm(form)
-          this.openloading = true
           this.openModal = false
+          this.openloading = false
+          this.$refs.grid.get(this.explorer)
+          this.cleanForm(form)
         } else {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           this.openloading = false
@@ -274,21 +282,19 @@ export default {
         this.save(form)
       }
     },
-
-    previewFiles: function () {
+    previewFiles: function (imagem) {
       var file = document.querySelector('input[type=file]').files[0]
       var reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = function (e) {
-        this.a = e.target.result
-        sessionStorage.setItem('img', this.a)
+        sessionStorage.setItem('img', e.target.result)
       }
     },
-    img: function () {
+    /* functionImg: function () {
       this.a = sessionStorage.getItem('img')
       this.form.imagem = this.a
       sessionStorage.setItem('img', '')
-    },
+    }, */
     imprimir (relatorio) {
       this.openloading = true
       axios.post(adonai.url + 'imprimir', relatorio, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -347,13 +353,8 @@ export default {
     get () {
       this.openloading = true
       axios.get(adonai.url + 'membros/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data.ret === 'success') {
-          this.membros = res.data.membros
-          this.openloading = false
-        } else {
-          this.openloading = false
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
-        }
+        this.membros = res.data.obj
+        this.openloading = false
       })
     }
   },

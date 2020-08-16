@@ -60,9 +60,7 @@ export default {
     }
   },
   mounted () {
-    this.isLoading = true
     this.get()
-    this.isLoading = false
   },
   methods: {
     async save (form, abertura) {

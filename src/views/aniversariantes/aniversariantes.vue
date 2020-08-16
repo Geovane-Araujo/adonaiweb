@@ -89,6 +89,10 @@ p {
   margin: 5px;
   overflow:auto;
 }
+tr {
+  line-height: 14px;
+  font-size: 13px;
+}
 #overlay {
   position: fixed;
   top: 0;

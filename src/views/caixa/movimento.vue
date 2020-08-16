@@ -211,6 +211,10 @@ p {
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);
 }
+tr {
+  line-height: 14px;
+  font-size: 13px;
+}
 button {
   color: #5e8a75;
   border-color:#5e8a75;

@@ -16,12 +16,11 @@
           :registros="cargos"
           :form="form"
           :getbyId="getbyId"
-          :save="save"
-          ref="expl"></adonaigrid>
+          :explorer="explorer"
+          ref="grid"></adonaigrid>
         </div>
       </div>
     </div>
-
     <!-- modal -->
     <div id="overlay" v-if="openModal">
       <div class="modal-dialog modal-dialog-centered">

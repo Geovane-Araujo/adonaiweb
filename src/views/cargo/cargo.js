@@ -12,6 +12,11 @@ export default {
     openloading: false,
     openDatasearch: false,
     open: false,
+    explorer: {
+      route: 'menu_pessoas_cargo',
+      pagina: 1,
+      criterios: 'order by id desc'
+    },
     ds: {
       grid: [],
       title: '',
@@ -28,7 +33,7 @@ export default {
     cargos: []
   }),
   mounted () {
-    this.get()
+    this.$refs.grid.get(this.explorer)
   },
   methods: {
     async save (form) {
@@ -43,21 +48,14 @@ export default {
             this.status = 'Excluido com Sucesso'
           }
           this.$toastr.success(this.status, 'Cadastro de Contas Bancárias', util.toast)
-          this.get()
           this.openloading = false
           this.openModal = false
           this.cleanForm()
+          this.$refs.grid.get(this.explorer)
         } else {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           this.openloading = false
         }
-      })
-    },
-    get () {
-      this.openloading = true
-      axios.get(adonai.url + 'cargos/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.cargos = res.data
-        this.openloading = false
       })
     },
     validate (form) {

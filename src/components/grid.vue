@@ -1,5 +1,6 @@
 <template id="adonaigrid">
 <div style="padding-left:0px;">
+  <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
   <table class=" table table-botdered table-striped table-sm table-hover table-fixed">
       <thead  style="overflow-y:auto;">
         <tr class="text-left text-light text-light" style="background-color: #5e8a75">
@@ -8,7 +9,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="text-left" v-for="registro in registros" :key="registro.id">
+        <tr class="text-left" v-for="registro in reg" :key="registro.id">
           <td v-for="item in registro" :key="item.id">{{ item }}</td>
           <td>
             <a href="#" @click="getbyId(registro.id); form.edit=true;form.add=false" class="text-success"><i class="fas fa-edit"></i></a>

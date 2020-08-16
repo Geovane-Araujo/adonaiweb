@@ -20,10 +20,11 @@
         <div class="col-lg-12">
           <!-- table -->
           <adonaigrid :titulos="['ID','Nome','Endereço','Bairro','Numero','Telefone']"
-          :registros="membros"
           :form="form"
           :getbyId="getbyId"
-          :save="save"></adonaigrid>
+          :save="save"
+          :explorer="explorer"
+          ref="grid"></adonaigrid>
         </div>
       </div>
     </div>
@@ -46,11 +47,11 @@
                       <b-row class="text-center">
                         <b-col cols="2">
                           <div class="file-loading">
-                            <b-avatar :src="a" ref="myFiles"
+                            <b-avatar  ref="myFiles"
                             size="5rem"></b-avatar>
                           </div>
                           <label for='selecao-arquivo' class="material-icons">perm_media</label>
-                          <input id='selecao-arquivo' @change="previewFiles();img();"  accept="image/*" type='file'>
+                          <input id='selecao-arquivo'  @change="previewFiles();"  accept="image/*" type='file'>
                         </b-col>
                         <b-col cols="10" >
                           <div class="row">

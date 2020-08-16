@@ -61,7 +61,7 @@ export default {
           this.openModal = false
         } else {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
-          this.openloading = true
+          this.openloading = false
         }
       })
     },
