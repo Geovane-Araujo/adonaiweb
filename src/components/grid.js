@@ -48,9 +48,9 @@ export default {
     get (explorer) {
       this.openloading = true
       axios.post(adonai.url + 'aexplorer', explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.openloading = false
         if (res.data.ret === 'success') {
           this.reg = res.data.obj
-          this.openloading = false
         } else {
           this.openloading = false
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)

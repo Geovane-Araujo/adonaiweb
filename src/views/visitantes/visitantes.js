@@ -13,6 +13,11 @@ export default {
       deleteModal: false,
       openloading: false,
       open: false,
+      explorer: {
+        route: 'menu_pessoas_visitantes',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       ds: {
         grid: [],
         title: ''
@@ -67,13 +72,11 @@ export default {
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
       },
-      cidade: [],
-      visitantes: []
+      cidade: []
     }
   },
   mounted () {
-    this.openloading = true
-    this.get(1)
+    this.$refs.grid.get(this.explorer)
   },
   methods: {
     async save (form) {
@@ -88,9 +91,10 @@ export default {
             this.status = 'Excluido com Sucesso'
           }
           this.$toastr.success(this.status, 'Cadastro de Membros', util.toast)
-          this.get(1)
           this.cleanForm()
           this.openloading = false
+          this.openModal = false
+          this.$refs.grid.get(this.explorer)
           if (this.form.edit) {
             this.openModal = false
             this.openloading = false
@@ -106,12 +110,6 @@ export default {
       } else {
         this.save(form)
       }
-    },
-    get (pagina) {
-      axios.get(adonai.url + 'visitantes/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.visitantes = res.data
-        this.openloading = false
-      })
     },
     cleanForm () {
       this.form.id = ''

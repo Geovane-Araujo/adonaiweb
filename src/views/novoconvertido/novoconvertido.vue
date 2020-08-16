@@ -19,7 +19,8 @@
           :form="form"
           :getbyId="getbyId"
           :save="save"
-          ref="expl"></adonaigrid>
+          :explorer="explorer"
+          ref="grid"></adonaigrid>
         </div>
       </div>
     </div>

@@ -11,6 +11,11 @@ export default {
     openModal: false,
     openloading: false,
     open: false,
+    explorer: {
+      route: 'menu_tipoconta',
+      pagina: 1,
+      criterios: 'order by id desc'
+    },
     ds: {
       grid: [],
       title: '',
@@ -30,7 +35,7 @@ export default {
     tipocontas: []
   }),
   mounted () {
-    this.get()
+    this.$refs.grid.get(this.explorer)
   },
   methods: {
     async save (form) {
@@ -46,10 +51,9 @@ export default {
           }
           this.openloading = false
           this.$toastr.success(this.status, 'Cadastro de Contas Bancárias', util.toast)
-
-          this.get()
           this.cleanForm()
           this.openModal = false
+          this.$refs.grid.get(this.explorer)
         } else {
           this.openloading = false
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
@@ -70,13 +74,6 @@ export default {
       } else {
         this.save(form)
       }
-    },
-    get () {
-      this.openloading = true
-      axios.get(adonai.url + 'tipos/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.tipocontas = res.data
-        this.openloading = false
-      })
     },
     read (form) {
       this.form.id = form.id

@@ -109,7 +109,6 @@ export default {
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD h:mm:ss')
       },
-      membros: [],
       a: null
     }
   },

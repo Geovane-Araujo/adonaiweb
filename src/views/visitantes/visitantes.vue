@@ -18,7 +18,9 @@
           :registros="visitantes"
           :form="form"
           :getbyId="getbyId"
-          :save="save"></adonaigrid>
+          :save="save"
+          :explorer="explorer"
+          ref="grid"></adonaigrid>
         </div>
       </div>
     </div>

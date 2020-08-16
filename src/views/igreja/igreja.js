@@ -12,6 +12,11 @@ export default {
       openModal: false,
       openloading: false,
       open: false,
+      explorer: {
+        route: 'menu_pessoas_igreja',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       ds: {
         grid: [],
         title: '',
@@ -137,12 +142,11 @@ export default {
         ],
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
-      },
-      igreja: []
+      }
     }
   },
   mounted () {
-    this.get()
+    this.$refs.grid.get(this.explorer)
   },
   methods: {
     async save (form) {
@@ -158,10 +162,10 @@ export default {
           }
           this.openModal = false
           this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
-          this.get()
           this.cleanForm()
-          this.openloading = true
+          this.openloading = false
           this.openModal = false
+          this.$refs.grid.get(this.explorer)
         } else {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           this.openloading = true
@@ -174,14 +178,6 @@ export default {
       } else {
         this.save(form)
       }
-    },
-    get () {
-      this.openloading = true
-      axios.get(adonai.url + 'igrejagrid/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.igreja = res.data
-        this.openloading = false
-      })
-      /* this.$refs.expl.explorer('igrejagrid',1,'') */
     },
     cleanForm () {
       this.form.id = ''

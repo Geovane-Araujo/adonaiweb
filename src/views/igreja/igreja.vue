@@ -15,11 +15,11 @@
         <div class="col-lg-12">
           <!-- table -->
           <adonaigrid :titulos="['ID','Nome','Endereço','Bairro','Numero','Telefone']"
-          :registros="igreja"
           :form="form"
           :getbyId="getbyId"
           :save="save"
-          ref="expl"></adonaigrid>
+          :explorer="explorer"
+          ref="grid"></adonaigrid>
         </div>
       </div>
     </div>

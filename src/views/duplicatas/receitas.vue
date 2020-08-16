@@ -14,8 +14,7 @@
         </div>
         <div class="col-lg-12">
           <!-- table -->
-          <adonaigrid :titulos="['ID','nome','Descricao','Valor','DataEmis.','DataVenc.','DataPag','Status']"
-          :registros="duplicata"
+          <adonaigrid :titulos="['ID','nome','Descricao','Valor','DataEmis.','DataVenc.','DataPag','Status','Tipo','Caixa']"
           :form="form"
           :getbyId="getbyId"
           :save="save"

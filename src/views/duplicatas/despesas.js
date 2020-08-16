@@ -16,7 +16,7 @@ export default {
       explorer: {
         route: 'menu_duplicata_despesa',
         pagina: 1,
-        criterios: 'order by id desc'
+        criterios: ''
       },
       ds: {
         grid: [],
