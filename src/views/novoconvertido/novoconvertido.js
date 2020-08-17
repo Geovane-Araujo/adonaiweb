@@ -71,8 +71,7 @@ export default {
         ],
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
-      },
-      novoconvertido: []
+      }
     }
   },
   mounted () {
@@ -82,7 +81,7 @@ export default {
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'novoconvertido', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data === 'success') {
+        if (res.data.ret === 'success') {
           if (this.form.add === true) {
             this.status = 'Salvo com Sucesso'
           } else if (this.form.edit === true) {
@@ -198,8 +197,8 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'novoconvertidobyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data.motivo === 'success') {
-          this.read(res.data)
+        if (res.data.ret === 'success') {
+          this.read(res.data.obj)
           this.openloading = false
         } else {
           this.$toastr.error(res.data, 'AdonaiSoft', util.toast)

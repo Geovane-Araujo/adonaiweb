@@ -38,7 +38,7 @@ export default {
         observacoes: '',
         dataBatismo: '',
         estadoCivil: null,
-        imagem: '',
+        pathimg: '',
         batizado: '',
         endereco: [
           {
@@ -119,7 +119,7 @@ export default {
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'membro', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data === 'success') {
+        if (res.data.ret === 'success') {
           if (this.form.add === true) {
             this.status = 'Salvo com Sucesso'
           } else if (this.form.edit === true) {
@@ -149,7 +149,7 @@ export default {
       form.observacoes = ''
       form.dataBatismo = ''
       form.estadoCivil = null
-      form.imagem = ''
+      form.pathimg = ''
       form.batizado = ''
 
       form.endereco[0].id = ''
@@ -215,7 +215,7 @@ export default {
       this.form.observacoes = form.observacoes
       this.form.dataBatismo = form.dataBatismo
       this.form.estadoCivil = form.estadoCivil
-      this.form.imagem = form.imagem
+      this.form.pathimg = form.pathimg
       this.form.batizado = form.batizado
       this.moment = moment(data).format('YYYY-MM-DD h:mm:ss')
 
@@ -281,19 +281,14 @@ export default {
         this.save(form)
       }
     },
-    previewFiles: function (imagem) {
-      var file = document.querySelector('input[type=file]').files[0]
+    previewFiles (e) {
+      var file = e.target.files[0]
       var reader = new FileReader()
       reader.readAsDataURL(file)
-      reader.onload = function (e) {
-        sessionStorage.setItem('img', e.target.result)
+      reader.onload = e => {
+        this.form.pathimg = e.target.result
       }
     },
-    /* functionImg: function () {
-      this.a = sessionStorage.getItem('img')
-      this.form.imagem = this.a
-      sessionStorage.setItem('img', '')
-    }, */
     imprimir (relatorio) {
       this.openloading = true
       axios.post(adonai.url + 'imprimir', relatorio, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -322,7 +317,7 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'membro/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.povoar(res.data)
+        this.povoar(res.data.obj)
         this.openloading = false
       })
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério

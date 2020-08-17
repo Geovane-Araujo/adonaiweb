@@ -31,7 +31,7 @@
 
     <!-- modal para cadastro-->
     <div id="overlay" v-if=openModal>
-        <div class="modal-dialog modal-dialog-centered modal-lg ">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Cadastro de Membros</h5>
@@ -47,11 +47,11 @@
                       <b-row class="text-center">
                         <b-col cols="2">
                           <div class="file-loading">
-                            <b-avatar  ref="myFiles"
+                            <b-avatar :src="form.pathimg"
                             size="5rem"></b-avatar>
                           </div>
                           <label for='selecao-arquivo' class="material-icons">perm_media</label>
-                          <input id='selecao-arquivo'  @change="previewFiles();"  accept="image/*" type='file'>
+                          <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
                         </b-col>
                         <b-col cols="10" >
                           <div class="row">
@@ -296,18 +296,18 @@
     overflow-y:auto;
 }
 label {
-  background-color: #3498db;
+  background-color: #5e8a75;
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
   margin: 10px;
   padding: 6px 20px
 }
-p {
-  font-size: 30px;
-}
 input[type='file'] {
   display: none
+}
+p {
+  font-size: 30px;
 }
 .table-sm {
   padding: 2px;

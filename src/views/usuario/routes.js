@@ -28,8 +28,9 @@ export default {
       senha: '',
       confirmarSenha: '',
       motivo: '',
+      pathimg: '',
       retorno: '',
-      idpessoa: '',
+      idPessoa: '',
       permissaoUsuario: {
         idPessoa: 0,
         membro: 0,
@@ -50,7 +51,7 @@ export default {
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'usuario', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data === 'success') {
+        if (res.data.ret === 'success') {
           if (this.form.add === true) {
             this.status = 'Salvo com Sucesso'
           } else if (this.form.edit === true) {
@@ -64,10 +65,18 @@ export default {
           this.openModal = false
           this.$refs.grid.get(this.explorer)
         } else {
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
           this.openloading = false
         }
       })
+    },
+    previewFiles (e) {
+      var file = e.target.files[0]
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = e => {
+        this.form.pathimg = e.target.result
+      }
     },
     validate (form) {
       if (this.form.nome === '') {
@@ -81,9 +90,10 @@ export default {
       form.del = false
       form.add = true
       form.id = ''
-      form.idpessoa = ''
+      form.idPessoa = ''
       form.login = ''
       form.senha = ''
+      form.pathimg = ''
       form.confirmarSenha = ''
       form.permissaoUsuario.idPessoa = 0
       form.permissaoUsuario.membro = 0
@@ -98,7 +108,8 @@ export default {
       this.form.id = form.id
       this.form.login = form.login
       this.form.senha = form.senha
-      this.form.idpessoa = form.idpessoa
+      this.form.idPessoa = form.idPessoa
+      this.form.pathimg = form.pathimg
       this.form.permissaoUsuario.idPessoa = form.permissaoUsuario.idPessoa
       this.form.confirmarSenha = form.confirmarSenha
       this.form.permissaoUsuario.membro = form.permissaoUsuario.membro
@@ -113,7 +124,7 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'usuariobyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data)
+        this.read(res.data.obj)
         this.openloading = false
       })
     }

@@ -152,7 +152,7 @@ export default {
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'igreja', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data === 'success') {
+        if (res.data.ret === 'success') {
           if (this.form.add === true) {
             this.status = 'Salvo com Sucesso'
           } else if (this.form.edit === true) {
@@ -396,7 +396,7 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data)
+        this.read(res.data.obj)
         this.openloading = false
       })
     },
