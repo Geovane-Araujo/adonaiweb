@@ -1,6 +1,7 @@
 <template>
 <transition>
   <div class="cargodts">
+    <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
       <div id="overlay" v-if="openDatasearch">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
@@ -24,7 +25,7 @@
                   <tr class="text-left" v-for="registro in registros" :key="registro.id">
                     <td  v-for="item in registro" :key="item.id"> {{ item }}</td>
                     <td>
-                      <a href="#" class="text-success" @click="destroy (route, registro, params);"><i class="far fa-check-square"></i></a>
+                      <a href="#" class="text-success" @click="destroy (registro, params);"><i class="far fa-check-square"></i></a>
                     </td>
                   </tr>
                 </tbody>
@@ -32,11 +33,11 @@
               <div class="row">
                 <b-input-group >
                   <b-input-group-append>
-                    <b-button variant="outline-info" style="margin-left:10px;" class="material-icons" @click="pagina = pagina - 1;dataSearch (route,pagina,contexto,params)">chevron_left</b-button>
+                    <b-button variant="outline-info" style="margin-left:10px;" class="material-icons" @click="explorerflex.pagina = pagina - 1;dataSearch (explorerflex,'',params)">chevron_left</b-button>
                   </b-input-group-append>
                   <b-form-input  class="col-sm-1 text-center" v-model="pagina"></b-form-input>
                   <b-input-group-append>
-                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="pagina = pagina + 1;dataSearch (route,pagina,contexto,params)">chevron_right</b-button>
+                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="explorerflex.pagina = pagina + 1;dataSearch (explorerflex,'',params)">chevron_right</b-button>
                   </b-input-group-append>
                 </b-input-group>
               </div>

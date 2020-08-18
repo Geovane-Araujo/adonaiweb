@@ -7,7 +7,7 @@
             <h3>{{ user.igreja.nome }}</h3>
           </div>
           <div class="Direito">
-            <b-avatar src="http://207.244.225.189:888/img/teste.jpeg" ></b-avatar>
+            <b-avatar :src="user.pathimg" ></b-avatar>
             <h4 class="float-right" style="margin-left: 10px;">{{ user.nome }}</h4>
           </div>
           </nav>

@@ -25,6 +25,7 @@ export default {
       del: false,
       id: '',
       login: '',
+      nome: '',
       senha: '',
       confirmarSenha: '',
       motivo: '',
@@ -41,8 +42,7 @@ export default {
         usuarios: 0,
         relatorios: 0
       }
-    },
-    usuarios: []
+    }
   }),
   mounted () {
     this.$refs.grid.get(this.explorer)
@@ -92,6 +92,7 @@ export default {
       form.id = ''
       form.idPessoa = ''
       form.login = ''
+      form.nome = ''
       form.senha = ''
       form.pathimg = ''
       form.confirmarSenha = ''
@@ -108,6 +109,7 @@ export default {
       this.form.id = form.id
       this.form.login = form.login
       this.form.senha = form.senha
+      this.form.nome = form.nome
       this.form.idPessoa = form.idPessoa
       this.form.pathimg = form.pathimg
       this.form.permissaoUsuario.idPessoa = form.permissaoUsuario.idPessoa
@@ -130,7 +132,6 @@ export default {
     }
   },
   computed: {
-    ...mapState('usuario', ['usuario']),
     ...mapState('auth', ['user'])
   },
   props: {

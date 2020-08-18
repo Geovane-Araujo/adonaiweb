@@ -6,32 +6,27 @@ export default {
   name: 'adonaidatasearch',
   data () {
     return {
+      openloading: false,
       registros: [],
       params: '',
-      route: '',
       pagina: 1,
       contexto: ''
     }
   },
   methods: {
-    dataSearch (route, pagina, contexto, params) {
-      if (contexto === '') {
-        contexto = 'a'
-      }
-      axios.get(adonai.url + route + '/' + pagina + '/' + contexto, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.registros = res.data
-        this.route = route
-        if (contexto === 'a') {
-          contexto = ''
-        }
-        this.contexto = contexto
+    dataSearch (criterios, contexto, params) {
+      this.openloading = true
+      axios.post(adonai.url + 'aexplorer', criterios, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.registros = res.data.obj
+        this.explorerflex = criterios
+        this.pagina = criterios.pagina
         this.params = params
+        this.openloading = false
       })
     },
     dataSearch1 (route, pagina) {
       axios.get(adonai.url + route + '/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.registros = res.data
-        this.route = route
       })
     }
   },
@@ -46,6 +41,9 @@ export default {
     cabecalho: {
       type: Array,
       required: true
+    },
+    explorerflex: {
+      type: Object
     },
     form: {
       type: Object,

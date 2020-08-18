@@ -17,6 +17,11 @@ export default {
         pagina: 1,
         criterios: 'order by id desc'
       },
+      explorerflex: {
+        route: '',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       ds: {
         grid: [],
         title: '',
@@ -106,12 +111,13 @@ export default {
       })
     },
     datasearch () {
-      this.ds.grid = ['ID', 'Descriçao']
+      this.ds.grid = ['ID', 'Nome', 'Codigo']
+      this.explorerflex.route = 'exp_banco'
       this.ds.title = 'Bancos'
-      this.$refs.expl.dataSearch('bancos', 1, 'a')
+      this.$refs.expl.dataSearch(this.explorerflex, 1, 1)
       this.open = true
     },
-    destroy (route, registro) {
+    destroy (registro, params) {
       this.form.nomeBanco = registro.nome
       this.form.idbanco = registro.id
       this.open = false

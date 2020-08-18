@@ -12,7 +12,7 @@
         </div>
         <div class="col-lg-12">
           <!-- table -->
-          <adonaigrid :titulos="['ID','Nome']"
+          <adonaigrid :titulos="['ID','Nome','Login']"
           :registros="usuarios"
           :form="form"
           :getbyId="getbyId"
@@ -47,12 +47,20 @@
                   </b-col>
                   <b-col cols="10">
                     <b-row>
-                      <div class="col-sm-12">
+                      <div class="col-sm-6">
                         <input type="text"
                           name="nome"
                           autocomplete="off"
                           class="form-control"
-                          placeholder="NomeUsuario / Login "
+                          placeholder="Nome"
+                          v-model="form.nome">
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text"
+                          name="nome"
+                          autocomplete="off"
+                          class="form-control"
+                          placeholder="Login"
                           v-model="form.login ">
                       </div>
                       <div class="col-sm-6">

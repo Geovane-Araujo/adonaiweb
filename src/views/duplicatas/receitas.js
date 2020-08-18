@@ -19,6 +19,11 @@ export default {
         pagina: 1,
         criterios: 'order by id desc'
       },
+      explorerflex: {
+        route: '',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       open: false,
       ds: {
         grid: [],
@@ -94,13 +99,13 @@ export default {
     },
     validate (form, quitar) {
       if (this.form.descricao === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSoft diz:', util.toast)
       } else if (this.form.tipo === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSoft diz:', util.toast)
       } else if (this.form.desccaixa === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSoft diz:', util.toast)
       } else if (this.form.valor === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSoft diz:', util.toast)
       } else {
         if (quitar === 1) {
           form.dataPagamento = new Date()
@@ -179,27 +184,33 @@ export default {
     },
     datasearch (route) {
       if (route === 1) {
+        this.explorerflex.route = 'exp_membro'
+        this.explorerflex.criterios = 'ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Nome']
         this.ds.title = 'Membro'
-        this.$refs.teste.dataSearch('membro', 1, 'a')
+        this.$refs.cmp.dataSearch(this.explorerflex, 1, 1)
         this.open = true
       } else if (route === 2) {
+        this.explorerflex.route = 'exp_tipoconta'
+        this.explorerflex.criterios = 'AND contexto = 0 ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Tipo Conta'
-        this.$refs.teste.dataSearch('tipo', 1, 0)
+        this.$refs.cmp.dataSearch(this.explorerflex, 1, 2)
         this.open = true
       } else if (route === 3) {
+        this.explorerflex.route = 'exp_caixa'
+        this.explorerflex.criterios = 'ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Caixa'
-        this.$refs.teste.dataSearch('caixa', 1, 1)
+        this.$refs.cmp.dataSearch(this.explorerflex, 1, 3)
         this.open = true
       }
     },
-    destroy (route, registro) {
-      if (route === 'membro') {
+    destroy (registro, params) {
+      if (params === 1) {
         this.form.nome = registro.nome
         this.form.idMembro = registro.id
-      } else if (route === 'tipo') {
+      } else if (params === 2) {
         this.form.descrconta = registro.descricao
         this.form.idtipo = registro.id
       } else {

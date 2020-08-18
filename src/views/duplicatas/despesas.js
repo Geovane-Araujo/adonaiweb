@@ -18,6 +18,11 @@ export default {
         pagina: 1,
         criterios: ''
       },
+      explorerflex: {
+        route: '',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       ds: {
         grid: [],
         title: ''
@@ -68,7 +73,7 @@ export default {
     async save (form) {
       this.openloading = true
       if (form.del === true && form.dataPagamento !== '') {
-        this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSpft diz:', util.toast)
+        this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSoft diz:', util.toast)
         this.openloading = false
       } else {
         await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -114,19 +119,25 @@ export default {
     },
     datasearch (route) {
       if (route === 1) {
+        this.explorerflex.route = 'exp_membro'
+        this.explorerflex.criterios = 'ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Nome']
         this.ds.title = 'Membro'
-        this.$refs.cmp.dataSearch('membro', 1, 'a')
+        this.$refs.cmp.dataSearch(this.explorerflex, 1, 1)
         this.open = true
       } else if (route === 2) {
+        this.explorerflex.route = 'exp_tipoconta'
+        this.explorerflex.criterios = 'AND contexto = 1 ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Tipo Conta'
-        this.$refs.cmp.dataSearch('tipo', 1, 1)
+        this.$refs.cmp.dataSearch(this.explorerflex, 1, 2)
         this.open = true
       } else if (route === 3) {
+        this.explorerflex.criterios = 'ORDER BY ID DESC'
+        this.explorerflex.route = 'exp_caixa'
         this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Caixa'
-        this.$refs.cmp.dataSearch('caixa', 1, 1)
+        this.$refs.cmp.dataSearch(this.explorerflex, 1, 3)
         this.open = true
       }
     },
@@ -194,11 +205,11 @@ export default {
         this.openloading = false
       })
     },
-    destroy (route, registro) {
-      if (route === 'membro') {
+    destroy (registro, params) {
+      if (params === 1) {
         this.form.nome = registro.nome
         this.form.idMembro = registro.id
-      } else if (route === 'tipo') {
+      } else if (params === 2) {
         this.form.descrconta = registro.descricao
         this.form.idtipo = registro.id
       } else {

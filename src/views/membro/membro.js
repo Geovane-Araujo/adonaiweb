@@ -18,6 +18,11 @@ export default {
         pagina: 1,
         criterios: 'order by id desc'
       },
+      explorerflex: {
+        route: '',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       ds: {
         grid: [],
         title: ''
