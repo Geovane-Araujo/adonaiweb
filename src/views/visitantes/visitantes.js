@@ -18,6 +18,11 @@ export default {
         pagina: 1,
         criterios: 'order by id desc'
       },
+      explorerflex: {
+        route: '',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       ds: {
         grid: [],
         title: ''
@@ -209,16 +214,18 @@ export default {
         }
       })
     },
-    datasearch (route) {
+    datasearch (route, params) {
       if (route === 1) {
+        this.explorerflex.route = 'exp_municipio'
+        this.explorerflex.criterios = 'ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Nome Cidade', 'UF', '']
         this.ds.title = 'Cidades'
-        this.$refs.teste.dataSearch('cidade', 1, 'a')
+        this.$refs.expl.dataSearch(this.explorerflex, 1, 1, params)
         this.open = true
       }
     },
-    destroy (route, registro) {
-      this.form.endereco[0].cidade = registro.cidade
+    destroy (registro, params) {
+      this.form.endereco[0].cidade = registro.nome
       this.form.endereco[0].idCidade = registro.id
       this.open = false
     }

@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     dataSearch (criterios, contexto, params, extraparams) {
-      // this.openloading = true
+      this.openloading = true
       axios.post(adonai.url + 'aexplorer', criterios, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.registros = res.data.obj
         this.explorerflex = criterios
