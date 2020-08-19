@@ -248,9 +248,9 @@
                             <div class="col-sm-4">
                               <div class="form-group">
                                 <b-input-group >
-                                  <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade" @click="datasearch(0);"></b-form-input>
+                                  <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade" @click="datasearch(1, 0);"></b-form-input>
                                   <b-input-group-append>
-                                    <b-button variant="outline-info" class="material-icons" @click="datasearch(0);">search</b-button>
+                                    <b-button variant="outline-info" class="material-icons" @click="datasearch(1, 0);">search</b-button>
                                   </b-input-group-append>
                                 </b-input-group>
                               </div>
@@ -399,7 +399,7 @@
     :cabecalho="ds.grid"
     :form="form" v-bind:openDatasearch="open"
     :destroy="destroy"
-    ref="cmp"/>
+    ref="expl"/>
   </div>
 </template>
 

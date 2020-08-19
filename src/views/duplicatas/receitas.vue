@@ -129,7 +129,7 @@
     :cabecalho="ds.grid"
     :form="form" v-bind:openDatasearch="open"
     :destroy="destroy"
-    ref="teste"/>
+    ref="cmp"/>
   </div>
 </template>
 

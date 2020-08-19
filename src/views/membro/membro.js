@@ -328,21 +328,25 @@ export default {
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
     datasearch (route, params) {
       if (route === 1) {
+        this.explorerflex.route = 'exp_municipio'
+        this.explorerflex.criterios = 'ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Nome Cidade', 'UF', '']
         this.ds.title = 'Cidades'
-        this.$refs.expl.dataSearch('cidade', 1, 'a', params)
+        this.$refs.expl.dataSearch(this.explorerflex, 1, 1, params)
         this.open = true
       } else if (route === 2) {
+        this.explorerflex.route = 'exp_cargo'
+        this.explorerflex.criterios = 'ORDER BY ID asc'
         this.ds.grid = ['ID', 'Descrição']
         this.ds.title = 'Cargos'
-        this.$refs.expl.dataSearch('cargos', 1, 'a')
+        this.$refs.expl.dataSearch(this.explorerflex, 1, 2)
         this.open = true
       }
     },
-    destroy (route, registro, params) {
-      if (route === 'cidade') {
-        this.form.endereco[params].cidade = registro.cidade
-        this.form.endereco[params].idCidade = registro.id
+    destroy (registro, params, e) {
+      if (params === 1) {
+        this.form.endereco[e].cidade = registro.nome
+        this.form.endereco[e].idCidade = registro.id
       } else {
         this.form.cargo = registro.descricao
         this.form.idCargo = registro.id

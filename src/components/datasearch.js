@@ -10,21 +10,23 @@ export default {
       registros: [],
       params: '',
       pagina: 1,
-      contexto: ''
+      contexto: '',
+      extraparams: ''
     }
   },
   methods: {
-    dataSearch (criterios, contexto, params) {
-      this.openloading = true
+    dataSearch (criterios, contexto, params, extraparams) {
+      // this.openloading = true
       axios.post(adonai.url + 'aexplorer', criterios, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.registros = res.data.obj
         this.explorerflex = criterios
         this.pagina = criterios.pagina
         this.params = params
+        this.extraparams = extraparams
         this.openloading = false
       })
     },
-    dataSearch1 (route, pagina) {
+    dataSearch1 (route, pagina, contexto) {
       axios.get(adonai.url + route + '/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.registros = res.data
       })
