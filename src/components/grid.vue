@@ -14,7 +14,7 @@
           <td>
             <a href="#" @click="getbyId(registro.id); form.edit=true;form.add=false" class="text-success"><i class="fas fa-edit"></i></a>
             &nbsp;
-            <a href="#" @click="form.id=registro.id; form.dataPagamento=registro.dataPagamento;form.edit=false;form.add=false;form.del=true; deleteModal=true" class="text-danger"><i class="far fa-trash-alt"></i></a>
+            <a href="#" @click="onDelete(registro, form)" class="text-danger"><i class="far fa-trash-alt"></i></a>
           </td>
         </tr>
       </tbody>

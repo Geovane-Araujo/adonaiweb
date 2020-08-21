@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { mapState } from 'vuex'
+import util from '../assets/scss/util'
 import adonai from '../views/router/services'
 
 export default {
@@ -24,12 +25,12 @@ export default {
         this.params = params
         this.extraparams = extraparams
         this.openloading = false
-      })
+      }).catch(err => util.error(err))
     },
     dataSearch1 (route, pagina, contexto) {
       axios.get(adonai.url + route + '/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.registros = res.data
-      })
+      }).catch(err => util.error(err))
     }
   },
   computed: {

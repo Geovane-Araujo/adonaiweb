@@ -124,7 +124,7 @@ export default {
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'membro', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data.ret === 'success') {
+        if (res.data.ret !== undefined && res.data.ret === 'success') {
           if (this.form.add === true) {
             this.status = 'Salvo com Sucesso'
           } else if (this.form.edit === true) {
@@ -141,7 +141,7 @@ export default {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           this.openloading = false
         }
-      })
+      }).catch(err => util.error(err))
     },
     cleanForm (form) {
       form.id = ''
@@ -209,7 +209,7 @@ export default {
       form.retorno = ''
       form.motivo = ''
     },
-    povoar (form) {
+    read (form) {
       this.form.id = form.id
       this.form.nome = form.nome
       this.form.idPessoa = form.idPessoa
@@ -302,7 +302,7 @@ export default {
         var a = '<embed width=100% height=100% type="application/pdf" src="data:application/pdf;base64,' + escape(res.data) + ' "></embed>'
         var print = window.open('', 'PDF', winparams)
         print.document.write(a)
-      })
+      }).catch(err => util.error(err))
     },
     buscarcep (cep, form, local) {
       axios.get('https://viacep.com.br/ws/' + cep + '/json').then(function (response) {
@@ -317,12 +317,12 @@ export default {
           form.endereco[1].cidade = response.data.localidade
           form.endereco[1].uf = response.data.uf
         }
-      })
+      }).catch(err => util.error(err))
     },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'membro/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.povoar(res.data.obj)
+        this.read(res.data.obj)
         this.openloading = false
       })
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
@@ -352,20 +352,9 @@ export default {
         this.form.idCargo = registro.id
       }
       this.open = false
-    },
-    get () {
-      this.openloading = true
-      axios.get(adonai.url + 'membros/1/a', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.membros = res.data.obj
-        this.openloading = false
-      })
     }
   },
   computed: {
     ...mapState('auth', ['user'])
-  },
-  props: {
-    membros: { type: Object, required: false },
-    cargos: { type: Object, required: false }
   }
 }

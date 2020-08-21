@@ -114,6 +114,7 @@ export default {
         } else if (quitar === 2) {
           form.status = 1
         }
+        this.form.idUsuarioInclusao = this.user.id
         this.save(form)
       }
     },
@@ -214,7 +215,7 @@ export default {
         this.form.idtipo = registro.id
       } else {
         this.form.desccaixa = registro.descricao
-        this.form.idCaixaMovimento = registro.id
+        this.form.idCaixaMovimento = registro.idmovimento
       }
       this.open = false
     }

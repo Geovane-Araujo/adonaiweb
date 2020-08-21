@@ -8,5 +8,17 @@ export default {
     closeButton: true,
     preventDuplicates: true
   },
-  validamenu: false
+  validamenu: false,
+  toasta: function (form) {
+    if (form.add) {
+      this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', this.toast)
+    } else if (form.edit) {
+      this.$toastr.success('Editado com Sucesso', 'AdonaiSoft Diz:', this.toast)
+    } else {
+      this.$toastr.success('Excluido com Sucesso', 'AdonaiSoft Diz:', this.toast)
+    }
+  },
+  error: function (err) {
+    this.$toastr.success(err, 'AdonaiSoft Diz:', this.toast)
+  }
 }

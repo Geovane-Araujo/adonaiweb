@@ -42,7 +42,7 @@
                       <b-row class="text-center">
                         <b-col cols="2">
                           <div class="file-loading">
-                            <b-avatar ref="myFiles"
+                            <b-avatar :src="form.pathimg"
                             size="5rem"></b-avatar>
                           </div>
                           <label for='selecao-arquivo' class="material-icons">perm_media</label>
@@ -248,9 +248,9 @@
                             <div class="col-sm-4">
                               <div class="form-group">
                                 <b-input-group >
-                                  <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade" @click="datasearch(1, 0);"></b-form-input>
+                                  <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade"  @keyup="datasearch(0);"></b-form-input>
                                   <b-input-group-append>
-                                    <b-button variant="outline-info" class="material-icons" @click="datasearch(1, 0);">search</b-button>
+                                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="datasearch(0);">search</b-button>
                                   </b-input-group-append>
                                 </b-input-group>
                               </div>
@@ -407,7 +407,7 @@
 </script>
 <style lang=scss scoped>
 label {
-  background-color: #3498db;
+  background-color: #5e8a75;
   border-radius: 5px;
   color: #fff;
   cursor: pointer;

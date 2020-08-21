@@ -9,6 +9,7 @@ export default {
     return {
       openloading: false,
       deleteModal: false,
+      ref: '',
       pagina: 1,
       reg: []
     }
@@ -51,11 +52,22 @@ export default {
         this.openloading = false
         if (res.data.ret === 'success') {
           this.reg = res.data.obj
+          this.ref = explorer.route
         } else {
           this.openloading = false
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
         }
-      })
+      }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+    },
+    onDelete (registro, form) {
+      if (this.ref === 'menu_duplicata_receita' || this.ref === 'menu_duplicata_despesa') {
+        form.dataPagamento = registro.datapagamento
+      }
+      form.id = registro.id
+      form.edit = false
+      form.add = false
+      form.del = true
+      this.deleteModal = true
     }
   },
   computed: {
