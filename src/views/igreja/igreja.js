@@ -393,19 +393,25 @@ export default {
       }).catch(err => util.error(err))
     },
     buscarcep (cep, form, local) {
-      axios.get('https://viacep.com.br/ws/' + cep + '/json').then(function (response) {
-        if (local === 1) {
-          form.endereco[0].endereco = response.data.logradouro
-          form.endereco[0].bairro = response.data.bairro
-          form.endereco[0].cidade = response.data.localidade
-          form.endereco[0].uf = response.data.uf
+      axios.get(adonai.url + 'cep/' + cep, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data.ret === 'unsuccess') {
+          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
         } else {
-          form.endereco[1].endereco = response.data.logradouro
-          form.endereco[1].bairro = response.data.bairro
-          form.endereco[1].cidade = response.data.localidade
-          form.endereco[1].uf = response.data.uf
+          if (local === 1) {
+            form.endereco[0].endereco = res.data.obj.logradouro
+            form.endereco[0].bairro = res.data.obj.bairro
+            form.endereco[0].cidade = res.data.obj.localidade
+            form.endereco[0].uf = res.data.obj.uf
+            form.endereco[0].idCidade = res.data.obj.idCidade
+          } else {
+            form.endereco[1].endereco = res.data.obj.logradouro
+            form.endereco[1].bairro = res.data.obj.bairro
+            form.endereco[1].cidade = res.data.obj.localidade
+            form.endereco[1].uf = res.data.obj.uf
+            form.endereco[1].idCidade = res.data.obj.idCidade
+          }
         }
-      }).catch(err => util.error(err))
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
     },
     getbyId (id) {
       this.openloading = true

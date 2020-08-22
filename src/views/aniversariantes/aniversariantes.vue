@@ -13,6 +13,7 @@
           <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
             <thead>
               <tr class="text-left text-light text-light" style="background-color: #5e8a75">
+                <th>ID</th>
                 <th>Nome</th>
                 <th>Data Nascimento</th>
                 <th>Telefone</th>
@@ -20,10 +21,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="text-left" v-for="item in aniversariantes" :key="item.id">
-                <td >{{ item.nome }}</td>
-                <td>{{ item.dataNascimento }}</td>
-                <td>{{ item.telefone}}</td>
+              <tr class="text-left" v-for="item in aniversariantes" :key="item.ID">
+                <td >{{ item.ID }}</td>
+                <td >{{ item.Nome }}</td>
+                <td>{{ item.DataNascimento }}</td>
+                <td>{{ item.Telefone}}</td>
                 <td>
                   <a href="#" @click="openModal =true; form.telefone = item.telefone;" class="text-success"><i class="fab fa-whatsapp 5x" style=""></i></a>
                 </td>

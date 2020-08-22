@@ -1,6 +1,7 @@
 import { mapState } from 'vuex'
 import axios from 'axios'
 import adonai from '../router/services'
+import util from '../../assets/scss/util'
 
 export default {
   data () {
@@ -9,6 +10,11 @@ export default {
       openModal: false,
       openloading: false,
       aniversariantes: [],
+      explorer: {
+        route: 'menu_aniversariantes',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       form: {
         nome: '',
         telefone: '',
@@ -23,10 +29,10 @@ export default {
   methods: {
     buscaraniversariante () {
       this.openloading = true
-      axios.get(adonai.url + 'aniversariantes/' + this.pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.aniversariantes = res.data
+      axios.post(adonai.url + 'aexplorer', this.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.aniversariantes = res.data.obj
         this.openloading = false
-      })
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     enviarMensagem (form) {
       form.telefone = form.telefone.replace('(', '')

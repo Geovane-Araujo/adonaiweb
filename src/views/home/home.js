@@ -173,6 +173,18 @@ export default {
               ]
             }
           ]
+        },
+        {
+          title: 'AdonaiSoft',
+          icon: 'fab fa-wpforms',
+          child: [
+            {
+              title: 'Termos de Uso'
+            },
+            {
+              title: 'Minhas Faturas'
+            }
+          ]
         }
       ],
       collapsed: false,
