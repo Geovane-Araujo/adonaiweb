@@ -24,8 +24,8 @@
             </thead>
             <tbody>
               <tr class="text-left" v-for="registro in caixamovimento" :key="registro.id">
-                <td>{{ registro.id }}</td>
-                <td>{{ registro.descricao }}</td>
+                <td>{{ registro.ID }}</td>
+                <td>{{ registro.Descricao }}</td>
                 <td>
                   <a style="margin-right: 15px;" id="link1" @click="getSaldos (registro.id, 0);" class="text-success"><i class="fas fa-info"></i></a>
                   <b-tooltip target="link1" title="Detalhar Entradas e Saídas"></b-tooltip>

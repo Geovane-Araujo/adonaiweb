@@ -106,6 +106,11 @@ export default {
                   href: '/movimento',
                   title: 'Movimentação',
                   disabled: false
+                },
+                {
+                  href: '/movimentohistorico',
+                  title: 'Histório Fechamento',
+                  disabled: false
                 }
               ]
             },

@@ -21,6 +21,11 @@ export default {
         grid: [],
         title: ''
       },
+      explorer: {
+        route: 'menu_movimento',
+        pagina: 1,
+        criterios: 'order by id desc'
+      },
       pagina: 1,
       tipo: 0,
       status: 1,
@@ -60,7 +65,7 @@ export default {
     }
   },
   mounted () {
-    this.get()
+    this.get(this.explorer)
   },
   methods: {
     async save (form, abertura) {
@@ -107,12 +112,17 @@ export default {
         this.save(form, this.abertura)
       }
     },
-    get () {
+    get (explorer) {
       this.openloading = true
-      axios.get(adonai.url + 'caixamovimento', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.caixamovimento = res.data
-      })
-      this.openloading = false
+      axios.post(adonai.url + 'aexplorer', explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.openloading = false
+        if (res.data.ret === 'success') {
+          this.caixamovimento = res.data.obj
+        } else {
+          this.openloading = false
+          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+        }
+      }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast), this.openloading = false)
     },
     getSaldos (idcaixa, tipo) {
       if (tipo === 1) {
