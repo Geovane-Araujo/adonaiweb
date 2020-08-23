@@ -3,6 +3,7 @@ import util from '../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../router/services'
 import axios from 'axios'
+import rel from '../../util/utilClass'
 var moment = require('moment')
 var data = new Date()
 
@@ -185,6 +186,14 @@ export default {
       this.form.retorno = form.retorno
       this.form.motivo = form.motivo
       this.openModal = true
+    },
+    imprimir (relatorio) {
+      rel.report.relatorio = relatorio
+      this.openloading = true
+      axios.post(adonai.url + 'imprimir', rel.report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.openloading = false
+        window.open(res.data)
+      }).catch(err => util.error(err))
     },
     buscarcep (cep, form, local) {
       axios.get(adonai.url + 'cep/' + cep, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {

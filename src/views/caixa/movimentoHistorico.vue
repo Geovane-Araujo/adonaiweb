@@ -28,8 +28,8 @@
                 <td>{{ registro.DataFechamento }}</td>
                 <td>{{ registro.Saldo }}</td>
                 <td>
-                  <a  style="margin-right: 15px;" id="link2" @click="getSaldos (registro.id)" class="text-info"><i class="fas fa-print"></i></a>
-                  <b-tooltip target="link2" title="Mostrar Saldo"></b-tooltip>
+                  <a  style="margin-right: 15px;" id="link2" @click="imprimir ('report/financeiro/movimentacoes.jrxml',registro.ID)" class="text-info"><i class="fas fa-print"></i></a>
+                  <b-tooltip target="link2" title="Imprimir"></b-tooltip>
                 </td>
               </tr>
             </tbody>

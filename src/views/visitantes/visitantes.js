@@ -3,6 +3,7 @@ import util from '../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../router/services'
 import axios from 'axios'
+import rel from '../../util/utilClass'
 var moment = require('moment')
 var data = new Date()
 
@@ -213,6 +214,14 @@ export default {
           this.openloading = false
         }
       })
+    },
+    imprimir (relatorio) {
+      rel.report.relatorio = relatorio
+      this.openloading = true
+      axios.post(adonai.url + 'imprimir', rel.report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.openloading = false
+        window.open(res.data)
+      }).catch(err => util.error(err))
     },
     datasearch (route, params) {
       if (route === 1) {

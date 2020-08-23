@@ -84,18 +84,19 @@ export default {
           }
         })
       } else {
-        this.openloading = true
         await axios.post(adonai.url + 'caixafechar', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          if (res.data === 'success') {
+          if (res.data.ret === 'success') {
             this.$toastr.success('Caixa Fechado com Sucesso', 'AdonaiSoft diz:', util.toast)
             this.get()
             this.cleanForm()
             this.openModal = false
             this.openloading = false
+            window.open(res.data.obj)
           } else {
-            this.$toastr.error(res.data, 'AdonaiSoft diz:', util.toast)
+            this.openloading = false
+            this.$toastr.error(res.data.motivo, 'AdonaiSoft diz:', util.toast)
           }
-        })
+        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast), this.openloading = false)
       }
     },
     validate (form) {

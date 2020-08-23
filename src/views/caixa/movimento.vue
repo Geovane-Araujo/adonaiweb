@@ -27,13 +27,13 @@
                 <td>{{ registro.ID }}</td>
                 <td>{{ registro.Descricao }}</td>
                 <td>
-                  <a style="margin-right: 15px;" id="link1" @click="getSaldos (registro.id, 0);" class="text-success"><i class="fas fa-info"></i></a>
+                  <a style="margin-right: 15px;" id="link1" @click="getSaldos (registro.ID, 0);" class="text-success"><i class="fas fa-info"></i></a>
                   <b-tooltip target="link1" title="Detalhar Entradas e Saídas"></b-tooltip>
                   &nbsp;&nbsp;&nbsp;
-                  <a  style="margin-right: 15px;" id="link2" @click="getSaldos (registro.id, 1)" class="text-info"><i class="far fa-eye"></i></a>
+                  <a  style="margin-right: 15px;" id="link2" @click="getSaldos (registro.ID, 1)" class="text-info"><i class="far fa-eye"></i></a>
                   <b-tooltip target="link2" title="Mostrar Saldo"></b-tooltip>
                   &nbsp;&nbsp;&nbsp;
-                  <a style="margin-right: 0px;" id="link3" @click="form.id=registro.id; form.edit=true;form.add=false; fechamento=true; abertura=false;title='Fechamento de Caixa'; openModal=true; " class="text-danger"><i class="fas fa-lock"></i></a>
+                  <a style="margin-right: 0px;" id="link3" @click="form.id=registro.ID; form.edit=true;form.add=false; fechamento=true; abertura=false;title='Fechamento de Caixa'; openModal=true; " class="text-danger"><i class="fas fa-lock"></i></a>
                   <b-tooltip target="link3" title="Fechar Caixa"></b-tooltip>
                 </td>
               </tr>
