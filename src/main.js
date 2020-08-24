@@ -25,6 +25,7 @@ import barchart from '../src/components/barchart'
 import piechart from '../src/components/pie'
 import doughnut from '../src/components/doughnut'
 import FullCalendar from 'vue-full-calendar'
+import VueDropdown from 'vue-dynamic-dropdown'
 import 'fullcalendar/dist/locale/pt-br'
 import 'fullcalendar/dist/fullcalendar.min.css'
 import './assets/scss/app.scss'
@@ -46,6 +47,7 @@ Vue.use(loader)
 Vue.use(jsPDF)
 Vue.use(VueCharts)
 Vue.use(FullCalendar)
+Vue.component('vue-dropdown', VueDropdown)
 Vue.component('tippy', TippyComponent)
 Vue.component('adonaigrid', adonaigrid)
 Vue.component('adonaidatasearch', adonaidatasearch)

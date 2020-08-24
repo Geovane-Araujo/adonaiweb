@@ -3,6 +3,7 @@ import util from '../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import adonai from '../router/services'
+import rel from '../../util/utilClass'
 var moment = require('moment')
 var data = new Date()
 
@@ -20,11 +21,6 @@ export default {
       ds: {
         grid: [],
         title: ''
-      },
-      explorer: {
-        route: 'menu_movimento',
-        pagina: 1,
-        criterios: 'order by id desc'
       },
       pagina: 1,
       tipo: 0,
@@ -65,7 +61,7 @@ export default {
     }
   },
   mounted () {
-    this.get(this.explorer)
+    this.get()
   },
   methods: {
     async save (form, abertura) {
@@ -113,9 +109,11 @@ export default {
         this.save(form, this.abertura)
       }
     },
-    get (explorer) {
+    get () {
+      rel.explorer.route = 'menu_movimento'
+      rel.explorer.criterios = 'order by id desc'
       this.openloading = true
-      axios.post(adonai.url + 'aexplorer', explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      axios.post(adonai.url + 'aexplorer', rel.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.openloading = false
         if (res.data.ret === 'success') {
           this.caixamovimento = res.data.obj
@@ -154,9 +152,11 @@ export default {
     },
     datasearch (route) {
       if (route === 1) {
+        rel.explorerflex.route = 'expl_caixa_abrir'
+        rel.explorerflex.criterios = 'ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Caixa']
         this.ds.title = 'Caixas'
-        this.$refs.teste.dataSearch('caixa', 1, 0)
+        this.$refs.teste.dataSearch(rel.explorerflex, 1, 1)
         this.open = true
       }
     },
@@ -203,9 +203,9 @@ export default {
         this.openloading = false
       })
     },
-    destroy (route, registro) {
-      this.form.descricao = registro.descricao
-      this.form.idCaixa = registro.id
+    destroy (registro, params) {
+      this.form.descricao = registro.Descricao
+      this.form.idCaixa = registro.ID
       this.open = false
     }
   },

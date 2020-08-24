@@ -98,6 +98,9 @@ export default {
         })
       }
     },
+    teste () {
+      alert()
+    },
     validate (form, quitar) {
       if (this.form.descricao === '') {
         this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSoft diz:', util.toast)

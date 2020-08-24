@@ -10,6 +10,11 @@
             @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
           </button>
+          <button
+            class="btn btn-outline-info float-right"
+            @click="imprimir('report/pessoas/congregacoes.jrxml')">
+            <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir
+          </button>
           <hr class="bg-info">
         </div>
         <div class="col-lg-12">

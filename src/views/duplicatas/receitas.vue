@@ -10,6 +10,14 @@
             @click="form.del=false;form.add=true;form.edit=false;lancar=true,estornar=false;openModal=true;">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
           </button>
+          <div class="dropdown float-right">
+            <button type="button" id="dropdownMenuButton"  class="btn dropdown-toggle" data-toggle="collapse">
+              Imprimir
+            </button>
+            <div class="dropdown-content">
+              <a class="dropdown-menu-item" style="color: #5e8a75;" @click="teste()">Receitas - Listagem</a>
+            </div>
+          </div>
           <hr class="bg-info">
         </div>
         <div class="col-lg-12">
@@ -173,4 +181,25 @@ button:hover {
   background-color: #5e8a75;
   border-color:#5e8a75;
 }
+.dropdown {
+  position: relative;
+}
+.dropdown-content {
+  display: none;
+  position: inherit;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+  text-decoration: none;
+  color: #5e8a75;
+}
+a:link, a:visited {
+ text-decoration: none
+}
+
 </style>
