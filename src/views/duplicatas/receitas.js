@@ -2,6 +2,7 @@ import { mapState } from 'vuex'
 import util from '../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
+import rel from '../../util/utilClass'
 import adonai from '../router/services'
 var moment = require('moment')
 var data = new Date()
@@ -98,8 +99,13 @@ export default {
         })
       }
     },
-    teste () {
-      alert()
+    imprimir (relatorio) {
+      rel.report.relatorio = relatorio
+      this.openloading = true
+      axios.post(adonai.url + 'imprimir', rel.report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.openloading = false
+        window.open(res.data)
+      }).catch(err => util.error(err))
     },
     validate (form, quitar) {
       if (this.form.descricao === '') {

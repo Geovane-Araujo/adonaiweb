@@ -181,13 +181,16 @@ export default {
         },
         {
           title: 'AdonaiSoft',
-          icon: 'fab fa-wpforms',
+          icon: '../assets/Logo.png',
           child: [
             {
               title: 'Termos de Uso'
             },
             {
               title: 'Minhas Faturas'
+            },
+            {
+              title: 'Notas de Versões'
             }
           ]
         }

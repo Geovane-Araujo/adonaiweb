@@ -10,14 +10,19 @@
             @click="form.del=false;form.add=true;form.edit=false;lancar=true,estornar=false;openModal=true;">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
           </button>
-          <div class="dropdown float-right">
+          <button
+            class="btn btn-outline-info float-right"
+            @click="imprimir('report/financeiro/receitagrupo.jrxml')">
+            <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir
+          </button>
+<!--           <div class="dropdown float-right">
             <button type="button" id="dropdownMenuButton"  class="btn dropdown-toggle" data-toggle="collapse">
               Imprimir
             </button>
             <div class="dropdown-content">
               <a class="dropdown-menu-item" style="color: #5e8a75;" @click="teste()">Receitas - Listagem</a>
             </div>
-          </div>
+          </div> -->
           <hr class="bg-info">
         </div>
         <div class="col-lg-12">
