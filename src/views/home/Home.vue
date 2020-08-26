@@ -45,9 +45,6 @@ html {
   width: 100%;
   overflow: hidden;
 }
-.v-sidebar-menu .vsm--icon {
-  
-}
 h3 {
   color: #f2f4f7;
 }
