@@ -21,13 +21,13 @@ import VueTippy, { TippyComponent } from 'vue-tippy'
 import VueCharts from 'vue-chartjs'
 import loader from 'vue-ui-preloader'
 import jsPDF from 'jspdf'
+import FullCalendar from 'vue-full-calendar'
 import barchart from '../src/components/barchart'
 import piechart from '../src/components/pie'
 import doughnut from '../src/components/doughnut'
-import FullCalendar from 'vue-full-calendar'
 import VueDropdown from 'vue-dynamic-dropdown'
 import 'fullcalendar/dist/locale/pt-br'
-import 'fullcalendar/dist/fullcalendar.min.css'
+import 'fullcalendar/dist/fullcalendar.css'
 import './assets/scss/app.scss'
 
 window.toastr = require('toastr')
@@ -45,8 +45,8 @@ Vue.use(require('vue-moment'))
 Vue.use(VueTippy)
 Vue.use(loader)
 Vue.use(jsPDF)
-Vue.use(VueCharts)
 Vue.use(FullCalendar)
+Vue.use(VueCharts)
 Vue.component('vue-dropdown', VueDropdown)
 Vue.component('tippy', TippyComponent)
 Vue.component('adonaigrid', adonaigrid)

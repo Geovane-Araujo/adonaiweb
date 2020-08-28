@@ -8,7 +8,7 @@
           <hr class="bg-info">
           <div class="row">
             <div class="col-sm-12">
-              <full-calendar :config="config" :events="events"/>
+              <full-calendar :events="events"></full-calendar>
             </div>
           </div>
         </div>

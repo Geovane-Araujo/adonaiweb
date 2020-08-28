@@ -2,12 +2,11 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../router/services'
-var moment = require('moment')
 
 export default {
   data () {
     return {
-      events: [
+      /* events: [
         {
           title: 'Riader',
           allDay: true,
@@ -27,7 +26,7 @@ export default {
         defaultView: 'month',
         themeSystem: 'standard',
         eventRender: function (event, element) {}
-      }
+      } */
     }
   },
   mounted () {
