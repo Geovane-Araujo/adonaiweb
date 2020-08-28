@@ -78,7 +78,7 @@ export default {
         this.openloading = false
       } else {
         await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          if (res.data === 'success') {
+          if (res.data.ret === 'success') {
             if (this.form.add === true) {
               this.status = 'Salvo com Sucesso'
             } else if (this.form.edit === true) {
@@ -94,7 +94,7 @@ export default {
           } else {
             this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           }
-        })
+        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       }
     },
     validate (form, quitar) {
@@ -125,7 +125,7 @@ export default {
       axios.post(adonai.url + 'imprimir', rel.report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.openloading = false
         window.open(res.data)
-      }).catch(err => util.error(err))
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     datasearch (route) {
       if (route === 1) {
@@ -213,7 +213,7 @@ export default {
       axios.get(adonai.url + 'duplicata/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.read(res.data.obj)
         this.openloading = false
-      })
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     destroy (registro, params) {
       if (params === 1) {

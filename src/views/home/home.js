@@ -1,6 +1,4 @@
 import { mapState } from 'vuex'
-import axios from 'axios'
-import adonai from '../router/services'
 
 export default {
   name: 'App',
@@ -202,7 +200,6 @@ export default {
   mounted () {
     this.onResize()
     window.addEventListener('resize', this.onResize)
-    this.contaraniversariante()
   },
   methods: {
     onToggleCollapse (collapsed) {
@@ -217,11 +214,6 @@ export default {
         this.isOnMobile = false
         this.collapsed = false
       }
-    },
-    contaraniversariante () {
-      axios.get(adonai.url + 'aniversariantes', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.aniversariantes = res.data.quantidade
-      })
     }
   },
   computed: {

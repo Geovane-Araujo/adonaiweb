@@ -68,7 +68,7 @@ export default {
       } else {
         form.moment = moment(data).format('YYYY-MM-DD HH:mm:ss')
         await axios.post(adonai.url + 'caixa', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          if (res.data === 'success') {
+          if (res.data.ret === 'success') {
             if (this.form.add === true) {
               this.status = 'Salvo com Sucesso'
             } else if (this.form.edit === true) {
@@ -105,9 +105,9 @@ export default {
     },
     getusers () {
       axios.get(adonai.url + 'users', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.form.usuariospermissoes = res.data
+        this.form.usuariospermissoes = res.data.obj
         this.openloading = false
-      })
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     datasearch (route) {
       this.ds.grid = ['ID', 'Descricao']
@@ -149,8 +149,8 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'caixabyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data)
-      })
+        this.read(res.data.obj)
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       this.openloading = false
     },
     destroy (route, registro) {

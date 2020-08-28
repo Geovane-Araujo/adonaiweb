@@ -128,7 +128,7 @@ export default {
       axios.get(adonai.url + 'usuariobyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.read(res.data.obj)
         this.openloading = false
-      })
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     }
   },
   computed: {

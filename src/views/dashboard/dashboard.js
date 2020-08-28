@@ -52,15 +52,15 @@ export default {
     get () {
       this.openloading = true
       axios.get(adonai.url + 'dashboard/' + this.user.id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.membros = res.data.membros
-        this.entradas = res.data.entradas
-        this.despesas = res.data.saidas
-        this.cabe_tipos_despesa = res.data.tipoReceitas
-        this.cabe_tipos_entradas = res.data.tipoDespesas
-        this.dataset_finan[0].data = res.data.receitas
-        this.dataset_finan[1].data = res.data.despesas
-        this.dataset_tipos_despesas[0].data = res.data.valorReceitas
-        this.dataset_tipos_entradas[0].data = res.data.valorDespesas
+        this.membros = res.data.obj.membros
+        this.entradas = res.data.obj.entradas
+        this.despesas = res.data.obj.saidas
+        this.cabe_tipos_despesa = res.data.obj.tipoReceitas
+        this.cabe_tipos_entradas = res.data.obj.tipoDespesas
+        this.dataset_finan[0].data = res.data.obj.receitas
+        this.dataset_finan[1].data = res.data.obj.despesas
+        this.dataset_tipos_despesas[0].data = res.data.obj.valorReceitas
+        this.dataset_tipos_entradas[0].data = res.data.obj.valorDespesas
         this.$refs.year.render(this.cabe_finan, this.dataset_finan)
         this.$refs.des.render(this.cabe_tipos_despesa, this.dataset_tipos_despesas)
         this.$refs.rec.render(this.cabe_tipos_entradas, this.dataset_tipos_entradas)

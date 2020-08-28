@@ -68,7 +68,7 @@ export default {
       this.openloading = true
       if (abertura === true) {
         await axios.post(adonai.url + 'caixaabrir', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          if (res.data === 'success') {
+          if (res.data.ret === 'success') {
             this.$toastr.success('Caixa Aberto com Sucesso', 'AdonaiSoft diz:', util.toast)
             this.get()
             this.cleanForm()
@@ -78,7 +78,7 @@ export default {
             this.$toastr.error(res.data, 'AdonaiSpft diz:', util.toast)
             this.openloading = false
           }
-        })
+        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       } else {
         await axios.post(adonai.url + 'caixafechar', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
@@ -110,44 +110,43 @@ export default {
       }
     },
     get () {
+      this.openloading = true
       rel.explorer.route = 'menu_movimento'
       rel.explorer.criterios = 'order by id desc'
-      this.openloading = true
       axios.post(adonai.url + 'aexplorer', rel.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.openloading = false
         if (res.data.ret === 'success') {
           this.caixamovimento = res.data.obj
         } else {
-          this.openloading = false
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
         }
+        this.openloading = false
       }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast), this.openloading = false)
     },
     getSaldos (idcaixa, tipo) {
       if (tipo === 1) {
         this.openloading = true
         axios.get(adonai.url + 'caixasaldos/' + idcaixa + '/' + this.user.id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          if (res.data.permite === 0) {
+          if (res.data.obj.permite === 0) {
             this.$toastr.error('Usuário não autorizado a ver saldos', 'AdonaiSoft diz:', util.toast)
           } else {
-            this.saldos.receitas = res.data.receitas
-            this.saldos.despesas = res.data.despesas
-            this.saldos.saldoinicial = res.data.saldoinicial
-            this.saldos.saldototal = res.data.saldototal
+            this.saldos.receitas = res.data.obj.receitas
+            this.saldos.despesas = res.data.obj.despesas
+            this.saldos.saldoinicial = res.data.obj.saldoinicial
+            this.saldos.saldototal = res.data.obj.saldototal
           }
           this.openloading = false
-        })
+        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       } else {
         this.openloading = true
         axios.get(adonai.url + 'caixasaldosdetalhe/' + idcaixa + '/' + this.user.id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.permite === 0) {
             this.$toastr.error('Usuário não autorizado a ver saldos', 'AdonaiSoft diz:', util.toast)
           } else {
-            this.saldos.detalhes = res.data.saldos
+            this.saldos.detalhes = res.data.obj.saldos
             this.openDetail = true
           }
           this.openloading = false
-        })
+        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       }
     },
     datasearch (route) {

@@ -41,7 +41,7 @@ export default {
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'tipo', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data === 'success') {
+        if (res.data.ret === 'success') {
           if (this.form.add === true) {
             this.status = 'Salvo com Sucesso'
           } else if (this.form.edit === true) {
@@ -56,9 +56,9 @@ export default {
           this.$refs.grid.get(this.explorer)
         } else {
           this.openloading = false
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
         }
-      })
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     cleanForm (form) {
       form.descricao = ''
@@ -84,7 +84,7 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'tipo/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data)
+        this.read(res.data.obj)
         this.openloading = false
       })
     }
