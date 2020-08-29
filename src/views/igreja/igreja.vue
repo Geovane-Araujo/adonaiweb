@@ -435,6 +435,7 @@ input[type='file'] {
   top: 0;
   bottom: 0;
   left: 0;
+  z-index: 9998;
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);
 }

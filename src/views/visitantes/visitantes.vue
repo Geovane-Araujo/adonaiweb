@@ -185,6 +185,7 @@ input[type='file'] {
 #overlay {
   position: fixed;
   top: 0;
+  z-index: 9998;
   bottom: 0;
   left: 0;
   right: 0;

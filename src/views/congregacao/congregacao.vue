@@ -193,6 +193,7 @@ input[type='file'] {
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 9998;
   background: rgba($color: #000000, $alpha: 0.7);
 }
 button {

@@ -27,7 +27,7 @@ import piechart from '../src/components/pie'
 import doughnut from '../src/components/doughnut'
 import VueDropdown from 'vue-dynamic-dropdown'
 import 'fullcalendar/dist/locale/pt-br'
-import 'fullcalendar/dist/fullcalendar.css'
+// import 'fullcalendar/dist/fullcalendar.css'
 import './assets/scss/app.scss'
 
 window.toastr = require('toastr')
