@@ -1,7 +1,7 @@
 <template>
 <transition>
   <div class="cargodts">
-    <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
+    <loader id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular" style="z-index: 5002;"></loader>
       <div id="overlay" v-if="openDatasearch">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
@@ -67,7 +67,7 @@ p {
 .table-sm {
   padding: 2px;
 }
-.despesas {
+.cargodts {
   border-radius: 10px;
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
   background-color: rgba($color: #ffffff, $alpha: 0.9);
@@ -78,6 +78,16 @@ p {
   position: fixed;
   top: 0;
   bottom: 0;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  background: rgba($color: #000000, $alpha: 0.7);
+}
+#loading {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 5000;
   left: 0;
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);

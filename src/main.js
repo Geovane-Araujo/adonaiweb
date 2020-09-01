@@ -21,7 +21,7 @@ import VueTippy, { TippyComponent } from 'vue-tippy'
 import VueCharts from 'vue-chartjs'
 import loader from 'vue-ui-preloader'
 import jsPDF from 'jspdf'
-import FullCalendar from 'vue-full-calendar'
+import vuejquery from 'vue-jquery'
 import barchart from '../src/components/barchart'
 import piechart from '../src/components/pie'
 import doughnut from '../src/components/doughnut'
@@ -45,8 +45,8 @@ Vue.use(require('vue-moment'))
 Vue.use(VueTippy)
 Vue.use(loader)
 Vue.use(jsPDF)
-Vue.use(FullCalendar)
 Vue.use(VueCharts)
+Vue.use(vuejquery)
 Vue.component('vue-dropdown', VueDropdown)
 Vue.component('tippy', TippyComponent)
 Vue.component('adonaigrid', adonaigrid)

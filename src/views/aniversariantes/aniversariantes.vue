@@ -1,6 +1,6 @@
 <template>
   <div class="Aniversariantes">
-    <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
+    <loader id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row bg-ligth">
         <div class="col-lg-12">
@@ -99,7 +99,16 @@ tr {
   position: fixed;
   top: 0;
   bottom: 0;
-  z-index: 9998;
+  z-index: 1001;
+  left: 0;
+  right: 0;
+  background: rgba($color: #000000, $alpha: 0.7);
+}
+#loading {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 5000;
   left: 0;
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);

@@ -1,6 +1,6 @@
 <template>
   <div class="congregacao">
-    <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="3" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
+    <loader id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="3" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
@@ -159,10 +159,6 @@
 <script src="./congregacao.js">
 </script>
 <style lang=scss scoped>
-.table-overflow {
-    max-height:90vh;
-    overflow-y:auto;
-}
 label {
   background-color: #3498db;
   border-radius: 5px;
@@ -176,6 +172,15 @@ p {
 }
 input[type='file'] {
   display: none
+}
+#loading {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 5000;
+  left: 0;
+  right: 0;
+  background: rgba($color: #000000, $alpha: 0.7);
 }
 .table-sm {
   padding: 2px;
@@ -193,7 +198,7 @@ input[type='file'] {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 9998;
+  z-index: 1000;
   background: rgba($color: #000000, $alpha: 0.7);
 }
 button {

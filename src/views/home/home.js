@@ -193,6 +193,7 @@ export default {
           ]
         }
       ],
+      selectedTheme: 'white-theme',
       collapsed: false,
       isOnMobile: false
     }

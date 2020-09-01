@@ -2,31 +2,57 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../router/services'
+import FullCalendar from '@fullcalendar/vue'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import 'fullcalendar/dist/locale/pt-br'
+var moment = require('moment')
 
 export default {
   data () {
     return {
-      /* events: [
-        {
-          title: 'Riader',
-          allDay: true,
-          color: '#f87979',
-          start: moment(),
-          end: moment().add(3, 'd')
+      calendarOptions: {
+        plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
+        initialView: 'dayGridMonth',
+        locale: 'pt-br',
+        editable: true,
+        themeSystem: 'bootstrap',
+        selectable: true,
+        dateClick: this.handleDateClick, // clicar no dia
+        eventClick: this.eventDateClick, // clicar evento
+        eventDrop: this.eventDrop,
+        headerToolbar: {
+          locale: 'pt-br',
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        {
-          title: 'another test',
-          start: moment().add(2, 'd'),
-          end: moment()
-            .add(2, 'd')
-            .add(2, 'h')
+        events: [
+          {
+            title: 'Pregação Com Aloisio',
+            allDay: true,
+            color: '#f87979',
+            start: '2020-08-31',
+            end: '2020-09-02',
+            description: 'This is a cool event'
+          },
+          {
+            title: 'another test',
+            start: moment().add(2, 'd'),
+            end: moment()
+              .add(2, 'd')
+              .add(2, 'h')
+          }
+        ],
+        buttonText: {
+          today: 'Hoje',
+          month: 'Mês',
+          week: 'Semana',
+          day: 'Hoje',
+          list: 'Lista'
         }
-      ],
-      config: {
-        defaultView: 'month',
-        themeSystem: 'standard',
-        eventRender: function (event, element) {}
-      } */
+      }
     }
   },
   mounted () {
@@ -38,7 +64,19 @@ export default {
         this.openloading = false
       })
       /* this.$refs.expl.explorer('igrejagrid',1,'') */
+    },
+    handleDateClick: function (arg) {
+      alert('date click! ' + arg.dateStr)
+    },
+    eventDateClick: function (arg) {
+      alert('Olá! ' + arg)
+    },
+    eventDrop: function (arg) {
+      alert('Olá! ' + arg)
     }
+  },
+  components: {
+    FullCalendar
   },
   computed: {
     ...mapState('auth', ['user'])
