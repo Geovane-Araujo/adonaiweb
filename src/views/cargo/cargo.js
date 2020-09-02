@@ -65,12 +65,12 @@ export default {
         this.save(form)
       }
     },
-    cleanForm (form) {
-      form.descricao = ''
-      form.edit = false
-      form.del = false
-      form.add = true
-      form.id = ''
+    cleanForm () {
+      this.form.descricao = ''
+      this.form.edit = false
+      this.form.del = false
+      this.form.add = true
+      this.form.id = ''
     },
     read (form) {
       this.form.id = form.id

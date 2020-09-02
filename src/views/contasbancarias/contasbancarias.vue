@@ -17,6 +17,7 @@
           <adonaigrid :titulos="['ID','Descricao']"
           :registros="contasbancarias"
           :form="form"
+          :save="save"
           :getbyId="getbyId"
           :explorer="explorer"
           ref="grid"></adonaigrid>

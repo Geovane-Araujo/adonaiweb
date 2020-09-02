@@ -26,8 +26,12 @@ import barchart from '../src/components/barchart'
 import piechart from '../src/components/pie'
 import doughnut from '../src/components/doughnut'
 import VueDropdown from 'vue-dynamic-dropdown'
+import { ColourPicker } from 'vue-colour-picker'
+import { Material } from 'vue-color'
+import VSwatches from 'vue-swatches'
 import 'fullcalendar/dist/locale/pt-br'
 // import 'fullcalendar/dist/fullcalendar.css'
+import 'vue-swatches/dist/vue-swatches.css'
 import './assets/scss/app.scss'
 
 window.toastr = require('toastr')
@@ -47,6 +51,9 @@ Vue.use(loader)
 Vue.use(jsPDF)
 Vue.use(VueCharts)
 Vue.use(vuejquery)
+Vue.use(VSwatches)
+Vue.component('colour-picker', ColourPicker)
+Vue.component('material-picker', Material)
 Vue.component('vue-dropdown', VueDropdown)
 Vue.component('tippy', TippyComponent)
 Vue.component('adonaigrid', adonaigrid)

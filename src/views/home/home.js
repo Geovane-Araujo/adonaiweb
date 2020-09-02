@@ -158,22 +158,16 @@ export default {
           icon: 'fab fa-wpforms',
           child: [
             {
-              title: 'Secretaria',
-              child: [
-                {
-                  title: 'Cargos',
-                  href: '/cargo'
-                }
-              ]
+              title: 'Cargos',
+              href: '/cargo'
             },
             {
-              title: 'Financeiro',
-              child: [
-                {
-                  href: '/tipoconta',
-                  title: 'Tipos de Contas'
-                }
-              ]
+              href: '/tipoconta',
+              title: 'Tipos de Contas'
+            },
+            {
+              href: '/eventoTipos',
+              title: 'Tipo Eventos'
             }
           ]
         },

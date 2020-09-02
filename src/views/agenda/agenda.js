@@ -31,8 +31,7 @@ export default {
         events: [
           {
             title: 'Pregação Com Aloisio',
-            allDay: true,
-            color: '#f87979',
+            color: '#1c4769',
             start: '2020-08-31',
             end: '2020-09-02',
             description: 'This is a cool event'

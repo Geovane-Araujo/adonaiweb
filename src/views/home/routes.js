@@ -16,6 +16,7 @@ import movimento from '../caixa/movimento.vue'
 import dashboard from '../dashboard/dashboard.vue'
 import agenda from '../agenda/agenda.vue'
 import movimentoHistorico from '../caixa/movimentoHistorico.vue'
+import eventoTipos from '../eventoagenda/eventoagenda.vue'
 
 export default [
   {
@@ -108,6 +109,11 @@ export default [
         path: 'movimentohistorico',
         name: 'movimentohistorico',
         component: movimentoHistorico
+      },
+      {
+        path: 'eventoTipos',
+        name: 'eventoTipos',
+        component: eventoTipos
       }
     ]
   }

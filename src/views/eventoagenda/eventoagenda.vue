@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="row bg-ligth">
         <div class="col-lg-12">
-          <p>Cadastro de Cargos</p>
+          <p>Cadastro de Tipo Eventos</p>
           <button class="btn btn-outline-info" @click="cleanForm(form); openModal=true">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
           </button>
@@ -13,7 +13,6 @@
         <div class="col-lg-12">
           <!-- table -->
           <adonaigrid :titulos="['ID','Descricao']"
-          :registros="cargos"
           :form="form"
           :save="save"
           :getbyId="getbyId"
@@ -27,20 +26,27 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Cadastro Cargo</h5>
+            <h5 class="modal-title">Tipo Eventos</h5>
             <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body p-4">
             <form>
-              <div class="form-group">
-                <input type="text"
-                name="descricao"
-                autocomplete="off"
-                class="form-control"
-                placeholder="Descricao"
-                v-model="form.descricao">
+              <div class="row">
+                <div class="col-sm-10">
+                  <div class="form-group">
+                    <input type="text"
+                    name="descricao"
+                    autocomplete="off"
+                    class="form-control"
+                    placeholder="Descricao"
+                    v-model="form.descricao">
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <v-swatches v-model="form.color"></v-swatches>
+                </div>
               </div>
             </form>
             <button class="btn btn-outline-info float-right" @click="validate (form)" >Salvar</button>
@@ -51,7 +57,7 @@
   </div>
 </template>
 
-<script src="./cargo.js">
+<script src="./eventoagenda.js">
 </script>
 <style lang="scss" scoped>
 .table-overflow {

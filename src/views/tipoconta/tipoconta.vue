@@ -16,6 +16,7 @@
           :registros="tipocontas"
           :form="form"
           :getbyId="getbyId"
+          :save="save"
           :explorer="explorer"
           ref="grid"></adonaigrid>
         </div>

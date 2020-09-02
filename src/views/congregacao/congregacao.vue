@@ -22,6 +22,7 @@
           <adonaigrid :titulos="['ID','Nome','Endereço','Bairro','Numero','Telefone']"
           :registros="congregacao"
           :form="form"
+          :save="save"
           :getbyId="getbyId"
           :explorer="explorer"
           ref="grid"></adonaigrid>
