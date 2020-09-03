@@ -19,11 +19,7 @@ export default {
         {
           href: '/agenda',
           title: 'Agenda',
-          icon: 'far fa-calendar-alt',
-          badge: {
-            text: '2',
-            class: 'vsm--badge_default'
-          }
+          icon: 'far fa-calendar-alt'
         },
         {
           href: '',

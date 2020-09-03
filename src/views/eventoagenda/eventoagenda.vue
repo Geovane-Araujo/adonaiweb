@@ -45,7 +45,7 @@
                   </div>
                 </div>
                 <div class="col-sm-2">
-                  <v-swatches v-model="form.color"></v-swatches>
+                  <v-swatches v-model="form.cor"></v-swatches>
                 </div>
               </div>
             </form>

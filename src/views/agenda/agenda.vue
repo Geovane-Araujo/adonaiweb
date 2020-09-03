@@ -14,6 +14,75 @@
         </div>
       </div>
     </div>
+    <div id="overlay" v-if=openModal>
+        <div class="modal-dialog modal-dialog-centered modal-md ">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Agendamento</h5>
+              <button type="button" class="close"  @click="openModal=false;">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form method="POST">
+                <b-container>
+                  <b-row class="text-center">
+                    <b-col cols="12">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <datetime  placeholder="Data Inicio" style="margin-left: 2px;padding: 5px; height: 35px; border:solid 1px; border-radius:3px; border-color:#cacdcf; text-align: center; "
+                            class="theme-orange"
+                            type="datetime"
+                            id="startDate"
+                            format="dd/MM/yyyy HH:mm"
+                            v-model="form.startdate">
+                          </datetime>
+                        </div>
+                        <div class="col-sm-6">
+                          <datetime  placeholder="Data Fim" style="margin-left: 2px;padding: 5px; height: 35px; border:solid 1px; border-radius:3px; border-color:#cacdcf; text-align: center; "
+                            class="theme-orange"
+                            type="datetime"
+                            id="startDate"
+                            format="dd/MM/yyyy HH:mm"
+                            v-model="form.enddate">
+                          </datetime>
+                        </div>
+                        <div class="col-sm-12">
+                          <b-input-group>
+                            <b-form-input placeholder="Evento" v-model="form.descricaoevento"
+                            ></b-form-input>
+                              <b-input-group-append >
+                              <b-button variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
+                            </b-input-group-append>
+                          </b-input-group>
+                        </div>
+                        <div class="col-sm-12">
+                          <b-input-group>
+                            <b-form-input placeholder="Usuario evento" v-model="form.nome"
+                            ></b-form-input>
+                              <b-input-group-append >
+                              <b-button variant="outline-info" class="material-icons"  @click="datasearch (1);" >search</b-button>
+                            </b-input-group-append>
+                          </b-input-group>
+                        </div>
+                        <div class="col-sm-12">
+                           <b-form-textarea
+                              placeholder="Descricao"
+                              v-model="form.descricao"
+                              rows="3"
+                              max-rows="3"
+                            ></b-form-textarea>
+                        </div>
+                      </div>
+                    </b-col>
+                  </b-row>
+                </b-container>
+              </form>
+              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form, 0)">Agendar</button>
+            </div>
+          </div>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -60,6 +129,7 @@ input[type='file'] {
   top: 0;
   bottom: 0;
   left: 0;
+  z-index: 1000;
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);
 }
@@ -167,4 +237,20 @@ button:hover {
     margin-left: 0;
     margin-right: 0;
   }
+.theme-orange .vdatetime-popup__header,
+.theme-orange .vdatetime-calendar__month__day--selected > span > span,
+.theme-orange .vdatetime-calendar__month__day--selected:hover > span > span {
+  background: #FF9800;
+}
+
+.theme-orange .vdatetime-year-picker__item--selected,
+.theme-orange .vdatetime-time-picker__item--selected,
+.theme-orange .vdatetime-popup__actions__button {
+  color: #ff9800;
+}
+.picker {
+  border:solid 1px;
+  border-radius:3px;
+  border-color:#dee1e3;
+}
 </style>

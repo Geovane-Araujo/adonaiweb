@@ -4,14 +4,32 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../router/services'
 import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import 'fullcalendar/dist/locale/pt-br'
 var moment = require('moment')
+var data = new Date()
 
 export default {
   data () {
     return {
+      openModal: false,
+      form: {
+        add: true,
+        edit: false,
+        del: false,
+        id: '',
+        startdate: '',
+        enddate: '',
+        idmultiigreja: '',
+        idevento: '',
+        descricaoevento: '',
+        idpessoa: '',
+        nome: '',
+        descricao: ''
+      },
       calendarOptions: {
         plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
         initialView: 'dayGridMonth',
@@ -65,7 +83,10 @@ export default {
       /* this.$refs.expl.explorer('igrejagrid',1,'') */
     },
     handleDateClick: function (arg) {
-      alert('date click! ' + arg.dateStr)
+      this.openModal = true
+      var hora = data.getHours() + ':' + data.getMinutes()
+      var aux = moment(arg.dateStr + ' ' + hora).format('DD/MM/yyyy h:mm')
+      this.form.startdate = aux
     },
     eventDateClick: function (arg) {
       alert('Olá! ' + arg)
@@ -75,7 +96,8 @@ export default {
     }
   },
   components: {
-    FullCalendar
+    FullCalendar,
+    datetime: Datetime
   },
   computed: {
     ...mapState('auth', ['user'])

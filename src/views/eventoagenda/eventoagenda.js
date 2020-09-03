@@ -54,7 +54,7 @@ export default {
           utilClass.explorer.route = 'menu_eventos_tipos'
           this.$refs.grid.get(utilClass.explorer)
         } else {
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
           this.openloading = false
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
@@ -63,7 +63,6 @@ export default {
       if (this.form.descricao === '') {
         this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
       } else {
-        form.cor = form.color
         this.save(form)
       }
     },
