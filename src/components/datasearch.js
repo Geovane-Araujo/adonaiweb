@@ -25,7 +25,7 @@ export default {
         this.params = params
         this.extraparams = extraparams
         this.openloading = false
-      }).catch(err => util.error(err))
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     dataSearch1 (route, pagina, contexto) {
       axios.get(adonai.url + route + '/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {

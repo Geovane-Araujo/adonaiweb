@@ -30,8 +30,8 @@
                     <b-col cols="12">
                       <div class="row">
                         <div class="col-sm-6">
-                          <datetime  placeholder="Data Inicio" style="margin-left: 2px;padding: 5px; height: 35px; border:solid 1px; border-radius:3px; border-color:#cacdcf; text-align: center; "
-                            class="theme-orange"
+                          <datetime  placeholder="Data Inicio"
+                            class="datePivker"
                             type="datetime"
                             id="startDate"
                             format="dd/MM/yyyy HH:mm"
@@ -39,8 +39,8 @@
                           </datetime>
                         </div>
                         <div class="col-sm-6">
-                          <datetime  placeholder="Data Fim" style="margin-left: 2px;padding: 5px; height: 35px; border:solid 1px; border-radius:3px; border-color:#cacdcf; text-align: center; "
-                            class="theme-orange"
+                          <datetime  placeholder="Data Fim"
+                            class="datePivker"
                             type="datetime"
                             id="startDate"
                             format="dd/MM/yyyy HH:mm"
@@ -61,7 +61,7 @@
                             <b-form-input placeholder="Usuario evento" v-model="form.nome"
                             ></b-form-input>
                               <b-input-group-append >
-                              <b-button variant="outline-info" class="material-icons"  @click="datasearch (1);" >search</b-button>
+                              <b-button variant="outline-info" class="material-icons"  @click="datasearch (0);" >search</b-button>
                             </b-input-group-append>
                           </b-input-group>
                         </div>
@@ -78,11 +78,17 @@
                   </b-row>
                 </b-container>
               </form>
-              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form, 0)">Agendar</button>
+              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form)">Agendar</button>
             </div>
           </div>
         </div>
     </div>
+    <adonaidatasearch
+    :title="ds.title"
+    :cabecalho="ds.grid"
+    :form="form" v-bind:openDatasearch="open"
+    :destroy="destroy"
+    ref="expl"/>
   </div>
 </template>
 
@@ -96,6 +102,15 @@ label {
   cursor: pointer;
   margin: 10px;
   padding: 6px 20px
+}
+.datePivker{
+  margin-left: 2px;
+  padding: 5px;
+  height: 35px;
+  border:solid 1px;
+  border-radius:3px;
+  border-color:#cacdcf;
+  text-align: center;
 }
 .fc button {
     text-transform: uppercase;
@@ -140,117 +155,5 @@ button {
 button:hover {
   background-color: #5e8a75;
   border-color:#5e8a75;
-}
-  .popper,
-  .tooltip {
-    position: absolute;
-    z-index: 9999;
-    background: #FFC107;
-    color: black;
-    width: 150px;
-    border-radius: 3px;
-    box-shadow: 0 0 2px rgba(0,0,0,0.5);
-    padding: 10px;
-    text-align: center;
-  }
-  .style5 .tooltip {
-    background: #1E252B;
-    color: #FFFFFF;
-    max-width: 200px;
-    width: auto;
-    font-size: .8rem;
-    padding: .5em 1em;
-  }
-  .popper .popper__arrow,
-  .tooltip .tooltip-arrow {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    position: absolute;
-    margin: 5px;
-  }
-
-  .tooltip .tooltip-arrow,
-  .popper .popper__arrow {
-    border-color: #FFC107;
-  }
-  .style5 .tooltip .tooltip-arrow {
-    border-color: #1E252B;
-  }
-  .popper[x-placement^="top"],
-  .tooltip[x-placement^="top"] {
-    margin-bottom: 5px;
-  }
-  .popper[x-placement^="top"] .popper__arrow,
-  .tooltip[x-placement^="top"] .tooltip-arrow {
-    border-width: 5px 5px 0 5px;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-bottom-color: transparent;
-    bottom: -5px;
-    left: calc(50% - 5px);
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  .popper[x-placement^="bottom"],
-  .tooltip[x-placement^="bottom"] {
-    margin-top: 5px;
-  }
-  .tooltip[x-placement^="bottom"] .tooltip-arrow,
-  .popper[x-placement^="bottom"] .popper__arrow {
-    border-width: 0 5px 5px 5px;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-top-color: transparent;
-    top: -5px;
-    left: calc(50% - 5px);
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  .tooltip[x-placement^="right"],
-  .popper[x-placement^="right"] {
-    margin-left: 5px;
-  }
-  .popper[x-placement^="right"] .popper__arrow,
-  .tooltip[x-placement^="right"] .tooltip-arrow {
-    border-width: 5px 5px 5px 0;
-    border-left-color: transparent;
-    border-top-color: transparent;
-    border-bottom-color: transparent;
-    left: -5px;
-    top: calc(50% - 5px);
-    margin-left: 0;
-    margin-right: 0;
-  }
-  .popper[x-placement^="left"],
-  .tooltip[x-placement^="left"] {
-    margin-right: 5px;
-  }
-  .popper[x-placement^="left"] .popper__arrow,
-  .tooltip[x-placement^="left"] .tooltip-arrow {
-    border-width: 5px 0 5px 5px;
-    border-top-color: transparent;
-    border-right-color: transparent;
-    border-bottom-color: transparent;
-    right: -5px;
-    top: calc(50% - 5px);
-    margin-left: 0;
-    margin-right: 0;
-  }
-.theme-orange .vdatetime-popup__header,
-.theme-orange .vdatetime-calendar__month__day--selected > span > span,
-.theme-orange .vdatetime-calendar__month__day--selected:hover > span > span {
-  background: #FF9800;
-}
-
-.theme-orange .vdatetime-year-picker__item--selected,
-.theme-orange .vdatetime-time-picker__item--selected,
-.theme-orange .vdatetime-popup__actions__button {
-  color: #ff9800;
-}
-.picker {
-  border:solid 1px;
-  border-radius:3px;
-  border-color:#dee1e3;
 }
 </style>
