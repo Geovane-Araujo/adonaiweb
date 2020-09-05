@@ -1,6 +1,6 @@
 <template>
   <div class="agenda">
-    <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
+    <loader v-if="openloadin" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
@@ -15,11 +15,11 @@
       </div>
     </div>
     <div id="overlay" v-if=openModal>
-        <div class="modal-dialog modal-dialog-centered modal-md ">
+        <div class="modal-dialog modal-dialog-centered modal-md">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Agendamento</h5>
-              <button type="button" class="close"  @click="openModal=false;">
+              <button type="button" class="close"  @click="openModal=false;cleanForm ()">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -49,7 +49,7 @@
                         </div>
                         <div class="col-sm-12">
                           <b-input-group>
-                            <b-form-input placeholder="Evento" v-model="form.descricaoevento"
+                            <b-form-input placeholder="Evento" v-model="form.descricaoEvento"
                             ></b-form-input>
                               <b-input-group-append >
                               <b-button variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
@@ -78,6 +78,7 @@
                   </b-row>
                 </b-container>
               </form>
+              <button type="button" v-show="form.edit" class="btn btn-outline-danger float-left" style="margin-left:5px;" @click="form.edit=false;form.del=true;save(form)">Excluir</button>
               <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form)">Agendar</button>
             </div>
           </div>

@@ -13,12 +13,13 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import 'fullcalendar/dist/locale/pt-br'
 
 var moment = require('moment')
-var data = new Date()
+// var data = new Date()
 
 export default {
   data () {
     return {
       openModal: false,
+      openloadin: false,
       open: false,
       form: {
         add: true,
@@ -29,7 +30,7 @@ export default {
         enddate: '',
         idmultiigreja: 1,
         idevento: '',
-        descricaoevento: '',
+        descricaoEvento: '',
         idpessoa: '',
         nome: '',
         descricao: ''
@@ -70,54 +71,61 @@ export default {
   },
   methods: {
     async save (form) {
-      this.openloading = true
-      if (form.del === true && form.dataPagamento !== '') {
-        this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSoft diz:', util.toast)
-        this.openloading = false
-      } else {
-        await axios.post(adonai.url + 'agenda', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          if (res.data.ret === 'success') {
-            this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
-            this.cleanForm()
-            this.get()
-            this.openModal = false
-            this.openloading = false
-          } else {
-            this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
-          }
-        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
-      }
+      this.openloadin = true
+      await axios.post(adonai.url + 'agenda', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data.ret === 'success') {
+          this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
+          this.cleanForm()
+          this.openloadin = false
+          this.openModal = false
+          this.get()
+        } else {
+          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
+        }
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     get () {
+      this.openloadin = true
       utilExpl.explorer.route = 'menu_agenda'
-      this.openloading = true
       axios.post(adonai.url + 'aexplorer', utilExpl.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.openloading = false
         if (res.data.ret === 'success') {
           this.calendarOptions.events = res.data.obj
+          this.openloadin = false
         } else {
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+          this.openloadin = false
         }
-        this.openloading = false
       }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     getById (id) {
-      axios.get(adonai.url + 'igrejagrid/' + 1, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.igreja = res.data
-        this.openloading = false
+      this.openloadin = true
+      axios.get(adonai.url + 'agenda/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.read(res.data.obj)
+        this.form.edit = true
+        this.openloadin = false
       }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     handleDateClick: function (arg) {
       this.openModal = true
-      var hora = data.getHours() + ':' + data.getMinutes()
-      var aux = moment(arg.dateStr + ' ' + hora).format('DD/MM/yyyy h:mm')
-      this.form.startdate = aux
+      var data = arg.dateStr.split('-')
+      var date = ''
+      for (let i = 0; i < data.length; i++) {
+        date += data[i] + ','
+      }
+      date = date.replace(/,\s*$/, '')
+      this.form.startdate = moment(new Date(date).getTime()).format()
+      this.form.enddate = moment(new Date(date).getTime()).format()
     },
     eventDateClick: function (arg) {
-      alert('Olá! ' + arg)
+      this.getById(parseInt(arg.event.id))
     },
     eventDrop: function (arg) {
-      alert('Olá! ' + arg)
+      this.form.startdate = arg.event.startStr
+      this.form.enddate = arg.event.endStr
+      this.form.id = parseInt(arg.event.id)
+      this.form.descricao = ''
+      this.form.add = false
+      this.save(this.form)
     },
     datasearch (route) {
       if (route === 1) {
@@ -138,7 +146,7 @@ export default {
     },
     destroy (registro, params) {
       if (params === 1) {
-        this.form.descricaoevento = registro.descricao
+        this.form.descricaoEvento = registro.descricao
         this.form.idevento = registro.id
         this.open = false
       } else {
@@ -170,7 +178,7 @@ export default {
       this.form.descricao = ''
       this.form.enddate = ''
       this.form.startdate = ''
-      this.form.descricaoevento = ''
+      this.form.descricaoEvento = ''
       this.form.idevento = ''
       this.form.idmultiigreja = 1
     },
@@ -184,9 +192,10 @@ export default {
       this.form.descricao = form.descricao
       this.form.enddate = form.enddate
       this.form.startdate = form.startdate
-      this.form.descricaoevento = form.descricaoevento
+      this.form.descricaoEvento = form.descricaoEvento
       this.form.idevento = form.idevento
       this.form.idmultiigreja = 1
+      this.openModal = true
     }
   },
   components: {
