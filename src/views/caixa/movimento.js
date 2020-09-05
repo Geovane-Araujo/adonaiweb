@@ -92,7 +92,7 @@ export default {
             this.openloading = false
             this.$toastr.error(res.data.motivo, 'AdonaiSoft diz:', util.toast)
           }
-        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast), this.openloading = false)
+        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
       }
     },
     validate (form) {
@@ -120,7 +120,7 @@ export default {
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
         }
         this.openloading = false
-      }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast), this.openloading = false)
+      }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     getSaldos (idcaixa, tipo) {
       if (tipo === 1) {

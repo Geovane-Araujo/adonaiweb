@@ -4,6 +4,8 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import adonai from '../router/services'
 import rel from '../../util/utilClass'
+import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
 var moment = require('moment')
 var data = new Date()
 
@@ -12,21 +14,24 @@ export default {
     return {
       openModal: false,
       open: false,
+      openFilter: false,
       estornar: false,
       lancar: false,
-      explorer: {
-        route: 'menu_duplicata_despesa',
-        pagina: 1,
-        criterios: ''
-      },
-      explorerflex: {
-        route: '',
-        pagina: 1,
-        criterios: 'order by id desc'
-      },
       ds: {
         grid: [],
         title: ''
+      },
+      filters: {
+        datainicio: '',
+        datafim: '',
+        nome: '',
+        caixa: '',
+        tipo: '',
+        status: 0,
+        tipodata: 0,
+        idtipo: '',
+        idcaixa: '',
+        idpessoa: ''
       },
       openloading: false,
       pagina: 1,
@@ -64,11 +69,14 @@ export default {
         suffix: '',
         precision: 2,
         masked: false
-      }
+      },
+      criterio: ''
     }
   },
   mounted () {
-    this.$refs.grid.get(this.explorer)
+    rel.explorer.route = 'menu_duplicata_despesa'
+    rel.explorer.criterio = 'ORDER BY ID DESC'
+    this.$refs.grid.get(rel.explorer)
   },
   methods: {
     async save (form) {
@@ -79,20 +87,15 @@ export default {
       } else {
         await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
-            if (this.form.add === true) {
-              this.status = 'Salvo com Sucesso'
-            } else if (this.form.edit === true) {
-              this.status = 'Alterado com Sucesso'
-            } else {
-              this.status = 'Excluido com Sucesso'
-            }
-            this.$toastr.success(this.status, 'AdonaiSoft Diz:', util.toast)
+            this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
             this.cleanForm()
+
             this.openModal = false
             this.openloading = false
-            this.$refs.grid.get(this.explorer)
+            rel.explorer.route = 'menu_duplicata_despesa'
+            this.$refs.grid.get(rel.explorer)
           } else {
-            this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+            this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
           }
         }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       }
@@ -129,25 +132,25 @@ export default {
     },
     datasearch (route) {
       if (route === 1) {
-        this.explorerflex.route = 'exp_membro'
-        this.explorerflex.criterios = 'ORDER BY ID DESC'
+        rel.explorerflex.route = 'exp_membro'
+        rel.explorerflex.criterios = 'ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Nome']
         this.ds.title = 'Membro'
-        this.$refs.cmp.dataSearch(this.explorerflex, 1, 1)
+        this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
         this.open = true
       } else if (route === 2) {
-        this.explorerflex.route = 'exp_tipoconta'
-        this.explorerflex.criterios = 'AND contexto = 1 ORDER BY ID DESC'
+        rel.explorerflex.route = 'exp_tipoconta'
+        rel.explorerflex.criterios = 'AND contexto = 1 ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Tipo Conta'
-        this.$refs.cmp.dataSearch(this.explorerflex, 1, 2)
+        this.$refs.cmp.dataSearch(rel.explorerflex, 1, 2)
         this.open = true
       } else if (route === 3) {
-        this.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.explorerflex.route = 'exp_caixa'
+        rel.explorerflex.criterios = 'ORDER BY ID DESC'
+        rel.explorerflex.route = 'exp_caixa'
         this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Caixa'
-        this.$refs.cmp.dataSearch(this.explorerflex, 1, 3)
+        this.$refs.cmp.dataSearch(rel.explorerflex, 1, 3)
         this.open = true
       }
     },
@@ -219,15 +222,67 @@ export default {
       if (params === 1) {
         this.form.nome = registro.nome
         this.form.idMembro = registro.id
+
+        this.filters.nome = registro.nome
+        this.filters.idpessoa = registro.id
       } else if (params === 2) {
         this.form.descrconta = registro.descricao
         this.form.idtipo = registro.id
-      } else {
+
+        this.filters.idtipo = registro.id
+        this.filters.tipo = registro.descricao
+      } else if (params === 3) {
         this.form.desccaixa = registro.descricao
         this.form.idCaixaMovimento = registro.idmovimento
+
+        this.filters.caixa = registro.descricao
+        this.filters.idcaixa = registro.idmovimento
       }
       this.open = false
+    },
+    filter (filters) {
+      if (filters.nome !== '') {
+        this.criterio += ' AND duplicata.idmembro = ' + filters.idpessoa
+      }
+      if (filters.caixa !== '') {
+        this.criterio += ' AND duplicata.idcaixamovimento = ' + filters.idcaixa
+      }
+      if (filters.tipo !== '') {
+        this.criterio += ' AND duplicata.idtipo = ' + filters.idtipo
+      }
+      if (filters.datainicio !== '' && filters.datafim !== '') {
+        if (filters.tipodata === 1) {
+          this.criterio += ' AND dataemissao BETWEEN \'' + moment(filters.datainicio).format('YYYY-MM-DD') + '\' AND \'' + moment(filters.datafim).format('YYYY-MM-DD') + '\''
+        } else if (filters.tipodata === 2) {
+          this.criterio += ' AND datavencimento BETWEEN \'' + moment(filters.datainicio).format('YYYY-MM-DD') + '\' AND \'' + moment(filters.datafim).format('YYYY-MM-DD') + '\''
+        } else if (filters.tipodata === 3) {
+          this.criterio += ' AND datapagamento BETWEEN \'' + moment(filters.datainicio).format('YYYY-MM-DD') + '\' AND \'' + moment(filters.datafim).format('YYYY-MM-DD') + '\''
+        }
+      }
+      if (filters.status !== 0) {
+        if (filters.status === 1) {
+          this.criterio += ' AND duplicata.status = 1'
+        } else if (filters.status === 2) {
+          this.criterio += ' AND duplicata.status = 0'
+        }
+      }
+      rel.explorer.criterios = this.criterio + ' ORDER BY ID DESC'
+      rel.explorer.route = 'menu_duplicata_despesa'
+      this.openloading = true
+      this.$refs.grid.get(rel.explorer)
+      this.openFilter = false
+      this.openloading = false
+      this.criterio = ''
+    },
+    cleanFilters (filters) {
+      var fil
+      for (fil in filters) {
+        this.filters[fil] = ''
+      }
     }
+  },
+  components: {
+    datetime: Datetime
   },
   computed: {
     ...mapState('auth', ['user'])
