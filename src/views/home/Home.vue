@@ -75,6 +75,13 @@ h3 {
 #demo.onmobile {
   padding-left: 50px;
 }
+.icon {
+    background-color: #1e1e21;
+    background-image: url(https://image.flaticon.com/icons/png/512/124/124130.png);
+    text-decoration: none;
+    position: relative;
+    background-size: cover;
+}
 .containersidebar {
   background-color: rgba(3,50,73,0.7);
  /*  background-image: url(https://cdn.pixabay.com/photo/2018/06/29/22/45/wheat-3506758_960_720.jpg); */

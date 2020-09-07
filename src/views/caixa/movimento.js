@@ -57,7 +57,10 @@ export default {
         suffix: '',
         precision: 2,
         masked: false
-      }
+      },
+      ref: '',
+      buscar: '',
+      criterio: ''
     }
   },
   mounted () {
@@ -94,6 +97,26 @@ export default {
           }
         }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
       }
+    },
+    getexplorer (crit) {
+      if (this.criterio === '') {
+        this.criterio = this.titulos[1]
+      }
+      if (crit.length > 2 || crit === '') {
+        rel.explorer.route = 'menu_movimento'
+        rel.explorer.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
+        axios.post(adonai.url + 'aexplorer', rel.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          if (res.data.ret === 'success') {
+            this.caixamovimento = res.data.obj
+          } else {
+            this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+          }
+        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }
+    },
+    onSelectRsgister (cabecalho) {
+      this.criterio = cabecalho
+      this.$toastr.success(cabecalho + ' selecionado', 'AdonaiSoft Diz:', util.toast)
     },
     validate (form) {
       if (form.idCaixa === '' && form.id === '') {

@@ -32,7 +32,7 @@
         </div>
         <div class="col-lg-12">
           <!-- table -->
-          <adonaigrid :titulos="['ID','nome','Descricao','Valor','DataEmis.','DataVenc.','DataPag','Status','Tipo','Caixa']"
+          <adonaigrid :titulos="['ID','nome','Descricao','Valor','DataEmissao','DataVencimento','DataPagamento','Status','Tipo','Caixa']"
           :form="form"
           :getbyId="getbyId"
           :save="save"
@@ -48,7 +48,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg ">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Lançamento de Despesa</h5>
+              <h5 class="modal-title">Lançamento de Receitas</h5>
               <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
                 <span aria-hidden="true">&times;</span>
               </button>

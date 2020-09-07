@@ -4,7 +4,7 @@
   <table class=" table table-botdered table-striped table-sm table-hover table-fixed">
       <thead  style="overflow-y:auto;">
         <tr class="text-left text-light text-light" style="background-color: #5e8a75">
-          <th  v-for="title in titulos" :key="title.ID">{{ title }}</th>
+          <th @click="onSelectRsgister(title)" v-for="title in titulos" :key="title.ID">{{ title }}</th>
           <th></th>
         </tr>
       </thead>
@@ -24,7 +24,7 @@
         <button class="btn btn-outline-info" v-bind:disabled="(pagina == 1)"><i class="fas fa-caret-left"></i></button>
         <b-form-input  class="col-sm-1 text-center" v-model="pagina"></b-form-input>
         <button class="btn btn-outline-info" v-bind:disabled="(pagina == 1)" ><i class="fas fa-caret-right"></i></button>
-        <b-form-input placeholder="buscar" style="margin-left:10px" class="col-sm-5"></b-form-input>
+        <b-form-input placeholder="buscar" v-model="buscar" @keyup="getexplorer(buscar)" style="margin-left:10px" class="col-sm-5"></b-form-input>
         <b-button variant="outline-info" class="material-icons">search</b-button>
       </b-input-group>
     </footer>

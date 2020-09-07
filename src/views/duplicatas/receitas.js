@@ -75,8 +75,8 @@ export default {
     }
   },
   mounted () {
-    rel.explorer.route = 'menu_duplicata_despesa'
-    rel.explorer.criterio = 'ORDER BY ID DESC'
+    rel.explorer.route = 'menu_duplicata_receita'
+    rel.explorer.criterios = 'ORDER BY ID DESC'
     this.$refs.grid.get(rel.explorer)
   },
   methods: {
@@ -211,7 +211,7 @@ export default {
         this.open = true
       } else if (route === 2) {
         rel.explorerflex.route = 'exp_tipoconta'
-        rel.explorerflex.criterios = 'AND contexto = 1 ORDER BY ID DESC'
+        rel.explorerflex.criterios = 'AND contexto = 0 ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Tipo Conta'
         this.$refs.cmp.dataSearch(rel.explorerflex, 1, 2)

@@ -169,10 +169,20 @@ export default {
         },
         {
           title: 'AdonaiSoft',
-          icon: '../assets/Logo.png',
+          icon: {
+            element: 'span',
+            class: 'icon'
+            // attributes: {}
+            // text: ''
+          },
           child: [
             {
+              href: '/termosuso',
               title: 'Termos de Uso'
+            },
+            {
+              href: '/privacidade',
+              title: 'Politica de Privacidade'
             },
             {
               title: 'Minhas Faturas'

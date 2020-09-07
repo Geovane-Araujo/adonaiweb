@@ -75,7 +75,7 @@ export default {
   },
   mounted () {
     rel.explorer.route = 'menu_duplicata_despesa'
-    rel.explorer.criterio = 'ORDER BY ID DESC'
+    rel.explorer.criterios = 'ORDER BY ID DESC'
     this.$refs.grid.get(rel.explorer)
   },
   methods: {

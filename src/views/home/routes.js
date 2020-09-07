@@ -17,6 +17,8 @@ import dashboard from '../dashboard/dashboard.vue'
 import agenda from '../agenda/agenda.vue'
 import movimentoHistorico from '../caixa/movimentoHistorico.vue'
 import eventoTipos from '../eventoagenda/eventoagenda.vue'
+import termosuso from '../termosuso/termosuso.vue'
+import privacidade from '../politicaprivacidade/privacidade.vue'
 
 export default [
   {
@@ -114,6 +116,16 @@ export default [
         path: 'eventoTipos',
         name: 'eventoTipos',
         component: eventoTipos
+      },
+      {
+        path: 'termosuso',
+        name: 'termosuso',
+        component: termosuso
+      },
+      {
+        path: 'privacidade',
+        name: 'privacidade',
+        component: privacidade
       }
     ]
   }
