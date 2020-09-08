@@ -185,6 +185,7 @@ export default {
               title: 'Politica de Privacidade'
             },
             {
+              href: '/minhasfaturas',
               title: 'Minhas Faturas'
             },
             {

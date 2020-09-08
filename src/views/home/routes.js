@@ -19,6 +19,7 @@ import movimentoHistorico from '../caixa/movimentoHistorico.vue'
 import eventoTipos from '../eventoagenda/eventoagenda.vue'
 import termosuso from '../termosuso/termosuso.vue'
 import privacidade from '../politicaprivacidade/privacidade.vue'
+import minhasfaturas from '../minhasfaturas/minhasfaturas.vue'
 
 export default [
   {
@@ -126,6 +127,11 @@ export default [
         path: 'privacidade',
         name: 'privacidade',
         component: privacidade
+      },
+      {
+        path: 'minhasfaturas',
+        name: 'minhasfaturas',
+        component: minhasfaturas
       }
     ]
   }
