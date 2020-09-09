@@ -7,17 +7,17 @@
           <div class="modal-content">
             <div class="modal-header">
               <h6>Selecione o {{ title }}</h6>
-              <button type="button" class="close"  @click="registros=[];destroy (0, '', '')">
+              <button type="button" class="close"  @click="contexto='';explorerflex.pagina=1; registros=[];destroy (0, '', '')">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <b-form-input class="mr-sm-2" placeholder="Buscar" v-model="contexto"  @keyup.enter="dataSearch (route, pagina, contexto, params)"></b-form-input>
+              <b-form-input class="mr-sm-2" placeholder="Buscar" v-model="contexto"  @keyup="getexplorer(contexto)"></b-form-input>
               <br>
               <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
                 <thead>
                   <tr class="text-left text-light" style="background-color: #5e8a75">
-                    <th v-for="itcabe in cabecalho" :key="itcabe.ID">{{ itcabe }}</th>
+                    <th  @click="onSelectRsgister(itcabe)" v-for="itcabe in cabecalho" :key="itcabe.ID">{{ itcabe }}</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -33,11 +33,11 @@
               <div class="row">
                 <b-input-group >
                   <b-input-group-append>
-                    <b-button variant="outline-info" style="margin-left:10px;" class="material-icons" @click="explorerflex.pagina = pagina - 1;dataSearch (explorerflex,'',params)">chevron_left</b-button>
+                    <b-button variant="outline-info" style="margin-left:10px;" class="material-icons" @click="explorerflex.pagina = explorerflex.pagina - 1;dataSearch (explorerflex,'',params)">chevron_left</b-button>
                   </b-input-group-append>
-                  <b-form-input  class="col-sm-1 text-center" v-model="pagina"></b-form-input>
+                  <b-form-input  class="col-sm-1 text-center" v-model="explorerflex.pagina"></b-form-input>
                   <b-input-group-append>
-                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="explorerflex.pagina = pagina + 1;dataSearch (explorerflex,'',params)">chevron_right</b-button>
+                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="explorerflex.pagina = explorerflex.pagina + 1;dataSearch (explorerflex,'',params)">chevron_right</b-button>
                   </b-input-group-append>
                 </b-input-group>
               </div>

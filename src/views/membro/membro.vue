@@ -64,11 +64,13 @@
                           </div>
                           <div class="row">
                             <div class="col-sm-5">
-                              <b-form-datepicker
-                              placeholder="Data Nasc."
-                              v-model="form.dataNascimento"
-                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                              local="pt-br"></b-form-datepicker>
+                              <datetime  placeholder="Data Nascimento"
+                                class="datePivker"
+                                type="Date"
+                                value-zone="UTC"
+                                format="dd/MM/yyyy"
+                                v-model="form.dataNascimento">
+                              </datetime>
                             </div>
                             <div class="col-sm-6">
                               <b-form-select
@@ -87,11 +89,13 @@
                               </div>
                             </div>
                             <div class="col-md-4">
-                              <b-form-datepicker
-                              placeholder="Data Batismo"
-                              v-model="form.dataBatismo"
-                              :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                              local="pt-br"></b-form-datepicker>
+                              <datetime  placeholder="Data Batismo"
+                                class="datePivker"
+                                type="Date"
+                                value-zone="UTC"
+                                format="dd/MM/yyyy"
+                                v-model="form.dataBatismo">
+                              </datetime>
                             </div>
                             <div class="col-md-2">
                               <b-form-checkbox
@@ -151,7 +155,7 @@
                             <div class="col-sm-3">
                               <div class="form-group">
                                 <b-input-group>
-                                  <b-form-input placeholder="CEP" v-model="form.endereco[0].cep" ></b-form-input>
+                                  <b-form-input placeholder="CEP" v-mask="'#####-###'" v-model="form.endereco[0].cep" ></b-form-input>
                                     <b-input-group-append >
                                     <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 1)">search</b-button>
                                   </b-input-group-append>
@@ -209,7 +213,7 @@
                             <div class="col-sm-3">
                               <div class="form-group">
                                 <b-input-group>
-                                  <b-form-input placeholder="CEP" v-model="form.endereco[1].cep"></b-form-input>
+                                  <b-form-input placeholder="CEP" v-mask="'#####-###'" v-model="form.endereco[1].cep"></b-form-input>
                                   <b-input-group-append>
                                     <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 2)">search</b-button>
                                   </b-input-group-append>
@@ -318,6 +322,15 @@ p {
   background-color: rgba($color: #ffffff, $alpha: 0.9);
   margin: 5px;
   overflow:auto;
+}
+.datePivker{
+  margin-left: 2px;
+  padding: 5px;
+  height: 35px;
+  border:solid 1px;
+  border-radius:3px;
+  border-color:#cacdcf;
+  text-align: center;
 }
 #overlay {
   position: fixed;

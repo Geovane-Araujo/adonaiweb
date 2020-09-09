@@ -4,6 +4,8 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../router/services'
 import axios from 'axios'
 import rel from '../../util/utilClass'
+import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
 var moment = require('moment')
 var data = new Date()
 
@@ -304,6 +306,7 @@ export default {
       }).catch(err => util.error(err))
     },
     buscarcep (cep, form, local) {
+      cep = cep.replace('-', '')
       axios.get(adonai.url + 'cep/' + cep, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'unsuccess') {
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
@@ -335,14 +338,14 @@ export default {
       if (route === 1) {
         this.explorerflex.route = 'exp_municipio'
         this.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['ID', 'Nome Cidade', 'UF', '']
+        this.ds.grid = ['ID', 'nome', 'uf', '']
         this.ds.title = 'Cidades'
         this.$refs.expl.dataSearch(this.explorerflex, 1, 1, params)
         this.open = true
       } else if (route === 2) {
         this.explorerflex.route = 'exp_cargo'
         this.explorerflex.criterios = 'ORDER BY ID asc'
-        this.ds.grid = ['ID', 'Descrição']
+        this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Cargos'
         this.$refs.expl.dataSearch(this.explorerflex, 1, 2)
         this.open = true
@@ -358,6 +361,9 @@ export default {
       }
       this.open = false
     }
+  },
+  components: {
+    datetime: Datetime
   },
   computed: {
     ...mapState('auth', ['user'])

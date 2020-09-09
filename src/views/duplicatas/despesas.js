@@ -93,6 +93,7 @@ export default {
             this.openModal = false
             this.openloading = false
             rel.explorer.route = 'menu_duplicata_despesa'
+            rel.explorer.criterios = 'ORDER BY ID DESC'
             this.$refs.grid.get(rel.explorer)
           } else {
             this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)

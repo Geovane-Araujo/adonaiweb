@@ -21,9 +21,9 @@
     </table>
     <footer class="footer" >
       <b-input-group class="col-sm-12" style="padding-left: 0px;">
-        <button class="btn btn-outline-info" v-bind:disabled="(pagina == 1)"><i class="fas fa-caret-left"></i></button>
-        <b-form-input  class="col-sm-1 text-center" v-model="pagina"></b-form-input>
-        <button class="btn btn-outline-info" v-bind:disabled="(pagina == 1)" ><i class="fas fa-caret-right"></i></button>
+        <button class="btn btn-outline-info" v-bind:disabled="(explorer.pagina == 1)" @click="explorer.pagina = explorer.pagina - 1;get(explorer)"><i class="fas fa-caret-left"></i></button>
+        <b-form-input  class="col-sm-1 text-center" v-model="explorer.pagina"></b-form-input>
+        <button class="btn btn-outline-info" v-bind:disabled="(reg.length < 15)" @click="explorer.pagina = explorer.pagina + 1;get(explorer)"><i class="fas fa-caret-right"></i></button>
         <b-form-input placeholder="buscar" v-model="buscar" @keyup="getexplorer(buscar)" style="margin-left:10px" class="col-sm-5"></b-form-input>
         <b-button variant="outline-info" class="material-icons">search</b-button>
       </b-input-group>

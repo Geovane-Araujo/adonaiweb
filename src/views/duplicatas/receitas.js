@@ -88,18 +88,14 @@ export default {
       } else {
         await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
-            if (this.form.add === true) {
-              this.status = 'Salvo com Sucesso'
-            } else if (this.form.edit === true) {
-              this.status = 'Alterado com Sucesso'
-            } else {
-              this.status = 'Excluido com Sucesso'
-            }
             this.$toastr.success(this.status, 'AdonaiSoft diz:', util.toast)
             this.cleanForm()
             this.openModal = false
             this.openloading = false
-            this.$refs.grid.get(this.explorer)
+
+            rel.explorer.route = 'menu_duplicata_receita'
+            rel.explorer.criterios = 'ORDER BY ID DESC'
+            this.$refs.grid.get(rel.explorer)
           } else {
             this.$toastr.error(res.data.motivo, 'AdonaiSoft diz:', util.toast)
             this.openloading = false

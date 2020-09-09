@@ -12,9 +12,14 @@ export default {
       deleteModal: false,
       ref: '',
       buscar: '',
-      criterio: '',
       pagina: 1,
-      reg: []
+      criterio: '',
+      reg: [],
+      explorer: {
+        route: '',
+        pagina: 1,
+        criterios: ''
+      }
     }
   },
   props: {
@@ -26,9 +31,6 @@ export default {
       type: Array
     },
     form: {
-      type: Object
-    },
-    explorer: {
       type: Object
     },
     getbyId: Function,
@@ -44,6 +46,7 @@ export default {
         if (res.data.ret === 'success') {
           this.reg = res.data.obj
           this.ref = explorer.route
+          this.explorer = explorer
         } else {
           this.openloading = false
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)

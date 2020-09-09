@@ -55,7 +55,8 @@
                             <datetime
                               class="datePivker"
                               v-bind:disabled="(form.status == 0)"
-                              type="date"
+                              type="Date"
+                              value-zone="UTC"
                               format="dd/MM/yyyy"
                               v-model="form.dataemissao">
                             </datetime>
@@ -66,7 +67,8 @@
                             <datetime
                               class="datePivker"
                               v-bind:disabled="(form.status == 0)"
-                              type="date"
+                              type="Date"
+                              value-zone="UTC"
                               format="dd/MM/yyyy"
                               v-model="form.dataVencimento">
                             </datetime>

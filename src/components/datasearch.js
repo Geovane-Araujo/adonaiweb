@@ -12,7 +12,13 @@ export default {
       params: '',
       pagina: 1,
       contexto: '',
-      extraparams: ''
+      criterio: '',
+      extraparams: '',
+      explorerflex: {
+        route: '',
+        pagina: 1,
+        criterios: ''
+      }
     }
   },
   methods: {
@@ -27,10 +33,24 @@ export default {
         this.openloading = false
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
-    dataSearch1 (route, pagina, contexto) {
-      axios.get(adonai.url + route + '/' + pagina, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.registros = res.data
-      }).catch(err => util.error(err))
+    getexplorer (crit) {
+      if (this.criterio === '') {
+        this.criterio = this.cabecalho[1]
+      }
+      if (crit.length > 2 || crit === '') {
+        this.explorerflex.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
+        axios.post(adonai.url + 'aexplorer', this.explorerflex, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          if (res.data.ret === 'success') {
+            this.registros = res.data.obj
+          } else {
+            this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+          }
+        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }
+    },
+    onSelectRsgister (cabecalho) {
+      this.criterio = cabecalho
+      this.$toastr.success(cabecalho + ' selecionado', 'AdonaiSoft Diz:', util.toast)
     }
   },
   computed: {
