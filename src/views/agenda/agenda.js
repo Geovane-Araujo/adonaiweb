@@ -92,10 +92,10 @@ export default {
           this.calendarOptions.events = res.data.obj
           this.openloadin = false
         } else {
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
           this.openloadin = false
         }
-      }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
     },
     getById (id) {
       this.openloadin = true

@@ -111,7 +111,7 @@ export default {
       })
     },
     datasearch () {
-      this.ds.grid = ['ID', 'Nome', 'Codigo']
+      this.ds.grid = ['ID', 'nome', 'Codigo']
       this.explorerflex.route = 'exp_banco'
       this.ds.title = 'Bancos'
       this.$refs.expl.dataSearch(this.explorerflex, 1, 1)

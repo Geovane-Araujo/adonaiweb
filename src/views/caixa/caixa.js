@@ -105,7 +105,7 @@ export default {
     },
     getusers () {
       axios.get(adonai.url + 'users', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.form.usuariospermissoes = res.data.obj
+        this.form.usuariospermissoes = res.data
         this.openloading = false
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },

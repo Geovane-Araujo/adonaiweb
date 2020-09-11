@@ -15,17 +15,8 @@ export default {
       openModal: false,
       deleteModal: false,
       openloading: false,
+      openFilter: false,
       open: false,
-      explorer: {
-        route: 'menu_pessoa_membros',
-        pagina: 1,
-        criterios: 'order by id desc'
-      },
-      explorerflex: {
-        route: '',
-        pagina: 1,
-        criterios: 'order by id desc'
-      },
       ds: {
         grid: [],
         title: ''
@@ -117,27 +108,28 @@ export default {
         motivo: '',
         moment: moment(data).format('YYYY-MM-DD h:mm:ss')
       },
-      a: null
+      filters: {
+        idcargo: '',
+        cargo: '',
+        criterio: ''
+      }
     }
   },
   mounted () {
-    this.$refs.grid.get(this.explorer)
+    rel.explorer.route = 'menu_pessoa_membros'
+    rel.explorer.criterios = 'order by id desc'
+    this.$refs.grid.get(rel.explorer)
   },
   methods: {
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'membro', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret !== undefined && res.data.ret === 'success') {
-          if (this.form.add === true) {
-            this.status = 'Salvo com Sucesso'
-          } else if (this.form.edit === true) {
-            this.status = 'Alterado com Sucesso'
-          } else {
-            this.status = 'Excluido com Sucesso'
-          }
           this.openModal = false
           this.openloading = false
-          this.$refs.grid.get(this.explorer)
+          rel.explorer.route = 'menu_pessoa_membros'
+          rel.explorer.criterios = 'order by id desc'
+          this.$refs.grid.get(rel.explorer)
           this.cleanForm(form)
           this.$toastr.success(this.status, 'AdonaiSoft Diz: ', util.toast)
         } else {
@@ -336,18 +328,18 @@ export default {
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
     datasearch (route, params) {
       if (route === 1) {
-        this.explorerflex.route = 'exp_municipio'
-        this.explorerflex.criterios = 'ORDER BY ID DESC'
+        rel.explorerflex.route = 'exp_municipio'
+        rel.explorerflex.criterios = 'ORDER BY ID DESC'
         this.ds.grid = ['ID', 'nome', 'uf', '']
         this.ds.title = 'Cidades'
-        this.$refs.expl.dataSearch(this.explorerflex, 1, 1, params)
+        this.$refs.expl.dataSearch(rel.explorerflex, 1, 1, params)
         this.open = true
       } else if (route === 2) {
-        this.explorerflex.route = 'exp_cargo'
-        this.explorerflex.criterios = 'ORDER BY ID asc'
-        this.ds.grid = ['ID', 'Descricao']
+        rel.explorerflex.route = 'exp_cargo'
+        rel.explorerflex.criterios = 'ORDER BY ID asc'
+        this.ds.grid = ['ID', 'descricao']
         this.ds.title = 'Cargos'
-        this.$refs.expl.dataSearch(this.explorerflex, 1, 2)
+        this.$refs.expl.dataSearch(rel.explorerflex, 1, 2)
         this.open = true
       }
     },
@@ -358,8 +350,31 @@ export default {
       } else {
         this.form.cargo = registro.descricao
         this.form.idCargo = registro.id
+
+        this.filters.cargo = registro.descricao
+        this.filters.idcargo = registro.id
       }
       this.open = false
+    },
+    filter (filters) {
+      if (filters.cargo !== '') {
+        filters.criterio += ' AND pessoa_membro.idcargo = ' + filters.idcargo
+      } else {
+        filters.criterio = ''
+      }
+      rel.explorer.criterios = filters.criterio + ' ORDER BY ID DESC'
+      rel.explorer.route = 'menu_pessoa_membros'
+      this.openloading = true
+      this.$refs.grid.get(rel.explorer)
+      this.openFilter = false
+      this.openloading = false
+      filters.criterio = ''
+    },
+    cleanFilters (filters) {
+      var fil
+      for (fil in filters) {
+        this.filters[fil] = ''
+      }
     }
   },
   components: {

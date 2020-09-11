@@ -15,6 +15,11 @@
             @click="imprimir('report/pessoas/membrolist.jrxml')">
             <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir
           </button>
+          <button
+            class="btn btn-outline-info float-right" style="margin-right: 10px;"
+            @click="openFilter=true">
+            <img src="../img/filter.png">&nbsp;&nbsp;Flitros
+          </button>
           <hr class="bg-info">
         </div>
         <div class="col-lg-12">
@@ -279,6 +284,44 @@
                 </b-tabs>
               </form>
               <button type="button" class="btn btn-outline-info float-right" @click="validar(form)">Salvar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- modal Filtros-->
+    <div id="overlay" v-if=openFilter>
+        <div class="modal-dialog modal-dialog-centered modal-md ">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Filtros</h5>
+              <button type="button" class="close"  @click="openFilter=false;cleanFilters(filters);">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form method="POST">
+                <b-container>
+                  <b-row class="text-center">
+                    <b-col cols="12">
+                      <div class="row">
+                        <div class="col-sm-12" style="padding:3px;">
+                          <b-form-group label="Cargo" label-align-sm="left">
+                            <b-input-group>
+                              <b-form-input
+                              v-model="filters.cargo"
+                              ></b-form-input>
+                                <b-input-group-append >
+                                <b-button variant="outline-info" class="material-icons"  @click="datasearch (2);" >search</b-button>
+                              </b-input-group-append>
+                            </b-input-group>
+                          </b-form-group>
+                        </div>
+                      </div>
+                    </b-col>
+                  </b-row>
+                </b-container>
+              </form>
+              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="filter(filters)">Filtrar</button>
             </div>
           </div>
         </div>
