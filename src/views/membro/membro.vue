@@ -79,8 +79,8 @@
                             </div>
                             <div class="col-sm-6">
                               <b-form-select
-                              :options="[{ text: 'Estado Civil', value: null }, 'Solteiro(a)', 'Casado(a)', 'União Estável','Divorciado(a)','Viuvo(a)']"
-                              v-model="form.estadoCivil"
+                              :options="[{ text: 'Selecione(...)', value: 0 }, { text: 'Solteiro(a)', value: 1 }, { text: 'Casado(a)', value: 2 }, { text: 'União Estável', value: 3 }, { text: 'Divorciado(a)', value: 4 }, { text: 'Viuvo(a)', value: 5 }]"
+                              v-model="form.IDestadocivil"
                               ></b-form-select>
                             </div>
                             <div class="col-sm-5">
