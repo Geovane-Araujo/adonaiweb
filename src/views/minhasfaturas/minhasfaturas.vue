@@ -35,7 +35,7 @@
                   <b-tooltip target="link1" title="Imprimir Recibo"></b-tooltip>
                 </td>
                 <td>
-                  <a id="link2"  class="text-info"><i class="far fa-eye"></i></a>
+                  <a id="link2" @click="geraBoleto(registro.id)"  class="text-info"><i class="far fa-eye"></i></a>
                   <b-tooltip target="link2" title="Gerar Boleto"></b-tooltip>
                 </td>
               </tr>

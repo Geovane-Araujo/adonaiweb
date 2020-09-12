@@ -36,7 +36,7 @@ export default {
         cargo: '',
         observacoes: '',
         dataBatismo: '',
-        IDestadocivil: 0,
+        idEstadoCivil: 0,
         pathimg: '',
         batizado: '',
         endereco: [
@@ -148,7 +148,7 @@ export default {
       form.cargo = ''
       form.observacoes = ''
       form.dataBatismo = ''
-      form.IDestadocivil = 0
+      form.idEstadoCivil = 0
       form.pathimg = ''
       form.batizado = ''
 
@@ -214,7 +214,7 @@ export default {
       this.form.cargo = form.cargo
       this.form.observacoes = form.observacoes
       this.form.dataBatismo = form.dataBatismo
-      this.form.IDestadocivil = form.IDestadocivil
+      this.form.idEstadoCivil = form.idEstadoCivil
       this.form.pathimg = form.pathimg
       this.form.batizado = form.batizado
       this.moment = moment(data).format('YYYY-MM-DD h:mm:ss')

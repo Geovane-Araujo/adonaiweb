@@ -41,6 +41,18 @@ export default {
         this.openloading = false
         window.open(res.data)
       }).catch(err => util.error(err))
+    },
+    geraBoleto (id) {
+      this.openloading = true
+      axios.get(adonai.url + 'pagamentoboleto/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.openloading = false
+        if (res.data.ret === 'success') {
+          window.open(res.data.obj.paymentLink)
+        } else {
+          this.openloading = false
+          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+        }
+      }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     }
   },
   computed: {
