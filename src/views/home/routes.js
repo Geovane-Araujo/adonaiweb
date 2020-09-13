@@ -20,6 +20,7 @@ import eventoTipos from '../eventoagenda/eventoagenda.vue'
 import termosuso from '../termosuso/termosuso.vue'
 import privacidade from '../politicaprivacidade/privacidade.vue'
 import minhasfaturas from '../minhasfaturas/minhasfaturas.vue'
+import relatorios from '../relatorios/relatorios.vue'
 
 export default [
   {
@@ -132,6 +133,11 @@ export default [
         path: 'minhasfaturas',
         name: 'minhasfaturas',
         component: minhasfaturas
+      },
+      {
+        path: 'relatorios',
+        name: 'relatorios',
+        component: relatorios
       }
     ]
   }

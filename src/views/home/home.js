@@ -115,6 +115,14 @@ export default {
           ]
         },
         {
+          href: '/relatorios',
+          title: 'Relatorios',
+          icon: {
+            element: 'span',
+            class: 'report'
+          }
+        },
+        {
           href: '',
           title: 'Escola',
           hidden: true,

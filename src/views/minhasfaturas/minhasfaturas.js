@@ -46,11 +46,11 @@ export default {
       this.openloading = true
       axios.get(adonai.url + 'pagamentoboleto/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.openloading = false
-        if (res.data.ret === 'success') {
+        if (res.data.obj.ret === 'success') {
           window.open(res.data.obj.paymentLink)
         } else {
           this.openloading = false
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+          this.$toastr.error(res.data.obj.motivo, 'AdonaiSoft Diz:', util.toast)
         }
       }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     }

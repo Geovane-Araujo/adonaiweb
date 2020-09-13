@@ -106,9 +106,6 @@
     </div>
   </div>
 </template>
-
-<script src="./privacidade.js">
-</script>
 <style lang="scss" scoped>
 .p {
   font-size: 30px;

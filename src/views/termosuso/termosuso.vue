@@ -36,8 +36,6 @@
   </div>
 </template>
 
-<script src="./termosuso.js">
-</script>
 <style lang="scss" scoped>
 .p {
   font-size: 30px;
