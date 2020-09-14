@@ -21,6 +21,7 @@ import termosuso from '../termosuso/termosuso.vue'
 import privacidade from '../politicaprivacidade/privacidade.vue'
 import minhasfaturas from '../minhasfaturas/minhasfaturas.vue'
 import relatorios from '../relatorios/relatorios.vue'
+import biblia from '../biblia/biblia.vue'
 
 export default [
   {
@@ -138,6 +139,11 @@ export default [
         path: 'relatorios',
         name: 'relatorios',
         component: relatorios
+      },
+      {
+        path: 'biblia',
+        name: 'biblia',
+        component: biblia
       }
     ]
   }

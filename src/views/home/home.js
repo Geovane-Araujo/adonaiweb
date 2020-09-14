@@ -52,7 +52,7 @@ export default {
         {
           href: '',
           title: 'Pastoral',
-          icon: 'fas fa-bible',
+          icon: 'pastoral',
           child: [
             {
               href: '/novoconvertido',
@@ -121,6 +121,11 @@ export default {
             element: 'span',
             class: 'report'
           }
+        },
+        {
+          href: '/biblia',
+          title: 'Bíblia',
+          icon: 'fas fa-bible'
         },
         {
           href: '',
