@@ -11,6 +11,7 @@
           <div class="col-sm-4">
             <b-form-group label="Versão" label-align-sm="left">
               <b-form-select
+              v-model="form.idversao"
               :options="versao"
             ></b-form-select>
             </b-form-group>
@@ -19,24 +20,27 @@
             <b-form-group label="Livro" label-align-sm="left">
               <b-form-select
               :options="livros"
+              v-model="form.idlivro"
             ></b-form-select>
             </b-form-group>
           </div>
           <div class="col-sm-2">
             <b-form-group label="Capítulo" label-align-sm="left">
               <input type="text"
+                v-model="form.capitulo"
                 class="form-control">
             </b-form-group>
           </div>
           <div class="col-sm-2">
             <b-form-group label="Versiculo" label-align-sm="left">
               <input type="text"
+                v-model="form.versiculo"
                 class="form-control">
             </b-form-group>
           </div>
           <div class="col-sm-2">
             <b-form-group label="Bus" label-align-sm="left" style="color: #ffffff;">
-              <button @click="openModal=true;"
+              <button @click="getbible (form);"
                 class="btn btn-outline-info">Buscar
               </button>
             </b-form-group>
@@ -46,6 +50,29 @@
     </div>
     <!-- modal Filtros-->
     <div id="overlay" v-if=openModal>
+      <button style="margin-top:0px;margin-rigth: 0px;" @click="openModal=false"
+        class="btn btn-outline-info">
+        <img src="../img/close.png">
+      </button>
+      <div class="as">
+        <div class="row">
+          <div class="col-sm-1" style="padding: 0px;">
+            <button style="margin-top:0px;margin-rigth: 0px;" @click="form.id=(form.id-1);nextver (form)"
+              class="btn btn-outline-info">
+              <img src="../img/left.png">
+            </button>
+          </div>
+          <div class="col-sm-10" style="padding: 0px;">
+            <p>{{ form.texto }}</p>
+          </div>
+          <div class="col-sm-1" style="padding: 0px;">
+            <button style="margin-right:0px;" @click="form.id=(form.id+1);nextver (form)"
+              class="btn btn-outline-info">
+              <img src="../img/rigth.png">
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -62,6 +89,18 @@
   background-color: rgba($color: #ffffff, $alpha: 0.9);
   margin: 5px;
   overflow: auto;
+}
+.as {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+p {
+  color: white;
+  font-size: 30px;
 }
 #overlay {
   position: fixed;

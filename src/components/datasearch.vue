@@ -87,7 +87,7 @@ p {
   position: fixed;
   top: 0;
   bottom: 0;
-  z-index: 5000;
+  z-index: 9999;
   left: 0;
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);

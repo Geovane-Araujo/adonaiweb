@@ -27,9 +27,14 @@ export default {
         this.openloading = true
         localStorage.setItem('cnpj', this.form.cnpj)
         await this.ActionLogin(this.form)
+        var ret = localStorage.getItem('ret')
+        if (ret === 'unsuccess') {
+          this.$toastr.error(localStorage.getItem('login'), 'AdonaiSoft - Web', util.toast)
+        } else {
+          this.$toastr.success('Seja Bem Vindo(a)', 'AdonaiSoft - Web', util.toast)
+          this.$router.push({ name: 'home' })
+        }
         this.openloading = false
-        this.$toastr.success('Seja Bem Vindo(a)', 'AdonaiSoft - Web', util.toast)
-        this.$router.push({ name: 'home' })
       } catch (err) {
         this.openloading = false
         this.$toastr.error('Verifique os dados de Autenticação', 'AdonaiSoft - Web', util.toast)

@@ -4,6 +4,8 @@ import * as types from './mutation-types'
 
 export const ActionLogin = ({ dispatch }, payload) => {
   return services.auth.login(payload).then(res => {
+    localStorage.setItem('ret', res.data.ret)
+    localStorage.setItem('login', res.data.login)
     dispatch('ActionUser', res.data.login)
     dispatch('ActionToken', res.data.login.token)
   })
@@ -11,7 +13,6 @@ export const ActionLogin = ({ dispatch }, payload) => {
 
 export const ActionUser = ({ commit }, payload) => {
   commit(types.SET_USER, payload)
-  console.log(payload)
 }
 
 export const ActionToken = ({ commit }, payload) => {

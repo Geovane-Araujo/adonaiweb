@@ -5,7 +5,7 @@
         <div class="login-page">
             <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
             <div class="card">
-                <div class="card-header">Adonai Soft Login</div>
+                <div class="card-header">AdonaiSoft Login</div>
                 <div class="card-body">
                     <div class="form-group">
                     <div class="row">

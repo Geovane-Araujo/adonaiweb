@@ -9,11 +9,13 @@ export default {
     openModal: false,
     openloading: false,
     form: {
-      idversiculo: '',
-      versao: '',
-      livro: '',
+      id: '',
+      idversao: '',
+      idlivro: '',
       capitulo: '',
-      versiculo: ''
+      versiculo: '',
+      texto: '',
+      crit: ''
     },
     versao: [],
     livros: []
@@ -28,6 +30,33 @@ export default {
         if (res.data.ret === 'success') {
           this.livros = res.data.livros
           this.versao = res.data.versoes
+        } else {
+          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+        }
+        this.openloading = false
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+    },
+    getbible (form) {
+      this.openloading = true
+      form.crit = ' AND IDlivro  = ' + form.idlivro + ' AND idversao = ' + form.idversao + ' AND capitulo = ' + form.capitulo + ' AND versiculo = ' + form.versiculo
+      axios.post(adonai.url + 'bibliavers', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data.ret === 'success') {
+          this.form.texto = res.data.biblia.texto
+          this.form.id = res.data.biblia.id
+          this.openModal = true
+        } else {
+          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+        }
+        this.openloading = false
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+    },
+    nextver (form) {
+      this.openloading = true
+      form.crit = ' AND versiculos.ID  = ' + form.id
+      axios.post(adonai.url + 'bibliavers', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data.ret === 'success') {
+          this.form.texto = res.data.biblia.texto
+          this.form.id = res.data.biblia.id
         } else {
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
         }
