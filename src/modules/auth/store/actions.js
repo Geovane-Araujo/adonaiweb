@@ -4,10 +4,118 @@ import * as types from './mutation-types'
 
 export const ActionLogin = ({ dispatch }, payload) => {
   return services.auth.login(payload).then(res => {
+    localStorage.setItem('membro', true)
+
     localStorage.setItem('ret', res.data.ret)
-    localStorage.setItem('login', res.data.login)
     dispatch('ActionUser', res.data.login)
     dispatch('ActionToken', res.data.login.token)
+
+    // permissoes
+    if (res.data.login.permissoesuser.despesas === 1) {
+      sessionStorage.setItem('despesas', 0)
+    } else {
+      sessionStorage.setItem('despesas', 1)
+    }
+    if (res.data.login.permissoesuser.entradas === 1) {
+      sessionStorage.setItem('entradas', false)
+    } else {
+      sessionStorage.setItem('entradas', true)
+    }
+    if (res.data.login.permissoesuser.caixa === 1) {
+      sessionStorage.setItem('caixa', false)
+    } else {
+      sessionStorage.setItem('caixa', true)
+    }
+    if (res.data.login.permissoesuser.multiIgreja === 1) {
+      sessionStorage.setItem('multiIgreja', 0)
+    } else {
+      sessionStorage.setItem('multiIgreja', 1)
+    }
+    if (res.data.login.permissoesuser.usuarios === 1) {
+      sessionStorage.setItem('usuarios', 0)
+    } else {
+      sessionStorage.setItem('usuarios', 1)
+    }
+    if (res.data.login.permissoesuser.relatorios === 1) {
+      sessionStorage.setItem('relatorios', 0)
+    } else {
+      sessionStorage.setItem('relatorios', 1)
+    }
+    if (res.data.login.permissoesuser.visitante === 1) {
+      sessionStorage.setItem('visitante', 0)
+    } else {
+      sessionStorage.setItem('visitante', 1)
+    }
+    if (res.data.login.permissoesuser.aniversariante === 1) {
+      sessionStorage.setItem('aniversariante', 0)
+    } else {
+      sessionStorage.setItem('aniversariante', 1)
+    }
+    if (res.data.login.permissoesuser.congregacao === 1) {
+      sessionStorage.setItem('congregacao', 0)
+    } else {
+      sessionStorage.setItem('congregacao', 1)
+    }
+    if (res.data.login.permissoesuser.novoconvertido === 1) {
+      sessionStorage.setItem('novoconvertido', 0)
+    } else {
+      sessionStorage.setItem('novoconvertido', 1)
+    }
+    if (res.data.login.permissoesuser.contabancaria === 1) {
+      sessionStorage.setItem('contabancaria', 0)
+    } else {
+      sessionStorage.setItem('contabancaria', 1)
+    }
+    if (res.data.login.permissoesuser.biblia === 1) {
+      sessionStorage.setItem('biblia', 0)
+    } else {
+      sessionStorage.setItem('biblia', 1)
+    }
+    if (res.data.login.permissoesuser.termouso === 1) {
+      sessionStorage.setItem('termouso', 0)
+    } else {
+      sessionStorage.setItem('termouso', 1)
+    }
+    if (res.data.login.permissoesuser.politicaprivacidade === 1) {
+      sessionStorage.setItem('politicaprivacidade', 0)
+    } else {
+      sessionStorage.setItem('politicaprivacidade', 1)
+    }
+    if (res.data.login.permissoesuser.minhasfaturas === 1) {
+      sessionStorage.setItem('minhasfaturas', 0)
+    } else {
+      sessionStorage.setItem('minhasfaturas', 1)
+    }
+    if (res.data.login.permissoesuser.notaversao === 1) {
+      sessionStorage.setItem('notaversao', 0)
+    } else {
+      sessionStorage.setItem('notaversao', 1)
+    }
+    if (res.data.login.permissoesuser.agenda === 1) {
+      sessionStorage.setItem('agenda', 0)
+    } else {
+      sessionStorage.setItem('agenda', 1)
+    }
+    if (res.data.login.permissoesuser.auditoria === 1) {
+      sessionStorage.setItem('auditoria', 0)
+    } else {
+      sessionStorage.setItem('auditoria', 1)
+    }
+    if (res.data.login.permissoesuser.cargos === 1) {
+      sessionStorage.setItem('cargos', 0)
+    } else {
+      sessionStorage.setItem('cargos', 1)
+    }
+    if (res.data.login.permissoesuser.tipoconta === 1) {
+      sessionStorage.setItem('tipoconta', 0)
+    } else {
+      sessionStorage.setItem('tipoconta', 1)
+    }
+    if (res.data.login.permissoesuser.tipoevento === 1) {
+      sessionStorage.setItem('tipoevento', 0)
+    } else {
+      sessionStorage.setItem('tipoevento', 1)
+    }
   })
 }
 

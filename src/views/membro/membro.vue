@@ -24,7 +24,7 @@
         </div>
         <div class="col-lg-12">
           <!-- table -->
-          <adonaigrid :titulos="['ID','Nome','Endereço','Bairro','Numero','Telefone']"
+          <adonaigrid :titulos="['ID','Nome','endereco','Bairro','Numero','Telefone']"
           :form="form"
           :getbyId="getbyId"
           :save="save"

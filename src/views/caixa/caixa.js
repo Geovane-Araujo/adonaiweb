@@ -3,6 +3,7 @@ import util from '../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import adonai from '../router/services'
+import rel from '../../util/utilClass'
 var moment = require('moment')
 var data = new Date()
 
@@ -110,9 +111,11 @@ export default {
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     datasearch (route) {
-      this.ds.grid = ['ID', 'Descricao']
+      rel.explorerflex.route = 'exp_contabancaria'
+      rel.explorerflex.criterios = 'ORDER BY ID DESC'
+      this.ds.grid = ['ID', 'descricao']
       this.ds.title = 'Contas Bancárias'
-      this.$refs.teste.dataSearch('searchconta', 1, 'a')
+      this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
       this.open = true
     },
     cleanForm () {
@@ -153,7 +156,7 @@ export default {
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       this.openloading = false
     },
-    destroy (route, registro) {
+    destroy (registro, params) {
       this.form.nome = registro.descricao
       this.form.idbanco = registro.id
       this.open = false

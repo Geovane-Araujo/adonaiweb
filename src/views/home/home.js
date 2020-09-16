@@ -5,6 +5,15 @@ export default {
   data () {
     return {
       aniversariantes: '2',
+      permissoes: {
+        membro: '',
+        despesas: '',
+        entradas: '',
+        caixa: '',
+        multiIgreja: '',
+        usuarios: '',
+        relatorios: ''
+      },
       menu: [
         {
           header: true,
@@ -19,7 +28,8 @@ export default {
         {
           href: '/agenda',
           title: 'Agenda',
-          icon: 'far fa-calendar-alt'
+          icon: 'far fa-calendar-alt',
+          disabled: sessionStorage.getItem('agenda')
         },
         {
           href: '',
@@ -28,11 +38,13 @@ export default {
           child: [
             {
               href: '/membro',
-              title: 'Membros'
+              title: 'Membros',
+              disabled: localStorage.getItem('membro')
             },
             {
               href: '/visitantes',
-              title: 'Visitantes'
+              title: 'Visitantes',
+              disabled: sessionStorage.getItem('visitante')
             },
             {
               href: '/aniversariantes',
@@ -40,12 +52,13 @@ export default {
               badge: {
                 text: this.aniversariantes,
                 class: 'vsm--badge_default'
-              }
+              },
+              disabled: sessionStorage.getItem('aniversariante')
             },
             {
               href: '/congregacao',
               title: 'Congregações',
-              disabled: false
+              disabled: sessionStorage.getItem('congregacao')
             }
           ]
         },
@@ -57,7 +70,7 @@ export default {
             {
               href: '/novoconvertido',
               title: 'Novos Convertidos',
-              disabled: false
+              disabled: sessionStorage.getItem('novoconvertido')
             },
             {
               href: '',
@@ -81,16 +94,17 @@ export default {
             {
               href: '/receitas',
               title: 'Entradas',
-              disabled: false
+              disabled: sessionStorage.getItem('entradas')
             },
             {
               href: '/despesas',
               title: 'Despesas',
-              disabled: false
+              disabled: sessionStorage.getItem('despesas')
             },
             {
               href: '',
               title: 'Caixas',
+              disabled: sessionStorage.getItem('caixa'),
               child: [
                 {
                   href: '/caixa',
@@ -98,8 +112,7 @@ export default {
                 },
                 {
                   href: '/movimento',
-                  title: 'Movimentação',
-                  disabled: false
+                  title: 'Movimentação'
                 },
                 {
                   href: '/movimentohistorico',
@@ -110,7 +123,8 @@ export default {
             },
             {
               href: '/contasbancarias',
-              title: 'Contas Bancárias'
+              title: 'Contas Bancárias',
+              disabled: sessionStorage.getItem('contabancaria')
             }
           ]
         },
@@ -120,12 +134,14 @@ export default {
           icon: {
             element: 'span',
             class: 'report'
-          }
+          },
+          disabled: sessionStorage.getItem('relatorios')
         },
         {
           href: '/biblia',
           title: 'Bíblia',
-          icon: 'fas fa-bible'
+          icon: 'fas fa-bible',
+          disabled: sessionStorage.getItem('biblia')
         },
         {
           href: '',
@@ -148,17 +164,17 @@ export default {
             {
               href: '/igreja',
               title: 'Cadastro Igreja',
-              disabled: false
+              disabled: sessionStorage.getItem('multiIgreja')
             },
             {
               href: '/usuario',
               title: 'Usuários',
-              disabled: false
+              disabled: sessionStorage.getItem('usuarios')
             },
             {
               href: '',
               title: 'Auditoria de Ações',
-              disabled: false
+              disabled: sessionStorage.getItem('auditoria')
             }
           ]
         },
@@ -168,15 +184,18 @@ export default {
           child: [
             {
               title: 'Cargos',
-              href: '/cargo'
+              href: '/cargo',
+              disabled: sessionStorage.getItem('cargos')
             },
             {
               href: '/tipoconta',
-              title: 'Tipos de Contas'
+              title: 'Tipos de Contas',
+              disabled: sessionStorage.getItem('tipoconta')
             },
             {
               href: '/eventoTipos',
-              title: 'Tipo Eventos'
+              title: 'Tipo Eventos',
+              disabled: sessionStorage.getItem('tipoevento')
             }
           ]
         },
@@ -191,18 +210,23 @@ export default {
           child: [
             {
               href: '/termosuso',
-              title: 'Termos de Uso'
+              title: 'Termos de Uso',
+              disabled: sessionStorage.getItem('termouso')
             },
             {
               href: '/privacidade',
-              title: 'Politica de Privacidade'
+              title: 'Politica de Privacidade',
+              disabled: sessionStorage.getItem('politicaprivacidade')
             },
             {
               href: '/minhasfaturas',
-              title: 'Minhas Faturas'
+              title: 'Minhas Faturas',
+              disabled: sessionStorage.getItem('minhasfaturas')
             },
             {
-              title: 'Notas de Versões'
+              title: 'Notas de Versões',
+              hidden: true,
+              disabled: sessionStorage.getItem('notaversao')
             }
           ]
         }

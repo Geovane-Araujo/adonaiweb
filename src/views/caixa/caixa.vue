@@ -111,21 +111,13 @@
     :cabecalho="ds.grid"
     :form="form" v-bind:openDatasearch="open"
     :destroy="destroy"
-    ref="teste"/>
+    ref="cmp"/>
   </div>
 </template>
 
 <script src="./caixa.js">
 </script>
 <style lang=scss scoped>
-label {
-  background-color: #3498db;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  margin: 10px;
-  padding: 6px 20px;
-}
 p {
   font-size: 30px;
 }

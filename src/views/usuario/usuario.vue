@@ -36,116 +36,121 @@
           <div class="modal-body p-4">
             <form method="POST">
               <b-container>
-                <b-row>
-                  <b-col cols="2">
-                    <div class="file-loading">
-                      <b-avatar :src="form.pathimg"
-                      size="5rem"></b-avatar>
-                    </div>
-                    <label for='selecao-arquivo' class="material-icons">perm_media</label>
-                    <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
-                  </b-col>
-                  <b-col cols="10">
+                <b-tabs class="mt-1">
+                  <b-tab title="Principal">
                     <b-row>
-                      <div class="col-sm-6">
-                        <input type="text"
-                          name="nome"
-                          autocomplete="off"
-                          class="form-control"
-                          placeholder="Nome"
-                          v-model="form.nome">
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text"
-                          name="nome"
-                          autocomplete="off"
-                          class="form-control"
-                          placeholder="Login"
-                          v-model="form.login ">
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="password"
-                          name="senha"
-                          autocomplete="off"
-                          class="form-control"
-                          placeholder="Senha"
-                          v-model="form.senha">
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="password"
-                          name="confirmarsenha"
-                          autocomplete="off"
-                          class="form-control"
-                          placeholder="Confirmar Senha"
-                          v-model="form.confirmarSenha">
-                      </div>
+                      <b-col cols="2">
+                        <div class="file-loading">
+                          <b-avatar :src="form.pathimg"
+                          size="5rem"></b-avatar>
+                        </div>
+                        <label for='selecao-arquivo' class="material-icons">perm_media</label>
+                        <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
+                      </b-col>
+                      <b-col cols="10">
+                        <b-row>
+                          <div class="col-sm-6">
+                            <input type="text"
+                              name="nome"
+                              autocomplete="off"
+                              class="form-control"
+                              placeholder="Nome"
+                              v-model="form.nome">
+                          </div>
+                          <div class="col-sm-6">
+                            <input type="text"
+                              name="nome"
+                              autocomplete="off"
+                              class="form-control"
+                              placeholder="Login"
+                              v-model="form.login ">
+                          </div>
+                          <div class="col-sm-6">
+                            <input type="password"
+                              name="senha"
+                              autocomplete="off"
+                              class="form-control"
+                              placeholder="Senha"
+                              v-model="form.senha">
+                          </div>
+                          <div class="col-sm-6">
+                            <input type="password"
+                              name="confirmarsenha"
+                              autocomplete="off"
+                              class="form-control"
+                              placeholder="Confirmar Senha"
+                              v-model="form.confirmarSenha">
+                          </div>
+                        </b-row>
+                      </b-col>
                     </b-row>
-                  </b-col>
-                </b-row>
-                <h6 class="text-danger">Permissões:</h6>
-                <div class="form-check-inline">
-                  <b-form-checkbox
-                    id="checkbox-1"
-                    v-model="form.permissaoUsuario.membro"
-                    value="1"
-                    unchecked-value="0"
-                    >Membros
-                  </b-form-checkbox>
-                </div>
-                <span class="form-check-inline">
-                  <b-form-checkbox
-                    id="checkbox-2"
-                    v-model="form.permissaoUsuario.despesas"
-                    value="1"
-                    unchecked-value="0"
-                    >Despesas
-                  </b-form-checkbox>
-                </span>
-                <span class="form-check-inline">
-                   <b-form-checkbox
-                    id="checkbox-3"
-                    v-model="form.permissaoUsuario.multiIgreja"
-                    value="1"
-                    unchecked-value="0"
-                    >Multi-Igreja
-                  </b-form-checkbox>
-                </span>
-                <div class="form-check-inline">
-                  <b-form-checkbox
-                    id="checkbox-6"
-                    v-model="form.permissaoUsuario.caixa"
-                    value="1"
-                    unchecked-value="0"
-                    >Caixas
-                  </b-form-checkbox>
-                </div>
-                <div class="form-check-inline">
-                  <b-form-checkbox
-                    id="checkbox-7"
-                    v-model="form.permissaoUsuario.entradas"
-                    value="1"
-                    unchecked-value="0"
-                    >Entradas
-                  </b-form-checkbox>
-                </div>
-                <div class="form-check-inline">
-                  <b-form-checkbox
-                    id="checkbox-5"
-                    v-model="form.permissaoUsuario.usuarios"
-                    value="1"
-                    unchecked-value="0"
-                    >Usuários
-                  </b-form-checkbox>
-                </div>
-                <div class="form-check-inline">
-                  <b-form-checkbox
-                    id="checkbox-4"
-                    v-model="form.permissaoUsuario.relatorios"
-                    value="1"
-                    unchecked-value="0"
-                    >Relatórios
-                  </b-form-checkbox>
-                </div>
+                  </b-tab>
+                  <b-tab title="Permissões de Acesso">
+                    <div class="form-check-inline">
+                      <b-form-checkbox
+                        id="checkbox-1"
+                        v-model="form.permissaoUsuario.membro"
+                        value="1"
+                        unchecked-value="0"
+                        >Membros
+                      </b-form-checkbox>
+                    </div>
+                    <span class="form-check-inline">
+                      <b-form-checkbox
+                        id="checkbox-2"
+                        v-model="form.permissaoUsuario.despesas"
+                        value="1"
+                        unchecked-value="0"
+                        >Despesas
+                      </b-form-checkbox>
+                    </span>
+                    <span class="form-check-inline">
+                      <b-form-checkbox
+                        id="checkbox-3"
+                        v-model="form.permissaoUsuario.multiIgreja"
+                        value="1"
+                        unchecked-value="0"
+                        >Multi-Igreja
+                      </b-form-checkbox>
+                    </span>
+                    <div class="form-check-inline">
+                      <b-form-checkbox
+                        id="checkbox-6"
+                        v-model="form.permissaoUsuario.caixa"
+                        value="1"
+                        unchecked-value="0"
+                        >Caixas
+                      </b-form-checkbox>
+                    </div>
+                    <div class="form-check-inline">
+                      <b-form-checkbox
+                        id="checkbox-7"
+                        v-model="form.permissaoUsuario.entradas"
+                        value="1"
+                        unchecked-value="0"
+                        >Entradas
+                      </b-form-checkbox>
+                    </div>
+                    <div class="form-check-inline">
+                      <b-form-checkbox
+                        id="checkbox-5"
+                        v-model="form.permissaoUsuario.usuarios"
+                        value="1"
+                        unchecked-value="0"
+                        >Usuários
+                      </b-form-checkbox>
+                    </div>
+                    <div class="form-check-inline">
+                      <b-form-checkbox
+                        id="checkbox-4"
+                        v-model="form.permissaoUsuario.relatorios"
+                        value="1"
+                        unchecked-value="0"
+                        >Relatórios
+                      </b-form-checkbox>
+                    </div>
+                  </b-tab>
+                </b-tabs>
               </b-container>
             </form>
             <button class="btn btn-outline-info float-right" @click="validate(form)" >Salvar</button>
