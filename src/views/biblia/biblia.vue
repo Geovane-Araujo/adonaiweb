@@ -57,7 +57,7 @@
       <div class="as">
         <div class="row">
           <div class="col-sm-1" style="padding: 0px;">
-            <button style="margin-top:0px;margin-rigth: 0px;" @click="form.id=(form.id-1);nextver (form)"
+            <button style="margin-top:0px;margin-rigth: 0px;" v-on:click.37="form.id=(form.id-1);nextver (form)" @click="form.id=(form.id-1);nextver (form)"
               class="btn btn-outline-info">
               <img src="../img/left.png">
             </button>
@@ -66,7 +66,7 @@
             <p>{{ form.texto }}</p>
           </div>
           <div class="col-sm-1" style="padding: 0px;">
-            <button style="margin-right:0px;" @click="form.id=(form.id+1);nextver (form)"
+            <button style="margin-right:0px;" v-on:click.right="form.id=(form.id+1);nextver (form)" @click="form.id=(form.id+1);nextver (form)"
               class="btn btn-outline-info">
               <img src="../img/rigth.png">
             </button>
@@ -109,7 +109,8 @@ p {
   left: 0;
   z-index: 1000;
   right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
+  background-image: url('../img/fundo.jpg');
+  background-color: rgba($color: #000000, $alpha: 0.7);
 }
 button {
   color: #5e8a75;
