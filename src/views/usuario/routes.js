@@ -96,37 +96,38 @@ export default {
       form.senha = ''
       form.pathimg = ''
       form.confirmarSenha = ''
-      form.permissaoUsuario.idPessoa = 0
-      form.permissaoUsuario.membro = 0
-      form.permissaoUsuario.despesas = 0
-      form.permissaoUsuario.entradas = 0
-      form.permissaoUsuario.caixa = 0
-      form.permissaoUsuario.multiIgreja = 0
-      form.permissaoUsuario.relatorios = 0
-      form.permissaoUsuario.usuarios = 0
-    },
-    read (form) {
-      this.form.id = form.id
-      this.form.login = form.login
-      this.form.senha = form.senha
-      this.form.nome = form.nome
-      this.form.idPessoa = form.idPessoa
-      this.form.pathimg = form.pathimg
-      this.form.permissaoUsuario.idPessoa = form.permissaoUsuario.idPessoa
-      this.form.confirmarSenha = form.confirmarSenha
-      this.form.permissaoUsuario.membro = form.permissaoUsuario.membro
-      this.form.permissaoUsuario.despesas = form.permissaoUsuario.despesas
-      this.form.permissaoUsuario.entradas = form.permissaoUsuario.entradas
-      this.form.permissaoUsuario.caixa = form.permissaoUsuario.caixa
-      this.form.permissaoUsuario.multiIgreja = form.permissaoUsuario.multiIgreja
-      this.form.permissaoUsuario.relatorios = form.permissaoUsuario.relatorios
-      this.form.permissaoUsuario.usuarios = form.permissaoUsuario.usuarios
-      this.openModal = true
+      form.permissaoUsuario.idPessoa = 1
+      form.permissaoUsuario.membro = 1
+      form.permissaoUsuario.despesas = 1
+      form.permissaoUsuario.entradas = 1
+      form.permissaoUsuario.caixa = 1
+      form.permissaoUsuario.multiIgreja = 1
+      form.permissaoUsuario.relatorios = 1
+      form.permissaoUsuario.usuarios = 1
+
+      form.permissaoUsuario.visitante = 1
+      form.permissaoUsuario.aniversariante = 1
+      form.permissaoUsuario.congregacao = 1
+      form.permissaoUsuario.novoconvertido = 1
+      form.permissaoUsuario.contabancaria = 1
+      form.permissaoUsuario.biblia = 1
+      form.permissaoUsuario.termouso = 1
+      form.permissaoUsuario.politicaprivacidade = 1
+      form.permissaoUsuario.minhasfaturas = 1
+      form.permissaoUsuario.notaversao = 1
+      form.permissaoUsuario.agenda = 1
+      form.permissaoUsuario.auditoria = 1
+      form.permissaoUsuario.cargos = 1
+      form.permissaoUsuario.tipoconta = 1
+      form.permissaoUsuario.tipoevento = 1
     },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'usuariobyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data.obj)
+        this.form = res.data.obj
+        this.form.edit = true
+        this.form.add = false
+        this.openModal = true
         this.openloading = false
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     }

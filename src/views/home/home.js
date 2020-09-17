@@ -4,7 +4,7 @@ export default {
   name: 'App',
   data () {
     return {
-      aniversariantes: '2',
+      aniversariantes: '',
       permissoes: {
         membro: '',
         despesas: '',
@@ -29,7 +29,7 @@ export default {
           href: '/agenda',
           title: 'Agenda',
           icon: 'far fa-calendar-alt',
-          disabled: sessionStorage.getItem('agenda')
+          disabled: parseInt(sessionStorage.getItem('agenda'))
         },
         {
           href: '',
@@ -39,12 +39,12 @@ export default {
             {
               href: '/membro',
               title: 'Membros',
-              disabled: localStorage.getItem('membro')
+              disabled: parseInt(sessionStorage.getItem('membro'))
             },
             {
               href: '/visitantes',
               title: 'Visitantes',
-              disabled: sessionStorage.getItem('visitante')
+              disabled: parseInt(sessionStorage.getItem('visitante'))
             },
             {
               href: '/aniversariantes',
@@ -53,12 +53,12 @@ export default {
                 text: this.aniversariantes,
                 class: 'vsm--badge_default'
               },
-              disabled: sessionStorage.getItem('aniversariante')
+              disabled: parseInt(sessionStorage.getItem('aniversariante'))
             },
             {
               href: '/congregacao',
               title: 'Congregações',
-              disabled: sessionStorage.getItem('congregacao')
+              disabled: parseInt(sessionStorage.getItem('congregacao'))
             }
           ]
         },
@@ -70,7 +70,7 @@ export default {
             {
               href: '/novoconvertido',
               title: 'Novos Convertidos',
-              disabled: sessionStorage.getItem('novoconvertido')
+              disabled: parseInt(sessionStorage.getItem('novoconvertido'))
             },
             {
               href: '',
@@ -94,17 +94,17 @@ export default {
             {
               href: '/receitas',
               title: 'Entradas',
-              disabled: sessionStorage.getItem('entradas')
+              disabled: parseInt(sessionStorage.getItem('entradas'))
             },
             {
               href: '/despesas',
               title: 'Despesas',
-              disabled: sessionStorage.getItem('despesas')
+              disabled: parseInt(sessionStorage.getItem('despesas'))
             },
             {
               href: '',
               title: 'Caixas',
-              disabled: sessionStorage.getItem('caixa'),
+              disabled: parseInt(sessionStorage.getItem('caixa')),
               child: [
                 {
                   href: '/caixa',
@@ -124,7 +124,7 @@ export default {
             {
               href: '/contasbancarias',
               title: 'Contas Bancárias',
-              disabled: sessionStorage.getItem('contabancaria')
+              disabled: parseInt(sessionStorage.getItem('contabancaria'))
             }
           ]
         },
@@ -135,13 +135,13 @@ export default {
             element: 'span',
             class: 'report'
           },
-          disabled: sessionStorage.getItem('relatorios')
+          disabled: parseInt(sessionStorage.getItem('relatorios'))
         },
         {
           href: '/biblia',
           title: 'Bíblia',
           icon: 'fas fa-bible',
-          disabled: sessionStorage.getItem('biblia')
+          disabled: parseInt(sessionStorage.getItem('biblia'))
         },
         {
           href: '',
@@ -164,17 +164,17 @@ export default {
             {
               href: '/igreja',
               title: 'Cadastro Igreja',
-              disabled: sessionStorage.getItem('multiIgreja')
+              disabled: parseInt(sessionStorage.getItem('multiIgreja'))
             },
             {
               href: '/usuario',
               title: 'Usuários',
-              disabled: sessionStorage.getItem('usuarios')
+              disabled: parseInt(sessionStorage.getItem('usuarios'))
             },
             {
               href: '',
               title: 'Auditoria de Ações',
-              disabled: sessionStorage.getItem('auditoria')
+              disabled: parseInt(sessionStorage.getItem('auditoria'))
             }
           ]
         },
@@ -185,17 +185,17 @@ export default {
             {
               title: 'Cargos',
               href: '/cargo',
-              disabled: sessionStorage.getItem('cargos')
+              disabled: parseInt(sessionStorage.getItem('cargos'))
             },
             {
               href: '/tipoconta',
               title: 'Tipos de Contas',
-              disabled: sessionStorage.getItem('tipoconta')
+              disabled: parseInt(sessionStorage.getItem('tipoconta'))
             },
             {
               href: '/eventoTipos',
               title: 'Tipo Eventos',
-              disabled: sessionStorage.getItem('tipoevento')
+              disabled: parseInt(sessionStorage.getItem('tipoevento'))
             }
           ]
         },
@@ -211,22 +211,22 @@ export default {
             {
               href: '/termosuso',
               title: 'Termos de Uso',
-              disabled: sessionStorage.getItem('termouso')
+              disabled: parseInt(sessionStorage.getItem('termouso'))
             },
             {
               href: '/privacidade',
               title: 'Politica de Privacidade',
-              disabled: sessionStorage.getItem('politicaprivacidade')
+              disabled: parseInt(sessionStorage.getItem('politicaprivacidade'))
             },
             {
               href: '/minhasfaturas',
               title: 'Minhas Faturas',
-              disabled: sessionStorage.getItem('minhasfaturas')
+              disabled: parseInt(sessionStorage.getItem('minhasfaturas'))
             },
             {
               title: 'Notas de Versões',
               hidden: true,
-              disabled: sessionStorage.getItem('notaversao')
+              disabled: parseInt(sessionStorage.getItem('notaversao'))
             }
           ]
         }
@@ -237,6 +237,7 @@ export default {
     }
   },
   mounted () {
+    this.aniversariantes = sessionStorage.getItem('biblia')
     this.onResize()
     window.addEventListener('resize', this.onResize)
   },

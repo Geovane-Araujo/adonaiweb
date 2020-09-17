@@ -4,27 +4,25 @@ import * as types from './mutation-types'
 
 export const ActionLogin = ({ dispatch }, payload) => {
   return services.auth.login(payload).then(res => {
-    localStorage.setItem('membro', true)
-
-    localStorage.setItem('ret', res.data.ret)
-    dispatch('ActionUser', res.data.login)
-    dispatch('ActionToken', res.data.login.token)
-
-    // permissoes
+    if (res.data.login.permissoesuser.membro === 1) {
+      sessionStorage.setItem('membro', 0)
+    } else {
+      sessionStorage.setItem('membro', 1)
+    }
     if (res.data.login.permissoesuser.despesas === 1) {
       sessionStorage.setItem('despesas', 0)
     } else {
       sessionStorage.setItem('despesas', 1)
     }
     if (res.data.login.permissoesuser.entradas === 1) {
-      sessionStorage.setItem('entradas', false)
+      sessionStorage.setItem('entradas', 0)
     } else {
-      sessionStorage.setItem('entradas', true)
+      sessionStorage.setItem('entradas', 1)
     }
     if (res.data.login.permissoesuser.caixa === 1) {
-      sessionStorage.setItem('caixa', false)
+      sessionStorage.setItem('caixa', 0)
     } else {
-      sessionStorage.setItem('caixa', true)
+      sessionStorage.setItem('caixa', 1)
     }
     if (res.data.login.permissoesuser.multiIgreja === 1) {
       sessionStorage.setItem('multiIgreja', 0)
@@ -116,6 +114,11 @@ export const ActionLogin = ({ dispatch }, payload) => {
     } else {
       sessionStorage.setItem('tipoevento', 1)
     }
+    localStorage.setItem('ret', res.data.ret)
+    dispatch('ActionUser', res.data.login)
+    dispatch('ActionToken', res.data.login.token)
+
+    // permissoes
   })
 }
 
