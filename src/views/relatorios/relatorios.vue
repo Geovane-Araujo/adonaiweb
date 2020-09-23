@@ -10,11 +10,11 @@
         <div class="row" style="margin-top: -20px;">
           <div class="col-sm-12" style="margin: 10px;">
             <h5>Membros</h5>
-            <button @click="report.relatorio='report/pessoas/carteirasCertificados/carteiraassembleia.jrxml';openFilter=true;"
+            <button @click="report.relatorio='carteirinha';openFilter=true;"
               class="btn btn-outline-info">
               <img src="../img/carteira.png">&nbsp;&nbsp;Carteirinha
             </button>
-            <button @click="report.relatorio='report/pessoas/carteirasCertificados/Certificado2.jrxml';openFilter=true;"
+            <button @click="report.relatorio='certificado';openFilter=true;"
               class="btn btn-outline-info" style="margin-left: 10px;">
               <img src="../img/certificado.png">&nbsp;&nbsp;Certificado
             </button>

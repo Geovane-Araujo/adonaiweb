@@ -12,6 +12,7 @@ export default {
       openModal: false,
       deleteModal: false,
       openloading: false,
+      openConfiguration: false,
       open: false,
       explorer: {
         route: 'menu_pessoas_igreja',
@@ -149,6 +150,11 @@ export default {
           }
         ],
         moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
+      },
+      configuration: {
+        textocertificado: '',
+        modelocarteira: '',
+        modelocertificado: ''
       }
     }
   },
@@ -391,6 +397,26 @@ export default {
         var print = window.open('', 'PDF', winparams)
         print.document.write(a)
       }).catch(err => util.error(err))
+    },
+    globais (tipo) {
+      this.openloading = true
+      if (tipo === 1) {
+        axios.post(adonai.url + 'configuracoes', this.configuration, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          this.openloading = false
+          if (res.data.ret === 'success') {
+            this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
+            this.openConfiguration = false
+          } else {
+            this.$toastr.success(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+          }
+        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      } else {
+        axios.get(adonai.url + 'configuracoes/0', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          this.configuration = res.data.obj
+          this.openConfiguration = true
+          this.openloading = false
+        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }
     },
     buscarcep (cep, form, local) {
       cep = cep.replace('-', '')

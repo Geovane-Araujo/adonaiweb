@@ -10,6 +10,11 @@
             @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
           </button>
+          <button
+            class="btn btn-outline-info float-right"
+            @click="globais(2);">
+            <i class="fab fa-whmcs"></i>&nbsp;&nbsp;Configurações Globais
+          </button>
           <hr class="bg-info">
         </div>
         <div class="col-lg-12">
@@ -393,6 +398,53 @@
             </div>
           </div>
         </div>
+    </div>
+
+    <!-- Tela cadastro -->
+    <div id="overlay" v-if="openConfiguration">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cadastro Usuario</h5>
+            <button type="button" class="close"  @click="openConfiguration=false;">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body p-4">
+            <form method="POST">
+              <b-container>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <b-form-group label="Certificado Padrão (NÂO ALTERAR !!!)" label-align-sm="left">
+                      <input type="text"
+                      class="form-control"
+                      v-model="configuration.modelocertificado">
+                    </b-form-group>
+                  </div>
+                  <div class="col-sm-6">
+                    <b-form-group label="Carteirinha Membro Padrão (NÂO ALTERAR !!!)" label-align-sm="left">
+                      <input type="text"
+                      class="form-control"
+                      v-model="configuration.modelocarteira">
+                    </b-form-group>
+                  </div>
+                  <div class="col-sm-12">
+                  <b-form-group label-align-sm="left" label="Texto Certificado">
+                    <b-form-textarea
+                      placeholder="Texto Relatório"
+                      rows="6"
+                      v-model="configuration.textocertificado"
+                      max-rows="5"
+                    ></b-form-textarea>
+                  </b-form-group>
+                </div>
+                </div>
+              </b-container>
+            </form>
+            <button class="btn btn-outline-info float-right" @click="globais(1);" >Salvar</button>
+          </div>
+        </div>
+      </div>
     </div>
     <adonaidatasearch
     :title="ds.title"

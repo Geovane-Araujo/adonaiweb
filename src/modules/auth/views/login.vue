@@ -54,7 +54,7 @@
 <style scoped lang="scss">
 .login-page {
     height: 100vh;
-    background-image: url('/static/banner.mp4');
+    background-image: url('/static/imagem.jpg');
     background-size: cover;
     display: flex;
     align-items: center;
