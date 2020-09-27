@@ -12,9 +12,9 @@
         <tr class="text-left" v-for="registro in reg" :key="registro.id">
           <td v-for="item in registro" :key="item.id">{{ item }}</td>
           <td>
-            <a href="#" @click="getbyId(registro.id); form.edit=true;form.add=false" class="text-success"><i class="fas fa-edit"></i></a>
+            <a v-show="type" href="#" @click="getbyId(registro.id); form.edit=true;form.add=false" class="text-success"><i class="fas fa-edit"></i></a>
             &nbsp;
-            <a href="#" @click="onDelete(registro, form)" class="text-danger"><i class="far fa-trash-alt"></i></a>
+            <a v-show="type" href="#" @click="onDelete(registro, form)" class="text-danger"><i class="far fa-trash-alt"></i></a>
           </td>
         </tr>
       </tbody>
@@ -25,7 +25,6 @@
         <b-form-input  class="col-sm-1 text-center" v-model="explorer.pagina"></b-form-input>
         <button class="btn btn-outline-info" v-bind:disabled="(reg.length < 15)" @click="explorer.pagina = explorer.pagina + 1;get(explorer)"><i class="fas fa-caret-right"></i></button>
         <b-form-input placeholder="buscar" v-model="buscar" @keyup="getexplorer(buscar)" style="margin-left:10px" class="col-sm-5"></b-form-input>
-        <b-button variant="outline-info" class="material-icons">search</b-button>
       </b-input-group>
     </footer>
 

@@ -34,12 +34,15 @@ export default {
       type: Object
     },
     getbyId: Function,
-    save: Function
+    save: Function,
+    type: {
+      type: Boolean
+    }
   },
   mounted () {
   },
   methods: {
-    get (explorer) {
+    get (explorer, type) {
       this.openloading = true
       axios.post(adonai.url + 'aexplorer', explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.openloading = false
@@ -47,6 +50,9 @@ export default {
           this.reg = res.data.obj
           this.ref = explorer.route
           this.explorer = explorer
+          if (type === undefined) {
+            this.type = true
+          }
         } else {
           this.openloading = false
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)

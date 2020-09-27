@@ -172,7 +172,7 @@ export default {
               disabled: parseInt(sessionStorage.getItem('usuarios'))
             },
             {
-              href: '',
+              href: '/auditoria',
               title: 'Auditoria de Ações',
               disabled: parseInt(sessionStorage.getItem('auditoria'))
             }
@@ -224,8 +224,8 @@ export default {
               disabled: parseInt(sessionStorage.getItem('minhasfaturas'))
             },
             {
+              href: '/notaversao',
               title: 'Notas de Versões',
-              hidden: true,
               disabled: parseInt(sessionStorage.getItem('notaversao'))
             }
           ]

@@ -15,7 +15,7 @@
       </div>
     </div>
     <sidebar-menu :menu="menu"
-      :collapsed="collapsed"
+      :collapsed="false"
       :show-one-child="true"
       widthCollapsed="50px"
       width="200px"
