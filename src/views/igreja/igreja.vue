@@ -24,6 +24,7 @@
           :getbyId="getbyId"
           :save="save"
           :explorer="explorer"
+          :type="true"
           ref="grid"></adonaigrid>
         </div>
       </div>
@@ -253,9 +254,9 @@
                             <div class="col-sm-4">
                               <div class="form-group">
                                 <b-input-group >
-                                  <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade"  @keyup="datasearch(0);"></b-form-input>
+                                  <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade"  @keyup="datasearch(1, 0);"></b-form-input>
                                   <b-input-group-append>
-                                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="datasearch(0);">search</b-button>
+                                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="datasearch(1, 0);">search</b-button>
                                   </b-input-group-append>
                                 </b-input-group>
                               </div>
@@ -317,9 +318,9 @@
                             <div class="col-sm-4">
                               <div class="form-group">
                                 <b-input-group >
-                                  <b-form-input placeholder="Cidade Sede" v-model="form.endereco[1].cidade" @click="datasearch(1);"></b-form-input>
+                                  <b-form-input placeholder="Cidade Sede" v-model="form.endereco[1].cidade" @keyup="datasearch(1, 1);"></b-form-input>
                                   <b-input-group-append>
-                                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="datasearch(1);">search</b-button>
+                                    <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="datasearch(1, 1);">search</b-button>
                                   </b-input-group-append>
                                 </b-input-group>
                               </div>
@@ -391,6 +392,39 @@
                         </div>
                       </div>
                     </b-col>
+                  </b-tab>
+                  <b-tab title="MultIgreja" style="padding: 0;">
+                    <div class="row" >
+                      <div class="col-sm-12">
+                        <b-form-group label="Igreja" label-align-sm="left">
+                          <div class="form-group">
+                            <b-input-group >
+                              <b-form-input placeholder="Cidade Sede" v-model="campoecle.nome" @keyup="datasearch(2);"></b-form-input>
+                              <b-input-group-append>
+                                <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="datasearch(2);">search</b-button>
+                                <b-button variant="outline-info" style="margin-left:-10px;" class="material-icons" @click="add(campoecle)">add</b-button>
+                              </b-input-group-append>
+                            </b-input-group>
+                          </div>
+                        </b-form-group>
+                      </div>
+                      <div class="col-sm-12" style="margin-top: -20;">
+                          <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
+                            <thead>
+                              <tr class="text-left text-light" style="background-color: #5e8a75">
+                                <th>ID</th>
+                                <th>Igreja</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="cam in form.campoeclesiastico" :key="cam.id">
+                                <td>{{ cam.id }}</td>
+                                <td>{{ cam.nome }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                      </div>
+                    </div>
                   </b-tab>
                 </b-tabs>
               </form>
@@ -465,6 +499,10 @@ label {
   cursor: pointer;
   margin: 10px;
   padding: 6px 20px
+}
+tr {
+  line-height: 14px;
+  font-size: 13px;
 }
 p {
   font-size: 30px;

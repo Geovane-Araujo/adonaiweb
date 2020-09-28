@@ -3,8 +3,10 @@ import util from '../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../router/services'
 import axios from 'axios'
+import utc from '../../util/utilClass'
 var moment = require('moment')
 var data = new Date()
+var b = []
 
 export default {
   data () {
@@ -14,16 +16,6 @@ export default {
       openloading: false,
       openConfiguration: false,
       open: false,
-      explorer: {
-        route: 'menu_pessoas_igreja',
-        pagina: 1,
-        criterios: 'order by id desc'
-      },
-      explorerflex: {
-        route: '',
-        pagina: 1,
-        criterios: 'order by id desc'
-      },
       ds: {
         grid: [],
         title: ''
@@ -57,6 +49,7 @@ export default {
         fone: '',
         vice: '',
         presidente: '',
+        campoeclesiastico: [],
         endereco: [
           {
             id: '',
@@ -155,11 +148,18 @@ export default {
         textocertificado: '',
         modelocarteira: '',
         modelocertificado: ''
+      },
+      campoecle: {
+        id: '',
+        nome: ''
       }
     }
   },
   mounted () {
-    this.$refs.grid.get(this.explorer)
+    utc.explorer.route = 'menu_pessoas_igreja'
+    utc.explorer.pagina = 1
+    utc.explorer.criterios = ' order by id desc'
+    this.$refs.grid.get(utc.explorer)
   },
   methods: {
     async save (form) {
@@ -169,7 +169,10 @@ export default {
           this.cleanForm(form)
           this.openloading = false
           this.openModal = false
-          this.$refs.grid.get(this.explorer)
+          utc.explorer.route = 'menu_pessoas_igreja'
+          utc.explorer.pagina = 1
+          utc.explorer.criterios = ' order by id desc'
+          this.$refs.grid.get(utc.explorer)
           this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
         } else {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
@@ -440,25 +443,49 @@ export default {
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
     },
+    add (campoecle) {
+      var ca = []
+      ca.push(campoecle)
+      this.form.campoeclesiastico = ca
+      this.$set(this.form.campoeclesiastico)
+      console.log(this.form.campoeclesiastico)
+    },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data.obj)
+        this.form = res.data.obj
         this.openloading = false
+        this.openModal = true
       }).catch(err => util.error(err))
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
-    datasearch (params) {
-      this.explorerflex.route = 'exp_municipio'
-      this.explorerflex.criterios = 'ORDER BY ID DESC'
-      this.ds.grid = ['ID', 'nome', 'uf', '']
-      this.ds.title = 'Cidades'
-      this.$refs.expl.dataSearch(this.explorerflex, 1, 1, params)
-      this.open = true
+    datasearch (route, params) {
+      if (route === 1) {
+        utc.explorerflex.route = 'exp_municipio'
+        utc.explorerflex.criterios = 'ORDER BY ID DESC'
+        this.ds.grid = ['ID', 'nome', 'uf', '']
+        this.ds.title = 'Cidades'
+        this.$refs.expl.dataSearch(utc.explorerflex, '', 1, params)
+        this.open = true
+      } else if (route === 2) {
+        utc.explorerflex.route = 'exp_campoeclesiastico'
+        utc.explorerflex.criterios = 'ORDER BY ID DESC'
+        utc.explorerflex.pagina = 1
+        this.ds.title = 'Igrejas'
+        this.ds.grid = ['ID', 'nome']
+        this.$refs.expl.dataSearch(utc.explorerflex, '', 2)
+        this.open = true
+      }
     },
     destroy (registro, params, e) {
       if (params === 1) {
         this.form.endereco[e].cidade = registro.nome
         this.form.endereco[e].idCidade = registro.id
+      } else if (params === 2) {
+        this.campoecle.nome = registro.nome
+        this.campoecle.id = registro.id
+        b.push(this.campoecle)
+        this.form.campoeclesiastico = b
+        // this.$set(this.form.campoeclesiastico)
       }
       this.open = false
     }

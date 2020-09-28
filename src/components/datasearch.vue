@@ -1,13 +1,13 @@
 <template>
 <transition>
   <div class="cargodts">
-    <loader id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular" style="z-index: 5002;"></loader>
+      <loader  id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
       <div id="overlay" v-if="openDatasearch">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h6>Selecione o {{ title }}</h6>
-              <button type="button" class="close"  @click="contexto='';explorerflex.pagina=1; registros=[];destroy (0, '', '')">
+              <button type="button" class="close"  @click="explorerflex.pagina=1; registros=[];destroy (0, '', '')">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>

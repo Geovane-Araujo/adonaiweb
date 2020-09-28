@@ -50,9 +50,6 @@ export default {
           this.reg = res.data.obj
           this.ref = explorer.route
           this.explorer = explorer
-          if (type === undefined) {
-            this.type = true
-          }
         } else {
           this.openloading = false
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)

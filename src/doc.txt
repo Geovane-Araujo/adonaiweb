@@ -1,0 +1,8 @@
+**************************datasearch******************************************
+parametros que recebe
+1 - o obj explorer, contendo a rota, a paginação e a ordenação dos registros
+2 - recebe o contexto, na verdade este não serve pra nada, mantenho la porque se for mudar em todas as telas
+complica
+3 - o params este é pra identificar o registo, ecemplo tem uma tela que tenha mais de um datasearch, é através
+dele que será identificado pode ser também o id do componente fica mais fácil
+4 - extraparam, outro valor de identificação(pouco usado)

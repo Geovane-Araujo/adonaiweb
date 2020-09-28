@@ -20,6 +20,7 @@
           :save="save"
           :getbyId="getbyId"
           :explorer="explorer"
+          :type="true"
           ref="grid"></adonaigrid>
         </div>
       </div>
