@@ -7,7 +7,7 @@
           <p>Receitas</p>
           <button
             class="btn btn-outline-info"
-            @click="form.del=false;form.add=true;form.edit=false;lancar=true,estornar=false;openModal=true;">
+            @click="modal();">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
           </button>
           <button
@@ -88,11 +88,10 @@
                           <b-form-group label="Tipo" label-align-sm="left">
                             <b-input-group >
                               <b-form-input
-                              v-bind:disabled="(form.status == 0)"
                               v-model="form.descrconta"
                               ></b-form-input>
                                 <b-input-group-append >
-                                <b-button variant="outline-info" class="material-icons" v-bind:disabled="(form.status == 0)"  @click="datasearch (2);">search</b-button>
+                                <b-button variant="outline-info" class="material-icons" @click="datasearch (2);">search</b-button>
                               </b-input-group-append>
                             </b-input-group>
                           </b-form-group>
@@ -155,6 +154,7 @@
                 </b-container>
               </form>
               <button type="button" v-show="estornar" class="btn btn-outline-info float-left" style="margin-left:10px;" @click="validate(form, 0)">Estornar</button>
+              <button type="button" v-show="estornar" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(form, 0)">Salvar</button>
               <button type="button" v-show="lancar" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(form, 1)">Lançar e Quitar</button>
               <button type="button" v-show="lancar" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form, 0)">Lançar</button>
             </div>

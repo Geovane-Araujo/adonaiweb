@@ -44,10 +44,10 @@ export default {
     },
     geraBoleto (id) {
       this.openloading = true
-      axios.get(adonai.url + 'pagamentoboleto/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      axios.get(adonai.url + 'pagamentoboleto', { headers: { Authorization: 'Bearer ' + this.user.token, idcobranca: id } }).then(res => {
         this.openloading = false
-        if (res.data.obj.ret === 'success') {
-          window.open(res.data.obj.paymentLink)
+        if (res.data.ret === 'success') {
+          window.open(res.data.obj.links[0].href)
         } else {
           this.openloading = false
           this.$toastr.error(res.data.obj.motivo, 'AdonaiSoft Diz:', util.toast)

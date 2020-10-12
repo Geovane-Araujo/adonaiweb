@@ -80,6 +80,15 @@ export default {
     this.$refs.grid.get(rel.explorer)
   },
   methods: {
+    modal () {
+      this.form.dataemissao = moment(data).format('DD/MM/YYYY')
+      this.form.del = false
+      this.form.add = true
+      this.form.edit = false
+      this.lancar = true
+      this.estornar = false
+      this.openModal = true
+    },
     async save (form) {
       this.openloading = true
       if (form.del === true && form.dataPagamento !== '') {
@@ -124,9 +133,7 @@ export default {
         if (quitar === 1) {
           form.dataPagamento = new Date()
           form.status = 0
-        } else if (quitar === 0) {
-          form.status = 1
-        } else if (quitar === 2) {
+        } else if (quitar === 0 || quitar === 2) {
           form.status = 1
         }
         this.form.idUsuarioInclusao = this.user.id

@@ -18,6 +18,10 @@
               class="btn btn-outline-info" style="margin-left: 10px;">
               <img src="../img/certificado.png">&nbsp;&nbsp;Certificado
             </button>
+            <button v-show="false" @click="getsenderHash ()"
+              class="btn btn-outline-info" style="margin-left: 10px;">
+              <img src="../img/certificado.png">&nbsp;&nbsp;Integrações
+            </button>
             <hr class="bg-info" />
           </div>
         </div>

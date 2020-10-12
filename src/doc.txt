@@ -6,3 +6,5 @@ complica
 3 - o params este é pra identificar o registo, ecemplo tem uma tela que tenha mais de um datasearch, é através
 dele que será identificado pode ser também o id do componente fica mais fácil
 4 - extraparam, outro valor de identificação(pouco usado)
+
+*****************************************pag

@@ -454,6 +454,8 @@ export default {
       this.openloading = true
       axios.get(adonai.url + 'igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.form = res.data.obj
+        this.form.add = false
+        this.form.edit = true
         this.openloading = false
         this.openModal = true
       }).catch(err => util.error(err))

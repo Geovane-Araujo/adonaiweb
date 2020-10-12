@@ -27,6 +27,7 @@
     "luxon": "^1.25.0",
     "material-design-icons": "^3.0.1",
     "moment": "^2.27.0",
+    "node-pagseguro": "^0.1.9",
     "print-js": "^1.0.63",
     "resource": "^0.8.1",
     "toastr": "^2.1.4",

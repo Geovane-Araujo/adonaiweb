@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="row bg-ligth">
         <div class="col-lg-12">
-          <p class="p">Bíblia</p>
+          <p style="color: #000000" class="p">Bíblia</p>
           <hr class="bg-info" />
         </div>
         <div class="row" style="margin-top: -20px; margin-left: 10px;">

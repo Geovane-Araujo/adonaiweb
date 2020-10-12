@@ -117,7 +117,7 @@ export default {
         } else if (quitar === 0) {
           form.status = 1
         } else if (quitar === 2) {
-          form.status = 1
+          form.dataPagamento = this.form.dataPagamento
         }
         this.form.idUsuarioInclusao = this.user.id
         this.save(form)
