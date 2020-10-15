@@ -79,6 +79,17 @@ export default {
     this.$refs.grid.get(rel.explorer)
   },
   methods: {
+    initialize () {
+      this.cleanForm()
+      this.form.dataemissao = moment(data).format()
+      this.form.dataVencimento = moment(data).format()
+      this.form.del = false
+      this.form.add = true
+      this.form.edit = false
+      this.lancar = true
+      this.estornar = false
+      this.openModal = true
+    },
     async save (form) {
       this.openloading = true
       if (form.del === true && form.dataPagamento !== '') {
@@ -116,8 +127,9 @@ export default {
           form.status = 0
         } else if (quitar === 0) {
           form.status = 1
+          form.dataPagamento = ''
         } else if (quitar === 2) {
-          form.dataPagamento = this.form.dataPagamento
+          form.dataPagamento = moment(this.form.dataPagamento).format()
         }
         this.form.idUsuarioInclusao = this.user.id
         this.save(form)

@@ -7,7 +7,7 @@
           <p>Despesas</p>
           <button
             class="btn btn-outline-info"
-            @click="cleanForm();form.del=false;form.add=true;form.edit=false;lancar=true,estornar=false;openModal=true;">
+            @click="initialize();">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
           </button>
           <button

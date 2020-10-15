@@ -7,7 +7,7 @@
           <p>Receitas</p>
           <button
             class="btn btn-outline-info"
-            @click="modal();">
+            @click="initialize();">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
           </button>
           <button
@@ -154,7 +154,7 @@
                 </b-container>
               </form>
               <button type="button" v-show="estornar" class="btn btn-outline-info float-left" style="margin-left:10px;" @click="validate(form, 0)">Estornar</button>
-              <button type="button" v-show="estornar" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(form, 0)">Salvar</button>
+              <button type="button" v-show="estornar" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(form, 2)">Salvar</button>
               <button type="button" v-show="lancar" class="btn btn-outline-info float-right" style="margin-left:10px;" @click="validate(form, 1)">Lançar e Quitar</button>
               <button type="button" v-show="lancar" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form, 0)">Lançar</button>
             </div>

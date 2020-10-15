@@ -80,8 +80,10 @@ export default {
     this.$refs.grid.get(rel.explorer)
   },
   methods: {
-    modal () {
-      this.form.dataemissao = moment(data).format('DD/MM/YYYY')
+    initialize () {
+      this.cleanForm()
+      this.form.dataemissao = moment(data).format()
+      this.form.dataVencimento = moment(data).format()
       this.form.del = false
       this.form.add = true
       this.form.edit = false
@@ -133,8 +135,11 @@ export default {
         if (quitar === 1) {
           form.dataPagamento = new Date()
           form.status = 0
-        } else if (quitar === 0 || quitar === 2) {
+        } else if (quitar === 0) {
           form.status = 1
+          form.dataPagamento = ''
+        } else if (quitar === 2) {
+          form.dataPagamento = moment(this.form.dataPagamento).format()
         }
         this.form.idUsuarioInclusao = this.user.id
         this.save(form)

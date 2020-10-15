@@ -393,7 +393,7 @@
                       </div>
                     </b-col>
                   </b-tab>
-                  <b-tab title="MultIgreja" style="padding: 0;">
+                  <b-tab v-show="false" title="MultIgreja" style="padding: 0;">
                     <div class="row" >
                       <div class="col-sm-12">
                         <b-form-group label="Igreja" label-align-sm="left">
