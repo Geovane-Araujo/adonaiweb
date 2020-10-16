@@ -1,9 +1,9 @@
 <template>
-  <div class="contas">
+  <div>
     <loader id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12" >
           <p>Cadastro de Contas Bancárias</p>
           <button
             class="btn btn-outline-info"
@@ -12,7 +12,7 @@
           </button>
           <hr class="bg-info">
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
           <adonaigrid :titulos="['ID','Descricao']"
           :registros="contasbancarias"

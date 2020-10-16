@@ -1,5 +1,5 @@
 <template>
-  <div class="membro">
+  <div>
     <loader id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row">
@@ -22,7 +22,7 @@
           </button>
           <hr class="bg-info">
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
           <adonaigrid :titulos="['ID','Nome','endereco','Bairro','Numero','Telefone']"
           :form="form"
@@ -339,10 +339,6 @@
 <script src="./membro.js">
 </script>
 <style lang=scss scoped>
-.table-overflow {
-    max-height:90vh;
-    overflow-y:auto;
-}
 label {
   background-color: #5e8a75;
   border-radius: 5px;
@@ -356,16 +352,6 @@ input[type='file'] {
 }
 p {
   font-size: 30px;
-}
-.table-sm {
-  padding: 2px;
-}
-.membro {
-  border-radius: 10px;
-  box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
-  background-color: rgba($color: #ffffff, $alpha: 0.9);
-  margin: 5px;
-  overflow:auto;
 }
 .datePivker{
   margin-left: 2px;

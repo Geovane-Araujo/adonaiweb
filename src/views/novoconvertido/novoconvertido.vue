@@ -17,7 +17,7 @@
           </button>
           <hr class="bg-info">
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
           <adonaigrid :titulos="['ID','Nome','Endereço','Bairro','Numero','Telefone']"
           :registros="novoconvertido"

@@ -45,14 +45,18 @@ html {
   width: 100%;
   overflow: hidden;
 }
+.router{
+  border-radius: 10px;
+  box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
+  background-color: rgba($color: #ffffff, $alpha: 0.9);
+  margin: 5px;
+  height: 94.60%;
+}
 h3 {
   color: #f2f4f7;
 }
 .containerb {
   height: 100%;
-  .router {
-    height: 92%;
-  }
 }
 .navbar{
   background-color: rgba(3,50,73,0.7);
