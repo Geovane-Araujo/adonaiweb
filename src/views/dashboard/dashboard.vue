@@ -8,7 +8,7 @@
           <hr class="bg-info">
           <div class="row">
             <div class="col-sm-3">
-              <div class="col-sm-12" style="background-color: #ffffff;">
+              <div class="col-sm-12 p-shadow-10" style="background-color: #ffffff;">
                 <div class="row">
                   <div class="col-sm-6">
                     <i class="fas fa-users fa-3x"
@@ -24,7 +24,7 @@
               </div>
             </div>
             <div class="col-sm-3">
-              <div class="col-sm-12" style="background-color: #ffffff;">
+              <div class="col-sm-12 p-shadow-10" style="background-color: #ffffff;">
                 <div class="row">
                   <div class="col-sm-6">
                     <img src="./up.png"
@@ -40,7 +40,7 @@
               </div>
             </div>
             <div class="col-sm-3">
-              <div class="col-sm-12" style="background-color: #ffffff;">
+              <div class="col-sm-12 p-shadow-10" style="background-color: #ffffff;">
                 <div class="row">
                   <div class="col-sm-6">
                     <img src="./down.png"
@@ -56,7 +56,7 @@
               </div>
             </div>
             <div class="col-sm-3">
-              <div class="col-sm-12" style="background-color: #ffffff;">
+              <div class="col-sm-12 p-shadow-10" style="background-color: #ffffff;">
                <div class="row">
                   <div class="col-sm-6">
                     <i class="far fa-address-book fa-3x"
@@ -72,21 +72,20 @@
               </div>
             </div>
           </div>
-          <hr class="bg-info">
-          <div class="col-sm-12">
+          <div class="col-sm-12 p-shadow-10">
             <barchart
             :label="cabe_finan"
             :datasets="dataset_finan" ref="year"></barchart>
           </div>
           <hr class="bg-info">
           <div class="row">
-            <div class="col-sm-6">
+            <div style="margin-right:10px;" class="col-sm-4 p-shadow-10">
               <piechart
               :label="cabe_tipos_entradas"
               :datasets="dataset_tipos_entradas" ref="rec">
               </piechart>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4 p-shadow-10">
               <dougchart
               :label="cabe_tipos_despesas"
               :datasets="dataset_tipos_despesas" ref="des">

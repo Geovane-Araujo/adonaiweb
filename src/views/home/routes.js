@@ -24,6 +24,8 @@ import relatorios from '../relatorios/relatorios.vue'
 import biblia from '../biblia/biblia.vue'
 import auditoria from '../auditoria/auditoria.vue'
 import notaversao from '../notasversoes/notasversoes.vue'
+import pedidos from '../pedidos/pedidos.vue'
+import tipopedidos from '../tipopedido/tipopedido.vue'
 
 export default [
   {
@@ -156,6 +158,16 @@ export default [
         path: 'notaversao',
         name: 'notaversao',
         component: notaversao
+      },
+      {
+        path: 'pedidos',
+        name: 'pedidos',
+        component: pedidos
+      },
+      {
+        path: 'tipopedidos',
+        name: 'tipopedidos',
+        component: tipopedidos
       }
     ]
   }

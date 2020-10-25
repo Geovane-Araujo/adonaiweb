@@ -1,10 +1,16 @@
 import { mapState } from 'vuex'
+import Menubar from 'primevue/menubar'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import SplitButton from 'primevue/splitbutton'
+import AutoComplete from 'primevue/autocomplete'
 
 export default {
   name: 'App',
   data () {
     return {
       aniversariantes: '',
+      busca: '',
       permissoes: {
         membro: '',
         despesas: '',
@@ -18,7 +24,9 @@ export default {
         {
           header: true,
           title: 'Adonai Soft Web',
-          hiddenOnCollapse: true
+          hiddenOnCollapse: true,
+          name: sessionStorage.getItem('name'),
+          path: sessionStorage.getItem('path')
         },
         {
           href: '/',
@@ -73,10 +81,9 @@ export default {
               disabled: parseInt(sessionStorage.getItem('novoconvertido'))
             },
             {
-              href: '',
+              href: '/pedidos',
               title: 'Pedidos de Orações',
-              disabled: false,
-              hidden: true
+              disabled: false
             },
             {
               href: '',
@@ -196,6 +203,11 @@ export default {
               href: '/eventoTipos',
               title: 'Tipo Eventos',
               disabled: parseInt(sessionStorage.getItem('tipoevento'))
+            },
+            {
+              href: '/tipopedidos',
+              title: 'Tipo de Solicitações',
+              disabled: parseInt(sessionStorage.getItem('tipoevento'))
             }
           ]
         },
@@ -233,7 +245,13 @@ export default {
       ],
       selectedTheme: 'white-theme',
       collapsed: false,
-      isOnMobile: false
+      isOnMobile: false,
+      itensmenu: [
+        {
+          label: 'Sair',
+          icon: 'fab fa-whmcs'
+        }
+      ]
     }
   },
   mounted () {
@@ -246,6 +264,12 @@ export default {
       console.log(collapsed)
       this.collapsed = collapsed
     },
+    reload () {
+      document.location.reload(true)
+    },
+    toggle (event) {
+      this.$refs.menu.toggle(event)
+    },
     onResize () {
       if (window.innerWidth <= 767) {
         this.isOnMobile = true
@@ -255,6 +279,13 @@ export default {
         this.collapsed = false
       }
     }
+  },
+  components: {
+    Menubar,
+    Button,
+    InputText,
+    SplitButton,
+    AutoComplete
   },
   computed: {
     ...mapState('auth', ['user'])

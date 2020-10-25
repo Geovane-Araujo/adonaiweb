@@ -4,6 +4,9 @@ import * as types from './mutation-types'
 
 export const ActionLogin = ({ dispatch }, payload) => {
   return services.auth.login(payload).then(res => {
+    sessionStorage.setItem('name', res.data.login.nome)
+    sessionStorage.setItem('path', res.data.login.pathimg)
+    sessionStorage.setItem('nomeigreja', res.data.login.igreja.nome)
     if (res.data.login.permissoesuser.membro === 1) {
       sessionStorage.setItem('membro', 0)
     } else {

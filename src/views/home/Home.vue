@@ -2,16 +2,19 @@
   <div class="home">
     <div id="demo" :class="[{'collapsed' : collapsed}, {'onmobile' : isOnMobile}]">
       <div class="containerb">
-        <nav class="navbar">
-          <div class="Esquerdo">
-            <h3>{{ user.igreja.nome }}</h3>
-          </div>
-          <div class="Direito">
-            <b-avatar :src="user.pathimg" ></b-avatar>
-            <h4 class="float-right" style="margin-left: 10px;">{{ user.nome }}</h4>
-          </div>
-          </nav>
-          <router-view class="router"/>
+        <Menubar class="navbar">
+            <template #start>
+                  <h4 style="color:#ffffff">{{ user.igreja.nome }}</h4>
+            </template>
+            <template #end>
+              <span class="p-input-icon-left">
+                  <i class="pi pi-search"/>
+                  <InputText style="font-size:14px" v-model="busca" type="text" placeholder="Procurar" />
+              </span>
+              <Button style="margin-left:10px;margin-right:10px" icon="fas fa-power-off" @click="reload()" class="p-button-rounded button" />
+            </template>
+          </MenuBar>
+        <router-view class="router"/>
       </div>
     </div>
     <sidebar-menu :menu="menu"
@@ -105,4 +108,18 @@ h3 {
   height: 100%;
   width: 100%;
 }
+.button{
+  background-color: rgba(3,50,73,0.7);
+  border: #5e8a75;
+}
+.button:hover{
+  background-color: #5e8a75;
+}
+.button:visited{
+  color: #5e8a75;
+}
+.button:visited{
+  background-color: #5e8a75;
+}
+
 </style>

@@ -29,16 +29,23 @@ import VueDropdown from 'vue-dynamic-dropdown'
 import { ColourPicker } from 'vue-colour-picker'
 import { Material } from 'vue-color'
 import VSwatches from 'vue-swatches'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+
 import 'fullcalendar/dist/locale/pt-br'
 // import 'fullcalendar/dist/fullcalendar.css'
 import 'vue-swatches/dist/vue-swatches.css'
 import './assets/scss/app.scss'
+import 'primeflex/primeflex.css'
+import 'primevue/resources/themes/bootstrap4-light-blue/theme.css'
 
 window.toastr = require('toastr')
 
 Vue.config.productionTip = false
 Vue.use(VueMask)
 Vue.use(VueSidebarMenu)
+Vue.use(Button)
+Vue.use(InputText)
 Vue.use(Vuetify)
 Vue.use(VueToastr2)
 Vue.use(BootstrapVue)
@@ -61,6 +68,7 @@ Vue.component('adonaidatasearch', adonaidatasearch)
 Vue.component('barchart', barchart)
 Vue.component('piechart', piechart)
 Vue.component('dougchart', doughnut)
+Vue.prototype.$primevue = { ripple: true }
 
 Vue.config.debug = false
 Vue.config.devtools = false
