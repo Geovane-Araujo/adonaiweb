@@ -20,7 +20,6 @@ export default {
     return {
       openModal: false,
       openloadin: false,
-      open: false,
       form: {
         add: true,
         edit: false,
@@ -51,7 +50,7 @@ export default {
         eventDrop: this.eventDrop,
         headerToolbar: {
           locale: 'pt-br',
-          left: 'prev,next today',
+          left: 'prev,next',
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
@@ -100,8 +99,11 @@ export default {
     getById (id) {
       this.openloadin = true
       axios.get(adonai.url + 'agenda/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data.obj)
+        this.form = res.data.obj
         this.form.edit = true
+        this.form.add = false
+        this.form.idmultiigreja = 1
+        this.openModal = true
         this.openloadin = false
       }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
@@ -131,28 +133,24 @@ export default {
       if (route === 1) {
         utilExpl.explorerflex.route = 'menu_eventos_tipos'
         utilExpl.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['ID', 'Descricao']
+        this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Agenda Eventos'
         this.$refs.expl.dataSearch(utilExpl.explorerflex, 1, 1)
-        this.open = true
       } else {
         utilExpl.explorerflex.route = 'exp_agenda_usuarios'
         utilExpl.explorerflex.criterios = 'ORDER BY ID DESC'
         this.ds.grid = ['ID', 'Nome']
         this.ds.title = 'Agenda Eventos'
         this.$refs.expl.dataSearch(utilExpl.explorerflex, 2, 2)
-        this.open = true
       }
     },
     destroy (registro, params) {
       if (params === 1) {
         this.form.descricaoEvento = registro.descricao
         this.form.idevento = registro.id
-        this.open = false
       } else {
         this.form.nome = registro.Nome
         this.form.idpessoa = registro.ID
-        this.open = false
       }
     },
     validate (form) {
@@ -181,21 +179,6 @@ export default {
       this.form.descricaoEvento = ''
       this.form.idevento = ''
       this.form.idmultiigreja = 1
-    },
-    read (form) {
-      this.form.add = form.add
-      this.form.edit = form.edit
-      this.form.del = form.del
-      this.form.id = form.id
-      this.form.nome = form.nome
-      this.form.idpessoa = form.idpessoa
-      this.form.descricao = form.descricao
-      this.form.enddate = form.enddate
-      this.form.startdate = form.startdate
-      this.form.descricaoEvento = form.descricaoEvento
-      this.form.idevento = form.idevento
-      this.form.idmultiigreja = 1
-      this.openModal = true
     }
   },
   components: {

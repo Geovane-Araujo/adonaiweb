@@ -6,8 +6,9 @@ import axios from 'axios'
 import rel from '../../util/utilClass'
 import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
-var moment = require('moment')
-var data = new Date()
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
 
 export default {
   data () {
@@ -16,7 +17,6 @@ export default {
       deleteModal: false,
       openloading: false,
       openFilter: false,
-      open: false,
       ds: {
         grid: [],
         title: ''
@@ -103,10 +103,7 @@ export default {
         ],
         criterios: {
           criterios: ''
-        },
-        retorno: '',
-        motivo: '',
-        moment: moment(data).format('YYYY-MM-DD h:mm:ss')
+        }
       },
       filters: {
         idcargo: '',
@@ -204,74 +201,6 @@ export default {
       form.retorno = ''
       form.motivo = ''
     },
-    read (form) {
-      this.form.id = form.id
-      this.form.nome = form.nome
-      this.form.idPessoa = form.idPessoa
-      this.form.dataNascimento = form.dataNascimento
-      this.form.ativo = form.ativo
-      this.form.idCargo = form.idCargo
-      this.form.cargo = form.cargo
-      this.form.observacoes = form.observacoes
-      this.form.dataBatismo = form.dataBatismo
-      this.form.idEstadoCivil = form.idEstadoCivil
-      this.form.pathimg = form.pathimg
-      this.form.batizado = form.batizado
-      this.moment = moment(data).format('YYYY-MM-DD h:mm:ss')
-
-      this.form.endereco[0].id = form.endereco[0].id
-      this.form.endereco[0].idPessoa = form.endereco[0].idPessoa
-      this.form.endereco[0].endereco = form.endereco[0].endereco
-      this.form.endereco[0].bairro = form.endereco[0].bairro
-      this.form.endereco[0].idCidade = form.endereco[0].idCidade
-      this.form.endereco[0].cidade = form.endereco[0].cidade
-      this.form.endereco[0].numero = form.endereco[0].numero
-      this.form.endereco[0].uf = form.endereco[0].uf
-      this.form.endereco[0].cep = form.endereco[0].cep
-      this.form.endereco[0].complemto = form.endereco[0].complemto
-      this.form.endereco[0].tipo = 0
-
-      this.form.endereco[1].id = form.endereco[1].id
-      this.form.endereco[1].idPessoa = form.endereco[1].idPessoa
-      this.form.endereco[1].endereco = form.endereco[1].endereco
-      this.form.endereco[1].bairro = form.endereco[1].bairro
-      this.form.endereco[1].idCidade = form.endereco[1].idCidade
-      this.form.endereco[1].cidade = form.endereco[1].cidade
-      this.form.endereco[1].numero = form.endereco[1].numero
-      this.form.endereco[1].uf = form.endereco[1].uf
-      this.form.endereco[1].cep = form.endereco[1].cep
-      this.form.endereco[1].complemto = form.endereco[1].complemto
-      this.form.endereco[1].tipo = 1
-
-      this.form.telefone[0].id = form.telefone[0].id
-      this.form.telefone[0].idPessoa = form.telefone[0].idPessoa
-      this.form.telefone[0].telefone = form.telefone[0].telefone
-      this.form.telefone[0].tipo = 0
-
-      this.form.telefone[1].id = form.telefone[1].id
-      this.form.telefone[1].idPessoa = form.telefone[1].idPessoa
-      this.form.telefone[1].telefone = form.telefone[1].telefone
-      this.form.telefone[1].tipo = 1
-
-      this.form.telefone[2].id = form.telefone[2].id
-      this.form.telefone[2].idPessoa = form.telefone[2].idPessoa
-      this.form.telefone[2].telefone = form.telefone[2].telefone
-      this.form.telefone[2].tipo = 2
-
-      this.form.email[0].id = form.email[0].id
-      this.form.email[0].idPessoa = form.email[0].idPessoa
-      this.form.email[0].email = form.email[0].email
-      this.form.email[0].tipo = 0
-
-      this.form.email[1].id = form.email[1].id
-      this.form.email[1].idPessoa = form.email[1].idPessoa
-      this.form.email[1].email = form.email[1].email
-      this.form.email[1].tipo = 1
-
-      this.form.retorno = ''
-      this.form.motivo = ''
-      this.openModal = true
-    },
     validar (form) {
       if (form.nome === '') {
         this.$toastr.error('Por favor preencha o campo Nome Completo', 'Campos Inválidos', util.toast)
@@ -322,7 +251,10 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'membro/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data.obj)
+        this.form = res.data.obj
+        this.form.add = false
+        this.form.edit = true
+        this.openModal = true
         this.openloading = false
       })
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
@@ -330,17 +262,15 @@ export default {
       if (route === 1) {
         rel.explorerflex.route = 'exp_municipio'
         rel.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['ID', 'nome', 'uf', '']
+        this.ds.grid = ['id', 'nome', 'uf', '']
         this.ds.title = 'Cidades'
-        this.$refs.expl.dataSearch(rel.explorerflex, 1, 1, params)
-        this.open = true
+        this.$refs.expl.dataSearch(rel.explorerflex, 1, params)
       } else if (route === 2) {
         rel.explorerflex.route = 'exp_cargo'
         rel.explorerflex.criterios = 'ORDER BY ID asc'
-        this.ds.grid = ['ID', 'descricao']
+        this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Cargos'
-        this.$refs.expl.dataSearch(rel.explorerflex, 1, 2)
-        this.open = true
+        this.$refs.expl.dataSearch(rel.explorerflex, 2, '')
       }
     },
     destroy (registro, params, e) {
@@ -354,7 +284,6 @@ export default {
         this.filters.cargo = registro.descricao
         this.filters.idcargo = registro.id
       }
-      this.open = false
     },
     filter (filters) {
       if (filters.cargo !== '') {
@@ -378,7 +307,10 @@ export default {
     }
   },
   components: {
-    datetime: Datetime
+    datetime: Datetime,
+    Dialog,
+    Button,
+    InputText
   },
   computed: {
     ...mapState('auth', ['user'])

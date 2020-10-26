@@ -5,6 +5,9 @@ import axios from 'axios'
 import adonai from '../router/services'
 import rel from '../../util/utilClass'
 import { Datetime } from 'vue-datetime'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
 import 'vue-datetime/dist/vue-datetime.css'
 var moment = require('moment')
 var data = new Date()
@@ -13,7 +16,6 @@ export default {
   data () {
     return {
       openModal: false,
-      open: false,
       openFilter: false,
       estornar: false,
       lancar: false,
@@ -57,9 +59,7 @@ export default {
         descrconta: '',
         descstatus: '',
         desccaixa: '',
-        idtipo: '',
-        motivo: '',
-        moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
+        idtipo: ''
       },
       duplicata: [],
       currency: {
@@ -131,6 +131,7 @@ export default {
         } else if (quitar === 2) {
           form.dataPagamento = moment(this.form.dataPagamento).format()
         }
+        this.form.tipo = 1
         this.form.idUsuarioInclusao = this.user.id
         this.save(form)
       }
@@ -147,24 +148,21 @@ export default {
       if (route === 1) {
         rel.explorerflex.route = 'exp_membro'
         rel.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['ID', 'Nome']
+        this.ds.grid = ['id', 'nome']
         this.ds.title = 'Membro'
         this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
-        this.open = true
       } else if (route === 2) {
         rel.explorerflex.route = 'exp_tipoconta'
         rel.explorerflex.criterios = 'AND contexto = 1 ORDER BY ID DESC'
-        this.ds.grid = ['ID', 'Descricao']
+        this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Tipo Conta'
-        this.$refs.cmp.dataSearch(rel.explorerflex, 1, 2)
-        this.open = true
+        this.$refs.cmp.dataSearch(rel.explorerflex, 2, 2)
       } else if (route === 3) {
         rel.explorerflex.criterios = 'ORDER BY ID DESC'
         rel.explorerflex.route = 'exp_caixa'
-        this.ds.grid = ['ID', 'Descricao']
+        this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Caixa'
-        this.$refs.cmp.dataSearch(rel.explorerflex, 1, 3)
-        this.open = true
+        this.$refs.cmp.dataSearch(rel.explorerflex, 3, 3)
       }
     },
     cleanForm () {
@@ -191,43 +189,20 @@ export default {
       this.form.retorno = ''
       this.form.motivo = ''
     },
-    read (form) {
-      this.form.add = form.add
-      this.form.edit = form.edit
-      this.form.del = form.del
-      this.form.id = form.id
-      this.form.descricao = form.descricao
-      this.form.dataemissao = form.dataemissao
-      this.form.dataVencimento = form.dataVencimento
-      this.form.dataPagamento = form.dataPagamento
-      this.form.iUsuarioInclusao = form.iUsuarioInclusao
-      this.form.status = form.status
-      if (form.status === 0) {
-        this.estornar = true
-        this.lancar = false
-      } else {
-        this.estornar = false
-        this.lancar = true
-      }
-      this.form.valor = form.valor
-      this.form.observacoes = form.observacoes
-      this.form.tipo = 1
-      this.form.idCaixaMovimento = form.idCaixaMovimento
-      this.form.idMembro = form.idMembro
-      this.form.nome = form.nome
-      this.form.descrconta = form.descrconta
-      this.form.descstatus = form.descstatus
-      this.form.desccaixa = form.desccaixa
-      this.form.idtipo = form.idtipo
-
-      this.form.retorno = form.retorno
-      this.form.motivo = form.motivo
-      this.openModal = true
-    },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'duplicata/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data.obj)
+        this.form = res.data.obj
+        if (this.form.status === 0) {
+          this.estornar = true
+          this.lancar = false
+        } else {
+          this.estornar = false
+          this.lancar = true
+        }
+        this.form.add = false
+        this.form.edit = true
+        this.openModal = true
         this.openloading = false
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
@@ -295,7 +270,10 @@ export default {
     }
   },
   components: {
-    datetime: Datetime
+    datetime: Datetime,
+    Dialog,
+    Button,
+    InputText
   },
   computed: {
     ...mapState('auth', ['user'])

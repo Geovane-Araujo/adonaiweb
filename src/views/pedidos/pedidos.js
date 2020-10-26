@@ -39,7 +39,7 @@ export default {
       tipo: '',
       idtipo: 0,
       mensagem: '',
-      status: '',
+      status: 0,
       descStatus: '',
       data: '',
       datAlteracao: ''

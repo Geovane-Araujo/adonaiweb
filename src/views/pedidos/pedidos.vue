@@ -48,7 +48,7 @@
                 </b-form-group>
               </div>
               <div class="col-sm-5">
-                <b-form-group label="Tipo Solicitação" label-align-sm="left">
+                <b-form-group label="Status" label-align-sm="left">
                   <b-form-select
                     :options="[{ text: 'Não Lido', value: 0 }, {text: 'Incluído em Campanha', value: 1}, {text: 'Finalizado', value: 2}]"
                     v-model="form.status"

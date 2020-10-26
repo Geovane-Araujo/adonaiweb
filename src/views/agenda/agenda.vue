@@ -8,7 +8,7 @@
           <hr class="bg-info">
           <div class="row">
             <div class="col-sm-12">
-              <FullCalendar :options="calendarOptions" @dateClick="eventClick"/>
+              <FullCalendar style="font-size:12px;" :options="calendarOptions" @dateClick="eventClick"/>
             </div>
           </div>
         </div>
