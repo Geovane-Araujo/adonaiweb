@@ -5,7 +5,7 @@
       <div class="row bg-ligth">
         <div class="col-lg-12">
           <p>Pedidos de Oração</p>
-          <button class="btn btn-outline-info" @click="cleanForm(form); openModal=true">
+          <button class="btn btn-outline-info" @click="cleanForm(form);open=false; openModal=true">
             <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
           </button>
           <hr class="bg-info" >
@@ -21,10 +21,10 @@
           :type="true"
           ref="grid"></adonaigrid>
         </div>
-        <Dialog style="font-size:10px;" header="Pedidos" :visible.sync="openModal" :style="{width: '40vw'}" :modal="true">
+        <Dialog style="font-size:10px;" header="Pedidos" :visible.sync="openModal" :style="{width: '50vw'}" :modal="true">
           <form >
             <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-3">
                 <b-form-group label-align-sm="left" label="Data">
                   <datetime  placeholder="data"
                     class="datePivker"
@@ -36,23 +36,61 @@
                 </b-form-group>
               </div>
               <div class="col-sm-4">
-                <AutoComplete v-model="form.tipo" :suggestions="pedido" @complete="searchInput($event)" :dropdown="true" field="name">
-                  <template #item="slotProps">
-                      <div class="country-item">
-                          <div>{{slotProps.item.name}}</div>
-                      </div>
-                  </template>
-              </AutoComplete>
+                <b-form-group label="Tipo Solicitação" label-align-sm="left">
+                  <b-input-group>
+                    <b-form-input placeholder="Tipo Solicitação"
+                    v-model="form.tipo"
+                      ></b-form-input>
+                      <b-input-group-append >
+                      <b-button variant="outline-info" class="material-icons" @click="datasearch(1,0)">search</b-button>
+                    </b-input-group-append>
+                  </b-input-group>
+                </b-form-group>
+              </div>
+              <div class="col-sm-5">
+                <b-form-group label="Tipo Solicitação" label-align-sm="left">
+                  <b-form-select
+                    :options="[{ text: 'Não Lido', value: 0 }, {text: 'Incluído em Campanha', value: 1}, {text: 'Finalizado', value: 2}]"
+                    v-model="form.status"
+                ></b-form-select>
+                </b-form-group>
+              </div>
+              <div class="col-sm-6">
+                <b-form-group label="Nome" label-align-sm="left">
+                  <b-input-group>
+                    <b-form-input placeholder="Nome"
+                    v-model="form.nome"
+                      ></b-form-input>
+                      <b-input-group-append >
+                      <b-button variant="outline-info" class="material-icons" @click="datasearch(2,2)">search</b-button>
+                    </b-input-group-append>
+                  </b-input-group>
+                </b-form-group>
+              </div>
+              <div class="col-sm-12">
+                <b-form-group label="Pedido" label-align-sm="left">
+                  <b-form-textarea
+                    rows="2"
+                    v-model="form.mensagem"
+                    max-rows="2"
+                  ></b-form-textarea>
+                </b-form-group>
               </div>
             </div>
           </form>
           <template #footer>
               <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
-              <Button label="Salvar" class="p-button-raised p-button-success p-button-text button" />
+              <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
           </template>
         </Dialog>
       </div>
     </div>
+    <adonaidatasearch
+    :title="ds.title"
+    :cabecalho="ds.grid"
+    :form="form"
+    :destroy="destroy"
+    ref="expl"/>
   </div>
 </template>
 

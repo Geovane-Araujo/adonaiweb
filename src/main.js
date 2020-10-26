@@ -37,6 +37,7 @@ import 'fullcalendar/dist/locale/pt-br'
 import 'vue-swatches/dist/vue-swatches.css'
 import './assets/scss/app.scss'
 import 'primeflex/primeflex.css'
+import 'primeicons/primeicons.css'
 import 'primevue/resources/themes/bootstrap4-light-blue/theme.css'
 
 window.toastr = require('toastr')

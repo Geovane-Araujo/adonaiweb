@@ -2,6 +2,10 @@ import axios from 'axios'
 import { mapState } from 'vuex'
 import util from '../assets/scss/util'
 import adonai from '../views/router/services'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
 
 export default {
   name: 'adonaidatasearch',
@@ -10,11 +14,13 @@ export default {
       openloading: false,
       registros: [],
       params: '',
+      r: false,
+      l: false,
       pagina: 1,
       contexto: '',
       criterio: '',
       extraparams: '',
-      explorerflex: {
+      expl: {
         route: '',
         pagina: 1,
         criterios: ''
@@ -22,15 +28,17 @@ export default {
     }
   },
   methods: {
-    dataSearch (criterios, contexto, params, extraparams) {
+    dataSearch (criterios, params, extraparams) {
       this.openloading = true
       axios.post(adonai.url + 'aexplorer', criterios, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.registros = res.data.obj
-        this.explorerflex = criterios
+        this.explo = criterios
         this.pagina = criterios.pagina
         this.params = params
         this.extraparams = extraparams
         this.openloading = false
+        this.validate(criterios.pagina, this.registros.length)
+        this.openDatasearch = true
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     getexplorer (crit) {
@@ -38,8 +46,8 @@ export default {
         this.criterio = this.cabecalho[1]
       }
       if (crit.length > 2 || crit === '') {
-        this.explorerflex.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
-        axios.post(adonai.url + 'aexplorer', this.explorerflex, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.explo.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
+        axios.post(adonai.url + 'aexplorer', this.explo, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
             this.registros = res.data.obj
           } else {
@@ -48,10 +56,37 @@ export default {
         }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       }
     },
+    validate (paging, length) {
+      if (paging === 1) {
+        this.r = true
+      }
+      if (length < 15) {
+        this.l = true
+      }
+    },
+    paging (event) {
+      if (event === 0) {
+        this.explo.pagina += 1
+        this.dataSearch(this.explo, '', this.params)
+      } else {
+        this.explo.pagina -= 1
+        this.dataSearch(this.explo, '', this.params)
+      }
+    },
     onSelectRsgister (cabecalho) {
       this.criterio = cabecalho
       this.$toastr.success(cabecalho + ' selecionado', 'AdonaiSoft Diz:', util.toast)
+    },
+    onRowSelect (event) {
+      this.openDatasearch = false
+      this.destroy(event.data, this.params, this.extraparams)
     }
+  },
+  components: {
+    Dialog,
+    Button,
+    DataTable,
+    Column
   },
   computed: {
     ...mapState('auth', ['user'])

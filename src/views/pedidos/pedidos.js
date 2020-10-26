@@ -1,6 +1,7 @@
 import { mapState } from 'vuex'
 import util from '../../assets/scss/util'
 import adonai from '../router/services'
+import adExplorer from '../../util/utilClass'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import Dialog from 'primevue/dialog'
@@ -36,7 +37,7 @@ export default {
       idPessoa: '',
       nome: '',
       tipo: '',
-      idtipo: '',
+      idtipo: 0,
       mensagem: '',
       status: '',
       descStatus: '',
@@ -60,13 +61,17 @@ export default {
           this.cleanForm()
           this.$refs.grid.get(this.explorer)
         } else {
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
           this.openloading = false
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     validate (form) {
-      if (this.form.descricao === '') {
+      if (this.form.mensagem === '') {
+        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+      } else if (this.form.nome === '') {
+        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+      } else if (this.form.tipo === '') {
         this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
       } else {
         this.save(form)
@@ -82,14 +87,36 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'pedido/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data.obj)
+        this.form = res.data.obj
+        this.form.add = false
+        this.form.edit = true
         this.openloading = false
+        this.openModal = true
       })
     },
-    searchInput (event) {
-      util.explorer.criterios = this.criterio + ' ORDER BY ID DESC'
-      util.explorer.route = 'exp_tipo_pedido'
-      this.pedido = adonai.dataSearch(util.explorer, this.user.token)
+    datasearch (route, params) {
+      if (route === 1) {
+        adExplorer.explorerflex.route = 'exp_tipo_pedido'
+        adExplorer.explorerflex.criterios = 'ORDER BY ID DESC'
+        this.ds.grid = ['id', 'descricao']
+        this.ds.title = 'Tipo Solicitações'
+        this.$refs.expl.dataSearch(adExplorer.explorerflex, 1, '')
+      } else if (route === 2) {
+        adExplorer.explorerflex.route = 'exp_membro'
+        adExplorer.explorerflex.criterios = 'ORDER BY ID DESC'
+        this.ds.grid = ['id', 'nome']
+        this.ds.title = 'Membros'
+        this.$refs.expl.dataSearch(adExplorer.explorerflex, 2, '')
+      }
+    },
+    destroy (registro, params) {
+      if (params === 1) {
+        this.form.tipo = registro.descricao
+        this.form.idtipo = registro.id
+      } else if (params === 2) {
+        this.form.nome = registro.nome
+        this.form.idPessoa = registro.id
+      }
     }
   },
   components: {

@@ -8,7 +8,6 @@
             </template>
             <template #end>
               <span class="p-input-icon-left">
-                  <i class="pi pi-search"/>
                   <InputText style="font-size:14px" v-model="busca" type="text" placeholder="Procurar" />
               </span>
               <Button style="margin-left:10px;margin-right:10px" icon="fas fa-power-off" @click="reload()" class="p-button-rounded button" />
