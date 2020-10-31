@@ -11,7 +11,6 @@ export default {
     openloading: false,
     openDatasearch: false,
     openFilter: false,
-    open: false,
     ds: {
       grid: [],
       title: '',
@@ -48,10 +47,9 @@ export default {
       if (route === 1) {
         rel.explorerflex.route = 'exp_membro'
         rel.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['ID', 'Nome']
+        this.ds.grid = ['id', 'nome']
         this.ds.title = 'Membro'
         this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
-        this.open = true
       }
     },
     filter (filters) {
@@ -66,7 +64,6 @@ export default {
         this.filters.nome = registro.nome
         this.filters.idpessoa = registro.id
       }
-      this.open = false
     }
   },
   computed: {

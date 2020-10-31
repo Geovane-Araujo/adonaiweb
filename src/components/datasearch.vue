@@ -4,10 +4,10 @@
       <loader  id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
       <Dialog  :header="title" :visible.sync="openDatasearch" :style="{width: '40vw'}" :modal="true">
         <b-form-input class="mr-sm-2" placeholder="Buscar" v-model="contexto"  @keyup="getexplorer(contexto)"></b-form-input>
-        <DataTable scrollHeight="100px" style="font-size:10px;" :value="registros" :paginator="true" :rows="15" :selection.sync="select" selectionMode="single" dataKey="ID"
+        <DataTable class="p-datatable-sm" scrollHeight="200px" :scrollable="true" style="font-size:14px;" :value="registros" :paginator="true" :rows="15" :selection.sync="select" selectionMode="single" dataKey="ID"
           @row-select="onRowSelect" paginatorTemplate="">
           <Column v-for="itcabe in cabecalho" :field="itcabe" :header="itcabe" :key="itcabe.ID"></Column>
-          <template style="font-size:10px;" #paginatorLeft>
+          <template style="font-size:14px;" #paginatorLeft>
               <Button v-bind:disabled="r" style="font-size:10px;" @click="paging(1)" type="button" icon="pi pi-angle-left" class="p-button-text p-button-raised p-button-success"/>
               <Button v-bind:disabled="l" style="font-size:10px;" @click="paging(0)" type="button" icon="pi pi-angle-right" class="p-button-text p-button-raised p-button-success "/>
           </template>
@@ -24,9 +24,6 @@
 </script>
 
 <style lang="scss" scoped>
-.table-sm {
-  padding: 2px;
-}
 .cargodts {
   border-radius: 10px;
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);

@@ -92,11 +92,11 @@ export default {
       this.openModal = true
     },
     async save (form) {
-      this.openloading = true
       if (form.del === true && form.dataPagamento !== '') {
         this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSpft diz:', util.toast)
         this.openloading = false
       } else {
+        this.openloading = true
         await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
             this.$toastr.success(this.status, 'AdonaiSoft diz:', util.toast)
@@ -141,7 +141,7 @@ export default {
         } else if (quitar === 2) {
           form.dataPagamento = moment(this.form.dataPagamento).format()
         }
-        this.from.tipo = 0
+        this.form.tipo = 0
         this.form.idUsuarioInclusao = this.user.id
         this.save(form)
       }
