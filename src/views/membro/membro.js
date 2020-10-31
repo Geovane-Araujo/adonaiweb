@@ -249,6 +249,7 @@ export default {
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
     },
     getbyId (id) {
+      // id = id.id
       this.openloading = true
       axios.get(adonai.url + 'membro/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.form = res.data.obj

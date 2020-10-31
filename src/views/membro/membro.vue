@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="membro">
     <loader id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <p>Cadastro de Membros</p>
+          <p>Membros</p>
           <button
             class="btn btn-outline-info"
             @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
@@ -24,7 +24,7 @@
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
-          <adonaigrid :titulos="['ID','Nome','endereco','Bairro','Numero','Telefone']"
+          <adonaigrid :titulos="['id','nome','endereco','bairro','numero','telefone']"
           :form="form"
           :getbyId="getbyId"
           :save="save"
@@ -333,6 +333,9 @@ input[type='file'] {
 }
 p {
   font-size: 30px;
+}
+.membro{
+  overflow:auto;
 }
 .datePivker{
   margin-left: 2px;

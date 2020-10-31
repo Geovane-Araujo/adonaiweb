@@ -12,7 +12,7 @@
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
-          <adonaigrid :titulos="['ID','data','titulo', 'Solicitante','status']"
+          <adonaigrid :titulos="['id','data','tipo', 'nome','descricao']"
           :registros="pedidos"
           :form="form"
           :save="save"

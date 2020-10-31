@@ -23,7 +23,7 @@ export default {
       menu: [
         {
           header: true,
-          title: 'Adonai Soft Web',
+          title: 'AdonaiSoft Web',
           hiddenOnCollapse: true,
           name: sessionStorage.getItem('name'),
           path: sessionStorage.getItem('path')

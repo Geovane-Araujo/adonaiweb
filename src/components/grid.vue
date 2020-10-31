@@ -1,50 +1,50 @@
 <template id="adonaigrid">
 <div style="padding-left:0px;">
   <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
-  <div class="fixed" style="">
-    <table class=" table table-botdered table-striped table-sm table-hover table-fixed">
-      <thead  style="overflow-y:auto;">
-        <tr class="text-left text-light text-light" style="background-color: #5e8a75">
-          <th @click="onSelectRsgister(title)" v-for="title in titulos" :key="title.ID">{{ title }}</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="text-left" v-for="registro in reg" :key="registro.id">
-          <td v-for="item in registro" :key="item.id">{{ item }}</td>
-          <td>
-            <a v-show="type" href="#" @click="getbyId(registro.id); form.edit=true;form.add=false" class="text-success"><i class="fas fa-edit"></i></a>
-            &nbsp;
-            <a v-show="type" href="#" @click="onDelete(registro, form)" class="text-danger"><i class="far fa-trash-alt"></i></a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div>
+<!--     <Toobar class="p-md-4">
+      <template slot="left">
+        <Button label="Adicionar" icon="pi pi-plus" class="p-button-success p-mr-2"/>
+      </template>
+    </Toobar> -->
+    <DataTable class="p-datatable-sm"
+        scrollHeight="400px"
+        :scrollable="true"
+        style="font-size:14px;"
+        :value="reg"
+        :paginator="true"
+        :rows="15"
+        :selection.sync="select"
+        paginatorTemplate=""
+        selectionMode="single" dataKey="ID"
+        @row-select="onRowSelect"
+        :resizableColumns="true"
+        columnResizeMode="fit">
+        <Column v-for="title in titulos" :key="title.ID" :field="title" :header="title"></Column>
+        <Column :exportable="false">
+            <template #body="slotProps">
+                <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" @click="getbyId(slotProps.data.id); form.edit=true;form.add=false" />
+                <Button icon="pi pi-trash" class="p-button-rounded p-button-danger" @click="onDelete(slotProps.data, form)" />
+            </template>
+        </Column>
+        <template style="font-size:14px;" #paginatorLeft>
+          <Paginator @page="onPage($event)" class="p-paginator-success" :rows="10" :totalRecords="totalRows"></Paginator>
+        </template>
+        <template style="font-size:14px;" #paginatorRight>
+          <InputText style="margin-right:10px;" v-model="buscar" @keyup="getexplorer(buscar)"  placeholder="Pesquisar"/>
+        </template>
+    </DataTable>
   </div>
-  <div style="padding-top:0px;">
-    <b-input-group class="col-sm-12" style="margin-top:0px;">
-      <button class="btn btn-outline-info" v-bind:disabled="(explorer.pagina == 1)" @click="explorer.pagina = explorer.pagina - 1;get(explorer)"><i class="fas fa-caret-left"></i></button>
-      <b-form-input  class="col-sm-1 text-center" v-model="explorer.pagina"></b-form-input>
-      <button class="btn btn-outline-info" v-bind:disabled="(reg.length < 15)" @click="explorer.pagina = explorer.pagina + 1;get(explorer)"><i class="fas fa-caret-right"></i></button>
-      <b-form-input placeholder="buscar" v-model="buscar" @keyup="getexplorer(buscar)" style="margin-left:10px" class="col-sm-5"></b-form-input>
-    </b-input-group>
-  </div>
-    <div id="overlay" v-if=deleteModal>
-      <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="text-danger">Deseja realmente Excluir ?</h5>
-            <button type="button" class="close"  @click="deleteModal=false">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body p-4">
-            <button class="btn btn-outline-danger" @click="save(form);deleteModal=false;" >Sim</button>
-            <button class="btn btn-outline-success float-right" @click="deleteModal=false">Não</button>
-          </div>
-        </div>
-      </div>
+  <Dialog :visible.sync="deleteModal" :style="{width: '450px'}" header="Confirmar" :modal="true">
+    <div class="confirmation-content">
+      <i class="pi pi-exclamation-triangle p-mr-3" style="font-size: 2rem" />
+      <span >Deseja Realmente Excluir?</span>
     </div>
+    <template #footer>
+        <Button label="Não" icon="pi pi-times" class="p-button-text" @click="deleteModal = false"/>
+        <Button label="Sim" icon="pi pi-check" class="p-button-text" @click="save(form);deleteModal = false" />
+    </template>
+  </Dialog>
   </div>
 </template>
 
@@ -54,6 +54,9 @@
 tr {
   line-height: 14px;
   font-size: 13px;
+}
+.p-paginator-next{
+  background-color: #000000;
 }
 .fixed{
   overflow-y: auto;

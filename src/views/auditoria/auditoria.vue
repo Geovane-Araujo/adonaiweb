@@ -8,7 +8,7 @@
           <hr class="bg-info" >
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
-          <adonaigrid :titulos="['ID','login','data','descricao','log']"
+          <adonaigrid :titulos="['id','login','data','descricao','log']"
           :registros="tipocontas"
           :form="form"
           :getbyId="getbyId"

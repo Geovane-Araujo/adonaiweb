@@ -3,6 +3,13 @@ import adonai from '../views/router/services'
 import utlexpl from '../util/utilClass'
 import util from '../assets/scss/util'
 import axios from 'axios'
+import Toolbar from 'primevue/toolbar'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import InputText from 'primevue/inputtext'
+import Paginator from 'primevue/paginator'
 
 export default {
   name: 'adonaigrid',
@@ -15,6 +22,7 @@ export default {
       pagina: 1,
       criterio: '',
       reg: [],
+      totalRows: 0,
       explorer: {
         route: '',
         pagina: 1,
@@ -49,6 +57,7 @@ export default {
         if (res.data.ret === 'success') {
           this.reg = res.data.obj
           this.ref = explorer.route
+          this.totalRows = res.data.totalRows
           this.explorer = explorer
         } else {
           this.openloading = false
@@ -72,6 +81,11 @@ export default {
         }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       }
     },
+    onPage (event) {
+      event.page += 1
+      this.explorer.pagina = event.page
+      this.get(this.explorer)
+    },
     onSelectRsgister (cabecalho) {
       this.criterio = cabecalho
       this.$toastr.success(cabecalho + ' selecionado', 'AdonaiSoft Diz:', util.toast)
@@ -86,6 +100,15 @@ export default {
       form.del = true
       this.deleteModal = true
     }
+  },
+  components: {
+    Dialog,
+    Button,
+    DataTable,
+    Column,
+    Toolbar,
+    InputText,
+    Paginator
   },
   computed: {
     ...mapState('auth', ['user'])

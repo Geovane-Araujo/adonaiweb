@@ -45,7 +45,6 @@ html {
   display: inline-block;
   height: 100%;
   width: 100%;
-  overflow: hidden;
 }
 .router{
   border-radius: 10px;
@@ -53,6 +52,7 @@ html {
   background-color: rgba($color: #ffffff, $alpha: 0.9);
   margin: 5px;
   height: 94.60%;
+  overflow:auto;
 }
 h3 {
   color: #f2f4f7;

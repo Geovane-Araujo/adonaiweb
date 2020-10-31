@@ -7,6 +7,12 @@
         <DataTable class="p-datatable-sm" scrollHeight="200px" :scrollable="true" style="font-size:14px;" :value="registros" :paginator="true" :rows="15" :selection.sync="select" selectionMode="single" dataKey="ID"
           @row-select="onRowSelect" paginatorTemplate="">
           <Column v-for="itcabe in cabecalho" :field="itcabe" :header="itcabe" :key="itcabe.ID"></Column>
+          <Column :exportable="false">
+              <template #body="">
+                  <Button icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" @click="getexplorer(contexto)" />
+                  <Button icon="pi pi-trash" class="p-button-rounded p-button-warning" @click="getexplorer(contexto)" />
+              </template>
+          </Column>
           <template style="font-size:14px;" #paginatorLeft>
               <Button v-bind:disabled="r" style="font-size:10px;" @click="paging(1)" type="button" icon="pi pi-angle-left" class="p-button-text p-button-raised p-button-success"/>
               <Button v-bind:disabled="l" style="font-size:10px;" @click="paging(0)" type="button" icon="pi pi-angle-right" class="p-button-text p-button-raised p-button-success "/>
