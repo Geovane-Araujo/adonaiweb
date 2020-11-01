@@ -10,6 +10,7 @@
               <span class="p-input-icon-left">
                   <InputText style="font-size:14px" v-model="busca" type="text" placeholder="Procurar" />
               </span>
+              <!-- <Button style="margin-left:10px;margin-right:10px" badge="2" icon="pi pi-bell" class="p-button-rounded p-button-warning p-button-text" />-->
               <Button style="margin-left:10px;margin-right:10px" icon="fas fa-power-off" @click="reload()" class="p-button-rounded button" />
             </template>
           </MenuBar>

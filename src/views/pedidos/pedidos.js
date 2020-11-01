@@ -9,8 +9,6 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import { Datetime } from 'vue-datetime'
 import AutoComplete from 'primevue/autocomplete'
-/* var moment = require('moment')
-var data = new Date() */
 
 export default {
   data: () => ({

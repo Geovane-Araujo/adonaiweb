@@ -3,6 +3,10 @@ import util from '../../assets/scss/util'
 import adonai from '../router/services'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import Dropdown from 'primevue/dropdown'
 var moment = require('moment')
 var data = new Date()
 
@@ -88,6 +92,12 @@ export default {
         this.openloading = false
       })
     }
+  },
+  components: {
+    Dialog,
+    Button,
+    InputText,
+    Dropdown
   },
   computed: {
     ...mapState('auth', ['user'])

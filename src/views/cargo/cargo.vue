@@ -11,7 +11,6 @@
           <hr class="bg-info" >
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
-          <!-- table -->
           <adonaigrid :titulos="['id','descricao']"
           :registros="cargos"
           :form="form"
@@ -21,32 +20,20 @@
           :type="true"
           ref="grid"></adonaigrid>
         </div>
-      </div>
-    </div>
-    <!-- modal -->
-    <div id="overlay" v-if="openModal">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Cadastro Cargo</h5>
-            <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
-              <span aria-hidden="true">&times;</span>
-            </button>
+        <Dialog style="font-size:10px;" header="Cadastro Cargos" :visible.sync="openModal" :style="{width: '20vw'}" :modal="true">
+          <div class="form-group">
+            <input type="text"
+            name="descricao"
+            autocomplete="off"
+            class="form-control"
+            placeholder="Descricao"
+            v-model="form.descricao">
           </div>
-          <div class="modal-body p-4">
-            <form>
-              <div class="form-group">
-                <input type="text"
-                name="descricao"
-                autocomplete="off"
-                class="form-control"
-                placeholder="Descricao"
-                v-model="form.descricao">
-              </div>
-            </form>
-            <button class="btn btn-outline-info float-right" @click="validate (form)" >Salvar</button>
-          </div>
-        </div>
+          <template #footer>
+              <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+              <Button label="Salvar" @click="validate (form)" class="p-button-raised p-button-success p-button-text button" />
+          </template>
+        </Dialog>
       </div>
     </div>
   </div>
@@ -55,21 +42,8 @@
 <script src="./cargo.js">
 </script>
 <style lang="scss" scoped>
-.table-overflow {
-    max-height:90vh;
-    overflow-y:auto;
-}
 p {
   font-size: 30px;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
 }
 #loading {
   position: fixed;

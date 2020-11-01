@@ -4,12 +4,14 @@ import adonai from '../router/services'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import rel from '../../util/utilClass'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
 
 export default {
   data: () => ({
     openModal: false,
     openloading: false,
-    openDatasearch: false,
     openFilter: false,
     ds: {
       grid: [],
@@ -31,7 +33,7 @@ export default {
   methods: {
     imprimir (report) {
       this.openloading = true
-      this.openFilter = false
+      this.openModal = false
       axios.post(adonai.url + 'imprimir', report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.openloading = false
         window.open(res.data)
@@ -65,6 +67,11 @@ export default {
         this.filters.idpessoa = registro.id
       }
     }
+  },
+  components: {
+    Dialog,
+    Button,
+    InputText
   },
   computed: {
     ...mapState('auth', ['user'])

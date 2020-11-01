@@ -11,6 +11,9 @@ import 'vue-datetime/dist/vue-datetime.css'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import 'fullcalendar/dist/locale/pt-br'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
 
 var moment = require('moment')
 // var data = new Date()
@@ -183,7 +186,10 @@ export default {
   },
   components: {
     FullCalendar,
-    datetime: Datetime
+    datetime: Datetime,
+    Dialog,
+    Button,
+    InputText
   },
   computed: {
     ...mapState('auth', ['user'])

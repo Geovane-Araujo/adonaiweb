@@ -3,8 +3,9 @@ import util from '../../assets/scss/util'
 import adonai from '../router/services'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
-/* var moment = require('moment')
-var data = new Date() */
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
 
 export default {
   data: () => ({
@@ -72,18 +73,21 @@ export default {
       this.form.add = true
       this.form.id = ''
     },
-    read (form) {
-      this.form.id = form.id
-      this.form.descricao = form.descricao
-      this.openModal = true
-    },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'cargo/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data.obj)
+        this.form = res.data.obj
+        this.form.add = false
+        this.form.edit = true
+        this.openModal = true
         this.openloading = false
       })
     }
+  },
+  components: {
+    Dialog,
+    Button,
+    InputText
   },
   computed: {
     ...mapState('auth', ['user'])

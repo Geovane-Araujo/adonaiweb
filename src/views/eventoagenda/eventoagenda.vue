@@ -20,39 +20,33 @@
           :type="true"
           ref="grid"></adonaigrid>
         </div>
-      </div>
-    </div>
-    <!-- modal -->
-    <div id="overlay" v-if="openModal">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Tipo Eventos</h5>
-            <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body p-4">
-            <form>
-              <div class="row">
-                <div class="col-sm-10">
-                  <div class="form-group">
-                    <input type="text"
-                    name="descricao"
-                    autocomplete="off"
-                    class="form-control"
-                    placeholder="Descricao"
-                    v-model="form.descricao">
-                  </div>
-                </div>
-                <div class="col-sm-2">
-                  <v-swatches v-model="form.cor"></v-swatches>
-                </div>
+        <Dialog style="font-size:10px;" :baseZIndex="0" header="Cadastro Eventos Agenda" :visible.sync="openModal"  :style="{width: '30vw'}" :modal="true">
+          <template #content>
+            <ColorPicker :autoZIndex="true" :baseZIndex="1300" v-model="form.cor"/>
+          </template>
+          <div :baseZIndex="1" class="row">
+            <div class="col-sm-10">
+              <div class="form-group">
+                <input type="text"
+                name="descricao"
+                autocomplete="off"
+                class="form-control"
+                placeholder="Descricao"
+                v-model="form.descricao">
               </div>
-            </form>
-            <button class="btn btn-outline-info float-right" @click="validate (form)" >Salvar</button>
+            </div>
+            <div class="col-sm-2">
+              <ColorPicker disabled=true :autoZIndex="true" :baseZIndex="2" v-model="form.cor"/>
+            </div>
+            <div class="col-sm-4">
+              <ColorPicker :tabindex="50" inline=true :autoZIndex="true" :baseZIndex="2" v-model="form.cor"/>
+            </div>
           </div>
-        </div>
+          <template #footer>
+              <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+              <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
+          </template>
+        </Dialog>
       </div>
     </div>
   </div>
@@ -61,21 +55,8 @@
 <script src="./eventoagenda.js">
 </script>
 <style lang="scss" scoped>
-.table-overflow {
-    max-height:90vh;
-    overflow-y:auto;
-}
 p {
   font-size: 30px;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
 }
 #loading {
   position: fixed;

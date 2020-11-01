@@ -6,8 +6,11 @@ import axios from 'axios'
 import utilClass from '../../util/utilClass'
 import VSwatches from 'vue-swatches'
 import 'vue-swatches/dist/vue-swatches.css'
-/* var moment = require('moment')
-var data = new Date() */
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import ColorPicker from 'primevue/colorpicker'
+import Card from 'primevue/card'
 
 export default {
   data: () => ({
@@ -60,6 +63,7 @@ export default {
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     validate (form) {
+      form.cor = '#' + form.cor
       if (this.form.descricao === '') {
         this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
       } else {
@@ -74,22 +78,24 @@ export default {
       this.form.id = ''
       this.form.cor = ''
     },
-    read (form) {
-      this.form.id = form.id
-      this.form.descricao = form.descricao
-      this.form.cor = form.cor
-      this.openModal = true
-    },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'eventoagenda/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data.obj)
+        this.form = res.data.obj
+        this.form.add = false
+        this.form.edit = true
+        this.openModal = true
         this.openloading = false
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast), this.openloading = false)
     }
   },
   components: {
-    VSwatches
+    VSwatches,
+    Dialog,
+    Button,
+    InputText,
+    ColorPicker,
+    Card
   },
   computed: {
     ...mapState('auth', ['user'])
