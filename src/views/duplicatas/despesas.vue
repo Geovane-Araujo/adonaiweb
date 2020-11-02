@@ -111,8 +111,8 @@
                   <b-form-group label="Caixa/Conta" label-align-sm="left">
                     <b-input-group>
                       <b-form-input
-                      v-model="form.desccaixa"
-                      v-bind:disabled="(form.status == 0)"
+                        v-model="form.desccaixa"
+                        v-bind:disabled="(form.status == 0)"
                       ></b-form-input>
                         <b-input-group-append >
                         <b-button variant="outline-info" class="material-icons" v-bind:disabled="(form.status == 0)" @click="datasearch (3);" >search</b-button>

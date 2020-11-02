@@ -334,9 +334,6 @@ input[type='file'] {
 p {
   font-size: 30px;
 }
-.membro{
-  overflow:auto;
-}
 .datePivker{
   margin-left: 2px;
   padding: 5px;

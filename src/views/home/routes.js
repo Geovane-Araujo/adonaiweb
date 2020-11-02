@@ -26,6 +26,9 @@ import auditoria from '../auditoria/auditoria.vue'
 import notaversao from '../notasversoes/notasversoes.vue'
 import pedidos from '../pedidos/pedidos.vue'
 import tipopedidos from '../tipopedido/tipopedido.vue'
+import esbocos from '../esbocos/esbocos.vue'
+import classecurso from '../classecurso/classecurso.vue'
+import turma from '../turma/turma.vue'
 
 export default [
   {
@@ -168,6 +171,21 @@ export default [
         path: 'tipopedidos',
         name: 'tipopedidos',
         component: tipopedidos
+      },
+      {
+        path: 'esbocos',
+        name: 'esbocos',
+        component: esbocos
+      },
+      {
+        path: 'classecurso',
+        name: 'classecurso',
+        component: classecurso
+      },
+      {
+        path: 'turma',
+        name: 'turma',
+        component: turma
       }
     ]
   }

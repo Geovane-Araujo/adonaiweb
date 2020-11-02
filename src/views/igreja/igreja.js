@@ -1,11 +1,12 @@
 import { mapState } from 'vuex'
 import util from '../../assets/scss/util'
-import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../router/services'
 import axios from 'axios'
 import utc from '../../util/utilClass'
-var moment = require('moment')
-var data = new Date()
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import Chips from 'primevue/chips'
 var b = []
 
 export default {
@@ -38,7 +39,7 @@ export default {
         tesoureiro: '',
         tipo: 0,
         igrejaSede: '',
-
+        filiais: [],
         textoRelatorio: '',
         smtp: '',
         porta: '',
@@ -141,8 +142,7 @@ export default {
             email: '',
             tipo: 3
           }
-        ],
-        moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
+        ]
       },
       configuration: {
         textocertificado: '',
@@ -179,6 +179,9 @@ export default {
           this.openloading = true
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+    },
+    remove (event) {
+      this.filiais = '99'
     },
     cleanForm (form) {
       form.id = ''
@@ -271,9 +274,7 @@ export default {
       form.email[3].idPessoa = ''
       form.email[3].email = ''
       form.email[3].tipo = 3
-
-      form.retorno = ''
-      form.motivo = ''
+      this.openModal = true
     },
     read (form) {
       this.form.id = form.id
@@ -443,13 +444,6 @@ export default {
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
     },
-    add (campoecle) {
-      var ca = []
-      ca.push(campoecle)
-      this.form.campoeclesiastico = ca
-      this.$set(this.form.campoeclesiastico)
-      console.log(this.form.campoeclesiastico)
-    },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -491,6 +485,12 @@ export default {
       }
       this.open = false
     }
+  },
+  components: {
+    Dialog,
+    Button,
+    InputText,
+    Chips
   },
   computed: {
     ...mapState('auth', ['user'])

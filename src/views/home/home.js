@@ -86,10 +86,24 @@ export default {
               disabled: false
             },
             {
-              href: '',
-              title: 'Solicitações de Visitas',
-              disabled: false,
-              hidden: true
+              href: '/esbocos',
+              title: 'Esbocos e Estudos'
+            }
+          ]
+        },
+        {
+          title: 'Escola',
+          icon: 'fas fa-graduation-cap',
+          child: [
+            {
+              href: '/classecurso',
+              title: 'Classes e Cursos',
+              disabled: false
+            },
+            {
+              href: '/turma',
+              title: 'Turmas',
+              disabled: false
             }
           ]
         },
@@ -149,19 +163,6 @@ export default {
           title: 'Bíblia',
           icon: 'fas fa-bible',
           disabled: parseInt(sessionStorage.getItem('biblia'))
-        },
-        {
-          href: '',
-          title: 'Escola',
-          hidden: true,
-          icon: 'fas fa-graduation-cap',
-          child: [
-            {
-              href: '',
-              title: 'Escola Bíblica',
-              disabled: false
-            }
-          ]
         },
         {
           href: '',
