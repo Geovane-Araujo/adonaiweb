@@ -4,6 +4,8 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import SplitButton from 'primevue/splitbutton'
 import AutoComplete from 'primevue/autocomplete'
+import Sidebar from 'primevue/sidebar'
+import BlockUI from 'primevue/blockui'
 
 export default {
   name: 'App',
@@ -11,6 +13,8 @@ export default {
     return {
       aniversariantes: '',
       busca: '',
+      sidebar: false,
+      blockedDocument: false,
       permissoes: {
         membro: '',
         despesas: '',
@@ -93,6 +97,7 @@ export default {
         },
         {
           title: 'Escola',
+          hidden: true,
           icon: 'fas fa-graduation-cap',
           child: [
             {
@@ -244,7 +249,6 @@ export default {
           ]
         }
       ],
-      selectedTheme: 'white-theme',
       collapsed: false,
       isOnMobile: false,
       itensmenu: [
@@ -286,7 +290,9 @@ export default {
     Button,
     InputText,
     SplitButton,
-    AutoComplete
+    AutoComplete,
+    Sidebar,
+    BlockUI
   },
   computed: {
     ...mapState('auth', ['user'])

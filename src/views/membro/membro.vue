@@ -35,21 +35,21 @@
       </div>
     </div>
     <!-- modal para cadastro-->
-    <Dialog style="font-size:10px;" header="Cadastro Membros" :visible.sync="openModal" :style="{width: '70vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Cadastro Membros" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
       <form>
         <b-tabs content-class="mt-1">
           <b-tab title="Principal" active>
             <b-container>
               <b-row class="text-center">
-                <b-col cols="2">
                   <div class="file-loading">
                     <b-avatar :src="form.pathimg"
                     size="5rem"></b-avatar>
+                    <div>
+                      <label for='selecao-arquivo' class="material-icons">perm_media</label>
+                      <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
+                      <label class="material-icons label2" @click="form.pathimg=''" >delete_forever</label>
+                    </div>
                   </div>
-                  <label for='selecao-arquivo' class="material-icons">perm_media</label>
-                  <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
-                </b-col>
-                <b-col cols="10" >
                   <div class="row">
                     <div class="col-sm-12">
                       <input type="text"
@@ -57,8 +57,6 @@
                       v-model="form.nome"
                       placeholder="Nome Completo">
                     </div>
-                  </div>
-                  <div class="row">
                     <div class="col-sm-5">
                       <datetime  placeholder="Data Nascimento"
                         class="datePivker"
@@ -74,6 +72,8 @@
                       v-model="form.idEstadoCivil"
                       ></b-form-select>
                     </div>
+                  </div>
+                  <div class="row">
                     <div class="col-sm-5">
                       <div class="form-group">
                         <b-input-group >
@@ -103,7 +103,6 @@
                         </b-form-checkbox>
                     </div>
                   </div>
-                </b-col>
               </b-row>
               <div class="row">
                 <div class="col-md-4">
@@ -325,8 +324,16 @@ label {
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
-  margin: 10px;
-  padding: 6px 20px
+  margin: 5px;
+  padding: 6px
+}
+.label2 {
+  background-color: #a13b3b;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  margin: 5px;
+  padding: 6px
 }
 input[type='file'] {
   display: none

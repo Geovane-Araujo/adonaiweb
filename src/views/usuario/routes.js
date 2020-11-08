@@ -2,11 +2,14 @@ import { mapState } from 'vuex'
 import util from '../../assets/scss/util'
 import adonai from '../router/services'
 import axios from 'axios'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
 
 export default {
   data: () => ({
     openModal: false,
     openloading: false,
+    resize: 50,
     open: false,
     explorer: {
       route: 'menu_pessoas_usuarios',
@@ -45,6 +48,7 @@ export default {
     }
   }),
   mounted () {
+    this.onResize()
     this.$refs.grid.get(this.explorer)
   },
   methods: {
@@ -130,6 +134,13 @@ export default {
         this.openModal = true
         this.openloading = false
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+    },
+    onResize () {
+      if (window.innerWidth <= 767) {
+        this.resize = 100
+      } else {
+        this.resize = 50
+      }
     }
   },
   computed: {
@@ -137,5 +148,9 @@ export default {
   },
   props: {
     usuarios: { type: Object, required: false }
+  },
+  components: {
+    Dialog,
+    Button
   }
 }

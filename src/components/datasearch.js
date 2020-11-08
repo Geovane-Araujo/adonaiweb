@@ -13,6 +13,7 @@ export default {
     return {
       openloading: false,
       registros: [],
+      resize: 40,
       params: '',
       r: false,
       l: false,
@@ -29,6 +30,7 @@ export default {
   },
   methods: {
     dataSearch (criterios, params, extraparams) {
+      this.onResize()
       this.openloading = true
       axios.post(adonai.url + 'aexplorer', criterios, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.registros = res.data.obj
@@ -80,6 +82,13 @@ export default {
     onRowSelect (event) {
       this.openDatasearch = false
       this.destroy(event.data, this.params, this.extraparams)
+    },
+    onResize () {
+      if (window.innerWidth <= 767) {
+        this.resize = 100
+      } else {
+        this.resize = 40
+      }
     }
   },
   components: {

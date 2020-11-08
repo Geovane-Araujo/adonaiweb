@@ -7,8 +7,6 @@ import VueSidebarMenu from '../node_modules/vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
 import VueToastr2 from 'vue-toastr-2'
 import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -20,7 +18,6 @@ import money from 'v-money'
 import VueTippy, { TippyComponent } from 'vue-tippy'
 import VueCharts from 'vue-chartjs'
 import loader from 'vue-ui-preloader'
-import jsPDF from 'jspdf'
 import vuejquery from 'vue-jquery'
 import barchart from '../src/components/barchart'
 import piechart from '../src/components/pie'
@@ -31,13 +28,14 @@ import { Material } from 'vue-color'
 import VSwatches from 'vue-swatches'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import Vuesax from 'vuesax'
 
 import 'fullcalendar/dist/locale/pt-br'
-// import 'fullcalendar/dist/fullcalendar.css'
 import 'vue-swatches/dist/vue-swatches.css'
 import './assets/scss/app.scss'
 import 'primeflex/primeflex.css'
 import 'primeicons/primeicons.css'
+import 'vuesax/dist/vuesax.css'
 import 'primevue/resources/themes/bootstrap4-light-blue/theme.css'
 
 window.toastr = require('toastr')
@@ -46,8 +44,8 @@ Vue.config.productionTip = false
 Vue.use(VueMask)
 Vue.use(VueSidebarMenu)
 Vue.use(Button)
+Vue.use(Vuesax)
 Vue.use(InputText)
-Vue.use(Vuetify)
 Vue.use(VueToastr2)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -56,7 +54,6 @@ Vue.use(money, { precision: 4 })
 Vue.use(require('vue-moment'))
 Vue.use(VueTippy)
 Vue.use(loader)
-Vue.use(jsPDF)
 Vue.use(VueCharts)
 Vue.use(vuejquery)
 Vue.use(VSwatches)

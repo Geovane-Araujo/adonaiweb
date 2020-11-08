@@ -21,7 +21,7 @@
         :resizableColumns="true"
         columnResizeMode="fit">
         <Column v-for="title in titulos" :key="title.ID" :field="title" :header="title"></Column>
-        <Column :exportable="false">
+        <Column  :exportable="false">
             <template #body="slotProps">
                 <Button icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-button-success p-mr-2" @click="getbyId(slotProps.data.id); form.edit=true;form.add=false" />
                 <Button icon="pi pi-trash" class="p-button-rounded p-button-outlined p-button-danger" @click="onDelete(slotProps.data, form)" />
@@ -58,41 +58,9 @@ tr {
 .p-paginator-next{
   background-color: #000000;
 }
-.fixed{
-  overflow-y: auto;
-  height: 400px;
-}
-.fixed thead th {
-  position: sticky;
-  top: 0;
-}
-p {
-  font-size: 30px;
-}
-.table-sm {
-  padding: 2px;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-button {
-  color: #5e8a75;
-  border-color:#050505;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
-footer {
-  position: fixed;
-  bottom:10px;
-}
-.footer {
-  box-shadow:2px rgba(0, 0, 0, 0.25);
+.p-datatable {
+  .p-rowgroup-header{
+    height: 10px;
+  }
 }
 </style>

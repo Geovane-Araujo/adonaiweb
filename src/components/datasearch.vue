@@ -2,7 +2,7 @@
 <transition>
   <div class="cargodts">
       <loader  id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
-      <Dialog  :header="title" :visible.sync="openDatasearch" :style="{width: '40vw'}" :modal="true">
+      <Dialog  :header="title" :visible.sync="openDatasearch" :style="{width: resize+'vw'}" :modal="true">
         <b-form-input class="mr-sm-2" placeholder="Buscar" v-model="contexto"  @keyup="getexplorer(contexto)"></b-form-input>
         <DataTable class="p-datatable-sm" scrollHeight="200px" :scrollable="true" style="font-size:14px;" :value="registros" :paginator="true" :rows="15" :selection.sync="select" selectionMode="single" dataKey="ID"
           @row-select="onRowSelect" paginatorTemplate="">

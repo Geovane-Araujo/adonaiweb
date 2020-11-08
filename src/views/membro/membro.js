@@ -9,12 +9,14 @@ import 'vue-datetime/dist/vue-datetime.css'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import FileUpload from 'primevue/fileupload'
 
 export default {
   data () {
     return {
       openModal: false,
       deleteModal: false,
+      resize: 50,
       openloading: false,
       openFilter: false,
       ds: {
@@ -113,6 +115,7 @@ export default {
     }
   },
   mounted () {
+    this.onResize()
     rel.explorer.route = 'menu_pessoa_membros'
     rel.explorer.criterios = 'order by id desc'
     this.$refs.grid.get(rel.explorer)
@@ -305,13 +308,21 @@ export default {
       for (fil in filters) {
         this.filters[fil] = ''
       }
+    },
+    onResize () {
+      if (window.innerWidth <= 767) {
+        this.resize = 100
+      } else {
+        this.resize = 50
+      }
     }
   },
   components: {
     datetime: Datetime,
     Dialog,
     Button,
-    InputText
+    InputText,
+    FileUpload
   },
   computed: {
     ...mapState('auth', ['user'])
