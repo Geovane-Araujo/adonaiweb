@@ -6,7 +6,7 @@
         <div class="col-sm-12">
           <p>Cadastro de Classes e Cursos</p>
           <button class="btn btn-outline-info" @click="getbyId(-100);">
-            <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
+            <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
           <hr class="bg-info" >
         </div>

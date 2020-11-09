@@ -6,7 +6,7 @@
         <div class="col-sm-12">
           <p>Cadastro tipos Solicitações</p>
           <button class="btn btn-outline-info" @click="cleanForm (form);openModal=true;">
-            <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
+            <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
           <hr class="bg-info" >
         </div>

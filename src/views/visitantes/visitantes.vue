@@ -8,7 +8,7 @@
           <button
             class="btn btn-outline-info"
             @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
-            <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
+            <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
           <button
             class="btn btn-outline-info float-right"
