@@ -30,125 +30,116 @@
         </div>
       </div>
     </div>
-
-    <!-- modal para cadastro-->
-    <div id="overlay" v-if=openModal>
-        <div class="modal-dialog modal-dialog-centered modal-lg ">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Cadastro de Congregações</h5>
-              <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form method="POST">
-                <div class="row">
-                  <div class="col-sm-7">
-                    <input type="text"
-                    v-model="form.nome"
-                    class="form-control"
-                    placeholder="Nome Completo">
-                  </div>
-                  <div class="col-sm-5">
-                    <input type="text"
-                      class="form-control"
-                      v-model="form.responsavel"
-                      placeholder="Responsável">
-                  </div>
-                  <div class="col-sm-3">
-                    <input type="text"
-                      class="form-control"
-                      v-mask="'(##)#####-####'"
-                      v-model="form.telefone[0].telefone"
-                      placeholder="Telefone Residencial">
-                  </div>
-                  <div class="col-sm-3">
-                    <input type="text"
-                      class="form-control"
-                      v-mask="'(##)#####-####'"
-                      v-model="form.telefone[1].telefone"
-                      placeholder="Telefone Celular">
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="text"
-                      class="form-control"
-                      v-model="form.email[0].email"
-                      placeholder="E-mail">
-                  </div>
-                  <div class="col-sm-12">
-                    <h6 class="text-success">Endereço</h6>
-                  </div>
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <b-input-group>
-                        <b-form-input placeholder="CEP"
-                        v-model="form.endereco[0].cep"
-                        v-mask="'#####-###'"
-                         ></b-form-input>
-                          <b-input-group-append >
-                          <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 1)">search</b-button>
-                        </b-input-group-append>
-                      </b-input-group>
-                    </div>
-                  </div>
-                  <div class="col-sm-7">
-                    <div class="form-group">
-                      <input type="text"
-                        class="form-control"
-                        v-model="form.endereco[0].endereco"
-                        placeholder="Endereço">
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <input type="text"
-                        class="form-control"
-                        v-model="form.endereco[0].numero"
-                        placeholder="Numero">
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <input type="text"
-                        class="form-control"
-                        v-model="form.endereco[0].bairro"
-                        placeholder="Bairro">
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <input type="text"
-                        class="form-control"
-                        v-model="form.endereco[0].complemento"
-                        placeholder="Complemento">
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <b-input-group >
-                        <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade" @click="datasearch(0, 1);"></b-form-input>
-                        <b-input-group-append>
-                          <b-button variant="outline-info" class="material-icons" @click="datasearch(0, 1);">search</b-button>
-                        </b-input-group-append>
-                      </b-input-group>
-                    </div>
-                  </div>
-                  <div class="col-sm-12">
-                    <b-form-textarea
-                      placeholder="Observações"
-                      rows="3"
-                      v-model="form.observacoes"
-                      max-rows="3"
-                    ></b-form-textarea>
-                  </div>
-                </div>
-              </form>
-              <button type="button" class="btn btn-outline-info float-right" @click="validate(form)">Salvar</button>
+    <Dialog style="font-size:10px;" header="Cadastro Congregações" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
+      <form method="POST">
+        <div class="row">
+          <div class="col-sm-7">
+            <input type="text"
+            v-model="form.nome"
+            class="form-control"
+            placeholder="Nome Completo">
+          </div>
+          <div class="col-sm-5">
+            <input type="text"
+              class="form-control"
+              v-model="form.responsavel"
+              placeholder="Responsável">
+          </div>
+          <div class="col-sm-3">
+            <input type="text"
+              class="form-control"
+              v-mask="'(##)#####-####'"
+              v-model="form.telefone[0].telefone"
+              placeholder="Telefone Residencial">
+          </div>
+          <div class="col-sm-3">
+            <input type="text"
+              class="form-control"
+              v-mask="'(##)#####-####'"
+              v-model="form.telefone[1].telefone"
+              placeholder="Telefone Celular">
+          </div>
+          <div class="col-sm-6">
+            <input type="text"
+              class="form-control"
+              v-model="form.email[0].email"
+              placeholder="E-mail">
+          </div>
+          <div class="col-sm-12">
+            <h6 class="text-success">Endereço</h6>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <b-input-group>
+                <b-form-input placeholder="CEP"
+                v-model="form.endereco[0].cep"
+                v-mask="'#####-###'"
+                  ></b-form-input>
+                  <b-input-group-append >
+                  <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 1)">search</b-button>
+                </b-input-group-append>
+              </b-input-group>
             </div>
           </div>
+          <div class="col-sm-7">
+            <div class="form-group">
+              <input type="text"
+                class="form-control"
+                v-model="form.endereco[0].endereco"
+                placeholder="Endereço">
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <input type="text"
+                class="form-control"
+                v-model="form.endereco[0].numero"
+                placeholder="Numero">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text"
+                class="form-control"
+                v-model="form.endereco[0].bairro"
+                placeholder="Bairro">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input type="text"
+                class="form-control"
+                v-model="form.endereco[0].complemento"
+                placeholder="Complemento">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <b-input-group >
+                <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade" @click="datasearch(0, 1);"></b-form-input>
+                <b-input-group-append>
+                  <b-button variant="outline-info" class="material-icons" @click="datasearch(0, 1);">search</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <b-form-textarea
+              placeholder="Observações"
+              rows="3"
+              v-model="form.observacoes"
+              max-rows="3"
+            ></b-form-textarea>
+          </div>
         </div>
-    </div>
+      </form>
+      <template #footer>
+        <div class=" p-mr-2 p-as-start" style="align: left">
+          <Button label="Salvar" @click="validate(form)" class="p-button-raised p-button-success p-button-text button" />
+          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+        </div>
+      </template>
+    </Dialog>
     <adonaidatasearch
     :title="ds.title"
     :cabecalho="ds.grid"
@@ -161,14 +152,6 @@
 <script src="./congregacao.js">
 </script>
 <style lang=scss scoped>
-label {
-  background-color: #3498db;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  margin: 10px;
-  padding: 6px 20px
-}
 p {
   font-size: 30px;
 }
@@ -182,18 +165,6 @@ input[type='file'] {
   z-index: 5000;
   left: 0;
   right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-.table-sm {
-  padding: 2px;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
   background: rgba($color: #000000, $alpha: 0.7);
 }
 button {

@@ -8,7 +8,7 @@
           <hr class="bg-info">
           <div class="row">
             <div class="col-sm-3">
-              <div class="col-sm-12 p-shadow-10" style="background-color: #ffffff;">
+              <div class="col-sm-12 p-shadow-1" style="background-color: #ffffff;">
                 <div class="row">
                   <div class="col-sm-6">
                     <i class="fas fa-users fa-3x"
@@ -24,7 +24,7 @@
               </div>
             </div>
             <div class="col-sm-3">
-              <div class="col-sm-12 p-shadow-10" style="background-color: #ffffff;">
+              <div class="col-sm-12 p-shadow-1" style="background-color: #ffffff;">
                 <div class="row">
                   <div class="col-sm-6">
                     <img src="./up.png"
@@ -40,7 +40,7 @@
               </div>
             </div>
             <div class="col-sm-3">
-              <div class="col-sm-12 p-shadow-10" style="background-color: #ffffff;">
+              <div class="col-sm-12 p-shadow-1" style="background-color: #ffffff;">
                 <div class="row">
                   <div class="col-sm-6">
                     <img src="./down.png"
@@ -56,7 +56,7 @@
               </div>
             </div>
             <div class="col-sm-3">
-              <div class="col-sm-12 p-shadow-10" style="background-color: #ffffff;">
+              <div class="col-sm-12 p-shadow-1" style="background-color: #ffffff;">
                <div class="row">
                   <div class="col-sm-6">
                     <i class="far fa-address-book fa-3x"
@@ -72,7 +72,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-12 p-shadow-10">
+          <div class="col-sm-12 p-shadow-1">
             <barchart
             :label="cabe_finan"
             :datasets="dataset_finan" ref="year"></barchart>
@@ -85,7 +85,7 @@
               :datasets="dataset_tipos_entradas" ref="rec">
               </piechart>
             </div>
-            <div class="col-sm-4 p-shadow-10">
+            <div class="col-sm-4 p-shadow-1">
               <dougchart
               :label="cabe_tipos_despesas"
               :datasets="dataset_tipos_despesas" ref="des">
@@ -101,14 +101,6 @@
 <script src="./dashboard.js">
 </script>
 <style lang=scss scoped>
-label {
-  background-color: #3498db;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  margin: 10px;
-  padding: 6px 20px
-}
 p {
   font-size: 30px;
 }

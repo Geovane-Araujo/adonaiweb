@@ -14,6 +14,7 @@ export default {
     openModal: false,
     openloading: false,
     open: false,
+    resize: 50,
     explorer: {
       route: 'menu_esbocos',
       pagina: 1,
@@ -39,6 +40,7 @@ export default {
     tipopedido: []
   }),
   mounted () {
+    this.onResize()
     this.$refs.grid.get(this.explorer)
   },
   methods: {
@@ -85,6 +87,13 @@ export default {
         this.openloading = false
         this.openModal = true
       })
+    },
+    onResize () {
+      if (window.innerWidth <= 767) {
+        this.resize = 100
+      } else {
+        this.resize = 70
+      }
     }
   },
   components: {

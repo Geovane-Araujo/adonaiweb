@@ -8,17 +8,17 @@
           <button
             class="btn btn-outline-info"
             @click="initialize();">
-            <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
+            <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
           <button
             class="btn btn-outline-info float-right"
             @click="imprimir('report/financeiro/despesagrupo.jrxml')">
-            <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir
+            <i class="fas fa-print"></i>&nbsp;&nbsp;{{ mobileI }}
           </button>
           <button
             class="btn btn-outline-info float-right" style="margin-right: 10px;"
             @click="openFilter=true">
-            <img src="./filter.png">&nbsp;&nbsp;Flitros
+            <img src="./filter.png">&nbsp;&nbsp;{{ mobileF }}
           </button>
           <hr class="bg-info">
         </div>
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <Dialog style="font-size:10px;" header="Lançamento de Despesas" :visible.sync="openModal" :style="{width: '50vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Lançamento de Despesas" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
       <form method="POST">
         <b-container>
           <b-row class="text-center">
@@ -135,14 +135,14 @@
         </b-container>
       </form>
       <template #footer>
-        <Button label="Cancelar" @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
         <Button label="Estornar" v-show="estornar"  @click="validate(form, 0)" class="p-button-raised p-button-success p-button-text button"/>
         <Button label="Salvar" v-show="estornar"  @click="validate(form, 2)" class="p-button-raised p-button-success p-button-text button"/>
         <Button label="Lançar" v-show="lancar"  @click="validate(form, 0)" class="p-button-raised p-button-success p-button-text button"/>
         <Button label="Lancar e Quitar" v-show="lancar" @click="validate(form, 1)" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Cancelar" @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
       </template>
     </Dialog>
-    <Dialog style="font-size:10px;" header="Filtros" :visible.sync="openFilter" :style="{width: '30vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Filtros" :visible.sync="openFilter" :style="{width: resizeFilter+'vw'}" :modal="true">
       <form method="POST">
         <b-container>
           <b-row class="text-center">
@@ -227,8 +227,8 @@
         </b-container>
       </form>
       <template #footer>
-        <Button label="Cancelar" @click="openFilter=false" class="p-button-raised p-button-success p-button-text button"/>
         <Button label="Filtrar"  @click="filter(filters)" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Cancelar" @click="openFilter=false" class="p-button-raised p-button-success p-button-text button"/>
       </template>
     </Dialog>
     <adonaidatasearch

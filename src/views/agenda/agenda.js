@@ -23,6 +23,7 @@ export default {
     return {
       openModal: false,
       openloadin: false,
+      resize: 30,
       form: {
         add: true,
         edit: false,
@@ -69,6 +70,7 @@ export default {
     }
   },
   mounted () {
+    this.onResize()
     this.get()
   },
   methods: {
@@ -182,6 +184,13 @@ export default {
       this.form.descricaoEvento = ''
       this.form.idevento = ''
       this.form.idmultiigreja = 1
+    },
+    onResize () {
+      if (window.innerWidth <= 767) {
+        this.resize = 100
+      } else {
+        this.resize = 50
+      }
     }
   },
   components: {

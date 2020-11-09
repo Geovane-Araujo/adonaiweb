@@ -2,6 +2,13 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 import adonai from '../router/services'
 import util from '../../assets/scss/util'
+import Toolbar from 'primevue/toolbar'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import InputText from 'primevue/inputtext'
+import Paginator from 'primevue/paginator'
 
 export default {
   data () {
@@ -10,6 +17,7 @@ export default {
       openModal: false,
       openloading: false,
       aniversariantes: [],
+      resize: 50,
       explorer: {
         route: 'menu_aniversariantes',
         pagina: 1,
@@ -24,6 +32,7 @@ export default {
     }
   },
   mounted () {
+    this.onResize()
     this.buscaraniversariante()
   },
   methods: {
@@ -39,7 +48,23 @@ export default {
       form.telefone = form.telefone.replace(')', '')
       form.telefone = form.telefone.replace('-', '')
       window.open('https://api.whatsapp.com/send?phone=${encodeURIComponent(55' + form.telefone + ')}&text=' + form.mensagem)
+    },
+    onResize () {
+      if (window.innerWidth <= 767) {
+        this.resize = 100
+      } else {
+        this.resize = 50
+      }
     }
+  },
+  components: {
+    Dialog,
+    Button,
+    DataTable,
+    Column,
+    Toolbar,
+    InputText,
+    Paginator
   },
   computed: {
     ...mapState('auth', ['user'])

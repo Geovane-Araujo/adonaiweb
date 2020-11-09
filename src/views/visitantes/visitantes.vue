@@ -32,7 +32,7 @@
     </div>
 
     <!-- modal para cadastro-->
-    <Dialog style="font-size:10px;" header="Cadastro Visitantes" :visible.sync="openModal" :style="{width: '70vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Cadastro Visitantes" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
       <form method="POST">
         <div class="row">
           <div class="col-sm-12">
@@ -130,8 +130,10 @@
         </div>
       </form>
       <template #footer>
-        <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
-        <Button label="Filtrar" @click="validate(form)" class="p-button-raised p-button-success p-button-text button" />
+        <div class=" p-mr-2 p-as-start" style="align: left">
+          <Button label="Salvar" @click="validate(form)" class="p-button-raised p-button-success p-button-text button" />
+          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+        </div>
       </template>
     </Dialog>
     <adonaidatasearch

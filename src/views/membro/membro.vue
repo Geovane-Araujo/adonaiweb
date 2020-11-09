@@ -8,17 +8,17 @@
           <button
             class="btn btn-outline-info"
             @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
-            <i class="fas fa-user"></i>&nbsp;&nbsp;Adicionar
+            <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
           <button
             class="btn btn-outline-info float-right"
             @click="imprimir('report/pessoas/membrolist.jrxml')">
-            <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir
+            <i class="fas fa-print"></i>&nbsp;&nbsp;{{ mobileI }}
           </button>
           <button
             class="btn btn-outline-info float-right" style="margin-right: 10px;"
             @click="openFilter=true">
-            <img src="../img/filter.png">&nbsp;&nbsp;Flitros
+            <img src="../img/filter.png">&nbsp;&nbsp;{{ mobileF }}
           </button>
           <hr class="bg-info">
         </div>
@@ -274,8 +274,8 @@
         </b-tabs>
       </form>
       <template #footer>
-        <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
         <Button label="Salvar" @click="validar(form)" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
       </template>
     </Dialog>
     <!-- modal Filtros-->

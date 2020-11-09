@@ -17,6 +17,8 @@ export default {
       openModal: false,
       deleteModal: false,
       resize: 50,
+      mobileI: 'Imprimir',
+      mobileF: 'Filtrar',
       openloading: false,
       openFilter: false,
       ds: {
@@ -312,6 +314,8 @@ export default {
     onResize () {
       if (window.innerWidth <= 767) {
         this.resize = 100
+        this.mobileF = ''
+        this.mobileI = ''
       } else {
         this.resize = 50
       }

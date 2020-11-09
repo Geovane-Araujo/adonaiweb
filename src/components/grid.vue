@@ -20,11 +20,11 @@
         @row-select="onRowSelect"
         :resizableColumns="true"
         columnResizeMode="fit">
-        <Column v-for="title in titulos" :key="title.ID" :field="title" :header="title"></Column>
-        <Column  :exportable="false">
+        <Column headerStyle="width:90px;height:10px;" bodyStyle="height:5px;" v-for="title in titulos" :key="title.ID" :field="title" :header="title"></Column>
+        <Column headerStyle="width: 80px;" bodyStyle=""  :exportable="false">
             <template #body="slotProps">
-                <Button icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-button-success p-mr-2" @click="getbyId(slotProps.data.id); form.edit=true;form.add=false" />
-                <Button icon="pi pi-trash" class="p-button-rounded p-button-outlined p-button-danger" @click="onDelete(slotProps.data, form)" />
+                <Button style="font-size: 10px;" icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-button-success p-button-sm p-sm-2" @click="getbyId(slotProps.data.id); form.edit=true;form.add=false" />
+                <Button icon="pi pi-trash" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="onDelete(slotProps.data, form)" />
             </template>
         </Column>
         <template style="font-size:14px;" #paginatorLeft>

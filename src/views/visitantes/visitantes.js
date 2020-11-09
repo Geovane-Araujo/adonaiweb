@@ -14,6 +14,7 @@ export default {
       openModal: false,
       deleteModal: false,
       openloading: false,
+      resize: 50,
       explorer: {
         route: 'menu_pessoas_visitantes',
         pagina: 1,
@@ -80,6 +81,7 @@ export default {
     }
   },
   mounted () {
+    this.onResize()
     this.$refs.grid.get(this.explorer)
   },
   methods: {
@@ -200,6 +202,13 @@ export default {
     destroy (registro) {
       this.form.endereco[0].cidade = registro.nome
       this.form.endereco[0].idCidade = registro.id
+    },
+    onResize () {
+      if (window.innerWidth <= 767) {
+        this.resize = 100
+      } else {
+        this.resize = 60
+      }
     }
   },
   components: {

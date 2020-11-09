@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <Dialog style="font-size:10px;" header="Estudos, Esboços e Devocionais" :visible.sync="openModal" :style="{width: '70vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Estudos, Esboços e Devocionais" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
       <div class="row">
         <div class="col-sm-2">
           <b-form-group label="Data">
@@ -45,10 +45,14 @@
           </b-form-group>
         </div>
         <div class="col-sm-3">
-          <b-form-group label="Autor">
-            <div class="p-inputgroup">
-              <InputText v-model="form.nome"/>
-              <Button @click="datasearch ();" icon="pi pi-search" class="p-button-success p-button-outlined"/>
+          <b-form-group label="Nome">
+            <div class="form-group">
+              <b-input-group>
+                <b-form-input placeholder="Nome" v-model="form.nome" @click="datasearch ();"></b-form-input>
+                <b-input-group-append>
+                  <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="datasearch ();">search</b-button>
+                </b-input-group-append>
+              </b-input-group>
             </div>
           </b-form-group>
         </div>
@@ -65,8 +69,8 @@
         </div>
       </div>
       <template #footer>
-          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
           <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
+          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
       </template>
     </Dialog>
     <adonaidatasearch

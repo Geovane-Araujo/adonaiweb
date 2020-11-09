@@ -13,6 +13,8 @@ export default {
     return {
       aniversariantes: '',
       busca: '',
+      mobile: true,
+      colaps: false,
       sidebar: false,
       blockedDocument: false,
       permissoes: {
@@ -279,9 +281,12 @@ export default {
       if (window.innerWidth <= 767) {
         this.isOnMobile = true
         this.collapsed = true
+        this.mobile = false
+        this.colaps = true
       } else {
         this.isOnMobile = false
         this.collapsed = false
+        this.colaps = false
       }
     }
   },

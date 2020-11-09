@@ -10,92 +10,51 @@
       </div>
       <div class="row">
         <div class="col-lg-12" style="margin-top: -30px;">
-          <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
-            <thead>
-              <tr class="text-left text-light text-light" style="background-color: #5e8a75">
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Data Nascimento</th>
-                <th>Telefone</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="text-left" v-for="item in aniversariantes" :key="item.ID">
-                <td >{{ item.ID }}</td>
-                <td >{{ item.Nome }}</td>
-                <td>{{ item.DataNascimento }}</td>
-                <td>{{ item.Telefone}}</td>
-                <td>
-                  <a href="#" @click="openModal =true; form.telefone = item.telefone;" class="text-success"><i class="fab fa-whatsapp 5x" style=""></i></a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <DataTable columnResizeMode="fit" :value="aniversariantes" bodyStyle="width: 200px" headerStyle="width: 200px" selectionMode="single" dataKey="id">
+            <Column headerStyle="width:10px;" field="ID" header="ID"></Column>
+            <Column headerStyle="width:50px;" field="Nome" header="Nome"></Column>
+            <Column headerStyle="width:50px;" field="DataNascimento" header="DataNascimento"></Column>
+            <Column headerStyle="width:50px;" field="Telefone" header="Telefone"></Column>
+            <Column headerStyle="width:5px;" :exportable="false">
+              <template #body="slotProps">
+                  <Button style="font-size: 10px;" icon="fab fa-whatsapp" class="p-button-rounded p-button-outlined p-button-success p-button-sm p-sm-2" @click="openModal=true;form.telefone=slotProps.data.telefone;" form.edit="true;form.add=false" />
+              </template>
+            </Column>
+          </DataTable>
         </div>
       </div>
     </div>
-
-    <!-- modal -->
-    <div id="overlay" v-if="openModal">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Enviar Mensagem WhatsApp</h5>
-            <button type="button" class="close"  @click="openModal=false">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="col-sm-12">
-                <input type="text"
-                autocomplete="off"
-                class="form-control"
-                placeholder="Telefone"
-                v-model="form.telefone">
-              </div>
-              <div class="col-sm-12">
-                <b-form-textarea
-                  placeholder="Escreva sua mensagem"
-                  rows="4"
-                  v-model="form.mensagem"
-                  max-rows="4"
-                ></b-form-textarea>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-outline-info float-right" @click="enviarMensagem(form);" >Enviar</button>
-              </div>
-            </form>
-          </div>
+    <Dialog style="font-size:10px;" header="Enviar Mensagem Aniversariante" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
+      <form>
+        <div class="col-sm-12">
+          <input type="text"
+          autocomplete="off"
+          class="form-control"
+          placeholder="Telefone"
+          v-model="form.telefone">
         </div>
-      </div>
-    </div>
+        <div class="col-sm-12">
+          <b-form-textarea
+            placeholder="Escreva sua mensagem"
+            rows="4"
+            v-model="form.mensagem"
+            max-rows="4"
+          ></b-form-textarea>
+        </div>
+      </form>
+      <template #footer>
+          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+          <Button label="Enviar" @click="enviarMensagem(form);" class="p-button-raised p-button-success p-button-text button" />
+      </template>
+    </Dialog>
   </div>
 </template>
 
 <script src="./aniversariantes.js">
 </script>
 <style lang="scss" scoped>
-.table-overflow {
-    max-height:90vh;
-    overflow-y:auto;
-}
 p {
   font-size: 30px;
-}
-tr {
-  line-height: 14px;
-  font-size: 13px;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 1001;
-  left: 0;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
 }
 #loading {
   position: fixed;

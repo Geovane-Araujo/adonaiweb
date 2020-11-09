@@ -18,6 +18,9 @@ export default {
       openModal: false,
       openFilter: false,
       estornar: false,
+      mobileI: 'Imprimir',
+      mobileF: 'Filtrar',
+      risize: 50,
       lancar: false,
       ds: {
         grid: [],
@@ -74,6 +77,7 @@ export default {
     }
   },
   mounted () {
+    this.onResize()
     rel.explorer.route = 'menu_duplicata_despesa'
     rel.explorer.criterios = 'ORDER BY ID DESC'
     this.$refs.grid.get(rel.explorer)
@@ -266,6 +270,16 @@ export default {
       var fil
       for (fil in filters) {
         this.filters[fil] = ''
+      }
+    },
+    onResize () {
+      if (window.innerWidth <= 767) {
+        this.resize = 100
+        this.mobileF = ''
+        this.mobileI = ''
+        this.resizeFilter = 100
+      } else {
+        this.resize = 50
       }
     }
   },

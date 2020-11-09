@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <Dialog style="font-size:10px;" header="Cadastro tipos Solicitações" :visible.sync="openModal" :style="{width: '30vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Cadastro tipos Solicitações" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
       <form method="POST">
         <b-container>
           <b-row class="text-center">
@@ -99,20 +99,6 @@
 p {
   font-size: 30px;
 }
-input[type='file'] {
-  display: none
-}
-.table-sm {
-  padding: 2px;
-}
-.agenda {
-  border-radius: 10px;
-  box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
-  background-color: rgba($color: #ffffff, $alpha: 0.9);
-  margin: 5px;
-  overflow:auto;
-}
-
 button {
   color: #5e8a75;
   border-color:#5e8a75;
