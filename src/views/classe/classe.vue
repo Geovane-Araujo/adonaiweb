@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <p>Cadastro de Turmas</p>
+          <p>Cadastro de Classes</p>
           <button class="btn btn-outline-info" @click="getbyId(-100);">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
@@ -61,7 +61,7 @@
   </div>
 </template>
 
-<script src="./turma.js">
+<script src="./classe.js">
 </script>
 <style lang="scss" scoped>
 p {

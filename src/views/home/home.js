@@ -99,17 +99,16 @@ export default {
         },
         {
           title: 'Escola',
-          hidden: true,
+          hidden: false,
           icon: 'fas fa-graduation-cap',
           child: [
             {
-              href: '/classecurso',
-              title: 'Classes e Cursos',
-              disabled: false
+              href: '/curso',
+              title: 'Cursos'
             },
             {
-              href: '/turma',
-              title: 'Turmas',
+              href: '/classe',
+              title: 'Classes',
               disabled: false
             }
           ]

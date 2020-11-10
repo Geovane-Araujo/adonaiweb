@@ -18,7 +18,7 @@ export default {
     }
   }),
   mounted () {
-    adExplo.explorer.route = 'menu_classe'
+    adExplo.explorer.route = 'menu_curso'
     this.$refs.grid.get(adExplo.explorer)
   },
   methods: {
@@ -28,7 +28,7 @@ export default {
         if (res.data.ret === 'success') {
           this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
           this.openModal = false
-          adExplo.explorer.route = 'menu_classe'
+          adExplo.explorer.route = 'menu_curso'
           this.$refs.grid.get(adExplo.explorer)
           this.openloading = false
         } else {

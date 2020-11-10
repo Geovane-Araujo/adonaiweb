@@ -27,8 +27,8 @@ import notaversao from '../notasversoes/notasversoes.vue'
 import pedidos from '../pedidos/pedidos.vue'
 import tipopedidos from '../tipopedido/tipopedido.vue'
 import esbocos from '../esbocos/esbocos.vue'
-import classecurso from '../classecurso/classecurso.vue'
-import turma from '../turma/turma.vue'
+import curso from '../curso/curso.vue'
+import classe from '../classe/classe.vue'
 
 export default [
   {
@@ -178,14 +178,14 @@ export default [
         component: esbocos
       },
       {
-        path: 'classecurso',
-        name: 'classecurso',
-        component: classecurso
+        path: 'curso',
+        name: 'curso',
+        component: curso
       },
       {
-        path: 'turma',
-        name: 'turma',
-        component: turma
+        path: 'classe',
+        name: 'classe',
+        component: classe
       }
     ]
   }

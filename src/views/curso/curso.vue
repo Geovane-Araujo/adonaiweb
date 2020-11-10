@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <p>Cadastro de Classes e Cursos</p>
+          <p>Cadastro Cursos</p>
           <button class="btn btn-outline-info" @click="getbyId(-100);">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
@@ -42,7 +42,7 @@
   </div>
 </template>
 
-<script src="./classecurso.js">
+<script src="./curso.js">
 </script>
 <style lang="scss" scoped>
 p {
