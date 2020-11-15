@@ -29,6 +29,7 @@ import VSwatches from 'vue-swatches'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Vuesax from 'vuesax'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 import 'fullcalendar/dist/locale/pt-br'
 import 'vue-swatches/dist/vue-swatches.css'
@@ -56,6 +57,12 @@ Vue.use(VueTippy)
 Vue.use(loader)
 Vue.use(VueCharts)
 Vue.use(vuejquery)
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyB_QfBRWrPOJW4zvNOAD4sfekLDz6hTeD4'
+  }
+})
+// Vue.use(x5GMaps, 'AIzaSyCOu2jHIBcS0qsRdO-7cyBIfIiUxtd3UOA')
 Vue.use(VSwatches)
 Vue.component('colour-picker', ColourPicker)
 Vue.component('material-picker', Material)

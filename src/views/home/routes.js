@@ -1,34 +1,35 @@
 import home from './Home.vue'
-import cargo from '../cargo/cargo.vue'
-import usuario from '../usuario/usuario.vue'
-import tipoconta from '../tipoconta/tipoconta.vue'
-import membro from '../membro/membro.vue'
-import igreja from '../igreja/igreja.vue'
-import contasbancarias from '../contasbancarias/contasbancarias.vue'
-import visitantes from '../visitantes/visitantes.vue'
-import aniversariantes from '../aniversariantes/aniversariantes.vue'
-import novoconvertido from '../novoconvertido/novoconvertido.vue'
-import congregacao from '../congregacao/congregacao.vue'
-import despesas from '../duplicatas/despesas.vue'
-import receitas from '../duplicatas/receitas.vue'
-import caixa from '../caixa/caixa.vue'
-import movimento from '../caixa/movimento.vue'
-import dashboard from '../dashboard/dashboard.vue'
-import agenda from '../agenda/agenda.vue'
-import movimentoHistorico from '../caixa/movimentoHistorico.vue'
-import eventoTipos from '../eventoagenda/eventoagenda.vue'
-import termosuso from '../termosuso/termosuso.vue'
-import privacidade from '../politicaprivacidade/privacidade.vue'
-import minhasfaturas from '../minhasfaturas/minhasfaturas.vue'
+import cargo from '../uteis/cargo/cargo.vue'
+import usuario from '../configuracoes/usuario/usuario.vue'
+import tipoconta from '../uteis/tipoconta/tipoconta.vue'
+import membro from '../Secretaria/membro/membro.vue'
+import igreja from '../configuracoes/igreja/igreja.vue'
+import contasbancarias from '../financeiro/contasbancarias/contasbancarias.vue'
+import visitantes from '../Secretaria/visitantes/visitantes.vue'
+import aniversariantes from '../Secretaria/aniversariantes/aniversariantes.vue'
+import novoconvertido from '../pastoral/novoconvertido/novoconvertido.vue'
+import congregacao from '../Secretaria/congregacao/congregacao.vue'
+import despesas from '../financeiro/duplicatas/despesas.vue'
+import receitas from '../financeiro/duplicatas/receitas.vue'
+import caixa from '../financeiro/caixa/caixa.vue'
+import movimento from '../financeiro/caixa/movimento.vue'
+import dashboard from '../outros/dashboard/dashboard.vue'
+import agenda from '../outros/agenda/agenda.vue'
+import movimentoHistorico from '../financeiro/caixa/movimentoHistorico.vue'
+import eventoTipos from '../uteis/eventoagenda/eventoagenda.vue'
+import termosuso from '../minhaAdonai/termosuso/termosuso.vue'
+import privacidade from '../minhaAdonai/politicaprivacidade/privacidade.vue'
+import minhasfaturas from '../minhaAdonai/minhasfaturas/minhasfaturas.vue'
 import relatorios from '../relatorios/relatorios.vue'
-import biblia from '../biblia/biblia.vue'
-import auditoria from '../auditoria/auditoria.vue'
-import notaversao from '../notasversoes/notasversoes.vue'
-import pedidos from '../pedidos/pedidos.vue'
-import tipopedidos from '../tipopedido/tipopedido.vue'
-import esbocos from '../esbocos/esbocos.vue'
-import curso from '../curso/curso.vue'
-import classe from '../classe/classe.vue'
+import biblia from '../uteis/biblia/biblia.vue'
+import auditoria from '../uteis/auditoria/auditoria.vue'
+import notaversao from '../minhaAdonai/notasversoes/notasversoes.vue'
+import pedidos from '../pastoral/pedidos/pedidos.vue'
+import tipopedidos from '../uteis/tipopedido/tipopedido.vue'
+import esbocos from '../pastoral/esbocos/esbocos.vue'
+import curso from '../escola/curso/curso.vue'
+import classe from '../escola/classe/classe.vue'
+import maps from '../Secretaria/membrosMaps/membrosMaps.vue'
 
 export default [
   {
@@ -186,6 +187,11 @@ export default [
         path: 'classe',
         name: 'classe',
         component: classe
+      },
+      {
+        path: 'maps',
+        name: 'maps',
+        component: maps
       }
     ]
   }

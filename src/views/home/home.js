@@ -73,6 +73,11 @@ export default {
               href: '/congregacao',
               title: 'Congregações',
               disabled: parseInt(sessionStorage.getItem('congregacao'))
+            },
+            {
+              href: '/maps',
+              title: 'Maps',
+              disabled: parseInt(sessionStorage.getItem('congregacao'))
             }
           ]
         },
@@ -99,7 +104,7 @@ export default {
         },
         {
           title: 'Escola',
-          hidden: false,
+          hidden: true,
           icon: 'fas fa-graduation-cap',
           child: [
             {

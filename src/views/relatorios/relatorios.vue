@@ -1,5 +1,5 @@
 <template>
-  <div class="private">
+  <div>
     <loader id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row bg-ligth">
@@ -69,13 +69,6 @@
 <style lang="scss" scoped>
 .p {
   font-size: 30px;
-}
-.private {
-  border-radius: 10px;
-  box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
-  background-color: rgba($color: #ffffff, $alpha: 0.9);
-  margin: 5px;
-  overflow: auto;
 }
 #overlay {
   position: fixed;
