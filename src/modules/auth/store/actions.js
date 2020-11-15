@@ -117,6 +117,11 @@ export const ActionLogin = ({ dispatch }, payload) => {
     } else {
       sessionStorage.setItem('tipoevento', 1)
     }
+    if (res.data.login.igreja.idPessoa === 9999) {
+      sessionStorage.setItem('db', 'true')
+    } else {
+      sessionStorage.setItem('db', 'false')
+    }
     localStorage.setItem('ret', res.data.ret)
     dispatch('ActionUser', res.data.login)
     dispatch('ActionToken', res.data.login.token)

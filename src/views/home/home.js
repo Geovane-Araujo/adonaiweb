@@ -251,6 +251,11 @@ export default {
               href: '/notaversao',
               title: 'Notas de Versões',
               disabled: parseInt(sessionStorage.getItem('notaversao'))
+            },
+            {
+              href: '/tickets',
+              title: 'Tickets',
+              hidden: Boolean(sessionStorage.getItem('db'))
             }
           ]
         }

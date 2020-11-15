@@ -30,6 +30,7 @@ import esbocos from '../pastoral/esbocos/esbocos.vue'
 import curso from '../escola/curso/curso.vue'
 import classe from '../escola/classe/classe.vue'
 import maps from '../Secretaria/membrosMaps/membrosMaps.vue'
+import tickets from '../uteis/tickets/tickets.vue'
 
 export default [
   {
@@ -192,6 +193,11 @@ export default [
         path: 'maps',
         name: 'maps',
         component: maps
+      },
+      {
+        path: 'tickets',
+        name: 'tickets',
+        component: tickets
       }
     ]
   }
