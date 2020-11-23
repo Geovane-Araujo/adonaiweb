@@ -307,6 +307,17 @@
         <Button label="Filtrar" @click="filter(filters)" class="p-button-raised p-button-success p-button-text button" />
       </template>
     </Dialog>
+    <Dialog :visible.sync="mapsModal" :style="{width: '450px'}" header="Confirmar" :modal="true">
+      <div class="confirmation-content">
+        <i class="pi pi-exclamation-triangle p-mr-3" style="font-size: 2rem" />
+        <span >A T E N Ç Ã O os dados de endereço estão incompletos<br>se continuar o membro NÃO irá aparecer no mapa
+          <br> deseja realmente continuar?</span>
+      </div>
+      <template #footer>
+          <Button label="Não" icon="pi pi-times" class="p-button-text" @click="mapsModal=false"/>
+          <Button label="Sim" icon="pi pi-check" class="p-button-text" @click="mapsModal=false;save(form);deleteModal = false" />
+      </template>
+    </Dialog>
     <adonaidatasearch
     :title="ds.title"
     :cabecalho="ds.grid"

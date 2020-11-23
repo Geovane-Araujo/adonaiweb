@@ -1,26 +1,28 @@
 <template>
-  <div class="private">
+  <div>
+    <loader id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row bg-ligth">
         <div class="col-lg-12">
           <p class="p">Localização dos Membros</p>
           <hr class="bg-info" />
-          <div>
-          <gmap-map
-            :center="center"
-            :zoom="16"
-            style="width: 100%; height: 500px"
-          >
-            <gmap-marker
-              :key="index"
-              v-for="(m, index) in markers"
-              :position="m.position"
-              :title="m.title"
-              :clickable="true"
-              :draggable="true"
-              @click="center=m.position"
-            ></gmap-marker>
-          </gmap-map>
+          <div style="height:600px">
+            <MglMap
+              :accessToken="accessToken"
+              :mapStyle.sync="mapStyle"
+              :center="coordinates"
+              :zoom="13"
+            >
+              <MglNavigationControl position="top-right"/>
+              <MglGeolocateControl position="top-right" />
+              <MglMarker v-for="marker in markers" :key="marker.coords" :coordinates="marker.coords">
+                <MglPopup>
+                  <VCard>
+                    <div>{{ marker.text }}</div>
+                  </VCard>
+                </MglPopup>
+              </MglMarker>
+            </MglMap>
           </div>
         </div>
       </div>
@@ -32,5 +34,12 @@
 <style lang="scss" scoped>
 .p {
   font-size: 30px;
+}
+#map {
+  width: 60vw;
+  min-width: 360px;
+  text-align: center;
+  margin: 5% auto;
+  background-color: #ccc;
 }
 </style>
