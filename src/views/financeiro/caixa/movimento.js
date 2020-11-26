@@ -176,7 +176,7 @@ export default {
       if (route === 1) {
         rel.explorerflex.route = 'expl_caixa_abrir'
         rel.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['ID', 'Caixa']
+        this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Caixas'
         this.$refs.teste.dataSearch(rel.explorerflex, 1, 1)
         this.open = true

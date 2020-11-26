@@ -48,6 +48,7 @@ export default {
         this.criterio = this.cabecalho[1]
       }
       if (crit.length > 2 || crit === '') {
+        this.onRoute()
         this.explo.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
         axios.post(adonai.url + 'aexplorer', this.explo, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
@@ -64,6 +65,11 @@ export default {
       }
       if (length < 15) {
         this.l = true
+      }
+    },
+    onRoute () {
+      if (this.explo.route === 'exp_municipio') {
+        this.criterio = 'municipio.nome'
       }
     },
     paging (event) {
