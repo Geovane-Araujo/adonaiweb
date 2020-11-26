@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="row bg-ligth">
         <div class="col-lg-12">
-          <p class="p">Localização dos Membros</p>
+          <p class="p">Mapa dos Membros</p>
           <hr class="bg-info" />
           <div style="height:600px">
             <MglMap

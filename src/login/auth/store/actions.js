@@ -125,7 +125,6 @@ export const ActionLogin = ({ dispatch }, payload) => {
     localStorage.setItem('ret', res.data.ret)
     dispatch('ActionUser', res.data.login)
     dispatch('ActionToken', res.data.login.token)
-
     // permissoes
   })
 }

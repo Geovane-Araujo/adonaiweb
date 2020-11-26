@@ -7,7 +7,6 @@ Vue.use(VueResource)
 
 const http = Vue.http
 
-// http.options.root = 'http://localhost:8089/adonai/'
 http.options.root = adonai.url
 
 Object.keys(Services).map(service => {

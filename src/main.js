@@ -42,6 +42,7 @@ window.toastr = require('toastr')
 
 Vue.config.productionTip = false
 Vue.use(VueMask)
+Vue.use(router)
 Vue.use(VueSidebarMenu)
 Vue.use(Button)
 Vue.use(Vuesax)
@@ -73,9 +74,6 @@ Vue.config.devtools = false
 Vue.config.silent = true
 
 var adonaisoft = new Vue({
-  data: {
-    img: null
-  },
   router,
   store,
   render: h => h(App)

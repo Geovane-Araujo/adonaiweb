@@ -9,6 +9,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import 'vue-datetime/dist/vue-datetime.css'
+import SplitButton from 'primevue/splitbutton'
 var moment = require('moment')
 var data = new Date()
 
@@ -25,6 +26,14 @@ export default {
       resize: 50,
       resizeFilter: 30,
       lancar: false,
+      items: [
+        {
+          label: 'Detalhado'
+        },
+        {
+          label: 'Listagem'
+        }
+      ],
       ds: {
         grid: [],
         title: ''
@@ -291,7 +300,8 @@ export default {
     datetime: Datetime,
     Dialog,
     Button,
-    InputText
+    InputText,
+    SplitButton
   },
   computed: {
     ...mapState('auth', ['user'])

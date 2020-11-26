@@ -10,11 +10,18 @@
             @click="initialize();">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
-          <button
-            class="btn btn-outline-info float-right"
-            @click="imprimir('report/financeiro/receitagrupo.jrxml')">
-            <i class="fas fa-print"></i>&nbsp;&nbsp;{{ mobileI }}
-          </button>
+          <!-- <SplitButton label="Imprimir" icon="pi pi-plus" :model="items" class="p-sm-2"></SplitButton> -->
+          <div class="dropdown" style="z-index: 9999;">
+            <button
+              class="btn btn-outline-info dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-print"></i>&nbsp;&nbsp;{{ mobileI }}
+            </button>
+            <div style="height: 20px; z-index: 9999;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </div>
           <button
             class="btn btn-outline-info float-right" style="margin-right: 10px;"
             @click="openFilter=true">
@@ -247,8 +254,11 @@
     ref="cmp"/>
   </div>
 </template>
-
+<script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
 <script src="./receitas.js">
+  $(function () {
+    $('.dropdown-toggle').dropdown();
+  })
 </script>
 <style lang=scss scoped>
 label {
@@ -274,14 +284,8 @@ p {
   right: 0;
   background: rgba($color: #000000, $alpha: 0.7);
 }
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
+.p-splitbutton {
+  margin-right: .1rem;
 }
 button {
   color: #5e8a75;

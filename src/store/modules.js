@@ -1,4 +1,4 @@
-import { store as auth } from '@/modules/auth'
+import { store as auth } from '@/login/auth'
 
 export default {
   auth
