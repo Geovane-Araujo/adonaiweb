@@ -3,7 +3,9 @@ import store from '../store'
 
 export default async (to, from, next) => {
   document.title = 'AdonaiSoft - Igreja'
-  if (to.name === 'register') {
+  if (to.name === 'newchurch') {
+    next()
+  } else if (to.name === 'register') {
     next()
   } else if (to.name !== 'login' && !store.getters['auth/hasToken']) {
     try {

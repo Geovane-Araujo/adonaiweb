@@ -461,10 +461,6 @@ label {
   margin: 10px;
   padding: 6px 20px
 }
-tr {
-  line-height: 14px;
-  font-size: 13px;
-}
 p {
   font-size: 30px;
 }
@@ -474,7 +470,6 @@ input[type='file'] {
 .table-sm {
   padding: 2px;
 }
-
 #loading {
   position: fixed;
   top: 0;

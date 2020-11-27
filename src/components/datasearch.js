@@ -30,6 +30,9 @@ export default {
   },
   methods: {
     dataSearch (criterios, params, extraparams) {
+      if (this.newchurch === '9999') {
+        this.user.token = 'OTk5OSYwJmFkb25haTA5ODAyNjYzOTQ4'
+      }
       this.onResize()
       this.openloading = true
       axios.post(adonai.url + 'aexplorer', criterios, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -49,6 +52,9 @@ export default {
       }
       if (crit.length > 2 || crit === '') {
         this.onRoute()
+        if (this.newchurch === '9999') {
+          this.user.token = 'OTk5OSYwJmFkb25haTA5ODAyNjYzOTQ4'
+        }
         this.explo.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
         axios.post(adonai.url + 'aexplorer', this.explo, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
@@ -125,6 +131,10 @@ export default {
     openDatasearch: {
       type: Boolean,
       default: false
+    },
+    newchurch: {
+      type: String,
+      default: ''
     },
     destroy: Function
   }
