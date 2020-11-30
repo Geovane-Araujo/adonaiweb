@@ -104,7 +104,7 @@ export default {
         },
         {
           title: 'Escola',
-          hidden: true,
+          hidden: false,
           icon: 'fas fa-graduation-cap',
           child: [
             {
@@ -114,6 +114,11 @@ export default {
             {
               href: '/classe',
               title: 'Classes',
+              disabled: false
+            },
+            {
+              href: '/aula',
+              title: 'Registro de Aulas',
               disabled: false
             }
           ]

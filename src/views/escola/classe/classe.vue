@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <loader  id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row">
@@ -12,7 +12,7 @@
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
-          <adonaigrid :titulos="['id','descricao']"
+          <adonaigrid :titulos="['id', 'curso', 'descricao']"
           :registros="tipopedido"
           :form="form"
           :getbyId="getbyId"
@@ -23,41 +23,75 @@
         </div>
       </div>
     </div>
-    <Dialog style="font-size:10px;" header="Cadastro de Turmas" :visible.sync="openModal" :style="{width: '50vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Cadastro de Turmas" :visible.sync="openModal" :style="{width: '60vw'}" :modal="true">
       <div class="row">
         <div class="col-sm-4">
-          <b-form-group label="Nome Turma">
+          <b-form-group label="Nome Classe">
             <input type="text"
             name="descricao"
             autocomplete="off"
             class="form-control"
-            placeholder="Descricao"
+            placeholder="Classe"
             v-model="form.descricao">
           </b-form-group>
         </div>
-        <div class="col-sm-3">
-          <b-form-group label="Autor">
-            <div class="p-inputgroup">
-              <InputText v-model="form.classe"/>
-              <Button @click="datasearch ();" icon="pi pi-search" class="p-button-success p-button-outlined"/>
+        <div class="col-sm-4">
+          <b-form-group label="Curso">
+            <div class="form-group">
+            <b-input-group >
+              <b-form-input placeholder="Curso" v-model="form.curso" @click="datasearch(0);"></b-form-input>
+              <b-input-group-append>
+
+                <b-button variant="outline-info" class="material-icons" @click="datasearch(0);">search</b-button>
+              </b-input-group-append>
+            </b-input-group>
+          </div>
+          </b-form-group>
+        </div>
+        <div class="col-sm-4">
+          <b-form-group label-align="left" label="Alunos e Professores">
+            <div class="form-group">
+              <Button label="Aluno" class="p-button-raised p-button-success p-button-text button" @click="datasearch(1);" />
+              <Button style="margin-left:20px;" label="Professor" class="p-button-raised p-button-success p-button-text button" @click="datasearch(2);" />
             </div>
           </b-form-group>
         </div>
         <div class="col-sm-12">
           <b-form-group label="Alunos e Professores">
             <DataTable :value="form.matriculados" :scrollable="true" scrollHeight="200px" :loading="loading">
-              <Column field="id" header="id"></Column>
+              <Column field="idpessoa" header="id"></Column>
               <Column field="nome" header="nome"></Column>
-              <Column field="tipo" header="tipo"></Column>
+              <Column field="descricaoTipo" header="tipo"></Column>
+              <Column headerStyle="width: 80px;" bodyStyle=""  :exportable="false">
+                <template #body="slotProps">
+                    <Button icon="pi pi-trash" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="slotProps.data.del=true;slotProps.data.add=false;del(slotProps.data);" />
+                </template>
+              </Column>
             </DataTable>
           </b-form-group>
         </div>
       </div>
       <template #footer>
-          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
           <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
       </template>
     </Dialog>
+    <Dialog :visible.sync="alunoModal" :style="{width: '450px'}" header="Confirmar" :modal="true">
+      <div class="confirmation-content">
+        <i class="pi pi-exclamation-triangle p-mr-3" style="font-size: 2rem" />
+        <span >Realmente deseja Excluir {{ nome }} </span>
+      </div>
+      <template #footer>
+          <Button label="Sim" icon="pi pi-times" class="p-button-text" @click="add(1)"/>
+          <Button label="Não" icon="pi pi-check" class="p-button-text" @click="alunoModal=false" />
+      </template>
+    </Dialog>
+    <adonaidatasearch
+    :title="ds.title"
+    :cabecalho="ds.grid"
+    :form="form"
+    :destroy="destroy"
+    ref="expl"/>
   </div>
 </template>
 

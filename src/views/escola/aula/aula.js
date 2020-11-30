@@ -8,6 +8,8 @@ import InputText from 'primevue/inputtext'
 import adExplo from '../../../util/utilClass'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import Editor from 'primevue/editor'
+import { Datetime } from 'vue-datetime'
 var a
 var r
 
@@ -18,28 +20,40 @@ export default {
     open: false,
     alunoModal: false,
     form: {
+      add: true,
+      edit: false,
+      del: false,
       id: '',
-      descricao: '',
-      idcurso: '',
-      curso: '',
-      matriculados: null
+      idclasse: '',
+      classe: '',
+      datachamada: '',
+      presentes: '',
+      ausentes: '',
+      visitas: '',
+      ofertas: '',
+      total: '',
+      idprofessor: '',
+      professor: '',
+      tema: '',
+      detalhe: '',
+      registroChamada: null,
+      matriculados: ''
     },
-    oldMatriculados: [],
-    matri: {
-      id: '',
-      nome: '',
-      tipo: '',
-      descricaotipo: ''
-    },
-    nome: '',
-    tipopedido: [],
     ds: {
       grid: [],
       title: ''
+    },
+    currency: {
+      decimal: ',',
+      thousands: '.',
+      prefix: 'R$ ',
+      suffix: '',
+      precision: 2,
+      masked: false
     }
   }),
   mounted () {
-    adExplo.explorer.route = 'menu_classe'
+    adExplo.explorer.route = 'menu_registro_chamada'
     this.$refs.grid.get(adExplo.explorer)
   },
   methods: {
@@ -49,7 +63,7 @@ export default {
         if (res.data.ret === 'success') {
           this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
           this.openModal = false
-          adExplo.explorer.route = 'menu_classe'
+          adExplo.explorer.route = 'menu_registro_chamada'
           this.$refs.grid.get(adExplo.explorer)
           this.openloading = false
         } else {
@@ -72,7 +86,7 @@ export default {
     },
     getbyId (id) {
       this.openloading = true
-      axios.get(adonai.url + 'classe/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      axios.get(adonai.url + 'aula/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.form = res.data.obj
         if (id !== -100) {
           this.form.add = false
@@ -167,7 +181,9 @@ export default {
     Button,
     InputText,
     DataTable,
-    Column
+    Editor,
+    Column,
+    datetime: Datetime
   },
   computed: {
     ...mapState('auth', ['user'])

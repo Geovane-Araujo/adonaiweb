@@ -192,25 +192,7 @@ export default {
         if (res.data.ret === 'success') {
           this.$toastr.success('Igreja Cadastrada com Sucesso', 'AdonaiSoft Diz:', util.toast)
           this.$toastr.info('Criando Banco de Dados', 'AdonaiSoft Diz:', util.toast)
-
-          axios.post(adonai.url + 'newchurch/' + res.data.obj).then(resp => {
-            if (resp.data.ret === 'success') {
-              this.$toastr.success('Banco de dadps configurado com Sucesso', 'AdonaiSoft Diz:', util.toast)
-              this.$toastr.info('Cadastrando o Usuário', 'AdonaiSoft Diz:', util.toast)
-              this.user.nome = this.user.login
-
-              var token = btoa(res.data.obj + '&0&' + this.user.nome + '111111111111111')
-              axios.post(adonai.url + 'usuario', form, { headers: { Authorization: 'Bearer ' + token } }).then(respo => {
-                if (respo.data.ret === 'success') {
-                  this.$toastr.success('Usuário Cadastrado com Sucesso, agora você tem acesso ao sistema, por favor verifique o email', 'AdonaiSoft Diz:', util.toast)
-                } else {
-                  this.$toastr.success(respo.data.motivo, 'AdonaiSoft Diz:', util.toast)
-                }
-              }).catch(err => this.$toastr.info(err, 'AdonaiSoft Diz:', util.toast))
-            } else {
-              this.$toastr.success(resp.data.motivo, 'AdonaiSoft Diz:', util.toast)
-            }
-          }).catch(err => this.$toastr.info(err, 'AdonaiSoft Diz:', util.toast))
+          this.createDb(res.data.obj, form)
         } else {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           this.openloading = true
@@ -223,6 +205,29 @@ export default {
       } else {
         this.save(form)
       }
+    },
+    async createDb (id, form) {
+      await axios.post(adonai.url + 'newchurch/' + id, form).then(resp => {
+        if (resp.data.ret === 'success') {
+          this.$toastr.success('Banco de dadps configurado com Sucesso', 'AdonaiSoft Diz:', util.toast)
+          this.$toastr.info('Cadastrando o Usuário', 'AdonaiSoft Diz:', util.toast)
+          this.user.nome = this.user.login
+          var token = btoa(id + '&0&' + this.user.nome + '111111111111111')
+          this.createUser(token, this.user)
+        } else {
+          this.$toastr.error(resp.data.motivo, 'AdonaiSoft Diz:', util.toast)
+        }
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+    },
+    async createUser (token, user) {
+      await axios.post(adonai.url + 'usuario', user, { headers: { Authorization: 'Bearer ' + token } }).then(respo => {
+        if (respo.data.ret === 'success') {
+          this.$toastr.success('Usuário Cadastrado com Sucesso, agora você tem acesso ao sistema, por favor verifique o email', 'AdonaiSoft Diz:', util.toast)
+          this.$router.push('login')
+        } else {
+          this.$toastr.success(respo.data.motivo, 'AdonaiSoft Diz:', util.toast)
+        }
+      }).catch(err => this.$toastr.info(err, 'AdonaiSoft Diz:', util.toast))
     },
     previewFiles (e) {
       var file = e.target.files[0]
