@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <Dialog style="font-size:10px;" header="Registro de Aula" :visible.sync="openModal" :style="{width: '60vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Registro de Aula" :visible.sync="openModal" :style="{width: '65vw'}" :modal="true">
       <b-tabs content-class="mt-1">
         <b-tab title="Principal">
           <div class="row">
@@ -37,7 +37,7 @@
                 </datetime>
               </b-form-group>
             </div>
-            <div class="col-sm-5" style="padding-top:0px; padding-bottom:0px">
+            <div class="col-sm-4" style="padding-top:0px; padding-bottom:0px">
               <b-form-group label="Tema">
                 <input type="text"
                 name="Tema"
@@ -47,7 +47,7 @@
                 v-model="form.tema">
               </b-form-group>
             </div>
-            <div class="col-sm-5" style="padding-top:0px; padding-bottom:0px">
+            <div class="col-sm-4" style="padding-top:0px; padding-bottom:0px">
               <b-form-group label="Classe">
                 <div class="form-group">
                 <b-input-group >
@@ -57,6 +57,14 @@
                   </b-input-group-append>
                 </b-input-group>
               </div>
+              </b-form-group>
+            </div>
+            <div class="col-sm-2" style="padding-top:0px; padding-bottom:0px">
+              <b-form-group label="Professor" label-align-sm="left">
+                <b-form-select
+                v-model="form.idprofessor"
+                :options="professores"
+              ></b-form-select>
               </b-form-group>
             </div>
             <div class="col-sm-2" style="padding-top:0px; padding-bottom:0px">
