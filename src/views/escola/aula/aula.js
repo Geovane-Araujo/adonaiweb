@@ -10,7 +10,9 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Editor from 'primevue/editor'
 import { Datetime } from 'vue-datetime'
-var r
+import Checkbox from 'primevue/checkbox'
+var moment = require('moment')
+var data = new Date()
 
 export default {
   data: () => ({
@@ -35,9 +37,10 @@ export default {
       professor: '',
       tema: '',
       detalhe: '',
-      registroChamada: null,
+      registroChamada: [],
       matriculados: ''
     },
+    selectAlunos: null,
     professores: [],
     ds: {
       grid: [],
@@ -50,6 +53,14 @@ export default {
       suffix: '',
       precision: 2,
       masked: false
+    },
+    percent: {
+      decimal: ',',
+      thousands: '.',
+      prefix: '',
+      suffix: '%',
+      precision: 2,
+      masked: false
     }
   }),
   mounted () {
@@ -57,9 +68,12 @@ export default {
     this.$refs.grid.get(adExplo.explorer)
   },
   methods: {
+    initialize () {
+      this.form.datachamada = moment(data).format()
+    },
     async save (form) {
       this.openloading = true
-      await axios.post(adonai.url + 'classe', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      await axios.post(adonai.url + 'aula', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
           this.openModal = false
@@ -73,14 +87,9 @@ export default {
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
     validate (form) {
-      if (this.form.descricao === '') {
+      if (this.form.idprofessor === '' || this.form.tema === '') {
         this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
       } else {
-        if (r !== undefined) {
-          r.forEach(element => {
-            this.form.matriculados.push(element)
-          })
-        }
         this.save(form)
       }
     },
@@ -91,6 +100,7 @@ export default {
         if (id !== -100) {
           this.form.add = false
           this.form.edit = true
+          this.professores = res.data.professores
         }
         this.openloading = false
         this.openModal = true
@@ -107,31 +117,33 @@ export default {
     },
     destroy (registro, params) {
       if (params === 0) {
-        this.form.curso = registro.descricao
-        this.form.idcurso = registro.id
+        this.form.classe = registro.descricao
+        this.form.idclasse = registro.id
         this.openloading = true
         axios.get(adonai.url + 'getprofessores/' + registro.id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          this.professores = res.data.obj
+          this.professores = res.data.obj.professores
+          this.form.registroChamada = res.data.obj.alunos
+          this.form.matriculados = this.form.registroChamada.length
+          this.form.ausentes = this.form.matriculados
           this.openloading = false
         })
       }
     },
-    del (data) {
-      if (r === undefined) {
-        r = []
-        r.push(data)
-      } else {
-        r.push(data)
-      }
-      var i = 0
-      var indice = 0
-      this.form.matriculados.forEach(element => {
-        if (element === data) {
-          indice = i
-        }
-        i++
+    marcarPresente (e) {
+      this.$nextTick(() => {
+        var pre = 0
+        var aus = 0
+        this.form.registroChamada.forEach(element => {
+          if (element.presente === '1') {
+            pre += 1
+          } else {
+            aus += 1
+          }
+        })
+        this.form.ausentes = aus
+        this.form.presentes = pre
+        this.form.total = (pre / this.form.matriculados) * 100
       })
-      this.form.matriculados.splice(indice, 1)
     }
   },
   components: {
@@ -141,6 +153,7 @@ export default {
     DataTable,
     Editor,
     Column,
+    Checkbox,
     datetime: Datetime
   },
   computed: {

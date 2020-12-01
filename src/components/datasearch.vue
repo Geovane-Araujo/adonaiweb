@@ -6,7 +6,7 @@
         <b-form-input class="mr-sm-2" placeholder="Buscar" v-model="contexto"  @keyup="getexplorer(contexto)"></b-form-input>
         <DataTable class="p-datatable-sm" scrollHeight="200px" :scrollable="true" style="font-size:14px;" :value="registros" :paginator="true" :rows="15" :selection.sync="select" selectionMode="single" dataKey="ID"
           @row-select="onRowSelect" paginatorTemplate="">
-          <Column bodyStyle="height:5px;" v-for="itcabe in cabecalho" :field="itcabe" :header="itcabe" :key="itcabe.ID"></Column>
+          <Column headerStyle="width: 2rem" bodyStyle="height:5px;" v-for="itcabe in cabecalho" :field="itcabe" :header="itcabe" :key="itcabe.ID"></Column>
           <template style="font-size:14px;" #paginatorLeft>
               <Button v-bind:disabled="r" style="font-size:10px;" @click="paging(1)" type="button" icon="pi pi-angle-left" class="p-button-text p-button-raised p-button-success"/>
               <Button v-bind:disabled="l" style="font-size:10px;" @click="paging(0)" type="button" icon="pi pi-angle-right" class="p-button-text p-button-raised p-button-success "/>

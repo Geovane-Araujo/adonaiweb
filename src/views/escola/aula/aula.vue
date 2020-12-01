@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-sm-12">
           <p>Registro de Aulas</p>
-          <button class="btn btn-outline-info" @click="openModal=true">
+          <button class="btn btn-outline-info" @click="getbyId(-100);initialize ();openModal=true">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Nova Aula
           </button>
           <hr class="bg-info" >
@@ -37,7 +37,7 @@
                 </datetime>
               </b-form-group>
             </div>
-            <div class="col-sm-4" style="padding-top:0px; padding-bottom:0px">
+            <div class="col-sm-3" style="padding-top:0px; padding-bottom:0px">
               <b-form-group label="Tema">
                 <input type="text"
                 name="Tema"
@@ -47,11 +47,11 @@
                 v-model="form.tema">
               </b-form-group>
             </div>
-            <div class="col-sm-4" style="padding-top:0px; padding-bottom:0px">
+            <div class="col-sm-3" style="padding-top:0px; padding-bottom:0px">
               <b-form-group label="Classe">
                 <div class="form-group">
                 <b-input-group >
-                  <b-form-input placeholder="Classe" v-model="form.curso" @click="datasearch(0);"></b-form-input>
+                  <b-form-input placeholder="Classe" v-model="form.classe" @click="datasearch(0);"></b-form-input>
                   <b-input-group-append>
                     <b-button variant="outline-info" class="material-icons" @click="datasearch(0);">search</b-button>
                   </b-input-group-append>
@@ -59,7 +59,7 @@
               </div>
               </b-form-group>
             </div>
-            <div class="col-sm-2" style="padding-top:0px; padding-bottom:0px">
+            <div class="col-sm-4" style="padding-top:0px; padding-bottom:0px">
               <b-form-group label="Professor" label-align-sm="left">
                 <b-form-select
                 v-model="form.idprofessor"
@@ -108,21 +108,22 @@
             </div>
             <div class="col-sm-2" style="padding-top:0px; padding-bottom:0px">
               <b-form-group style="padding:0px;" label="Total">
-                <input type="text"
+                <money type="text"
                   disabled=""
+                  v-bind="percent"
                   v-model="form.total"
-                  class="form-control text-danger">
+                  class="form-control text-info"/>
               </b-form-group>
             </div>
             <div class="col-sm-12">
-              <b-form-group label="Alunos e Professores">
-                <DataTable :value="form.matriculados" :scrollable="true" scrollHeight="200px" :loading="loading">
-                  <Column field="idpessoa" header="id"></Column>
+              <b-form-group label="Matriculados">
+                <DataTable :value="form.registroChamada" :scrollable="true" scrollHeight="200px" :loading="loading">
+                  <Column headerStyle="width: 2rem" field="id" header="id"></Column>
                   <Column field="nome" header="nome"></Column>
-                  <Column field="descricaoTipo" header="tipo"></Column>
-                  <Column headerStyle="width: 80px;" bodyStyle=""  :exportable="false">
+                  <Column header="Presente" headerStyle="width: 80px;" bodyStyle=""  :exportable="false">
                     <template #body="slotProps">
-                        <Button icon="pi pi-trash" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="slotProps.data.del=true;slotProps.data.add=false;del(slotProps.data);" />
+                        <b-form-checkbox @change="marcarPresente(slotProps.data.presente)" :id="slotProps.data.id" v-model="slotProps.data.presente"  value="1"  unchecked-value="0">
+                      </b-form-checkbox>
                     </template>
                   </Column>
                 </DataTable>
