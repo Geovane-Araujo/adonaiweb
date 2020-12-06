@@ -116,10 +116,10 @@
               </b-form-group>
             </div>
             <div class="col-sm-12">
-              <b-form-group label="Matriculados">
+              <b-form-group label="Chamada">
                 <DataTable :value="form.registroChamada" :scrollable="true" scrollHeight="200px" :loading="loading">
                   <Column headerStyle="width: 2rem" field="id" header="id"></Column>
-                  <Column field="nome" header="nome"></Column>
+                  <Column field="nomeMatriculado" header="nome"></Column>
                   <Column header="Presente" headerStyle="width: 80px;" bodyStyle=""  :exportable="false">
                     <template #body="slotProps">
                         <b-form-checkbox @change="marcarPresente(slotProps.data.presente)" :id="slotProps.data.id" v-model="slotProps.data.presente"  value="1"  unchecked-value="0">

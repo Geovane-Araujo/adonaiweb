@@ -100,7 +100,6 @@ export default {
         if (id !== -100) {
           this.form.add = false
           this.form.edit = true
-          this.professores = res.data.professores
         }
         this.openloading = false
         this.openModal = true

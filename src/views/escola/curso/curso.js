@@ -24,7 +24,7 @@ export default {
   methods: {
     async save (form) {
       this.openloading = true
-      await axios.post(adonai.url + 'classe', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      await axios.post(adonai.url + 'curso', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
           this.openModal = false
@@ -46,7 +46,7 @@ export default {
     },
     getbyId (id) {
       this.openloading = true
-      axios.get(adonai.url + 'classe/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      axios.get(adonai.url + 'curso/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.form = res.data.obj
         if (id !== -100) {
           this.form.add = false
