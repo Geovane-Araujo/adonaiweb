@@ -1,7 +1,7 @@
 import { mapState } from 'vuex'
 import { Bar } from 'vue-chartjs'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import adonai from '../../router/services'
+import adonai from '../../../http/router'
 import axios from 'axios'
 
 export default {

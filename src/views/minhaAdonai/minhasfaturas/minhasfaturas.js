@@ -2,7 +2,7 @@ import { mapState } from 'vuex'
 import util from '../../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
-import adonai from '../../router/services'
+import adonai from '../../../http/router'
 import expl from '../../../util/utilClass'
 
 export default {

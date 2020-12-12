@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { mapState } from 'vuex'
 import util from '../assets/scss/util'
-import adonai from '../views/router/services'
+import adonai from '../http/router'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import DataTable from 'primevue/datatable'

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import Services from './services'
-import adonai from '../views/router/services'
+import adonai from './router'
 
 Vue.use(VueResource)
 

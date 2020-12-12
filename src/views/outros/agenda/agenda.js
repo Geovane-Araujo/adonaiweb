@@ -1,7 +1,7 @@
 import { mapState } from 'vuex'
 import axios from 'axios'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import adonai from '../../router/services'
+import adonai from '../../../http/router'
 import FullCalendar from '@fullcalendar/vue'
 import util from '../../../assets/scss/util'
 import dayGridPlugin from '@fullcalendar/daygrid'

@@ -2,7 +2,7 @@ import { mapState } from 'vuex'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import Mapbox from 'mapbox-gl'
 import { MglMap, MglNavigationControl, MglGeolocateControl, MglMarker, MglPopup } from 'vue-mapbox'
-import adonai from '../../router/services'
+import adonai from '../../../http/router'
 import axios from 'axios'
 
 export default {

@@ -1,6 +1,6 @@
 import util from '../assets/scss/util'
 import axios from 'axios'
-import adonai from '../views/router/services'
+import adonai from '../http/router'
 
 export default {
   report: {

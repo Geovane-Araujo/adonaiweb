@@ -1,6 +1,6 @@
 import util from '../assets/scss/util'
 import Button from 'primevue/button'
-import adonai from '../views/router/services'
+import adonai from '../http/router'
 import axios from 'axios'
 
 export default {
