@@ -47,10 +47,10 @@ export default {
       axios.get(adonai.url + 'pagamentoboleto', { headers: { Authorization: 'Bearer ' + this.user.token, idcobranca: id } }).then(res => {
         this.openloading = false
         if (res.data.ret === 'success') {
-          window.open(res.data.obj.links[0].href)
+          window.open(res.data.link)
         } else {
           this.openloading = false
-          this.$toastr.error(res.data.obj.motivo, 'AdonaiSoft Diz:', util.toast)
+          this.$toastr.error(res.data.obj.errors[0].message, 'AdonaiSoft Diz:', util.toast)
         }
       }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     }
