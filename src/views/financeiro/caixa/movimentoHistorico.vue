@@ -9,42 +9,36 @@
         </div>
         <div class="col-sm-12" style="margin-top: -30px;">
           <!-- table -->
-          <table class="table table-botdered table-striped table-sm table-hover table-fixed">
-            <thead  style="max-height:10vh; overflow-y:auto;">
-              <tr class="text-left text-light" style="background-color: #5e8a75">
-                <th>ID</th>
-                <th>Caixa</th>
-                <th>DataAbertura</th>
-                <th>DataFechamento</th>
-                <th>Saldo</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="text-left" v-for="registro in caixamovimento" :key="registro.ID">
-                <td>{{ registro.ID }}</td>
-                <td>{{ registro.Descricao }}</td>
-                <td>{{ registro.DataAbertura }}</td>
-                <td>{{ registro.DataFechamento }}</td>
-                <td>{{ registro.Saldo }}</td>
-                <td>
-                  <a  style="margin-right: 15px;" id="link2" @click="imprimir ('report/financeiro/movimentacoes.jrxml',registro.ID)" class="text-info"><i class="fas fa-print"></i></a>
-                  <b-tooltip target="link2" title="Imprimir"></b-tooltip>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-           <footer class="footer" >
-            <b-input-group class="col-sm-12" style="padding-left: 0px;">
-              <button class="btn btn-outline-info" v-bind:disabled="(pagina == 1)"><i class="fas fa-caret-left"></i></button>
-              <b-form-input  class="col-sm-1 text-center" v-model="pagina"></b-form-input>
-              <button class="btn btn-outline-info" v-bind:disabled="(pagina == 1)" ><i class="fas fa-caret-right"></i></button>
-              <b-form-input placeholder="buscar" style="margin-left:10px" class="col-sm-5"></b-form-input>
-              <b-button variant="outline-info" class="material-icons">search</b-button>
-            </b-input-group>
-          </footer>
-        </div>
+          <DataTable
+          class="p-datatable-sm"
+          scrollHeight="400px"
+          :scrollable="true"
+          style="font-size:14px;"
+          :value="caixamovimento"
+          :paginator="true"
+          :rows="15"
+          :selection.sync="select"
+          paginatorTemplate=""
+          selectionMode="single" dataKey="ID"
+          @row-select="onRowSelect"
+          :resizableColumns="true"
+          columnResizeMode="fit">
+            <Column headerStyle="width: 30px;" field="ID" header="ID"></Column>
+            <Column field="Descricao" header="Descricao"></Column>
+            <Column field="DataAbertura" header="DataAbertura"></Column>
+            <Column field="DataFechamento" header="DataFechamento"></Column>
+            <Column field="Saldo" header="Saldo"></Column>
+            <Column headerStyle="width: 200px;" bodyStyle=""  :exportable="false">
+              <template #body="slotProps">
+                  <Button icon="pi pi-print" class="p-button-rounded p-button-outlined p-button-info p-button-sm" @click="imprimir ('report/financeiro/movimentacoes.jrxml',slotProps.data.ID)" />
+              </template>
+            </Column>
+            <template style="font-size:14px;" #paginatorLeft>
+              <Paginator @page="onPage($event)" class="p-paginator-success" :rows="15" :totalRecords="totalRows"></Paginator>
+           </template>
+          </DataTable>
       </div>
+    </div>
     </div>
   </div>
 </template>

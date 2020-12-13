@@ -7,7 +7,7 @@
           <p>Movimentações dos Caixas</p>
           <button
             class="btn btn-outline-info"
-            @click="form.del=false;form.add=true;form.edit=false; fechamento=false; abertura=true; title='Abertura de Caixa'; openModal=true; ">
+            @click="openCashier()">
             <i class="fas fa-lock-open"></i>&nbsp;&nbsp;Abrir Caixa
           </button>
           <hr class="bg-info">
@@ -31,9 +31,8 @@
             <Column field="Descricao" header="Descricao"></Column>
             <Column headerStyle="width: 200px;" bodyStyle=""  :exportable="false">
               <template #body="slotProps">
-                  <Button icon="fas fa-info" style="margin-left:10px;" class="p-button-rounded p-button-outlined p-button-success p-button-sm" @click="getSaldos (slotProps.data.ID, 0);" />
-                  <Button icon="far fa-eye" class="p-button-rounded p-button-outlined p-button-info p-button-sm" @click="getSaldos (slotProps.data.ID, 1)" />
-                  <Button icon="fas fa-lock" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="form.id=slotProps.data.ID; form.edit=true;form.add=false; fechamento=true; abertura=false;title='Fechamento de Caixa'; openModal=true;" />
+                  <Button icon="pi pi-eye" class="p-button-rounded p-button-outlined p-button-info p-button-sm" @click="getSaldos (slotProps.data.ID, 1)" />
+                  <Button icon="pi pi-lock" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="closeCashier(slotProps.data)" />
               </template>
             </Column>
           </DataTable>
@@ -76,102 +75,159 @@
         </div>
       </div>
     </div>
+    <Dialog style="font-size:10px;" header="Abertura de Caixa" :visible.sync="openModalAbertura" :style="{width: resizeAbertura+'vw'}" :modal="true">
+      <form method="POST">
+        <b-container>
+          <b-row class="text-center">
+            <b-col cols="12">
+              <div class="row">
+                <div v-show="abertura" class="col-sm-3">
+                  <b-form-group label="Data Abertura" label-align-sm="left">
+                    <datetime
+                      class="datePivker"
+                      v-bind:disabled="(true)"
+                      type="Date"
+                      value-zone="UTC"
+                      format="dd/MM/yyyy"
+                      v-model="form.dataAbertura">
+                    </datetime>
+                  </b-form-group>
+                </div>
+                <div v-show="abertura" class="col-sm-9">
+                  <b-form-group label="Caixa" label-align="left">
+                    <b-input-group>
+                      <b-form-input placeholder="Caixa"
+                      v-model="form.descricao"
+                      ></b-form-input>
+                        <b-input-group-append >
+                        <b-button variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
+                      </b-input-group-append>
+                    </b-input-group>
+                  </b-form-group>
+                </div>
+                <div v-show="abertura" class="col-sm-6">
+                  <b-form-group label="Saldo Anterior" label-align="left">
+                    <money  type="text"
+                      class="form-control"
+                      v-bind="currency"
+                      v-bind:disabled="true"
+                      placeholder="Saldo Anterior"
+                      v-model="saldoAnterior"/>
+                  </b-form-group>
+                </div>
+                <div v-show="abertura" class="col-sm-6">
+                  <b-form-group label="Saldo Inicial" label-align="left">
+                    <money  type="text"
+                    class="form-control"
+                    v-bind="currency"
+                    placeholder="Saldo Inicial"
+                    v-model="form.saldoInicial"/>
+                  </b-form-group>
+                </div>
+              </div>
+            </b-col>
+          </b-row>
+        </b-container>
+      </form>
+      <template #footer>
+          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+          <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
+      </template>
+    </Dialog>
 
-    <!-- modal para cadastro-->
-    <div id="overlay" v-if=openModal>
-        <div class="modal-dialog modal-dialog-centered modal-md ">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">{{ title }}</h5>
-              <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form method="POST">
-                <b-container>
-                  <b-row class="text-center">
-                    <b-col cols="12">
-                      <div class="row">
-                        <div v-show="abertura" class="col-sm-12">
-                          <b-input-group>
-                            <b-form-input placeholder="Caixa"
-                            v-model="form.descricao"
-                            ></b-form-input>
-                              <b-input-group-append >
-                              <b-button variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
-                            </b-input-group-append>
-                          </b-input-group>
-                        </div>
-                        <div v-show="abertura" class="col-sm-12">
-                          <money  type="text"
-                          class="form-control"
+    <Dialog style="font-size:10px;" header="Fechamento de Caixa" :visible.sync="openModalFechamento" :style="{width: resizeFechamento+'vw'}" :modal="true">
+      <form method="POST">
+        <b-container>
+          <b-row class="text-center">
+            <b-col cols="12">
+              <div class="row">
+                <div class="col-sm-3">
+                  <b-form-group label="Data Abertura" label-align-sm="left">
+                    <datetime
+                      class="datePivker"
+                      v-bind:disabled="(true)"
+                      type="Date"
+                      value-zone="UTC"
+                      format="dd/MM/yyyy"
+                      v-model="form.dataFechamento">
+                    </datetime>
+                  </b-form-group>
+                </div>
+                <div class="col-sm-9">
+                  <b-form-group label="Caixa" label-align="left">
+                    <b-input-group v-bind:disabled="true">
+                      <b-form-input v-bind:disabled="true" placeholder="Caixa" v-model="form.descricao"
+                      ></b-form-input>
+                        <b-input-group-append >
+                        <b-button v-bind:disabled="true" variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
+                      </b-input-group-append>
+                    </b-input-group>
+                  </b-form-group>
+                </div>
+                <div class="col-sm-12">
+                  <b-form-group label="Valor das Movimentações por tipo" label-align="left">
+                    <DataTable :value="movimentacoes.movimento" :scrollable="true" scrollHeight="200px" :loading="loading">
+                      <Column headerStyle="width: 30vw;" field="descricao" header="descricao"></Column>
+                      <Column field="valor" header="valor"></Column>
+                      <Column field="tipo" header="tipo"></Column>
+                    </DataTable>
+                  </b-form-group>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                    <div class="col-sm-3">
+                      <b-form-group label="Saldo Inicial" label-align="left" class="text-info">
+                        <money type="text"
+                          class="form-control text-info"
                           v-bind="currency"
-                          placeholder="Saldo Inicial"
-                          v-model="form.saldoInicial"/>
-                        </div>
-                        <div v-show="fechamento" class="col-sm-12">
-                          <money  type="text"
-                          class="form-control"
+                          disabled=""
+                          v-model="movimentacoes.saldos.saldoinicial"/>
+                        </b-form-group>
+                    </div>
+                    <div class="col-sm-3">
+                      <b-form-group label="Receitas" label-align="left" class="text-success">
+                        <money type="text"
+                          class="form-control text-success "
                           v-bind="currency"
-                          placeholder="Valor Conferido"
-                          v-model="form.conferido"/>
-                        </div>
-                      </div>
-                    </b-col>
-                  </b-row>
-                </b-container>
-              </form>
-              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form)">Salvar</button>
-            </div>
-          </div>
-        </div>
-    </div>
-    <!-- modal para cadastro-->
-    <div id="overlay" v-if=openDetail>
-        <div class="modal-dialog modal-dialog-centered modal-md ">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Detalhes</h5>
-              <button type="button" class="close"  @click="cleanForm(form); openDetail=false;">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form method="POST">
-                <b-container>
-                  <b-row class="text-center">
-                    <b-col cols="12">
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
-                            <thead>
-                              <tr class="text-left text-light" style="background-color: #5e8a75">
-                                <th>Tipo</th>
-                                <th>Total</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr class="text-left" v-for="detail in saldos.detalhes" :key="detail.tipo">
-                                <td>{{ detail.tipo }}</td>
-                                <td>{{ detail.valor }}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </b-col>
-                  </b-row>
-                </b-container>
-              </form>
-            </div>
-          </div>
-        </div>
-    </div>
+                          disabled=""
+                          v-model="movimentacoes.saldos.receitas"/>
+                        </b-form-group>
+                    </div>
+                    <div class="col-sm-3">
+                      <b-form-group label="Despesas" label-align="left" class="text-danger">
+                        <money type="text"
+                          class="form-control text-danger"
+                          v-bind="currency"
+                          disabled=""
+                          v-model="movimentacoes.saldos.despesas"/>
+                      </b-form-group>
+                    </div>
+                    <div class="col-sm-3">
+                      <b-form-group label="Saldo Total" label-align="left" class="text-info">
+                        <money type="text"
+                        class="form-control text-info"
+                        v-bind="currency"
+                        disabled=""
+                        v-model="movimentacoes.saldos.saldototal"/>
+                      </b-form-group>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </b-col>
+          </b-row>
+        </b-container>
+      </form>
+      <template #footer>
+          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+          <Button label="Fechar Caixa" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
+      </template>
+    </Dialog>
+
     <adonaidatasearch
     :title="ds.title"
     :cabecalho="ds.grid"
-    :form="form" v-bind:openDatasearch="open"
+    :form="form"
     :destroy="destroy"
     ref="teste"/>
   </div>
@@ -179,56 +235,5 @@
 
 <script src="./movimento.js">
 </script>
-<style lang=scss scoped>
-label {
-  background-color: #3498db;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  margin: 10px;
-  padding: 6px 20px;
-}
-p {
-  font-size: 30px;
-}
-.table-sm {
-  padding: 2px;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-tr {
-  line-height: 14px;
-  font-size: 13px;
-}
-button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
-#loading {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 5000;
-  left: 0;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-footer {
-    position: fixed;
-    bottom:10px;
-}
-.footer {
-  box-shadow:2px rgba(0, 0, 0, 0.25);
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>

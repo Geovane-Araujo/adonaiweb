@@ -4,6 +4,7 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import adonai from '../../../http/router'
 import rel from '../../../util/utilClass'
+import { Datetime } from 'vue-datetime'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import DataTable from 'primevue/datatable'
@@ -15,21 +16,18 @@ var data = new Date()
 export default {
   data () {
     return {
-      openModal: false,
+      openModalAbertura: false,
       openDetail: false,
       openloading: false,
+      openModalFechamento: false,
       disabled: 'disabled',
       abertura: false,
       fechamento: false,
       title: '',
-      open: false,
       ds: {
         grid: [],
         title: ''
       },
-      pagina: 1,
-      tipo: 0,
-      status: 1,
       form: {
         add: true,
         edit: false,
@@ -43,9 +41,7 @@ export default {
         dataAbertura: '',
         dataFechamento: '',
         idPessoaFechamento: '',
-        status: '',
-        retorno: '',
-        moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
+        status: ''
       },
       saldos: {
         despesas: '',
@@ -63,15 +59,55 @@ export default {
         precision: 2,
         masked: false
       },
-      ref: '',
-      buscar: '',
-      criterio: ''
+      saldoAnterior: '',
+      criterio: '',
+      movimentacoes: {
+        movimento: '',
+        saldos: ''
+      },
+      resizeAbertura: 40,
+      resizeFechamento: 50
     }
   },
   mounted () {
     this.get()
+    this.onResize()
   },
   methods: {
+    openCashier () {
+      this.form.dataAbertura = moment(data).format()
+      this.form.del = false
+      this.form.add = true
+      this.form.edit = false
+      this.fechamento = false
+      this.abertura = true
+      this.form.descricao = ''
+      this.saldoAnterior = ''
+      this.openModalAbertura = true
+    },
+    closeCashier (obj) {
+      this.form.dataFechamento = moment(data).format()
+      this.form.del = false
+      this.form.add = false
+      this.form.edit = true
+      this.fechamento = true
+      this.form.descricao = obj.Descricao
+      this.abertura = false
+      this.form.id = obj.ID
+
+      axios.get(adonai.url + 'fechamentodetalhe/' + obj.ID + '/' + this.user.id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data.ret === 'success') {
+          this.movimentacoes.movimento = res.data.obj.movimento
+          if (res.data.obj.saldos.permite !== 0) {
+            this.movimentacoes.saldos = res.data.obj.saldos
+          }
+          this.openModalFechamento = true
+        } else {
+          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+        }
+        this.openloading = false
+      }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+    },
     async save (form, abertura) {
       this.openloading = true
       if (abertura === true) {
@@ -79,8 +115,7 @@ export default {
           if (res.data.ret === 'success') {
             this.$toastr.success('Caixa Aberto com Sucesso', 'AdonaiSoft diz:', util.toast)
             this.get()
-            this.cleanForm()
-            this.openModal = false
+            this.openModalAbertura = false
             this.openloading = false
           } else {
             this.$toastr.error(res.data, 'AdonaiSpft diz:', util.toast)
@@ -92,8 +127,7 @@ export default {
           if (res.data.ret === 'success') {
             this.$toastr.success('Caixa Fechado com Sucesso', 'AdonaiSoft diz:', util.toast)
             this.get()
-            this.cleanForm()
-            this.openModal = false
+            this.openModalFechamento = false
             this.openloading = false
             window.open(res.data.obj)
           } else {
@@ -128,10 +162,8 @@ export default {
         this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSft diz:', util.toast)
       } else {
         if (this.abertura === true) {
-          form.dataAbertura = moment(data).format('YYYY-MM-DD')
           form.idPessoaFechamento = this.user.id
         } else {
-          form.dataFechamento = moment(data).format('YYYY-MM-DD')
           form.idPessoaFechamento = this.user.id
         }
         this.save(form, this.abertura)
@@ -187,53 +219,27 @@ export default {
         this.open = true
       }
     },
-    cleanForm () {
-      this.form.add = true
-      this.form.edit = false
-      this.form.del = false
-      this.form.id = ''
-      this.form.descricao = ''
-      this.form.dataAbertura = ''
-      this.form.dataFechamento = ''
-      this.form.saldoInicial = ''
-      this.form.idbanco = ''
-      this.form.idCaixa = ''
-      this.form.receitas = 0
-      this.form.despesas = 0
-      this.form.idPessoaFechamento = ''
-      this.form.status = ''
-      this.form.retorno = ''
-      this.form.motivo = ''
-    },
-    read (form) {
-      this.form.add = form.add
-      this.form.edit = form.edit
-      this.form.del = form.del
-      this.form.id = form.id
-      this.form.descricao = form.descricao
-      this.form.dataAbertura = form.dataAbertura
-      this.form.dataFechamento = form.dataFechamento
-      this.form.saldoInicial = 0
-      this.form.saldo = 0
-      this.form.idCaixa = form.idCaixa
-      this.form.idPessoaFechamento = this.user.id
-      this.form.status = form.status
-
-      this.form.retorno = form.retorno
-      this.form.moment = moment(data).format('YYYY-MM-DD HH:mm:ss')
-      this.openModal = true
-    },
-    getbyId (id) {
-      this.openloading = true
-      axios.get(adonai.url + 'caixamovimento/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data)
-        this.openloading = false
-      })
-    },
     destroy (registro, params) {
       this.form.descricao = registro.Descricao
       this.form.idCaixa = registro.ID
-      this.open = false
+      this.openloading = true
+      axios.get(adonai.url + 'saldoanterior/' + registro.ID, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data.ret === 'success') {
+          this.saldoAnterior = res.data.obj
+        } else {
+          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+        }
+        this.openloading = false
+      }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+    },
+    onResize () {
+      if (window.innerWidth <= 767) {
+        this.resizeAbertura = 100
+        this.resizeFechamento = 100
+      } else {
+        this.resizeAbertura = 40
+        this.resizeFechamento = 50
+      }
     }
   },
   components: {
@@ -241,7 +247,8 @@ export default {
     Button,
     DataTable,
     Column,
-    Paginator
+    Paginator,
+    datetime: Datetime
   },
   computed: {
     ...mapState('auth', ['user'])

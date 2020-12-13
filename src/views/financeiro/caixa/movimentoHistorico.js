@@ -4,6 +4,10 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import adonai from '../../../http/router'
 import expl from '../../../util/utilClass'
+import Button from 'primevue/button'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import Paginator from 'primevue/paginator'
 
 export default {
   data () {
@@ -14,7 +18,8 @@ export default {
         title: ''
       },
       pagina: 1,
-      caixamovimentoHistorico: []
+      caixamovimentoHistorico: [],
+      totalRows: 0
     }
   },
   mounted () {
@@ -28,6 +33,7 @@ export default {
         this.openloading = false
         if (res.data.ret === 'success') {
           this.caixamovimento = res.data.obj
+          this.totalRows = res.data.totalRows
         } else {
           this.openloading = false
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
@@ -42,7 +48,18 @@ export default {
         this.openloading = false
         window.open(res.data)
       }).catch(err => util.error(err))
+    },
+    onPage (event) {
+      event.page += 1
+      expl.explorer.pagina = event.page
+      this.get(expl.explorer)
     }
+  },
+  components: {
+    Button,
+    DataTable,
+    Column,
+    Paginator
   },
   computed: {
     ...mapState('auth', ['user'])
