@@ -14,31 +14,29 @@
         </div>
         <div class="col-sm-12" style="margin-top: -30px;">
           <!-- table -->
-          <table class="table table-botdered table-striped table-sm table-hover table-fixed">
-            <thead  style="max-height:10vh; overflow-y:auto;">
-              <tr class="text-left text-light" style="background-color: #5e8a75">
-                <th>ID</th>
-                <th>Caixa</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="text-left" v-for="registro in caixamovimento" :key="registro.id">
-                <td>{{ registro.ID }}</td>
-                <td>{{ registro.Descricao }}</td>
-                <td>
-                  <a style="margin-right: 15px;" id="link1" @click="getSaldos (registro.ID, 0);" class="text-success"><i class="fas fa-info"></i></a>
-                  <b-tooltip target="link1" title="Detalhar Entradas e Saídas"></b-tooltip>
-                  &nbsp;&nbsp;&nbsp;
-                  <a  style="margin-right: 15px;" id="link2" @click="getSaldos (registro.ID, 1)" class="text-info"><i class="far fa-eye"></i></a>
-                  <b-tooltip target="link2" title="Mostrar Saldo"></b-tooltip>
-                  &nbsp;&nbsp;&nbsp;
-                  <a style="margin-right: 0px;" id="link3" @click="form.id=registro.ID; form.edit=true;form.add=false; fechamento=true; abertura=false;title='Fechamento de Caixa'; openModal=true; " class="text-danger"><i class="fas fa-lock"></i></a>
-                  <b-tooltip target="link3" title="Fechar Caixa"></b-tooltip>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <DataTable
+          class="p-datatable-sm"
+          scrollHeight="400px"
+          :scrollable="true"
+          style="font-size:14px;"
+          :value="caixamovimento"
+          :paginator="false"
+          :selection.sync="select"
+          paginatorTemplate=""
+          selectionMode="single" dataKey="ID"
+          @row-select="onRowSelect"
+          :resizableColumns="true"
+          columnResizeMode="fit">
+            <Column headerStyle="width: 30px;" field="ID" header="ID"></Column>
+            <Column field="Descricao" header="Descricao"></Column>
+            <Column headerStyle="width: 200px;" bodyStyle=""  :exportable="false">
+              <template #body="slotProps">
+                  <Button icon="fas fa-info" style="margin-left:10px;" class="p-button-rounded p-button-outlined p-button-success p-button-sm" @click="getSaldos (slotProps.data.ID, 0);" />
+                  <Button icon="far fa-eye" class="p-button-rounded p-button-outlined p-button-info p-button-sm" @click="getSaldos (slotProps.data.ID, 1)" />
+                  <Button icon="fas fa-lock" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="form.id=slotProps.data.ID; form.edit=true;form.add=false; fechamento=true; abertura=false;title='Fechamento de Caixa'; openModal=true;" />
+              </template>
+            </Column>
+          </DataTable>
           <footer class="footer">
             <div class="row">
               <div class="col-sm-2">

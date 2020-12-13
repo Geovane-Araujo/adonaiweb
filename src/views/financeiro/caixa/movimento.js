@@ -4,6 +4,11 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import adonai from '../../../http/router'
 import rel from '../../../util/utilClass'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import Paginator from 'primevue/paginator'
 var moment = require('moment')
 var data = new Date()
 
@@ -230,6 +235,13 @@ export default {
       this.form.idCaixa = registro.ID
       this.open = false
     }
+  },
+  components: {
+    Dialog,
+    Button,
+    DataTable,
+    Column,
+    Paginator
   },
   computed: {
     ...mapState('auth', ['user'])

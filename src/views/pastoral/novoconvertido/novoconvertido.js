@@ -4,8 +4,11 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
 import axios from 'axios'
 import rel from '../../../util/utilClass'
-var moment = require('moment')
-var data = new Date()
+import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
 
 export default {
   data () {
@@ -13,6 +16,7 @@ export default {
       openModal: false,
       openloading: false,
       open: false,
+      resize: 0,
       explorer: {
         route: 'menu_pessoas_novoconvertido',
         pagina: 1,
@@ -28,7 +32,6 @@ export default {
         title: '',
         params: ''
       },
-      status: '',
       form: {
         add: true,
         edit: false,
@@ -38,6 +41,7 @@ export default {
         idPessoa: '',
         observacoes: '',
         dataConversao: '',
+        dataNascimento: '',
         endereco: [
           {
             id: '',
@@ -74,13 +78,13 @@ export default {
             email: '',
             tipo: 0
           }
-        ],
-        motivo: '',
-        moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
-      }
+        ]
+      },
+      img: ''
     }
   },
   mounted () {
+    this.onResize()
     this.$refs.grid.get(this.explorer)
   },
   methods: {
@@ -88,15 +92,7 @@ export default {
       this.openloading = true
       await axios.post(adonai.url + 'novoconvertido', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          if (this.form.add === true) {
-            this.status = 'Salvo com Sucesso'
-          } else if (this.form.edit === true) {
-            this.status = 'Alterado com Sucesso'
-          } else {
-            this.status = 'Excluido com Sucesso'
-          }
-          this.$toastr.success(this.status, 'Cadastro de Membros', util.toast)
-          this.cleanForm()
+          this.$toastr.success('Salvo com Sucesso', 'Cadastro de Membros', util.toast)
           this.openloading = false
           this.openModal = false
           this.$refs.grid.get(this.explorer)
@@ -112,81 +108,6 @@ export default {
         this.save(form)
       }
     },
-    cleanForm () {
-      this.form.id = ''
-      this.form.nome = ''
-      this.form.idPessoa = ''
-      this.form.observacoes = ''
-      this.form.dataConversao = ''
-
-      this.form.endereco[0].id = ''
-      this.form.endereco[0].idPessoa = ''
-      this.form.endereco[0].endereco = ''
-      this.form.endereco[0].bairro = ''
-      this.form.endereco[0].idCidade = ''
-      this.form.endereco[0].cidade = ''
-      this.form.endereco[0].numero = ''
-      this.form.endereco[0].uf = ''
-      this.form.endereco[0].cep = ''
-      this.form.endereco[0].complemto = ''
-      this.form.endereco[0].tipo = 0
-
-      this.form.telefone[0].id = ''
-      this.form.telefone[0].idPessoa = ''
-      this.form.telefone[0].telefone = ''
-      this.form.telefone[0].tipo = 0
-
-      this.form.telefone[1].id = ''
-      this.form.telefone[1].idPessoa = ''
-      this.form.telefone[1].telefone = ''
-      this.form.telefone[1].tipo = 1
-
-      this.form.email[0].id = ''
-      this.form.email[0].idPessoa = ''
-      this.form.email[0].email = ''
-      this.form.email[0].tipo = 0
-
-      this.form.retorno = ''
-      this.form.motivo = ''
-    },
-    read (form) {
-      this.form.id = form.id
-      this.form.nome = form.nome
-      this.form.idPessoa = form.idPessoa
-      this.form.observacoes = form.observacoes
-      this.form.dataConversao = form.dataConversao
-
-      this.form.endereco[0].id = form.endereco[0].id
-      this.form.endereco[0].idPessoa = form.endereco[0].idPessoa
-      this.form.endereco[0].endereco = form.endereco[0].endereco
-      this.form.endereco[0].bairro = form.endereco[0].bairro
-      this.form.endereco[0].idCidade = form.endereco[0].idCidade
-      this.form.endereco[0].cidade = form.endereco[0].cidade
-      this.form.endereco[0].numero = form.endereco[0].numero
-      this.form.endereco[0].uf = form.endereco[0].uf
-      this.form.endereco[0].cep = form.endereco[0].cep
-      this.form.endereco[0].complemento = form.endereco[0].complemento
-      this.form.endereco[0].tipo = 0
-
-      this.form.telefone[0].id = form.telefone[0].id
-      this.form.telefone[0].idPessoa = form.telefone[0].idPessoa
-      this.form.telefone[0].telefone = form.telefone[0].telefone
-      this.form.telefone[0].tipo = 0
-
-      this.form.telefone[1].id = form.telefone[1].id
-      this.form.telefone[1].idPessoa = form.telefone[1].idPessoa
-      this.form.telefone[1].telefone = form.telefone[1].telefone
-      this.form.telefone[1].tipo = 1
-
-      this.form.email[0].id = form.email[0].id
-      this.form.email[0].idPessoa = form.email[0].idPessoa
-      this.form.email[0].email = form.email[0].email
-      this.form.email[0].tipo = 0
-
-      this.form.retorno = form.retorno
-      this.form.motivo = form.motivo
-      this.openModal = true
-    },
     imprimir (relatorio) {
       rel.report.relatorio = relatorio
       this.openloading = true
@@ -194,6 +115,20 @@ export default {
         this.openloading = false
         window.open(res.data)
       }).catch(err => util.error(err))
+    },
+    previewFiles (e) {
+      var file = e.target.files[0]
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = e => {
+        this.form.foto = e.target.result
+        this.openloading = true
+        axios.post(adonai.url + 'base64toimage', this.form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          this.openloading = false
+          this.img = adonai.urli + res.data
+          this.form.foto = res.data
+        }).catch(err => util.error(err))
+      }
     },
     buscarcep (cep, form, local) {
       cep = cep.replace('-', '')
@@ -213,7 +148,16 @@ export default {
       this.openloading = true
       axios.get(adonai.url + 'novoconvertidobyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          this.read(res.data.obj)
+          if (id === -100) {
+            this.form = res.data.obj
+            this.img = adonai.urli + this.form.foto
+          } else {
+            this.form = res.data.obj
+            this.form.add = false
+            this.form.edit = true
+            this.img = adonai.urli + this.form.foto
+          }
+          this.openModal = true
           this.openloading = false
         } else {
           this.$toastr.error(res.data, 'AdonaiSoft', util.toast)
@@ -238,7 +182,20 @@ export default {
         this.form.endereco[1].idCidade = registro.id
       }
       this.open = false
+    },
+    onResize () {
+      if (window.innerWidth <= 767) {
+        this.resize = 100
+      } else {
+        this.resize = 70
+      }
     }
+  },
+  components: {
+    datetime: Datetime,
+    Dialog,
+    Button,
+    InputText
   },
   computed: {
     ...mapState('auth', ['user'])

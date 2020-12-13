@@ -6,6 +6,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import Paginator from 'primevue/paginator'
 
 export default {
   name: 'adonaidatasearch',
@@ -21,6 +22,7 @@ export default {
       contexto: '',
       criterio: '',
       extraparams: '',
+      totalRows: 200,
       expl: {
         route: '',
         pagina: 1,
@@ -37,11 +39,12 @@ export default {
       this.openloading = true
       axios.post(adonai.url + 'aexplorer', criterios, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.registros = res.data.obj
-        this.explo = criterios
+        this.expl = criterios
         this.pagina = criterios.pagina
         this.params = params
         this.extraparams = extraparams
         this.openloading = false
+        this.totalRows = res.data.totalRows
         this.validate(criterios.pagina, this.registros.length)
         this.openDatasearch = true
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
@@ -55,10 +58,11 @@ export default {
         if (this.newchurch === '9999') {
           this.user.token = 'OTk5OSYwJmFkb25haTA5ODAyNjYzOTQ4'
         }
-        this.explo.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
-        axios.post(adonai.url + 'aexplorer', this.explo, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.expl.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
+        axios.post(adonai.url + 'aexplorer', this.expl, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
             this.registros = res.data.obj
+            this.totalRows = res.data.totalRows
           } else {
             this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
           }
@@ -74,18 +78,14 @@ export default {
       }
     },
     onRoute () {
-      if (this.explo.route === 'exp_municipio') {
+      if (this.expl.route === 'exp_municipio') {
         this.criterio = 'municipio.nome'
       }
     },
-    paging (event) {
-      if (event === 0) {
-        this.explo.pagina += 1
-        this.dataSearch(this.explo, '', this.params)
-      } else {
-        this.explo.pagina -= 1
-        this.dataSearch(this.explo, '', this.params)
-      }
+    onPage (event) {
+      event.page += 1
+      this.expl.pagina = event.page
+      this.dataSearch(this.expl, this.params, this.extraparams)
     },
     onSelectRsgister (cabecalho) {
       this.criterio = cabecalho
@@ -107,7 +107,8 @@ export default {
     Dialog,
     Button,
     DataTable,
-    Column
+    Column,
+    Paginator
   },
   computed: {
     ...mapState('auth', ['user'])

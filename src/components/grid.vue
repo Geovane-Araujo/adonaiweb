@@ -28,7 +28,7 @@
             </template>
         </Column>
         <template style="font-size:14px;" #paginatorLeft>
-          <Paginator @page="onPage($event)" class="p-paginator-success" :rows="10" :totalRecords="totalRows"></Paginator>
+          <Paginator @page="onPage($event)" class="p-paginator-success" :rows="15" :totalRecords="totalRows"></Paginator>
         </template>
         <template style="font-size:14px;" #paginatorRight>
           <InputText style="margin-right:10px;" v-model="buscar" @keyup="getexplorer(buscar)"  placeholder="Pesquisar"/>
