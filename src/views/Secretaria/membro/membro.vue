@@ -12,7 +12,7 @@
           </button>
           <button
             class="btn btn-outline-info float-right"
-            @click="imprimir('report/pessoas/membrolist.jrxml')">
+            @click="openloading=true;imprimir('report/pessoas/membrolist.jrxml');">
             <i class="fas fa-print"></i>&nbsp;&nbsp;{{ mobileI }}
           </button>
           <button
@@ -155,7 +155,7 @@
                         <b-input-group>
                           <b-form-input placeholder="CEP" v-mask="'#####-###'" v-model="form.endereco[0].cep" ></b-form-input>
                             <b-input-group-append >
-                            <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 1)">search</b-button>
+                            <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 0)">search</b-button>
                           </b-input-group-append>
                         </b-input-group>
                       </div>
@@ -213,7 +213,7 @@
                         <b-input-group>
                           <b-form-input placeholder="CEP" v-mask="'#####-###'" v-model="form.endereco[1].cep"></b-form-input>
                           <b-input-group-append>
-                            <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 2)">search</b-button>
+                            <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[1].cep, form, 1)">search</b-button>
                           </b-input-group-append>
                         </b-input-group>
                       </div>

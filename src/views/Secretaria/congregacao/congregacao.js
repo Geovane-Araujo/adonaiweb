@@ -145,18 +145,7 @@ export default {
       this.form.motivo = ''
     },
     buscarcep (cep, form, local) {
-      cep = cep.replace('-', '')
-      axios.get(adonai.url + 'cep/' + cep, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data.ret === 'unsuccess') {
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
-        } else {
-          form.endereco[0].endereco = res.data.obj.logradouro
-          form.endereco[0].bairro = res.data.obj.bairro
-          form.endereco[0].cidade = res.data.obj.localidade
-          form.endereco[0].uf = res.data.obj.uf
-          form.endereco[0].idCidade = res.data.obj.idCidade
-        }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
+      rel.methods.onSearchCep(cep, form, local, this.user.token)
     },
     imprimir (relatorio) {
       rel.report.relatorio = relatorio

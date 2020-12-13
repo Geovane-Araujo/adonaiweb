@@ -76,7 +76,7 @@
                 v-mask="'#####-###'"
                   ></b-form-input>
                   <b-input-group-append >
-                  <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 1)">search</b-button>
+                  <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 0)">search</b-button>
                 </b-input-group-append>
               </b-input-group>
             </div>

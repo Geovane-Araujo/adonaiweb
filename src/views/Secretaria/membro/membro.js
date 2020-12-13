@@ -169,33 +169,15 @@ export default {
         }).catch(err => util.error(err))
       }
     },
-    imprimir (relatorio) {
-      this.openloading = true
+    async imprimir (relatorio) {
       rel.report.relatorio = relatorio
-      rel.methods.imprimir(rel.report, this.user.token)
+      await rel.methods.imprimir(rel.report, this.user.token)
       this.openloading = false
     },
-    buscarcep (cep, form, local) {
-      cep = cep.replace('-', '')
-      axios.get(adonai.url + 'cep/' + cep, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (res.data.ret === 'unsuccess') {
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
-        } else {
-          if (local === 1) {
-            form.endereco[0].endereco = res.data.obj.logradouro
-            form.endereco[0].bairro = res.data.obj.bairro
-            form.endereco[0].cidade = res.data.obj.localidade
-            form.endereco[0].uf = res.data.obj.uf
-            form.endereco[0].idCidade = res.data.obj.idCidade
-          } else {
-            form.endereco[1].endereco = res.data.obj.logradouro
-            form.endereco[1].bairro = res.data.obj.bairro
-            form.endereco[1].cidade = res.data.obj.localidade
-            form.endereco[1].uf = res.data.obj.uf
-            form.endereco[1].idCidade = res.data.obj.idCidade
-          }
-        }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
+    async buscarcep (cep, form, local) {
+      this.openloading = true
+      await rel.methods.onSearchCep(cep, form, local, this.user.token)
+      this.openloading = false
     },
     getbyId (id) {
       this.openloading = true
