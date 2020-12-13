@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-sm-12">
           <p>Cadastro de Usuários</p>
-          <button class="btn btn-outline-info" @click="openModal=true">
+          <button class="btn btn-outline-info" @click="getbyId(-100)">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
           <hr class="bg-info" >
@@ -29,47 +29,51 @@
               <b-tabs class="mt-1">
                 <b-tab title="Principal">
                   <b-row class="text-center">
-                    <div class="file-loading">
-                      <b-avatar :src="form.pathimg" size="5rem"></b-avatar>
-                      <div>
-                        <label for='selecao-arquivo' class="material-icons">perm_media</label>
-                        <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
-                        <label class="material-icons label2" @click="form.pathimg=''" >delete_forever</label>
+                    <div class="col-sm-2">
+                      <div class="file-loading">
+                        <b-avatar :src="img" size="5rem"></b-avatar>
+                        <div>
+                          <label for='selecao-arquivo' class="material-icons">perm_media</label>
+                          <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
+                          <label class="material-icons label2" @click="form.foto='';img=''" >delete_forever</label>
+                        </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <input type="text"
-                          name="nome"
-                          autocomplete="off"
-                          class="form-control"
-                          placeholder="Nome"
-                          v-model="form.nome">
+                    <div class="col-sm-10">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <input type="text"
+                            name="nome"
+                            autocomplete="off"
+                            class="form-control"
+                            placeholder="Nome"
+                            v-model="form.nome">
+                        </div>
+                        <div class="col-sm-6">
+                          <input type="text"
+                            name="nome"
+                            autocomplete="off"
+                            class="form-control"
+                            placeholder="Login"
+                            v-model="form.login ">
+                        </div>
+                        <div class="col-sm-6">
+                          <input type="password"
+                            name="senha"
+                            autocomplete="off"
+                            class="form-control"
+                            placeholder="Senha"
+                            v-model="form.senha">
+                        </div>
+                        <div class="col-sm-6">
+                          <input type="password"
+                            name="confirmarsenha"
+                            autocomplete="off"
+                            class="form-control"
+                            placeholder="Confirmar Senha"
+                            v-model="form.confirmarSenha">
+                        </div>
                       </div>
-                      <div class="col-sm-12">
-                        <input type="text"
-                          name="nome"
-                          autocomplete="off"
-                          class="form-control"
-                          placeholder="Login"
-                          v-model="form.login ">
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="password"
-                        name="senha"
-                        autocomplete="off"
-                        class="form-control"
-                        placeholder="Senha"
-                        v-model="form.senha">
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="password"
-                        name="confirmarsenha"
-                        autocomplete="off"
-                        class="form-control"
-                        placeholder="Confirmar Senha"
-                        v-model="form.confirmarSenha">
                     </div>
                   </b-row>
                 </b-tab>

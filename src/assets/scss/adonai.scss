@@ -1,0 +1,58 @@
+label {
+  background-color: #5e8a75;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  margin: 5px;
+  padding: 6px
+}
+.label2 {
+  background-color: #a13b3b;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  margin: 5px;
+  padding: 6px
+}
+input[type='file'] {
+  display: none
+}
+p {
+  font-size: 30px;
+}
+.datePivker{
+  margin-left: 2px;
+  padding: 5px;
+  height: 38px;
+  border:solid 1px;
+  border-radius:3px;
+  font-size: 16px;
+  border-color:#cacdcf;
+  text-align: center;
+}
+#overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  right: 0;
+  background: rgba($color: #000000, $alpha: 0.7);
+}
+#loading {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 5000;
+  left: 0;
+  right: 0;
+  background: rgba($color: #000000, $alpha: 0.7);
+}
+button {
+  color: #5e8a75;
+  border-color:#5e8a75;
+}
+button:hover {
+  background-color: #5e8a75;
+  border-color:#5e8a75;
+}

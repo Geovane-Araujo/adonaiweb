@@ -32,7 +32,7 @@ export default {
       senha: '',
       confirmarSenha: '',
       motivo: '',
-      pathimg: '',
+      foto: '',
       retorno: '',
       idPessoa: '',
       permissaoUsuario: {
@@ -45,7 +45,8 @@ export default {
         usuarios: 0,
         relatorios: 0
       }
-    }
+    },
+    img: ''
   }),
   mounted () {
     this.onResize()
@@ -56,15 +57,7 @@ export default {
       this.openloading = true
       await axios.post(adonai.url + 'usuario', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          if (this.form.add === true) {
-            this.status = 'Salvo com Sucesso'
-          } else if (this.form.edit === true) {
-            this.status = 'Alterado com Sucesso'
-          } else {
-            this.status = 'Excluido com Sucesso'
-          }
-          this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
-          this.clean(form)
+          this.$toastr.success('Salvo com Sucesso', 'Cadastro de Igrejas', util.toast)
           this.openloading = false
           this.openModal = false
           this.$refs.grid.get(this.explorer)
@@ -79,7 +72,13 @@ export default {
       var reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = e => {
-        this.form.pathimg = e.target.result
+        this.form.foto = e.target.result
+        this.openloading = true
+        axios.post(adonai.url + 'base64toimage', this.form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          this.openloading = false
+          this.img = adonai.urli + res.data
+          this.form.foto = res.data
+        }).catch(err => util.error(err))
       }
     },
     validate (form) {
@@ -89,48 +88,18 @@ export default {
         this.save(form)
       }
     },
-    clean (form) {
-      form.edit = false
-      form.del = false
-      form.add = true
-      form.id = ''
-      form.idPessoa = ''
-      form.login = ''
-      form.nome = ''
-      form.senha = ''
-      form.pathimg = ''
-      form.confirmarSenha = ''
-      form.permissaoUsuario.idPessoa = 1
-      form.permissaoUsuario.membro = 1
-      form.permissaoUsuario.despesas = 1
-      form.permissaoUsuario.entradas = 1
-      form.permissaoUsuario.caixa = 1
-      form.permissaoUsuario.multiIgreja = 1
-      form.permissaoUsuario.relatorios = 1
-      form.permissaoUsuario.usuarios = 1
-
-      form.permissaoUsuario.visitante = 1
-      form.permissaoUsuario.aniversariante = 1
-      form.permissaoUsuario.congregacao = 1
-      form.permissaoUsuario.novoconvertido = 1
-      form.permissaoUsuario.contabancaria = 1
-      form.permissaoUsuario.biblia = 1
-      form.permissaoUsuario.termouso = 1
-      form.permissaoUsuario.politicaprivacidade = 1
-      form.permissaoUsuario.minhasfaturas = 1
-      form.permissaoUsuario.notaversao = 1
-      form.permissaoUsuario.agenda = 1
-      form.permissaoUsuario.auditoria = 1
-      form.permissaoUsuario.cargos = 1
-      form.permissaoUsuario.tipoconta = 1
-      form.permissaoUsuario.tipoevento = 1
-    },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'usuariobyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.form = res.data.obj
-        this.form.edit = true
-        this.form.add = false
+        if (id === -100) {
+          this.form = res.data.obj
+          this.img = adonai.urli + this.form.foto
+        } else {
+          this.form = res.data.obj
+          this.form.add = false
+          this.form.edit = true
+          this.img = adonai.urli + this.form.foto
+        }
         this.openModal = true
         this.openloading = false
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))

@@ -39,6 +39,7 @@ export default {
         ativo: '',
         idCargo: '',
         cargo: '',
+        foto: '',
         observacoes: '',
         dataBatismo: '',
         idEstadoCivil: 0,
@@ -114,7 +115,8 @@ export default {
         idcargo: '',
         cargo: '',
         criterio: ''
-      }
+      },
+      img: ''
     }
   },
   mounted () {
@@ -133,79 +135,12 @@ export default {
           rel.explorer.route = 'menu_pessoa_membros'
           rel.explorer.criterios = 'order by id desc'
           this.$refs.grid.get(rel.explorer)
-          this.cleanForm(form)
           this.$toastr.success(this.status, 'AdonaiSoft Diz: ', util.toast)
         } else {
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
           this.openloading = false
         }
       }).catch(err => this.$toastr.success(err, 'AdonaiSoft Diz: ', util.toast))
-    },
-    cleanForm (form) {
-      form.id = ''
-      form.nome = ''
-      form.idPessoa = ''
-      form.dataNascimento = ''
-      form.ativo = ''
-      form.idCargo = ''
-      form.cargo = ''
-      form.observacoes = ''
-      form.dataBatismo = ''
-      form.idEstadoCivil = 0
-      form.pathimg = ''
-      form.batizado = ''
-
-      form.endereco[0].id = ''
-      form.endereco[0].idPessoa = ''
-      form.endereco[0].endereco = ''
-      form.endereco[0].bairro = ''
-      form.endereco[0].idCidade = ''
-      form.endereco[0].cidade = ''
-      form.endereco[0].numero = ''
-      form.endereco[0].uf = ''
-      form.endereco[0].cep = ''
-      form.endereco[0].complemto = ''
-      form.endereco[0].tipo = 0
-
-      form.endereco[1].id = ''
-      form.endereco[1].idPessoa = ''
-      form.endereco[1].endereco = ''
-      form.endereco[1].bairro = ''
-      form.endereco[1].idCidade = ''
-      form.endereco[1].cidade = ''
-      form.endereco[1].numero = ''
-      form.endereco[1].uf = ''
-      form.endereco[1].cep = ''
-      form.endereco[1].complemto = ''
-      form.endereco[1].tipo = 1
-
-      form.telefone[0].id = ''
-      form.telefone[0].idPessoa = ''
-      form.telefone[0].telefone = ''
-      form.telefone[0].tipo = 0
-
-      form.telefone[1].id = ''
-      form.telefone[1].idPessoa = ''
-      form.telefone[1].telefone = ''
-      form.telefone[1].tipo = 1
-
-      form.telefone[2].id = ''
-      form.telefone[2].idPessoa = ''
-      form.telefone[2].telefone = ''
-      form.telefone[2].tipo = 2
-
-      form.email[0].id = ''
-      form.email[0].idPessoa = ''
-      form.email[0].email = ''
-      form.email[0].tipo = 0
-
-      form.email[1].id = ''
-      form.email[1].idPessoa = ''
-      form.email[1].email = ''
-      form.email[1].tipo = 1
-
-      form.retorno = ''
-      form.motivo = ''
     },
     validar (form) {
       if (form.nome === '') {
@@ -225,16 +160,20 @@ export default {
       var reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = e => {
-        this.form.pathimg = e.target.result
+        this.form.foto = e.target.result
+        this.openloading = true
+        axios.post(adonai.url + 'base64toimage', this.form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          this.openloading = false
+          this.img = adonai.urli + res.data
+          this.form.foto = res.data
+        }).catch(err => util.error(err))
       }
     },
     imprimir (relatorio) {
-      rel.report.relatorio = relatorio
       this.openloading = true
-      axios.post(adonai.url + 'imprimir', rel.report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.openloading = false
-        window.open(res.data)
-      }).catch(err => util.error(err))
+      rel.report.relatorio = relatorio
+      rel.methods.imprimir(rel.report, this.user.token)
+      this.openloading = false
     },
     buscarcep (cep, form, local) {
       cep = cep.replace('-', '')
@@ -259,12 +198,17 @@ export default {
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
     },
     getbyId (id) {
-      // id = id.id
       this.openloading = true
       axios.get(adonai.url + 'membro/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.form = res.data.obj
-        this.form.add = false
-        this.form.edit = true
+        if (id === -100) {
+          this.form = res.data.obj
+          this.img = adonai.urli + this.form.foto
+        } else {
+          this.form = res.data.obj
+          this.form.add = false
+          this.form.edit = true
+          this.img = adonai.urli + this.form.foto
+        }
         this.openModal = true
         this.openloading = false
       })

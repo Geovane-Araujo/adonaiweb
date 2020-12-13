@@ -20,9 +20,8 @@ export default {
     criterios: 'order by id desc'
   },
   methods: {
-    imprimir (relatorio) {
-      this.report.relatorio = relatorio
-      axios.post(adonai.url + 'imprimir', this.report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+    imprimir (relatorio, token) {
+      axios.post(adonai.url + 'imprimir', relatorio, { headers: { Authorization: 'Bearer ' + token } }).then(res => {
         window.open(res.data)
       }).catch(err => util.error(err))
     }

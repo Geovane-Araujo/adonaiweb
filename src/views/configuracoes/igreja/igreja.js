@@ -15,6 +15,9 @@ export default {
       openModal: false,
       deleteModal: false,
       openloading: false,
+      resize: 50,
+      mobileI: 'Imprimir',
+      mobileF: 'Filtrar',
       openConfiguration: false,
       open: false,
       ds: {
@@ -38,6 +41,7 @@ export default {
         secretario: '',
         tesoureiro: '',
         tipo: 0,
+        foto: '',
         igrejaSede: '',
         filiais: [],
         textoRelatorio: '',
@@ -152,7 +156,8 @@ export default {
       campoecle: {
         id: '',
         nome: ''
-      }
+      },
+      img: ''
     }
   },
   mounted () {
@@ -166,7 +171,6 @@ export default {
       this.openloading = true
       await axios.post(adonai.url + 'igreja', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret !== undefined && res.data.ret === 'success') {
-          this.cleanForm(form)
           this.openloading = false
           this.openModal = false
           utc.explorer.route = 'menu_pessoas_igreja'
@@ -183,200 +187,6 @@ export default {
     remove (event) {
       this.filiais = '99'
     },
-    cleanForm (form) {
-      form.id = ''
-      form.nome = ''
-      form.idPessoa = ''
-      form.observacoes = ''
-      form.imagem = []
-      form.cnpjcpf = ''
-      form.pathimg = ''
-      form.pastorResponsavel = ''
-      form.secretario = ''
-      form.tesoureiro = ''
-      form.tipo = 0
-      form.igrejaSede = ''
-      form.textoRelatorio = ''
-      form.smtp = ''
-      form.porta = ''
-      form.emailmala = ''
-      form.senha = ''
-      form.usuario = ''
-      form.autenticacao = ''
-      form.vice = ''
-      form.presidente = ''
-
-      form.endereco[0].id = ''
-      form.endereco[0].idPessoa = ''
-      form.endereco[0].endereco = ''
-      form.endereco[0].bairro = ''
-      form.endereco[0].idCidade = ''
-      form.endereco[0].cidade = ''
-      form.endereco[0].numero = ''
-      form.endereco[0].uf = ''
-      form.endereco[0].cep = ''
-      form.endereco[0].complemto = ''
-      form.endereco[0].tipo = 0
-
-      form.endereco[1].id = ''
-      form.endereco[1].idPessoa = ''
-      form.endereco[1].endereco = ''
-      form.endereco[1].bairro = ''
-      form.endereco[1].idCidade = ''
-      form.endereco[1].cidade = ''
-      form.endereco[1].numero = ''
-      form.endereco[1].uf = ''
-      form.endereco[1].cep = ''
-      form.endereco[1].complemto = ''
-      form.endereco[1].tipo = 1
-
-      form.telefone[0].id = ''
-      form.telefone[0].idPessoa = ''
-      form.telefone[0].telefone = ''
-      form.telefone[0].tipo = 0
-
-      form.telefone[1].id = ''
-      form.telefone[1].idPessoa = ''
-      form.telefone[1].telefone = ''
-      form.telefone[1].tipo = 1
-
-      form.telefone[2].id = ''
-      form.telefone[2].idPessoa = ''
-      form.telefone[2].telefone = ''
-      form.telefone[2].tipo = 2
-
-      form.telefone[3].id = ''
-      form.telefone[3].idPessoa = ''
-      form.telefone[3].telefone = ''
-      form.telefone[3].tipo = 3
-
-      form.telefone[4].id = ''
-      form.telefone[4].idPessoa = ''
-      form.telefone[4].telefone = ''
-      form.telefone[4].tipo = 4
-
-      form.telefone[5].id = ''
-      form.telefone[5].idPessoa = ''
-      form.telefone[5].telefone = ''
-      form.telefone[5].tipo = 5
-
-      form.email[0].id = ''
-      form.email[0].idPessoa = ''
-      form.email[0].email = ''
-      form.email[0].tipo = 0
-
-      form.email[1].id = ''
-      form.email[1].idPessoa = ''
-      form.email[1].email = ''
-      form.email[1].tipo = 1
-
-      form.email[3].id = ''
-      form.email[3].idPessoa = ''
-      form.email[3].email = ''
-      form.email[3].tipo = 3
-      this.openModal = true
-    },
-    read (form) {
-      this.form.id = form.id
-      this.form.nome = form.nome
-      this.form.idPessoa = form.idPessoa
-      this.form.observacoes = form.observacoes
-      this.form.imagem = form.imagem
-      this.form.pathimg = form.pathimg
-      this.form.cnpjcpf = form.cnpjcpf
-      this.form.pastorResponsavel = form.pastorResponsavel
-      this.form.secretario = form.secretario
-      this.form.tesoureiro = form.tesoureiro
-      this.form.tipo = 0
-      this.form.igrejaSede = form.igrejaSede
-      this.form.textoRelatorio = form.textoRelatorio
-      this.form.smtp = form.smtp
-      this.form.porta = form.porta
-      this.form.emailmala = form.emailmala
-      this.form.senha = form.senha
-      this.form.usuario = form.usuario
-      this.form.autenticacao = form.autenticacao
-      this.form.vice = form.vice
-      this.form.presidente = form.presidente
-
-      this.form.endereco[0].id = form.endereco[0].id
-      this.form.endereco[0].idPessoa = form.endereco[0].idPessoa
-      this.form.endereco[0].endereco = form.endereco[0].endereco
-      this.form.endereco[0].bairro = form.endereco[0].bairro
-      this.form.endereco[0].idCidade = form.endereco[0].idCidade
-      this.form.endereco[0].cidade = form.endereco[0].cidade
-      this.form.endereco[0].numero = form.endereco[0].numero
-      this.form.endereco[0].uf = form.endereco[0].uf
-      this.form.endereco[0].cep = form.endereco[0].cep
-      this.form.endereco[0].complemento = form.endereco[0].complemento
-      this.form.endereco[0].tipo = 0
-
-      this.form.endereco[1].id = form.endereco[1].id
-      this.form.endereco[1].idPessoa = form.endereco[1].idPessoa
-      this.form.endereco[1].endereco = form.endereco[1].endereco
-      this.form.endereco[1].bairro = form.endereco[1].bairro
-      this.form.endereco[1].idCidade = form.endereco[1].idCidade
-      this.form.endereco[1].cidade = form.endereco[1].cidade
-      this.form.endereco[1].numero = form.endereco[1].numero
-      this.form.endereco[1].uf = form.endereco[1].uf
-      this.form.endereco[1].cep = form.endereco[1].cep
-      this.form.endereco[1].complemento = form.endereco[1].complemento
-      this.form.endereco[1].tipo = 1
-
-      this.form.telefone[0].id = form.telefone[0].id
-      this.form.telefone[0].idPessoa = form.telefone[0].idPessoa
-      this.form.telefone[0].telefone = form.telefone[0].telefone
-      this.form.telefone[0].tipo = 0
-
-      this.form.telefone[1].id = form.telefone[1].id
-      this.form.telefone[1].idPessoa = form.telefone[1].idPessoa
-      this.form.telefone[1].telefone = form.telefone[1].telefone
-      this.form.telefone[1].tipo = 1
-
-      this.form.telefone[2].id = form.telefone[2].id
-      this.form.telefone[2].idPessoa = form.telefone[2].idPessoa
-      this.form.telefone[2].telefone = form.telefone[2].telefone
-      this.form.telefone[2].tipo = 2
-
-      this.form.telefone[3].id = form.telefone[3].id
-      this.form.telefone[3].idPessoa = form.telefone[3].idPessoa
-      this.form.telefone[3].telefone = form.telefone[3].telefone
-      this.form.telefone[3].tipo = 3
-
-      this.form.telefone[4].id = form.telefone[4].id
-      this.form.telefone[4].idPessoa = form.telefone[4].idPessoa
-      this.form.telefone[4].telefone = form.telefone[4].telefone
-      this.form.telefone[4].tipo = 4
-
-      this.form.telefone[5].id = form.telefone[5].id
-      this.form.telefone[5].idPessoa = form.telefone[5].idPessoa
-      this.form.telefone[5].telefone = form.telefone[5].telefone
-      this.form.telefone[5].tipo = 5
-
-      this.form.email[0].id = form.email[0].id
-      this.form.email[0].idPessoa = form.email[0].idPessoa
-      this.form.email[0].email = form.email[0].email
-      this.form.email[0].tipo = 0
-
-      this.form.email[1].id = form.email[1].id
-      this.form.email[1].idPessoa = form.email[1].idPessoa
-      this.form.email[1].email = form.email[1].email
-      this.form.email[1].tipo = 1
-
-      this.form.email[2].id = form.email[2].id
-      this.form.email[2].idPessoa = form.email[2].idPessoa
-      this.form.email[2].email = form.email[2].email
-      this.form.email[2].tipo = 2
-
-      this.form.email[3].id = form.email[3].id
-      this.form.email[3].idPessoa = form.email[3].idPessoa
-      this.form.email[3].email = form.email[3].email
-      this.form.email[3].tipo = 3
-
-      this.form.retorno = form.retorno
-      this.form.motivo = form.motivo
-      this.openModal = true
-    },
     validate (doc, tipo, form) {
       if (this.form.nome === '') {
         this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
@@ -389,18 +199,17 @@ export default {
       var reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = e => {
-        this.form.pathimg = e.target.result
+        this.form.foto = e.target.result
+        this.openloading = true
+        axios.post(adonai.url + 'base64toimage', this.form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          this.openloading = false
+          this.img = adonai.urli + res.data
+          this.form.foto = res.data
+        }).catch(err => util.error(err))
       }
     },
     imprimir (relatorio) {
-      this.openloading = true
-      axios.post(adonai.url + 'imprimir', relatorio, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.openloading = false
-        var winparams = 'dependent=yes,locationbar=no,scrollbars=yes,menubar=yes,resizable,screenX=50,screenY=50,width=850,height=1050'
-        var a = '<embed width=100% height=100% type="application/pdf" src="data:application/pdf;base64,' + escape(res.data) + ' "></embed>'
-        var print = window.open('', 'PDF', winparams)
-        print.document.write(a)
-      }).catch(err => util.error(err))
+      utc.imprimir(relatorio)
     },
     globais (tipo) {
       this.openloading = true
@@ -445,13 +254,20 @@ export default {
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
     },
     getbyId (id) {
+      this.onResize()
       this.openloading = true
       axios.get(adonai.url + 'igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.form = res.data.obj
-        this.form.add = false
-        this.form.edit = true
-        this.openloading = false
+        if (id === -100) {
+          this.form = res.data.obj
+          this.img = adonai.urli + this.form.foto
+        } else {
+          this.form = res.data.obj
+          this.form.add = false
+          this.form.edit = true
+          this.img = adonai.urli + this.form.foto
+        }
         this.openModal = true
+        this.openloading = false
       }).catch(err => util.error(err))
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
     datasearch (route, params) {
@@ -484,6 +300,15 @@ export default {
         // this.$set(this.form.campoeclesiastico)
       }
       this.open = false
+    },
+    onResize () {
+      if (window.innerWidth <= 767) {
+        this.resize = 100
+        this.mobileF = ''
+        this.mobileI = ''
+      } else {
+        this.resize = 65
+      }
     }
   },
   components: {

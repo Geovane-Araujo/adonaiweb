@@ -7,7 +7,7 @@
           <p>Cadastro de Igreja</p>
           <button
             class="btn btn-outline-info"
-            @click="form.del=false;form.add=true;form.edit=false;cleanForm(form);">
+            @click="getbyId(-100)">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
           <button
@@ -31,29 +31,32 @@
     </div>
 
     <!-- modal para cadastro-->
-    <Dialog style="font-size:10px;" header="Cadastro tipos Solicitações" :visible.sync="openModal" :style="{width: '50vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Cadastro Igrejas" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
         <form method="POST">
           <b-tabs content-class="mt-1">
             <b-tab title="Principal" active>
               <b-container>
                 <b-row class="text-center">
-                  <b-col cols="2">
-                    <div class="file-loading">
-                      <b-avatar :src="form.pathimg"
+                  <div class="col-sm-2">
+                    <div class="file-loading" >
+                      <b-avatar :src="img"
                       size="5rem"></b-avatar>
+                      <div>
+                        <label for='selecao-arquivo' class="material-icons">perm_media</label>
+                        <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
+                        <label class="material-icons label2" @click="form.foto='';img=''" >delete_forever</label>
+                      </div>
                     </div>
-                    <label for='selecao-arquivo' class="material-icons">perm_media</label>
-                    <input id='selecao-arquivo' @change="previewFiles" ref="myFiles" type='file'>
-                  </b-col>
-                  <b-col cols="10" >
+                  </div>
+                  <div class="col-sm-10">
                     <div class="row">
-                      <div class="col-sm-12">
+                      <div class="col-sm-8">
                         <input type="text"
                         class="form-control"
                         v-model="form.nome"
                         placeholder="Nome Igreja">
                       </div>
-                      <div class="col-sm-5">
+                      <div class="col-sm-4">
                         <the-mask
                           type="text"
                           the-mask :mask="['###.###.###-##', '##.###.###/####-##']"
@@ -71,19 +74,12 @@
                       <div class="col-sm-6">
                         <input
                           type="text"
-                          v-model="form.tesoureiro"
-                          class="form-control"
-                          placeholder="Tesoureiro">
-                      </div>
-                      <div class="col-sm-6">
-                        <input
-                          type="text"
                           v-model="form.secretario"
                           class="form-control"
                           placeholder="Secretário(a)">
                       </div>
                     </div>
-                  </b-col>
+                  </div>
                 </b-row>
                 <H6 class="text-success">Dados de Contatos</H6>
                 <div class="row">
@@ -452,48 +448,5 @@
 
 <script src="./igreja.js">
 </script>
-<style lang=scss scoped>
-label {
-  background-color: #5e8a75;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  margin: 10px;
-  padding: 6px 20px
-}
-p {
-  font-size: 30px;
-}
-input[type='file'] {
-  display: none
-}
-.table-sm {
-  padding: 2px;
-}
-#loading {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 5000;
-  left: 0;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>

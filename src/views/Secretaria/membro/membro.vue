@@ -7,7 +7,7 @@
           <p>Membros</p>
           <button
             class="btn btn-outline-info"
-            @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
+            @click="getbyId(-100);openModal=true;">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
           <button
@@ -41,23 +41,26 @@
           <b-tab title="Principal" active>
             <b-container>
               <b-row class="text-center">
+                <div class="col-sm-2">
                   <div class="file-loading">
-                    <b-avatar :src="form.pathimg"
+                    <b-avatar :src="img"
                     size="5rem"></b-avatar>
                     <div>
                       <label for='selecao-arquivo' class="material-icons">perm_media</label>
                       <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
-                      <label class="material-icons label2" @click="form.pathimg=''" >delete_forever</label>
+                      <label class="material-icons label2" @click="form.foto='';img=''" >delete_forever</label>
                     </div>
                   </div>
+                </div>
+                <div class="col-sm-10">
                   <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-8">
                       <input type="text"
                       class="form-control"
                       v-model="form.nome"
                       placeholder="Nome Completo">
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-4">
                       <datetime  placeholder="Data Nascimento"
                         class="datePivker"
                         type="Date"
@@ -66,15 +69,13 @@
                         v-model="form.dataNascimento">
                       </datetime>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                       <b-form-select
                       :options="[{ text: 'Selecione(...)', value: 0 }, { text: 'Solteiro(a)', value: 1 }, { text: 'Casado(a)', value: 2 }, { text: 'União Estável', value: 3 }, { text: 'Divorciado(a)', value: 4 }, { text: 'Viuvo(a)', value: 5 }]"
                       v-model="form.idEstadoCivil"
                       ></b-form-select>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-5">
+                    <div class="col-sm-4">
                       <div class="form-group">
                         <b-input-group >
                           <b-form-input placeholder="Cargo" v-model="form.cargo" @click="datasearch(2);"></b-form-input>
@@ -84,16 +85,17 @@
                         </b-input-group>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <datetime  placeholder="Data Batismo"
                         class="datePivker"
                         type="Date"
+                        editable= "true"
                         value-zone="UTC"
                         format="dd/MM/yyyy"
                         v-model="form.dataBatismo">
                       </datetime>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                       <b-form-checkbox
                         id="checkbox-1"
                         v-model="form.ativo"
@@ -103,6 +105,7 @@
                         </b-form-checkbox>
                     </div>
                   </div>
+                </div>
               </b-row>
               <div class="row">
                 <div class="col-md-4">
@@ -326,65 +329,7 @@
     ref="expl"/>
   </div>
 </template>
-
 <script src="./membro.js">
 </script>
-<style lang=scss scoped>
-label {
-  background-color: #5e8a75;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  margin: 5px;
-  padding: 6px
-}
-.label2 {
-  background-color: #a13b3b;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  margin: 5px;
-  padding: 6px
-}
-input[type='file'] {
-  display: none
-}
-p {
-  font-size: 30px;
-}
-.datePivker{
-  margin-left: 2px;
-  padding: 5px;
-  height: 35px;
-  border:solid 1px;
-  border-radius:3px;
-  border-color:#cacdcf;
-  text-align: center;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-#loading {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 5000;
-  left: 0;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>
