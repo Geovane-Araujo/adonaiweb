@@ -51,6 +51,16 @@ export default {
           form.foto = res.data
         }).catch(err => util.error(err))
       }
+    },
+    randomColor () {
+      var hexadecimais = '0123456789ABCDEF'
+      var color = '#'
+      var i = 0
+      while (i < 6) {
+        color += hexadecimais[Math.floor(Math.random() * 16)]
+        i++
+      }
+      return color
     }
   }
 }

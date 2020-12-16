@@ -72,26 +72,38 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-12 p-shadow-1">
-            <barchart
-            :label="cabe_finan"
-            :datasets="dataset_finan" ref="year"></barchart>
-          </div>
+          <h4>Financeiro</h4>
+          <section>
+            <b-form-group label="Comparativo Entradas e Saidas Manual" label-align="center">
+              <div class="col-sm-12 p-shadow-1">
+                <barchart
+                :label="cabe_finan"
+                :datasets="dataset_finan" ref="year"></barchart>
+              </div>
+            </b-form-group>
+            <div class="row">
+                <div  class="col-sm-6 p-shadow-1">
+                  <b-form-group label="Por Tipos de Despesas" label-align="center">
+                    <piechart
+                    :label="cabe_tipos_entradas"
+                    :datasets="dataset_tipos_entradas" ref="rec">
+                    </piechart>
+                  </b-form-group>
+                </div>
+              <div class="col-sm-6 p-shadow-1">
+                <b-form-group label="Por Tipos de Receitas" label-align="center">
+                  <dougchart
+                  :label="cabe_tipos_despesas"
+                  :datasets="dataset_tipos_despesas" ref="des">
+                  </dougchart>
+                </b-form-group>
+              </div>
+            </div>
+          </section>
           <hr class="bg-info">
-          <div class="row">
-            <div style="margin-right:10px;" class="col-sm-4 p-shadow-10">
-              <piechart
-              :label="cabe_tipos_entradas"
-              :datasets="dataset_tipos_entradas" ref="rec">
-              </piechart>
-            </div>
-            <div class="col-sm-4 p-shadow-1">
-              <dougchart
-              :label="cabe_tipos_despesas"
-              :datasets="dataset_tipos_despesas" ref="des">
-              </dougchart>
-            </div>
-          </div>
+          <section>
+            <h4>Membros</h4>
+          </section>
         </div>
       </div>
     </div>

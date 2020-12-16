@@ -16,7 +16,8 @@ export default {
     render (label, datasets) {
       this.renderChart({
         labels: label,
-        datasets: datasets
+        datasets: datasets,
+        label: 'teste'
       },
       {
         responsive: true,

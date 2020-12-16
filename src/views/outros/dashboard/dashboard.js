@@ -2,6 +2,7 @@ import { mapState } from 'vuex'
 import { Bar } from 'vue-chartjs'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
+import utilClass from '../../../util/utilClass'
 import axios from 'axios'
 
 export default {
@@ -31,7 +32,7 @@ export default {
       dataset_tipos_entradas: [
         {
           label: 'Tipos de Entradas',
-          backgroundColor: ['#82cef5', '#f87979', '#72a167', '#167572', '#dba88a', '#c95fbb'],
+          backgroundColor: [],
           data: ''
         }
       ],
@@ -39,7 +40,7 @@ export default {
       dataset_tipos_despesas: [
         {
           label: 'Tipos de Saídas',
-          backgroundColor: ['#82cef5', '#f87979', '#72a167', '#167572', '#dba88a', '#c95fbb'],
+          backgroundColor: [],
           data: ''
         }
       ]
@@ -61,6 +62,11 @@ export default {
         this.dataset_finan[1].data = res.data.obj.despesas
         this.dataset_tipos_despesas[0].data = res.data.obj.valorReceitas
         this.dataset_tipos_entradas[0].data = res.data.obj.valorDespesas
+
+        this.dataset_tipos_entradas[0].data.forEach(element => {
+          this.dataset_tipos_entradas[0].backgroundColor.push(utilClass.methods.randomColor())
+          this.dataset_tipos_despesas[0].backgroundColor.push(utilClass.methods.randomColor())
+        })
         this.$refs.year.render(this.cabe_finan, this.dataset_finan)
         this.$refs.des.render(this.cabe_tipos_despesa, this.dataset_tipos_despesas)
         this.$refs.rec.render(this.cabe_tipos_entradas, this.dataset_tipos_entradas)
