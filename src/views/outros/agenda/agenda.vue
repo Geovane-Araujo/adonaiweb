@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <Dialog style="font-size:10px;" header="Cadastro tipos Solicitações" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Agenda" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
       <form method="POST">
         <b-container>
           <b-row class="text-center">

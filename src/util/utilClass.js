@@ -5,6 +5,8 @@ import adonai from '../http/router'
 export default {
   report: {
     relatorio: '',
+    ID: 0,
+    IDRelation: 0,
     simpleObjects: '',
     simpleObjects1: '',
     simpleObject2: ''
