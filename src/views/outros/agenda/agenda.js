@@ -189,7 +189,7 @@ export default {
       if (window.innerWidth <= 767) {
         this.resize = 100
       } else {
-        this.resize = 50
+        this.resize = 40
       }
     }
   },

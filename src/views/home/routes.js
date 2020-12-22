@@ -32,6 +32,7 @@ import classe from '../escola/classe/classe.vue'
 import maps from '../Secretaria/membrosMaps/membrosMaps.vue'
 import tickets from '../uteis/tickets/tickets.vue'
 import aula from '../escola/aula/aula.vue'
+import criancas from '../Secretaria/criancas/criancas.vue'
 
 export default [
   {
@@ -204,6 +205,11 @@ export default [
         path: 'aula',
         name: 'aulas',
         component: aula
+      },
+      {
+        path: 'criancas',
+        name: 'criancas',
+        component: criancas
       }
     ]
   }

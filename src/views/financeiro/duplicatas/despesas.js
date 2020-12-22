@@ -150,20 +150,23 @@ export default {
     },
     datasearch (route) {
       if (route === 1) {
-        rel.explorerflex.route = 'exp_membro'
+        rel.explorerflex.route = 'exp_pessoa_financeiro'
         rel.explorerflex.criterios = 'ORDER BY ID DESC'
+        rel.explorerflex.pagina = 1
         this.ds.grid = ['id', 'nome']
         this.ds.title = 'Membro'
         this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
       } else if (route === 2) {
         rel.explorerflex.route = 'exp_tipoconta'
         rel.explorerflex.criterios = 'AND contexto = 1 ORDER BY ID DESC'
+        rel.explorerflex.pagina = 1
         this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Tipo Conta'
         this.$refs.cmp.dataSearch(rel.explorerflex, 2, 2)
       } else if (route === 3) {
         rel.explorerflex.criterios = 'ORDER BY ID DESC'
         rel.explorerflex.route = 'exp_caixa'
+        rel.explorerflex.pagina = 1
         this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Caixa'
         this.$refs.cmp.dataSearch(rel.explorerflex, 3, 3)

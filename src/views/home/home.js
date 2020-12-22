@@ -56,6 +56,11 @@ export default {
               disabled: parseInt(sessionStorage.getItem('membro'))
             },
             {
+              href: '/criancas',
+              title: 'Crianças e Adolescentes'
+              // disabled: parseInt(sessionStorage.getItem('visitante'))
+            },
+            {
               href: '/visitantes',
               title: 'Visitantes',
               disabled: parseInt(sessionStorage.getItem('visitante'))
