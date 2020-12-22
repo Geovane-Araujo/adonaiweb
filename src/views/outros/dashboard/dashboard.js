@@ -65,6 +65,8 @@ export default {
 
         this.dataset_tipos_entradas[0].data.forEach(element => {
           this.dataset_tipos_entradas[0].backgroundColor.push(utilClass.methods.randomColor())
+        })
+        this.dataset_tipos_despesas[0].data.forEach(element => {
           this.dataset_tipos_despesas[0].backgroundColor.push(utilClass.methods.randomColor())
         })
         this.$refs.year.render(this.cabe_finan, this.dataset_finan)

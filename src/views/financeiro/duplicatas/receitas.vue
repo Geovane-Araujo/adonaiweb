@@ -10,8 +10,13 @@
             @click="initialize();">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
+          <button
+            class="btn btn-outline-info float-right"
+            @click="imprimir('report/financeiro/receitagrupo.jrxml')">
+            <i class="fas fa-print"></i>&nbsp;&nbsp;{{ mobileI }}
+          </button>
           <!-- <SplitButton label="Imprimir" icon="pi pi-plus" :model="items" class="p-sm-2"></SplitButton> -->
-          <div class="dropdown" style="z-index: 9999;">
+          <!-- <div class="dropdown" style="z-index: 9999;">
             <button
               class="btn btn-outline-info dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-print"></i>&nbsp;&nbsp;{{ mobileI }}
@@ -21,7 +26,7 @@
               <a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
-          </div>
+          </div> -->
           <button
             class="btn btn-outline-info float-right" style="margin-right: 10px;"
             @click="openFilter=true">
