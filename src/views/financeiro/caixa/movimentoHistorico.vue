@@ -30,7 +30,7 @@
             <Column field="Saldo" header="Saldo"></Column>
             <Column headerStyle="width: 200px;" bodyStyle=""  :exportable="false">
               <template #body="slotProps">
-                  <Button icon="pi pi-print" class="p-button-rounded p-button-outlined p-button-info p-button-sm" @click="imprimir ('report/financeiro/movimentacoes.jrxml',slotProps.data.ID)" />
+                  <Button icon="pi pi-print" class="p-button-rounded p-button-outlined p-button-info p-button-sm" @click="imprimir ('report/financeiro/fechamentoCaixa.jrxml',slotProps.data.ID)" />
               </template>
             </Column>
             <template style="font-size:14px;" #paginatorLeft>

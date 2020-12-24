@@ -29,8 +29,6 @@ export default {
         grid: [],
         title: ''
       },
-      campocidade: 0,
-      status: '',
       form: {
         add: true,
         edit: false,
@@ -76,8 +74,7 @@ export default {
             tipo: 0
           }
         ]
-      },
-      cidade: []
+      }
     }
   },
   mounted () {
@@ -89,15 +86,7 @@ export default {
       this.openloading = true
       await axios.post(adonai.url + 'visitantes', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          if (this.form.add === true) {
-            this.status = 'Salvo com Sucesso'
-          } else if (this.form.edit === true) {
-            this.status = 'Alterado com Sucesso'
-          } else {
-            this.status = 'Excluido com Sucesso'
-          }
-          this.$toastr.success(this.status, 'Cadastro de Membros', util.toast)
-          this.cleanForm()
+          this.$toastr.success('Salvo com Sucesso', 'Cadastro de Membros', util.toast)
           this.openloading = false
           this.openModal = false
           this.$refs.grid.get(this.explorer)
@@ -117,42 +106,6 @@ export default {
         this.save(form)
       }
     },
-    cleanForm () {
-      this.form.id = ''
-      this.form.nome = ''
-      this.form.idPessoa = ''
-      this.form.observacoes = ''
-
-      this.form.endereco[0].id = ''
-      this.form.endereco[0].idPessoa = ''
-      this.form.endereco[0].endereco = ''
-      this.form.endereco[0].bairro = ''
-      this.form.endereco[0].idCidade = ''
-      this.form.endereco[0].cidade = ''
-      this.form.endereco[0].numero = ''
-      this.form.endereco[0].uf = ''
-      this.form.endereco[0].cep = ''
-      this.form.endereco[0].complemto = ''
-      this.form.endereco[0].tipo = 0
-
-      this.form.telefone[0].id = ''
-      this.form.telefone[0].idPessoa = ''
-      this.form.telefone[0].telefone = ''
-      this.form.telefone[0].tipo = 0
-
-      this.form.telefone[1].id = ''
-      this.form.telefone[1].idPessoa = ''
-      this.form.telefone[1].telefone = ''
-      this.form.telefone[1].tipo = 1
-
-      this.form.email[0].id = ''
-      this.form.email[0].idPessoa = ''
-      this.form.email[0].email = ''
-      this.form.email[0].tipo = 0
-
-      this.form.retorno = ''
-      this.form.motivo = ''
-    },
     buscarcep (cep, form, local) {
       cep = cep.replace('-', '')
       axios.get(adonai.url + 'cep/' + cep, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -171,9 +124,13 @@ export default {
       this.openloading = true
       axios.get(adonai.url + 'visitante/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          this.form = res.data.obj
-          this.form.add = false
-          this.form.edit = true
+          if (id === -100) {
+            this.form = res.data.obj
+          } else {
+            this.form = res.data.obj
+            this.form.add = false
+            this.form.edit = true
+          }
           this.openModal = true
           this.openloading = false
         } else {

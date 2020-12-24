@@ -7,7 +7,7 @@
           <p>Cadastro de Visitantes</p>
           <button
             class="btn btn-outline-info"
-            @click="form.del=false;form.add=true;form.edit=false;openModal=true;">
+            @click="getbyId(-100)">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
           <button

@@ -33,6 +33,7 @@ import maps from '../Secretaria/membrosMaps/membrosMaps.vue'
 import tickets from '../uteis/tickets/tickets.vue'
 import aula from '../escola/aula/aula.vue'
 import criancas from '../Secretaria/criancas/criancas.vue'
+import registroVisitantes from '../Secretaria/visitantes/registroVisita.vue'
 
 export default [
   {
@@ -210,6 +211,11 @@ export default [
         path: 'criancas',
         name: 'criancas',
         component: criancas
+      },
+      {
+        path: 'registroVisitantes',
+        name: 'registroVisitantes',
+        component: registroVisitantes
       }
     ]
   }

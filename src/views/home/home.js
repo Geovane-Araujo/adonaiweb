@@ -61,8 +61,18 @@ export default {
               // disabled: parseInt(sessionStorage.getItem('visitante'))
             },
             {
-              href: '/visitantes',
+              href: '',
               title: 'Visitantes',
+              child: [
+                {
+                  href: '/visitantes',
+                  title: 'Cadastro'
+                },
+                {
+                  href: '/registroVisitantes',
+                  title: 'Registro de Presença'
+                }
+              ],
               disabled: parseInt(sessionStorage.getItem('visitante'))
             },
             {
