@@ -14,6 +14,7 @@ export default {
       open: false,
       membros: '',
       entradas: '',
+      compromissos: 0,
       despesas: '',
       dataset_finan: [
         {
@@ -56,6 +57,7 @@ export default {
         this.membros = res.data.obj.membros
         this.entradas = res.data.obj.entradas
         this.despesas = res.data.obj.saidas
+        this.compromissos = res.data.obj.compromissos
         this.cabe_tipos_despesa = res.data.obj.tipoReceitas
         this.cabe_tipos_entradas = res.data.obj.tipoDespesas
         this.dataset_finan[0].data = res.data.obj.receitas

@@ -66,7 +66,7 @@
                   </div>
                   <div class="col-sm-6">
                       <h6 style="text-align: center;">Compromissos</h6>
-                      <h1 style="text-align: center; font-size: 30px; ">1</h1>
+                      <h1 style="text-align: center; font-size: 30px; ">{{ compromissos }}</h1>
                   </div>
                 </div>
               </div>

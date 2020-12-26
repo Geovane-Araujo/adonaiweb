@@ -14,6 +14,7 @@ import 'fullcalendar/dist/locale/pt-br'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import Calendar from 'primevue/calendar'
 
 var moment = require('moment')
 // var data = new Date()
@@ -198,7 +199,8 @@ export default {
     datetime: Datetime,
     Dialog,
     Button,
-    InputText
+    InputText,
+    Calendar
   },
   computed: {
     ...mapState('auth', ['user'])
