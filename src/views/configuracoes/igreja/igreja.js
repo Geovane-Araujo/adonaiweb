@@ -274,9 +274,9 @@ export default {
       if (route === 1) {
         utc.explorerflex.route = 'exp_municipio'
         utc.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['ID', 'nome', 'uf', '']
+        this.ds.grid = ['id', 'nome', 'uf']
         this.ds.title = 'Cidades'
-        this.$refs.expl.dataSearch(utc.explorerflex, '', 1, params)
+        this.$refs.expl.dataSearch(utc.explorerflex, 1, params)
         this.open = true
       } else if (route === 2) {
         utc.explorerflex.route = 'exp_campoeclesiastico'
