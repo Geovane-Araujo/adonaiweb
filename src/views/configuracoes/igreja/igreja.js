@@ -6,9 +6,10 @@ import utc from '../../../util/utilClass'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import Chips from 'primevue/chips'
-var b = []
-
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+var r
+var a
 export default {
   data () {
     return {
@@ -19,6 +20,7 @@ export default {
       mobileI: 'Imprimir',
       mobileF: 'Filtrar',
       openConfiguration: false,
+      mult: false,
       open: false,
       ds: {
         grid: [],
@@ -54,7 +56,7 @@ export default {
         fone: '',
         vice: '',
         presidente: '',
-        campoeclesiastico: [],
+        campoEclesiastico: null,
         endereco: [
           {
             id: '',
@@ -191,6 +193,11 @@ export default {
       if (this.form.nome === '') {
         this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
       } else {
+        if (r !== undefined) {
+          r.forEach(element => {
+            this.form.campoEclesiastico.push(element)
+          })
+        }
         this.save(form)
       }
     },
@@ -259,12 +266,16 @@ export default {
       axios.get(adonai.url + 'igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (id === -100) {
           this.form = res.data.obj
-          this.img = adonai.urli + this.form.foto
+          this.img = adonai.urli + 'avatar.png'
+          a = []
+          r = []
         } else {
           this.form = res.data.obj
           this.form.add = false
           this.form.edit = true
           this.img = adonai.urli + this.form.foto
+          a = []
+          r = []
         }
         this.openModal = true
         this.openloading = false
@@ -283,8 +294,8 @@ export default {
         utc.explorerflex.criterios = 'ORDER BY ID DESC'
         utc.explorerflex.pagina = 1
         this.ds.title = 'Igrejas'
-        this.ds.grid = ['ID', 'nome']
-        this.$refs.expl.dataSearch(utc.explorerflex, '', 2)
+        this.ds.grid = ['id', 'nome']
+        this.$refs.expl.dataSearch(utc.explorerflex, 2, 2)
         this.open = true
       }
     },
@@ -293,13 +304,25 @@ export default {
         this.form.endereco[e].cidade = registro.nome
         this.form.endereco[e].idCidade = registro.id
       } else if (params === 2) {
-        this.campoecle.nome = registro.nome
-        this.campoecle.id = registro.id
-        b.push(this.campoecle)
-        this.form.campoeclesiastico = b
-        // this.$set(this.form.campoeclesiastico)
+        params = {
+          idsede: this.form.idPessoa,
+          nome: registro.nome,
+          idfilial: registro.id,
+          add: true,
+          del: false
+        }
+        if (this.form.campoEclesiastico === null || this.form.campoEclesiastico === undefined) {
+          if (a === undefined) {
+            a = []
+            a.push(params)
+          } else {
+            a.push(params)
+          }
+          this.form.campoEclesiastico = a
+        } else {
+          this.form.campoEclesiastico.push(params)
+        }
       }
-      this.open = false
     },
     onResize () {
       if (window.innerWidth <= 767) {
@@ -309,13 +332,31 @@ export default {
       } else {
         this.resize = 65
       }
+    },
+    del (data) {
+      if (r === undefined) {
+        r = []
+        r.push(data)
+      } else {
+        r.push(data)
+      }
+      var i = 0
+      var indice = 0
+      this.form.campoEclesiastico.forEach(element => {
+        if (element === data) {
+          indice = i
+        }
+        i++
+      })
+      this.form.campoEclesiastico.splice(indice, 1)
     }
   },
   components: {
     Dialog,
     Button,
     InputText,
-    Chips
+    DataTable,
+    Column
   },
   computed: {
     ...mapState('auth', ['user'])

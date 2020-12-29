@@ -50,7 +50,7 @@
                   </div>
                   <div class="col-sm-10">
                     <div class="row">
-                      <div class="col-sm-8">
+                      <div class="col-sm-6">
                         <input type="text"
                         class="form-control"
                         v-model="form.nome"
@@ -63,6 +63,12 @@
                           v-model="form.cnpjcpf"
                           class="form-control"
                           placeholder="CNPJ/CPF"/>
+                      </div>
+                      <div class="col-sm-2">
+                        <b-form-select
+                        :options="[{ text: 'Matriz', value: 0 }, {text: 'Filial', value: 1}]"
+                        v-model="form.tipo"
+                        ></b-form-select>
                       </div>
                       <div class="col-sm-6">
                         <input
@@ -120,8 +126,8 @@
               </b-container>
             </b-tab>
             <b-tab title="Igreja Sede">
-              <b-col cols="12" >
-                <div class="row">
+              <b-container>
+                  <div class="row">
                   <div class="col-sm-12">
                     <input type="text"
                     class="form-control"
@@ -144,181 +150,149 @@
                   </div>
                   <H6 class="text-success" style="padding-left:10px;">Dados de Contatos</H6>
                   <div class="row" style="padding-left: 10px;padding-right: 10px;">
-                  <div class="col-md-4">
-                    <input type="text"
-                      class="form-control"
-                      v-mask="'(##)####-#####'"
-                      v-model="form.telefone[3].telefone"
-                      placeholder="Telefone Principal">
+                    <div class="col-md-4">
+                      <input type="text"
+                        class="form-control"
+                        v-mask="'(##)####-#####'"
+                        v-model="form.telefone[3].telefone"
+                        placeholder="Telefone Principal">
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text"
+                        class="form-control"
+                        v-mask="'(##)####-#####'"
+                        v-model="form.telefone[4].telefone"
+                        placeholder="Telefone Celular">
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text"
+                        class="form-control"
+                        v-mask="'(##)####-#####'"
+                        v-model="form.telefone[5].telefone"
+                        placeholder="Telefone Outros">
+                    </div>
+                    <div class="col-md-6">
+                      <input type="text"
+                        class="form-control"
+                        v-model="form.email[2].email"
+                        placeholder="E-mail Principal">
+                    </div>
+                    <div class="col-md-6">
+                      <input type="text"
+                        class="form-control"
+                        v-model="form.email[3].email"
+                        placeholder="E-mail Outros">
+                    </div>
+                    <H6 class="text-success" style="padding-left:20px;"> </H6>
+                    <H6 class="text-success" style="padding-left:20px;"> </H6>
+                    <H6 class="text-success" style="padding-left:20px;"> </H6>
                   </div>
-                  <div class="col-md-4">
-                    <input type="text"
-                      class="form-control"
-                      v-mask="'(##)####-#####'"
-                      v-model="form.telefone[4].telefone"
-                      placeholder="Telefone Celular">
-                  </div>
-                  <div class="col-md-4">
-                    <input type="text"
-                      class="form-control"
-                      v-mask="'(##)####-#####'"
-                      v-model="form.telefone[5].telefone"
-                      placeholder="Telefone Outros">
-                  </div>
-                  <div class="col-md-6">
-                    <input type="text"
-                      class="form-control"
-                      v-model="form.email[2].email"
-                      placeholder="E-mail Principal">
-                  </div>
-                  <div class="col-md-6">
-                    <input type="text"
-                      class="form-control"
-                      v-model="form.email[3].email"
-                      placeholder="E-mail Outros">
-                  </div>
-                  <H6 class="text-success" style="padding-left:20px;"> </H6>
-                  <H6 class="text-success" style="padding-left:20px;"> </H6>
-                  <H6 class="text-success" style="padding-left:20px;"> </H6>
                 </div>
-                </div>
-              </b-col>
+              </b-container>
             </b-tab>
             <!-- Endereços -->
             <b-tab title="Enderecos">
-              <form>
+              <b-container>
+                <H6 class="text-success">Endereço Local</H6>
                 <div class="row">
-                <H6 class="text-success" style="padding-left:20px;">Endereço Local</H6>
-                <div class="col-sm-12">
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <div class="form-group">
-                          <b-input-group style="margin-left:10px;">
-                            <b-form-input
-                              placeholder="CEP"
-                              v-model="form.endereco[0].cep" v-mask="'#####-###'">
-                            </b-form-input>
-                              <b-input-group-append >
-                              <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 1)">search</b-button>
-                            </b-input-group-append>
-                          </b-input-group>
-                        </div>
-                      </div>
-                      <div class="col-sm-7">
-                        <div class="form-group">
-                          <input type="text"
-                            class="form-control"
-                            v-model="form.endereco[0].endereco"
-                            placeholder="Endereço Local">
-                        </div>
-                      </div>
-                      <div class="col-sm-2">
-                        <div class="form-group">
-                          <input type="text"
-                            class="form-control"
-                            v-model="form.endereco[0].numero"
-                            style="margin-right:10px;"
-                            placeholder="Numero">
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="form-group">
-                          <input type="text"
-                            style="margin-left:10px;width: 100%;"
-                            class="form-control"
-                            v-model="form.endereco[0].bairro"
-                            placeholder="Bairro Local">
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="form-group">
-                          <input type="text"
-                            class="form-control"
-                            v-model="form.endereco[0].complemento"
-                            placeholder="Complemento Local">
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="form-group">
-                          <b-input-group >
-                            <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade"  @keyup="datasearch(1, 0);"></b-form-input>
-                            <b-input-group-append>
-                              <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="datasearch(1, 0);">search</b-button>
-                            </b-input-group-append>
-                          </b-input-group>
-                        </div>
-                      </div>
-                    </div>
+                  <div class="col-sm-3">
+                    <b-input-group>
+                      <b-form-input
+                        placeholder="CEP"
+                        v-model="form.endereco[0].cep" v-mask="'#####-###'">
+                      </b-form-input>
+                        <b-input-group-append >
+                        <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 1)">search</b-button>
+                      </b-input-group-append>
+                    </b-input-group>
                   </div>
-                  <!-- Endereço Secundário -->
-                  <hr class="bg-info" >
-                  <div class="col-md-12">
-                    <H6 class="text-success" style="padding-left:10px;">Endereço Sede</H6>
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <div class="form-group">
-                          <b-input-group style="margin-left:10px;">
-                            <b-form-input
-                              placeholder="CEP Sede"
-                              v-model="form.endereco[1].cep" v-mask="'#####-###'">
-                            </b-form-input>
-                            <b-input-group-append>
-                              <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 2)">search</b-button>
-                            </b-input-group-append>
-                          </b-input-group>
-                        </div>
-                      </div>
-                      <div class="col-sm-7">
-                        <div class="form-group">
-                          <input type="text"
-                            class="form-control"
-                            v-model="form.endereco[1].endereco"
-                            placeholder="Endereço Sede">
-                        </div>
-                      </div>
-                      <div class="col-sm-2">
-                        <div class="form-group">
-                          <input type="text"
-                            class="form-control"
-                            v-model="form.endereco[1].numero"
-                            style="margin-right:0px;width: 100px;"
-                            placeholder="Numero">
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="form-group">
-                          <input type="text"
-                            style="margin-left:10px;width: 100%;"
-                            class="form-control"
-                            v-model="form.endereco[1].bairro"
-                            placeholder="Bairro Sede">
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="form-group">
-                          <input type="text"
-                            class="form-control"
-                            v-model="form.endereco[1].complemento"
-                            placeholder="Complemento Sede">
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="form-group">
-                          <b-input-group >
-                            <b-form-input placeholder="Cidade Sede" v-model="form.endereco[1].cidade" @keyup="datasearch(1, 1);"></b-form-input>
-                            <b-input-group-append>
-                              <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="datasearch(1, 1);">search</b-button>
-                            </b-input-group-append>
-                          </b-input-group>
-                        </div>
-                      </div>
+                  <div class="col-sm-7">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[0].endereco"
+                      placeholder="Endereço Local">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[0].numero"
+                      placeholder="Numero">
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[0].bairro"
+                      placeholder="Bairro Local">
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="text"
+                    class="form-control"
+                    v-model="form.endereco[0].complemento"
+                    placeholder="Complemento Local">
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <b-input-group >
+                        <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade"  @keyup="datasearch(1, 0);"></b-form-input>
+                        <b-input-group-append>
+                          <b-button variant="outline-info" class="material-icons" @click="datasearch(1, 0);">search</b-button>
+                        </b-input-group-append>
+                      </b-input-group>
                     </div>
                   </div>
                 </div>
-              </form>
+                <H6 class="text-success">Endereço Igreja Sede</H6>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <b-input-group>
+                      <b-form-input
+                        placeholder="CEP"
+                        v-model="form.endereco[0].cep" v-mask="'#####-###'">
+                      </b-form-input>
+                        <b-input-group-append >
+                        <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[1].cep, form, 2)">search</b-button>
+                      </b-input-group-append>
+                    </b-input-group>
+                  </div>
+                  <div class="col-sm-7">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[1].endereco"
+                      placeholder="Endereço Sede">
+                  </div>
+                  <div class="col-sm-2">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[1].numero"
+                      placeholder="Numero">
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[1].bairro"
+                      placeholder="Bairro Sede">
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="text"
+                    class="form-control"
+                    v-model="form.endereco[1].complemento"
+                    placeholder="Complemento Sede">
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <b-input-group >
+                        <b-form-input placeholder="Cidade Sede" v-model="form.endereco[1].cidade"  @keyup="datasearch(1, 0);"></b-form-input>
+                        <b-input-group-append>
+                          <b-button variant="outline-info" class="material-icons" @click="datasearch(1, 0);">search</b-button>
+                        </b-input-group-append>
+                      </b-input-group>
+                    </div>
+                  </div>
+                </div>
+              </b-container>
             </b-tab>
             <b-tab title="Configurações">
-              <b-col cols="12" >
+              <b-container>
                 <H6 class="text-success">Configurações de Mala Direta</H6>
                 <div class="row">
                     <div class="col-sm-5">
@@ -378,10 +352,27 @@
                     </div>
                   </div>
                 </div>
-              </b-col>
+              </b-container>
             </b-tab>
-            <b-tab v-show="false" title="MultIgreja" style="padding: 0;">
-              <Chips  v-model="form.filiais" @remove="remove(value)" separator="," />
+            <b-tab title="MultIgreja" :disabled="mult">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <Button label="Igrejas do Campo" class="p-button-raised p-button-success p-button-text button" @click="datasearch(2);" />
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <b-form-group label="Igrejas">
+                  <DataTable :value="form.campoEclesiastico" :scrollable="true" scrollHeight="200px" :loading="loading">
+                    <Column field="idfilial" header="id"></Column>
+                    <Column field="nome" header="Igreja"></Column>
+                    <Column headerStyle="width: 80px;" bodyStyle=""  :exportable="false">
+                      <template #body="slotProps">
+                          <Button icon="pi pi-trash" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="slotProps.data.del=true;slotProps.data.add=false;del(slotProps.data);" />
+                      </template>
+                    </Column>
+                  </DataTable>
+                </b-form-group>
+              </div>
             </b-tab>
           </b-tabs>
         </form>

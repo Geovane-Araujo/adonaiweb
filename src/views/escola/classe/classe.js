@@ -24,7 +24,6 @@ export default {
       curso: '',
       matriculados: null
     },
-    oldMatriculados: [],
     matri: {
       id: '',
       nome: '',
