@@ -355,9 +355,27 @@
               </b-container>
             </b-tab>
             <b-tab title="MultIgreja" :disabled="mult">
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <Button label="Igrejas do Campo" class="p-button-raised p-button-success p-button-text button" @click="datasearch(2);" />
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <Button label="Igrejas do Campo" class="p-button-raised p-button-success p-button-text button" @click="datasearch(2);" />
+                  </div>
+                </div>
+                <div class="col-sm-8">
+                  <b-form-checkbox
+                    id="checkbox-1"
+                    v-model="form.pessoaIgrejaPlanos.multiigreja"
+                    value="1"
+                    unchecked-value="0"
+                    >MultiIgreja
+                  </b-form-checkbox>
+                  <b-form-checkbox
+                    id="checkbox-1"
+                    v-model="form.pessoaIgrejaPlanos.celula"
+                    value="1"
+                    unchecked-value="0"
+                    >Celula
+                  </b-form-checkbox>
                 </div>
               </div>
               <div class="col-sm-12">

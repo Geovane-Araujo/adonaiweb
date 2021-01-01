@@ -148,7 +148,13 @@ export default {
             email: '',
             tipo: 3
           }
-        ]
+        ],
+        pessoaIgrejaPlanos: {
+          id: '',
+          multiigreja: '',
+          celula: '',
+          idpessoa: ''
+        }
       },
       configuration: {
         textocertificado: '',

@@ -187,7 +187,7 @@ export default {
   },
   methods: {
     async save (form) {
-      this.openloading = true
+      // this.openloading = true
       await axios.post(adonai.url + 'igreja', form, { headers: { Authorization: 'Bearer OTk5OSYwJmFkb25haTA5ODAyNjYzOTQ4' } }).then(res => {
         if (res.data.ret === 'success') {
           this.$toastr.success('Igreja Cadastrada com Sucesso', 'AdonaiSoft Diz:', util.toast)
