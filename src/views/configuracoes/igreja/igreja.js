@@ -270,13 +270,20 @@ export default {
       this.onResize()
       this.openloading = true
       axios.get(adonai.url + 'igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        var planos = this.form.pessoaIgrejaPlanos
         if (id === -100) {
           this.form = res.data.obj
+          this.form.pessoaIgrejaPlanos = planos
           this.img = adonai.urli + 'avatar.png'
           a = []
           r = []
         } else {
-          this.form = res.data.obj
+          if (this.user.auth !== '9999') {
+            this.form = res.data.obj
+            this.form.pessoaIgrejaPlanos = planos
+          } else {
+            this.form = res.data.obj
+          }
           this.form.add = false
           this.form.edit = true
           this.img = adonai.urli + this.form.foto
