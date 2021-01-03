@@ -118,6 +118,11 @@ export default {
           ]
         },
         {
+          title: 'Campo Eclesiastico',
+          icon: 'far fa-chart-bar',
+          href: '/campoEclesiastico'
+        },
+        {
           title: 'Escola',
           hidden: false,
           icon: 'fas fa-graduation-cap',

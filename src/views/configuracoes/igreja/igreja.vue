@@ -354,7 +354,7 @@
                 </div>
               </b-container>
             </b-tab>
-            <b-tab title="MultIgreja" :disabled="mult">
+            <b-tab :title="titleMult" :disabled="mult">
               <div class="row">
                 <div class="col-sm-4">
                   <div class="form-group">
@@ -370,7 +370,7 @@
                     >MultiIgreja
                   </b-form-checkbox>
                   <b-form-checkbox
-                    id="checkbox-1"
+                    id="checkbox-2"
                     v-model="form.pessoaIgrejaPlanos.celula"
                     value="1"
                     unchecked-value="0"

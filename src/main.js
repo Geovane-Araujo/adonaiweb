@@ -22,6 +22,7 @@ import vuejquery from 'vue-jquery'
 import barchart from '../src/components/barchart'
 import piechart from '../src/components/pie'
 import doughnut from '../src/components/doughnut'
+import polar from '../src/components/polar'
 import VueDropdown from 'vue-dynamic-dropdown'
 import { ColourPicker } from 'vue-colour-picker'
 import { Material } from 'vue-color'
@@ -67,6 +68,7 @@ Vue.component('adonaidatasearch', adonaidatasearch)
 Vue.component('barchart', barchart)
 Vue.component('piechart', piechart)
 Vue.component('dougchart', doughnut)
+Vue.component('polar', polar)
 Vue.prototype.$primevue = { ripple: true }
 
 Vue.config.debug = false

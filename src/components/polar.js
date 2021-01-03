@@ -1,7 +1,7 @@
-import { Doughnut } from 'vue-chartjs'
+import { PolarArea } from 'vue-chartjs'
 
 export default {
-  extends: Doughnut,
+  extends: PolarArea,
   props: {
     label: {
       type: Array,

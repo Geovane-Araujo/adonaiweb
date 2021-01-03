@@ -21,12 +21,12 @@ export default {
       mobileF: 'Filtrar',
       openConfiguration: false,
       mult: false,
+      titleMult: 'AdonaiSoft',
       open: false,
       ds: {
         grid: [],
         title: ''
       },
-      campocidade: 0,
       status: '',
       form: {
         add: true,
@@ -187,7 +187,7 @@ export default {
           this.$refs.grid.get(utc.explorer)
           this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
         } else {
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
           this.openloading = true
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
@@ -281,6 +281,8 @@ export default {
           if (this.user.auth !== '9999') {
             this.form = res.data.obj
             this.form.pessoaIgrejaPlanos = planos
+            this.mult = true
+            this.titleMult = ''
           } else {
             this.form = res.data.obj
           }

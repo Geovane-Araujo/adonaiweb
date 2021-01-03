@@ -34,6 +34,7 @@ import tickets from '../uteis/tickets/tickets.vue'
 import aula from '../escola/aula/aula.vue'
 import criancas from '../Secretaria/criancas/criancas.vue'
 import registroVisitantes from '../Secretaria/visitantes/registroVisita.vue'
+import campoEclesiastico from '../outros/campoeclesiastico/campoeclesiastico.vue'
 
 export default [
   {
@@ -216,6 +217,11 @@ export default [
         path: 'registroVisitantes',
         name: 'registroVisitantes',
         component: registroVisitantes
+      },
+      {
+        path: 'campoEclesiastico',
+        name: 'campoEclesiastico',
+        component: campoEclesiastico
       }
     ]
   }
