@@ -192,9 +192,6 @@ export default {
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
-    remove (event) {
-      this.filiais = '99'
-    },
     validate (doc, tipo, form) {
       if (this.form.nome === '') {
         this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)

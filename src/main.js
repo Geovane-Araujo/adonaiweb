@@ -19,6 +19,7 @@ import VueTippy, { TippyComponent } from 'vue-tippy'
 import VueCharts from 'vue-chartjs'
 import loader from 'vue-ui-preloader'
 import vuejquery from 'vue-jquery'
+import barchartdoubleData from '../src/components/barchartdoubleData'
 import barchart from '../src/components/barchart'
 import piechart from '../src/components/pie'
 import doughnut from '../src/components/doughnut'
@@ -66,6 +67,7 @@ Vue.component('tippy', TippyComponent)
 Vue.component('adonaigrid', adonaigrid)
 Vue.component('adonaidatasearch', adonaidatasearch)
 Vue.component('barchart', barchart)
+Vue.component('barchartdoubleData', barchartdoubleData)
 Vue.component('piechart', piechart)
 Vue.component('dougchart', doughnut)
 Vue.component('polar', polar)

@@ -187,7 +187,7 @@ export default {
   },
   methods: {
     async save (form) {
-      // this.openloading = true
+      this.openloading = true
       await axios.post(adonai.url + 'igreja', form, { headers: { Authorization: 'Bearer OTk5OSYwJmFkb25haTA5ODAyNjYzOTQ4' } }).then(res => {
         if (res.data.ret === 'success') {
           this.$toastr.success('Igreja Cadastrada com Sucesso', 'AdonaiSoft Diz:', util.toast)
@@ -197,7 +197,10 @@ export default {
           this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
           this.openloading = true
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast)
+        this.openloading = true
+      })
     },
     validate (form) {
       if (this.form.nome === '') {

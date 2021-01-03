@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
+    <b-overlay :show="show" rounded="sm" @shown="onShown" @hidden="onHidden">
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
@@ -60,8 +60,13 @@
               </section>
             </b-tab>
             <b-tab title="DashBoard">
-              <Sidebar :modal="true" :dismissable="true" :visible.sync="visibleLeft" position="right">
-                <h3>Filtros</h3>
+              <b-sidebar
+                id="sidebar-backdrop"
+                title="Filtros"
+                :backdrop-variant="variant"
+                backdrop
+                right
+                shadow>
                 <b-container style="padding:0px;">
                   <div class="col-sm-12">
                     <b-form-group label="Ano">
@@ -83,7 +88,7 @@
                     <Button label="Filtrar" @click="form.tipo=2;getCharts(form);" class="p-button-raised p-button-success p-button-text button" />
                   </div>
                 </b-container>
-              </Sidebar>
+              </b-sidebar>
               <b-container>
                 <div class="row">
                   <div class="col-sm-2">
@@ -92,7 +97,7 @@
                   <div class="col-sm-10">
                     <button
                       class="btn btn-outline-info" style="float:right;"
-                      @click="visibleLeft=true">
+                      v-b-toggle.sidebar-backdrop>
                       <img src="../../img/filter.png">
                     </button>
                   </div>
@@ -152,12 +157,39 @@
                     </b-form-group>
                   </div>
                 </div>
+                <h5 style="margin-top:20px;">Engajamento</h5>
+                <hr class="bg-info">
+                <div class="row">
+                  <div class="col-sm-6 p-shadow-1">
+                    <b-form-group label="Receitas" label-align="center">
+                      <barchart class="chartHeight-300"
+                      :label="chartGeral.labelReceitas"
+                      :datasets="chartGeral.receitas" ref="receitas">
+                      </barchart>
+                    </b-form-group>
+                  </div>
+                  <div class="col-sm-6 p-shadow-1">
+                    <b-form-group label="Despesas" label-align="center">
+                      <barchartdoubleData class="chartHeight-300"
+                      :label="chartGeral.labelDespesas"
+                      :datasets="chartGeral.despesas" ref="despesas">
+                      </barchartdoubleData>
+                    </b-form-group>
+                  </div>
+                </div>
               </b-container>
             </b-tab>
           </b-tabs>
         </div>
       </div>
     </div>
+    <template #overlay>
+        <div class="text-center">
+          <b-icon icon="stopwatch" font-scale="3" animation="cylon"></b-icon>
+          <p id="cancel-label">Carregando Dados das Igrejas, por favor Aguarde</p>
+        </div>
+      </template>
+    </b-overlay>
   </div>
 </template>
 

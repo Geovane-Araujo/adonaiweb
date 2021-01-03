@@ -17,11 +17,15 @@ export default {
   data () {
     return {
       openModal: false,
-      openloading: false,
       open: false,
       visibleLeft: false,
       modal: true,
+      show: false,
       ano: [
+        {
+          text: 'Todos',
+          value: 0
+        },
         {
           text: '2018',
           value: 2018
@@ -36,6 +40,10 @@ export default {
         }
       ],
       mes: [
+        {
+          text: 'Todos',
+          value: 0
+        },
         {
           text: 'Janeiro',
           value: 1
@@ -87,8 +95,8 @@ export default {
       ],
       form: {
         tipo: 1,
-        ano: '2020',
-        mes: '12'
+        ano: 0,
+        mes: 0
       },
       a: {
         totalIgrejas: 0,
@@ -100,7 +108,7 @@ export default {
       chartGeral: {
         membros: [
           {
-            label: 'Membros',
+            label: [],
             backgroundColor: [],
             data: ''
           }
@@ -145,26 +153,31 @@ export default {
             data: ''
           }
         ],
-        labelVisitantes: ''
+        labelVisitantes: '',
+        receitas: [],
+        labelReceitas: ' ',
+        despesas: [],
+        labelDespesas: []
       }
     }
   },
   mounted () {
+    this.show = true
     this.listaIgrejas()
     this.getCharts(this.form)
   },
   methods: {
     getCharts (form) {
-      this.openloading = true
+      this.show = true
       axios.post(adonai.url + 'dashboardcampoeclesiastico', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           // grava os dados vindos do bnco para o obj
-
           // Total de Membros
           this.chartGeral.labelMembros = res.data.Total.nomeIgreja
           this.chartGeral.membros[0].data = res.data.Total.Membros
           this.chartGeral.membros[0].data.forEach(element => {
             this.chartGeral.membros[0].backgroundColor.push(utc.methods.randomColor())
+            // this.chartGeral.membros[0].label.push(element)
           })
 
           // Membros Ativos -- Total
@@ -202,6 +215,56 @@ export default {
             this.chartGeral.visitantes[0].backgroundColor.push(utc.methods.randomColor())
           })
 
+          // receitas -- Total
+          var i = 0
+          res.data.Total.receitas.forEach(element => {
+            var objectChart = {
+              label: [],
+              backgroundColor: [],
+              data: []
+            }
+            /* var nome = ''
+            nome = utc.methods.splitString(res.data.Total.nomeIgreja[i]) */
+            objectChart.label = res.data.Total.nomeIgreja[i]
+            objectChart.data.push(element)
+            objectChart.backgroundColor = utc.methods.randomColor()
+            i++
+            this.chartGeral.receitas.push(objectChart)
+            // this.chartGeral.labelReceitas.push(nome)
+          })
+          i = 0
+          // Despesas
+
+          var finalObjectChart = []
+          var objectChart = {
+            label: [],
+            backgroundColor: [],
+            data: []
+          }
+          var cor = ''
+          cor = utc.methods.randomColor()
+          objectChart.data = res.data.Total.DespesasPagas
+          objectChart.backgroundColor = cor
+          objectChart.label = 'Despesas Pagas'
+
+          finalObjectChart.push(objectChart)
+
+          objectChart = {
+            label: [],
+            backgroundColor: [],
+            data: []
+          }
+
+          objectChart.data = res.data.Total.DespesasPendentes
+          objectChart.backgroundColor = utc.methods.LightenDarkenColor(cor, 50)
+          objectChart.label = 'Despesas Pendentes'
+
+          finalObjectChart.push(objectChart)
+
+          res.data.Total.nomeIgreja.forEach(element => {
+            this.chartGeral.labelDespesas.push(utc.methods.splitString(element))
+          })
+
           // manda os dados para os gráficos -- Total
           this.$refs.membros.render(this.chartGeral.labelMembros, this.chartGeral.membros)
           this.$refs.membrosativos.render(this.chartGeral.labelMembrosAtivos, this.chartGeral.membrosAtivos)
@@ -209,13 +272,14 @@ export default {
           this.$refs.eventos.render(this.chartGeral.labelEventosRealizados, this.chartGeral.eventosRealizados)
           this.$refs.novosConvertidos.render(this.chartGeral.labelNovosConvertidos, this.chartGeral.novosConvertidos)
           this.$refs.visitantes.render(this.chartGeral.labelVisitantes, this.chartGeral.visitantes)
+          this.$refs.receitas.render(this.chartGeral.labelReceitas, this.chartGeral.receitas)
+          this.$refs.despesas.render(this.chartGeral.labelDespesas, finalObjectChart)
         }
-        this.openloading = false
+        this.show = false
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       /* this.$refs.expl.explorer('igrejagrid',1,'') */
     },
     listaIgrejas () {
-      this.openloading = true
       axios.get(adonai.url + 'listaigrejas', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           this.b.listaIgrejas = res.data.obj
@@ -225,6 +289,14 @@ export default {
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       /* this.$refs.expl.explorer('igrejagrid',1,'') */
+    },
+    onShown () {
+      // Focus the cancel button when the overlay is showing
+      this.$refs.cancel.focus()
+    },
+    onHidden () {
+      // Focus the show button when the overlay is removed
+      this.$refs.show.focus()
     }
   },
   components: {
