@@ -104,7 +104,7 @@
                 </div>
                 <hr class="bg-info">
                 <div class="row">
-                  <div class="col-sm-4 p-shadow-1">
+                  <div v-show="false" class="col-sm-4 p-shadow-1">
                     <b-form-group label="Total Membros por Igreja" label-align="center">
                       <dougchart class="chartHeight"
                       :label="chartGeral.labelMembros"
@@ -112,7 +112,7 @@
                       </dougchart>
                     </b-form-group>
                   </div>
-                  <div class="col-sm-4 p-shadow-1">
+                  <div v-show="false" class="col-sm-4 p-shadow-1">
                     <b-form-group label="Total Membros Ativos por Igreja" label-align="center">
                       <dougchart class="chartHeight"
                       :label="chartGeral.labelMembrosAtivos"
@@ -120,12 +120,20 @@
                       </dougchart>
                     </b-form-group>
                   </div>
-                  <div class="col-sm-4 p-shadow-1">
+                  <div v-show="false" class="col-sm-4 p-shadow-1">
                     <b-form-group label="Total Membros Não Batizados por Igreja" label-align="center">
                       <dougchart class="chartHeight"
                       :label="chartGeral.labelMembrosAtivos"
                       :datasets="chartGeral.membrosAtivos" ref="membrosNaoBatizado">
                       </dougchart>
+                    </b-form-group>
+                  </div>
+                  <div  class="col-sm-12 p-shadow-1">
+                    <b-form-group label="Total Membros Não Batizados por Igreja" label-align="center">
+                      <lines class="chartHeight"
+                      :label="chartGeral.labelMembros"
+                      :datasets="chartGeral.membros" ref="memb">
+                      </lines>
                     </b-form-group>
                   </div>
                 </div>
@@ -134,7 +142,7 @@
                 <div class="row">
                   <div class="col-sm-4 p-shadow-1">
                     <b-form-group label="Total de Eventos Realizados na/pela Igreja" label-align="center">
-                      <polar class="chartHeight"
+                      <polar class="chartHeight-400"
                       :label="chartGeral.labelEventosRealizados"
                       :datasets="chartGeral.eventosRealizados" ref="eventos">
                       </polar>
@@ -142,7 +150,7 @@
                   </div>
                   <div class="col-sm-4 p-shadow-1">
                     <b-form-group label="Total de Novos Convertidos" label-align="center">
-                      <piechart class="chartHeight"
+                      <piechart class="chartHeight-400"
                       :label="chartGeral.labelNovosConvertidos"
                       :datasets="chartGeral.novosConvertidos" ref="novosConvertidos">
                       </piechart>
@@ -150,14 +158,14 @@
                   </div>
                   <div class="col-sm-4 p-shadow-1">
                     <b-form-group label="Total de Visitantes" label-align="center">
-                      <dougchart class="chartHeight"
+                      <dougchart class="chartHeight-400"
                       :label="chartGeral.labelVisitantes"
                       :datasets="chartGeral.visitantes" ref="visitantes">
                       </dougchart>
                     </b-form-group>
                   </div>
                 </div>
-                <h5 style="margin-top:20px;">Engajamento</h5>
+                <h5 style="margin-top:20px;">Financeiro</h5>
                 <hr class="bg-info">
                 <div class="row">
                   <div class="col-sm-6 p-shadow-1">

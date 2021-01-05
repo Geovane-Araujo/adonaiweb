@@ -118,9 +118,10 @@ export default {
           ]
         },
         {
-          title: 'Campo Eclesiastico',
+          title: 'Campo Eclesiastico (Beta)',
           icon: 'far fa-chart-bar',
-          href: '/campoEclesiastico'
+          href: '/campoEclesiastico',
+          hidden: false
         },
         {
           title: 'Escola',

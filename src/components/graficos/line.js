@@ -1,7 +1,7 @@
-import { PolarArea } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs'
 
 export default {
-  extends: PolarArea,
+  extends: Bar,
   props: {
     label: {
       type: Array,
@@ -21,8 +21,21 @@ export default {
       {
         responsive: true,
         maintainAspectRatio: false,
-        legend: {
-          position: 'left'
+        scales: {
+          xAxes: [{
+            stacked: true
+          }],
+          yAxes: [{
+            stacked: true
+          }]
+        },
+        tooltips: {
+          mode: 'index',
+          intersect: false
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: true
         }
       })
     }

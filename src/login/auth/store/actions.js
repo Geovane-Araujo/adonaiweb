@@ -122,6 +122,11 @@ export const ActionLogin = ({ dispatch }, payload) => {
     } else {
       sessionStorage.setItem('db', 'false')
     }
+    if (res.data.login.igreja.pessoaIgrejaPlanos.multiigreja === 0) {
+      sessionStorage.setItem('campoecle', 'true')
+    } else {
+      sessionStorage.setItem('campoecle', 'false')
+    }
     localStorage.setItem('ret', res.data.ret)
     dispatch('ActionUser', res.data.login)
     dispatch('ActionToken', res.data.login.token)

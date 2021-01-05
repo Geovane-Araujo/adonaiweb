@@ -13,7 +13,7 @@ export default {
     }
   },
   methods: {
-    render (label, datasets) {
+    render (label, datasets, local) {
       this.renderChart({
         labels: label,
         datasets: datasets
@@ -22,7 +22,7 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
-          position: 'left'
+          position: local
         }
       })
     }

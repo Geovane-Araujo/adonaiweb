@@ -1,7 +1,7 @@
-import { Pie } from 'vue-chartjs'
+import { PolarArea } from 'vue-chartjs'
 
 export default {
-  extends: Pie,
+  extends: PolarArea,
   props: {
     label: {
       type: Array,
@@ -13,17 +13,16 @@ export default {
     }
   },
   methods: {
-    render (label, datasets) {
+    render (label, datasets, local) {
       this.renderChart({
         labels: label,
-        datasets: datasets,
-        label: 'teste'
+        datasets: datasets
       },
       {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
-          position: 'left'
+          position: local
         }
       })
     }

@@ -99,6 +99,9 @@ export default {
       form.add = false
       form.del = true
       this.deleteModal = true
+    },
+    teste () {
+      alert('deu certo')
     }
   },
   components: {

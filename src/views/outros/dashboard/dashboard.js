@@ -72,8 +72,8 @@ export default {
           this.dataset_tipos_despesas[0].backgroundColor.push(utilClass.methods.randomColor())
         })
         this.$refs.year.render(this.cabe_finan, this.dataset_finan)
-        this.$refs.des.render(this.cabe_tipos_despesa, this.dataset_tipos_despesas)
-        this.$refs.rec.render(this.cabe_tipos_entradas, this.dataset_tipos_entradas)
+        this.$refs.des.render(this.cabe_tipos_despesa, this.dataset_tipos_despesas, 'left')
+        this.$refs.rec.render(this.cabe_tipos_entradas, this.dataset_tipos_entradas, 'left')
         this.openloading = false
       })
       /* this.$refs.expl.explorer('igrejagrid',1,'') */

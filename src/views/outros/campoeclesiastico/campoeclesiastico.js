@@ -155,7 +155,7 @@ export default {
         ],
         labelVisitantes: '',
         receitas: [],
-        labelReceitas: ' ',
+        labelReceitas: [],
         despesas: [],
         labelDespesas: []
       }
@@ -180,6 +180,11 @@ export default {
             // this.chartGeral.membros[0].label.push(element)
           })
 
+          var insertObjectChartMembers = []
+          insertObjectChartMembers.push(utc.methods.inserirObjectDuoChart(res.data.Total.Membros, 'Membros', utc.methods.randomColor(), 0))
+          insertObjectChartMembers.push(utc.methods.inserirObjectDuoChart(res.data.Total.MembrosBatizados, 'Membros Batizados', utc.methods.randomColor(), 0))
+          insertObjectChartMembers.push(utc.methods.inserirObjectDuoChart(res.data.Total.MembrosNaoBatizados, 'Membros Não Batizados', utc.methods.randomColor(), 0))
+          insertObjectChartMembers.push(utc.methods.inserirObjectDuoChart(res.data.Total.MembrosAtivos, 'Membros Ativos', utc.methods.randomColor(), 0))
           // Membros Ativos -- Total
           this.chartGeral.labelMembrosAtivos = res.data.Total.nomeIgreja
           this.chartGeral.membrosAtivos[0].data = res.data.Total.MembrosAtivos
@@ -215,65 +220,31 @@ export default {
             this.chartGeral.visitantes[0].backgroundColor.push(utc.methods.randomColor())
           })
 
-          // receitas -- Total
-          var i = 0
-          res.data.Total.receitas.forEach(element => {
-            var objectChart = {
-              label: [],
-              backgroundColor: [],
-              data: []
-            }
-            /* var nome = ''
-            nome = utc.methods.splitString(res.data.Total.nomeIgreja[i]) */
-            objectChart.label = res.data.Total.nomeIgreja[i]
-            objectChart.data.push(element)
-            objectChart.backgroundColor = utc.methods.randomColor()
-            i++
-            this.chartGeral.receitas.push(objectChart)
-            // this.chartGeral.labelReceitas.push(nome)
-          })
-          i = 0
-          // Despesas
+          // receitas
+          var finalObjectChartReceitas = []
+          finalObjectChartReceitas.push(utc.methods.inserirObjectDuoChart(res.data.Total.receitas, 'Receitas', utc.methods.randomColor(), 1))
+          this.chartGeral.labelReceitas = []
+          utc.methods.inserirNomeArray(res.data.Total.nomeIgreja, this.chartGeral.labelReceitas)
 
-          var finalObjectChart = []
-          var objectChart = {
-            label: [],
-            backgroundColor: [],
-            data: []
-          }
+          // Despesas
+          var finalObjectChartDespesas = []
           var cor = ''
           cor = utc.methods.randomColor()
-          objectChart.data = res.data.Total.DespesasPagas
-          objectChart.backgroundColor = cor
-          objectChart.label = 'Despesas Pagas'
-
-          finalObjectChart.push(objectChart)
-
-          objectChart = {
-            label: [],
-            backgroundColor: [],
-            data: []
-          }
-
-          objectChart.data = res.data.Total.DespesasPendentes
-          objectChart.backgroundColor = utc.methods.LightenDarkenColor(cor, 50)
-          objectChart.label = 'Despesas Pendentes'
-
-          finalObjectChart.push(objectChart)
-
-          res.data.Total.nomeIgreja.forEach(element => {
-            this.chartGeral.labelDespesas.push(utc.methods.splitString(element))
-          })
+          finalObjectChartDespesas.push(utc.methods.inserirObjectDuoChart(res.data.Total.DespesasPagas, 'Despesas Pagas', cor, 1))
+          finalObjectChartDespesas.push(utc.methods.inserirObjectDuoChart(res.data.Total.DespesasPendentes, 'Despesas Pendentes', utc.methods.LightenDarkenColor(cor, 50), 1))
+          this.chartGeral.labelDespesas = []
+          utc.methods.inserirNomeArray(res.data.Total.nomeIgreja, this.chartGeral.labelDespesas)
 
           // manda os dados para os gráficos -- Total
-          this.$refs.membros.render(this.chartGeral.labelMembros, this.chartGeral.membros)
-          this.$refs.membrosativos.render(this.chartGeral.labelMembrosAtivos, this.chartGeral.membrosAtivos)
-          this.$refs.membrosNaoBatizado.render(this.chartGeral.labelMembrosAtivos, this.chartGeral.membrosNaoBatizados)
-          this.$refs.eventos.render(this.chartGeral.labelEventosRealizados, this.chartGeral.eventosRealizados)
-          this.$refs.novosConvertidos.render(this.chartGeral.labelNovosConvertidos, this.chartGeral.novosConvertidos)
-          this.$refs.visitantes.render(this.chartGeral.labelVisitantes, this.chartGeral.visitantes)
-          this.$refs.receitas.render(this.chartGeral.labelReceitas, this.chartGeral.receitas)
-          this.$refs.despesas.render(this.chartGeral.labelDespesas, finalObjectChart)
+          this.$refs.membros.render(this.chartGeral.labelMembros, this.chartGeral.membros, 'top')
+          this.$refs.membrosativos.render(this.chartGeral.labelMembrosAtivos, this.chartGeral.membrosAtivos, 'top')
+          this.$refs.membrosNaoBatizado.render(this.chartGeral.labelMembrosAtivos, this.chartGeral.membrosNaoBatizados, 'top')
+          this.$refs.eventos.render(this.chartGeral.labelEventosRealizados, this.chartGeral.eventosRealizados, 'top')
+          this.$refs.novosConvertidos.render(this.chartGeral.labelNovosConvertidos, this.chartGeral.novosConvertidos, 'top')
+          this.$refs.visitantes.render(this.chartGeral.labelVisitantes, this.chartGeral.visitantes, 'top')
+          this.$refs.receitas.render(this.chartGeral.labelDespesas, finalObjectChartReceitas)
+          this.$refs.despesas.render(this.chartGeral.labelDespesas, finalObjectChartDespesas)
+          this.$refs.memb.render(this.chartGeral.labelDespesas, insertObjectChartMembers)
         }
         this.show = false
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
