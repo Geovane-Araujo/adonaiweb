@@ -12,6 +12,7 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Sidebar from 'primevue/sidebar'
 import RadioButton from 'primevue/radiobutton'
+
 export default {
   extends: Bar,
   data () {
@@ -19,8 +20,11 @@ export default {
       openModal: false,
       open: false,
       visibleLeft: false,
+      loader: false,
       modal: true,
       show: false,
+      anoCorrente: '',
+      labelAno: ['Janeio', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
       ano: [
         {
           text: 'Todos',
@@ -37,6 +41,10 @@ export default {
         {
           text: '2020',
           value: 2020
+        },
+        {
+          text: '2021',
+          value: 2021
         }
       ],
       mes: [
@@ -105,6 +113,10 @@ export default {
       b: {
         listaIgrejas: []
       },
+      c: {
+        nomeIgreja: '',
+        bairros: []
+      },
       chartGeral: {
         membros: [
           {
@@ -158,6 +170,28 @@ export default {
         labelReceitas: [],
         despesas: [],
         labelDespesas: []
+      },
+      chartAnual: {
+        despesas: [
+          {
+            label: 'Despesas',
+            backgroundColor: '#82cef5',
+            data: '',
+            fill: false
+          }
+        ],
+        receitas: [],
+        membros: [
+          {
+            label: 'Membros',
+            backgroundColor: '#82cef5',
+            data: []
+          }
+        ],
+        novosConvertidos: [],
+        visitantes: [],
+        batizados: [],
+        eventos: []
       }
     }
   },
@@ -171,6 +205,11 @@ export default {
       this.show = true
       axios.post(adonai.url + 'dashboardcampoeclesiastico', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
+          if (this.a.totalMembros === 0) {
+            res.data.Total.Membros.forEach(element => {
+              this.a.totalMembros += element
+            })
+          }
           // grava os dados vindos do bnco para o obj
           // Total de Membros
           this.chartGeral.labelMembros = res.data.Total.nomeIgreja
@@ -236,7 +275,7 @@ export default {
           utc.methods.inserirNomeArray(res.data.Total.nomeIgreja, this.chartGeral.labelDespesas)
 
           // manda os dados para os gráficos -- Total
-          this.$refs.membros.render(this.chartGeral.labelMembros, this.chartGeral.membros, 'top')
+          this.$refs.membro.render(this.chartGeral.labelMembros, this.chartGeral.membros, 'top')
           this.$refs.membrosativos.render(this.chartGeral.labelMembrosAtivos, this.chartGeral.membrosAtivos, 'top')
           this.$refs.membrosNaoBatizado.render(this.chartGeral.labelMembrosAtivos, this.chartGeral.membrosNaoBatizados, 'top')
           this.$refs.eventos.render(this.chartGeral.labelEventosRealizados, this.chartGeral.eventosRealizados, 'top')
@@ -248,12 +287,12 @@ export default {
         }
         this.show = false
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
-      /* this.$refs.expl.explorer('igrejagrid',1,'') */
     },
     listaIgrejas () {
       axios.get(adonai.url + 'listaigrejas', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           this.b.listaIgrejas = res.data.obj
+          this.a.totalMembros = 0
           this.a.totalIgrejas = this.b.listaIgrejas.length
         } else {
           this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
@@ -261,13 +300,38 @@ export default {
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       /* this.$refs.expl.explorer('igrejagrid',1,'') */
     },
-    onShown () {
-      // Focus the cancel button when the overlay is showing
-      this.$refs.cancel.focus()
+    getAnual (id, ano) {
+      this.loader = true
+      axios.get(adonai.url + 'resumoanual/' + id + '/' + ano, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data.ret === 'success') {
+          this.loader = false
+          // membros
+          var data = []
+          data.push(utc.methods.inserirObjectDuoChart(res.data.obj.totalMembros, 'Membros', utc.methods.randomColor(), 0))
+          data.push(utc.methods.inserirObjectDuoChart(res.data.obj.totalMembrosBatizados, 'Membros Batizados', utc.methods.randomColor(), 0))
+          data.push(utc.methods.inserirObjectDuoChart(res.data.obj.totaleventos, 'Eventos Realizados', utc.methods.randomColor(), 0))
+          this.$refs.tete.render(this.labelAno, data)
+
+          var financeiro = []
+          financeiro.push(utc.methods.inserirObjectDuoChart(res.data.obj.receitas, 'Receitas', utc.methods.randomColor(), 1))
+          financeiro.push(utc.methods.inserirObjectDuoChart(res.data.obj.despesas, 'Despesas', utc.methods.randomColor(), 1))
+          this.$refs.rec.render(this.labelAno, financeiro)
+
+          this.c.bairros = res.data.bairros
+        }
+      }).catch(err => {
+        this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast)
+        this.loader = false
+      })
     },
-    onHidden () {
-      // Focus the show button when the overlay is removed
-      this.$refs.show.focus()
+    onOpen (pros) {
+      this.openModal = true
+      this.c.nomeIgreja = pros.data.nomeIgreja
+      if (this.form.ano === 0) {
+        this.form.ano = 2021
+      }
+      this.getAnual(pros.data.idFilial, this.form.ano)
+      this.loader = false
     }
   },
   components: {

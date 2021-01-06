@@ -1,6 +1,7 @@
 <template>
   <div>
-    <b-overlay :show="show" rounded="sm" @shown="onShown" @hidden="onHidden">
+    <loader v-show="loader" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
+    <b-overlay :show="show" rounded="sm">
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
@@ -33,7 +34,7 @@
                         style=" text-align:center;">
                       </div>
                       <div class="col-sm-6">
-                          <h6 style="text-align: left;">Total de Membros no Campo</h6>
+                          <h6 style="text-align: left;">Total de Fieis no Campo</h6>
                           <h1 style="text-align: left; font-size: 30px; ">{{ a.totalMembros }}</h1>
                       </div>
                     </div>
@@ -51,7 +52,7 @@
                       <Column field="localidade" header="Bairro/Cidade"></Column>
                       <Column headerStyle="width: 80px;" bodyStyle=""  :exportable="false">
                         <template #body="slotProps">
-                            <Button icon="pi pi-eye" class="p-button-rounded p-button-outlined p-button-info p-button-sm" @click="slotProps.data.del=true;slotProps.data.add=false;del(slotProps.data);" />
+                            <Button icon="pi pi-eye" class="p-button-rounded p-button-outlined p-button-info p-button-sm" @click="onOpen(slotProps)" />
                         </template>
                       </Column>
                     </DataTable>
@@ -108,7 +109,7 @@
                     <b-form-group label="Total Membros por Igreja" label-align="center">
                       <dougchart class="chartHeight"
                       :label="chartGeral.labelMembros"
-                      :datasets="chartGeral.membros" ref="membros">
+                      :datasets="chartGeral.membros" ref="membro">
                       </dougchart>
                     </b-form-group>
                   </div>
@@ -190,6 +191,42 @@
           </b-tabs>
         </div>
       </div>
+      <Dialog :header="'Resumo Anual da ' + c.nomeIgreja " :visible.sync="openModal" :style="{width: '100vw', height: '100vw'}" :modal="true">
+        <b-container>
+          <h1>Dados Referente ao Ano {{ this.form.ano }}</h1>
+          <hr class="bg-info">
+          <div class="row">
+            <div class="col-sm-4">
+              <h4>Quantidade de Fieis por Bairro</h4>
+              <b-form-group>
+                <DataTable :value="c.bairros" :scrollable="true" scrollHeight="280px" :loading="loading">
+                  <Column field="quantidade" header="Quantidade"></Column>
+                  <Column field="bairro" header="Bairro"></Column>
+                </DataTable>
+              </b-form-group>
+            </div>
+            <div class="col-sm-8">
+              <div class="row">
+                <div class="col-sm-12 p-shadow-1">
+                  <b-form-group label="Quantidade de Membros por Mês" label-align="center">
+                    <lines class="chartHeight-300" ref="tete">
+                    </lines>
+                  </b-form-group>
+                </div>
+                <div class="col-sm-12 p-shadow-1">
+                  <b-form-group label="Quantidade de Membros por Mês" label-align="center">
+                    <barchart class="chartHeight-300" ref="rec">
+                    </barchart>
+                  </b-form-group>
+                </div>
+              </div>
+            </div>
+          </div>
+        </b-container>
+        <template #footer>
+            <Button label="Fechar" class="p-button-raised p-button-success p-button-text button" />
+        </template>
+      </Dialog>
     </div>
     <template #overlay>
         <div class="text-center">
