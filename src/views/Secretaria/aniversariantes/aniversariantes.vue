@@ -17,7 +17,7 @@
             <Column headerStyle="width:50px;" field="Telefone" header="Telefone"></Column>
             <Column headerStyle="width:5px;" :exportable="false">
               <template #body="slotProps">
-                  <Button style="font-size: 10px;" icon="fab fa-whatsapp" class="p-button-rounded p-button-outlined p-button-success p-button-sm p-sm-2" @click="openModal=true;form.telefone=slotProps.data.telefone;" form.edit="true;form.add=false" />
+                  <Button style="font-size: 10px;" icon="fab fa-whatsapp" class="p-button-rounded p-button-outlined p-button-success p-button-sm p-sm-2" @click="validate(slotProps);" />
               </template>
             </Column>
           </DataTable>

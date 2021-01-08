@@ -28,7 +28,7 @@
 
     <!-- modal para cadastro-->
     <Dialog style="font-size:10px;" class="ocultarScroll" header="Cadastro Visitantes" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
-      <form method="POST">
+      <b-container method="POST">
         <div class="row">
           <div class="col-sm-8">
             <b-form-group label="Nome Visitante" style="padding:0px;" label-align="left">
@@ -59,7 +59,7 @@
             </b-form-group>
           </div>
         </div>
-      </form>
+      </b-container>
       <template #footer>
         <div class=" p-mr-2 p-as-start" style="align: left">
           <Button label="Salvar" @click="validate(form)" class="p-button-raised p-button-success p-button-text button" />

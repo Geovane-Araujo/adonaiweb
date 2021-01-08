@@ -31,7 +31,7 @@
       </div>
     </div>
     <Dialog style="font-size:10px;" header="Cadastro Congregações" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
-      <form method="POST">
+      <b-container>
         <div class="row">
           <div class="col-sm-7">
             <input type="text"
@@ -132,7 +132,7 @@
             ></b-form-textarea>
           </div>
         </div>
-      </form>
+      </b-container>
       <template #footer>
         <div class=" p-mr-2 p-as-start" style="align: left">
           <Button label="Salvar" @click="validate(form)" class="p-button-raised p-button-success p-button-text button" />

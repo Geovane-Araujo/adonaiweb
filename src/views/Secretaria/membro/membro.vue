@@ -146,124 +146,115 @@
           </b-tab>
           <!-- Endereços -->
           <b-tab title="Enderecos">
-            <form action="" enctype="multipart/form-data" class="form form-vertical">
+            <b-container>
               <div class="row">
-              <div class="col-md-12">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <div class="form-group">
-                        <b-input-group>
-                          <b-form-input placeholder="CEP" v-mask="'#####-###'" v-model="form.endereco[0].cep" ></b-form-input>
-                            <b-input-group-append >
-                            <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 0)">search</b-button>
-                          </b-input-group-append>
-                        </b-input-group>
-                      </div>
-                    </div>
-                    <div class="col-sm-7">
-                      <div class="form-group">
-                        <input type="text"
-                          class="form-control"
-                          v-model="form.endereco[0].endereco"
-                          placeholder="Endereço Principal">
-                      </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="form-group">
-                        <input type="text"
-                          class="form-control"
-                          v-model="form.endereco[0].numero"
-                          placeholder="Numero">
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="form-group">
-                        <input type="text"
-                          class="form-control"
-                          v-model="form.endereco[0].bairro"
-                          placeholder="Bairro Principal">
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="form-group">
-                        <input type="text"
-                          class="form-control"
-                          v-model="form.endereco[0].complemento"
-                          placeholder="Complemento Principal">
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="form-group">
-                        <b-input-group >
-                          <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade" @click="datasearch(1, 0);"></b-form-input>
-                          <b-input-group-append>
-                            <b-button variant="outline-info" class="material-icons" @click="datasearch(1, 0);">search</b-button>
-                          </b-input-group-append>
-                        </b-input-group>
-                      </div>
-                    </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <b-input-group>
+                      <b-form-input placeholder="CEP" v-mask="'#####-###'" v-model="form.endereco[0].cep" ></b-form-input>
+                        <b-input-group-append >
+                        <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 0)">search</b-button>
+                      </b-input-group-append>
+                    </b-input-group>
                   </div>
                 </div>
-                <!-- Endereço Secundário -->
-                <hr class="bg-info" >
-                <div class="col-md-12">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <div class="form-group">
-                        <b-input-group>
-                          <b-form-input placeholder="CEP" v-mask="'#####-###'" v-model="form.endereco[1].cep"></b-form-input>
-                          <b-input-group-append>
-                            <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[1].cep, form, 1)">search</b-button>
-                          </b-input-group-append>
-                        </b-input-group>
-                      </div>
-                    </div>
-                    <div class="col-sm-7">
-                      <div class="form-group">
-                        <input type="text"
-                          class="form-control"
-                          v-model="form.endereco[1].endereco"
-                          placeholder="Endereço Outro">
-                      </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="form-group">
-                        <input type="text"
-                          class="form-control"
-                          v-model="form.endereco[1].numero"
-                          placeholder="Numero">
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="form-group">
-                        <input type="text"
-                          class="form-control"
-                          v-model="form.endereco[1].bairro"
-                          placeholder="Bairro Outro">
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="form-group">
-                        <input type="text"
-                          class="form-control"
-                          v-model="form.endereco[1].complemento"
-                          placeholder="Complemento Outro">
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="form-group">
-                        <b-input-group >
-                          <b-form-input placeholder="Cidade Outro" v-model="form.endereco[1].cidade" @click="datasearch(1, 1);"></b-form-input>
-                          <b-input-group-append>
-                            <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="datasearch(1, 1);">search</b-button>
-                          </b-input-group-append>
-                        </b-input-group>
-                      </div>
-                    </div>
+                <div class="col-sm-7">
+                  <div class="form-group">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[0].endereco"
+                      placeholder="Endereço Principal">
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[0].numero"
+                      placeholder="Numero">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[0].bairro"
+                      placeholder="Bairro Principal">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[0].complemento"
+                      placeholder="Complemento Principal">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <b-input-group >
+                      <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade" @click="datasearch(1, 0);"></b-form-input>
+                      <b-input-group-append>
+                        <b-button variant="outline-info" class="material-icons" @click="datasearch(1, 0);">search</b-button>
+                      </b-input-group-append>
+                    </b-input-group>
+                  </div>
+                </div>
+              <!-- Endereço Secundário -->
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <b-input-group>
+                      <b-form-input placeholder="CEP" v-mask="'#####-###'" v-model="form.endereco[1].cep"></b-form-input>
+                      <b-input-group-append>
+                        <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[1].cep, form, 1)">search</b-button>
+                      </b-input-group-append>
+                    </b-input-group>
+                  </div>
+                </div>
+                <div class="col-sm-7">
+                  <div class="form-group">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[1].endereco"
+                      placeholder="Endereço Outro">
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[1].numero"
+                      placeholder="Numero">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[1].bairro"
+                      placeholder="Bairro Outro">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.endereco[1].complemento"
+                      placeholder="Complemento Outro">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <b-input-group >
+                      <b-form-input placeholder="Cidade Outro" v-model="form.endereco[1].cidade" @click="datasearch(1, 1);"></b-form-input>
+                      <b-input-group-append>
+                        <b-button variant="outline-info" class="material-icons" @click="datasearch(1, 1);">search</b-button>
+                      </b-input-group-append>
+                    </b-input-group>
                   </div>
                 </div>
               </div>
-            </form>
+            </b-container>
           </b-tab>
           <b-tab title="Observações">
             <b-form-textarea

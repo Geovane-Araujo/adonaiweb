@@ -118,7 +118,7 @@ export default {
           ]
         },
         {
-          title: 'Campo Eclesiastico (Beta)',
+          title: 'Campo Eclesiastico',
           icon: 'far fa-chart-bar',
           href: '/campoEclesiastico',
           hidden: false

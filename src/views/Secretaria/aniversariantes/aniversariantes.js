@@ -36,6 +36,12 @@ export default {
     this.buscaraniversariante()
   },
   methods: {
+    validate (props) {
+      this.form.telefone = props.data.Telefone
+      this.form.edit = true
+      this.form.add = false
+      this.openModal = true
+    },
     buscaraniversariante () {
       this.openloading = true
       axios.post(adonai.url + 'aexplorer', this.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {

@@ -22,7 +22,7 @@
           ref="grid"></adonaigrid>
         </div>
         <Dialog style="font-size:10px;" header="Pedidos" :visible.sync="openModal" :style="{width: '50vw'}" :modal="true">
-          <form >
+          <b-container>
             <div class="row">
               <div class="col-sm-3">
                 <b-form-group label-align-sm="left" label="Data">
@@ -77,7 +77,7 @@
                 </b-form-group>
               </div>
             </div>
-          </form>
+          </b-container>
           <template #footer>
               <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
               <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />

@@ -24,53 +24,55 @@
       </div>
     </div>
     <Dialog style="font-size:10px;" header="Cadastro de Turmas" :visible.sync="openModal" :style="{width: '60vw'}" :modal="true">
-      <div class="row">
-        <div class="col-sm-4">
-          <b-form-group label="Nome Classe">
-            <input type="text"
-            name="descricao"
-            autocomplete="off"
-            class="form-control"
-            placeholder="Classe"
-            v-model="form.descricao">
-          </b-form-group>
-        </div>
-        <div class="col-sm-4">
-          <b-form-group label="Curso">
-            <div class="form-group">
-            <b-input-group >
-              <b-form-input placeholder="Curso" v-model="form.curso" @click="datasearch(0);"></b-form-input>
-              <b-input-group-append>
-
-                <b-button variant="outline-info" class="material-icons" @click="datasearch(0);">search</b-button>
-              </b-input-group-append>
-            </b-input-group>
+      <b-container>
+        <div class="row">
+          <div class="col-sm-4">
+            <b-form-group label="Nome Classe">
+              <input type="text"
+              name="descricao"
+              autocomplete="off"
+              class="form-control"
+              placeholder="Classe"
+              v-model="form.descricao">
+            </b-form-group>
           </div>
-          </b-form-group>
-        </div>
-        <div class="col-sm-4">
-          <b-form-group label-align="left" label="Alunos e Professores">
-            <div class="form-group">
-              <Button label="Aluno" class="p-button-raised p-button-success p-button-text button" @click="datasearch(1);" />
-              <Button style="margin-left:20px;" label="Professor" class="p-button-raised p-button-success p-button-text button" @click="datasearch(2);" />
+          <div class="col-sm-4">
+            <b-form-group label="Curso">
+              <div class="form-group">
+              <b-input-group >
+                <b-form-input placeholder="Curso" v-model="form.curso" @click="datasearch(0);"></b-form-input>
+                <b-input-group-append>
+
+                  <b-button variant="outline-info" class="material-icons" @click="datasearch(0);">search</b-button>
+                </b-input-group-append>
+              </b-input-group>
             </div>
-          </b-form-group>
+            </b-form-group>
+          </div>
+          <div class="col-sm-4">
+            <b-form-group label-align="left" label="Alunos e Professores">
+              <div class="form-group">
+                <Button label="Aluno" class="p-button-raised p-button-success p-button-text button" @click="datasearch(1);" />
+                <Button style="margin-left:20px;" label="Professor" class="p-button-raised p-button-success p-button-text button" @click="datasearch(2);" />
+              </div>
+            </b-form-group>
+          </div>
+          <div class="col-sm-12">
+            <b-form-group label="Alunos e Professores">
+              <DataTable :value="form.matriculados" :scrollable="true" scrollHeight="200px" :loading="loading">
+                <Column field="idpessoa" header="id"></Column>
+                <Column field="nome" header="nome"></Column>
+                <Column field="descricaoTipo" header="tipo"></Column>
+                <Column headerStyle="width: 80px;" bodyStyle=""  :exportable="false">
+                  <template #body="slotProps">
+                      <Button icon="pi pi-trash" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="slotProps.data.del=true;slotProps.data.add=false;del(slotProps.data);" />
+                  </template>
+                </Column>
+              </DataTable>
+            </b-form-group>
+          </div>
         </div>
-        <div class="col-sm-12">
-          <b-form-group label="Alunos e Professores">
-            <DataTable :value="form.matriculados" :scrollable="true" scrollHeight="200px" :loading="loading">
-              <Column field="idpessoa" header="id"></Column>
-              <Column field="nome" header="nome"></Column>
-              <Column field="descricaoTipo" header="tipo"></Column>
-              <Column headerStyle="width: 80px;" bodyStyle=""  :exportable="false">
-                <template #body="slotProps">
-                    <Button icon="pi pi-trash" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="slotProps.data.del=true;slotProps.data.add=false;del(slotProps.data);" />
-                </template>
-              </Column>
-            </DataTable>
-          </b-form-group>
-        </div>
-      </div>
+      </b-container>
       <template #footer>
           <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
           <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
