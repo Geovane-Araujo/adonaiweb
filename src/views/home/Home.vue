@@ -34,25 +34,11 @@
 <script src="./home.js">
 </script>
 <style lang="scss" scoped>
-body {
-  height: 100%;
-  width: 100%;
-  background-color: #f2f4f7;
-  color: #262626;
-}
-html {
-  margin: 0;
-  padding: 0;
-  display: inline-block;
-  height: 100%;
-  width: 100%;
-}
 .router{
   border-radius: 10px;
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
- //  background-color: rgba($color: #ffffff, $alpha: 1.0);
- background-color: #ffffff;
-  height: 90vh;
+  background-color: #ffffff;
+  height: 90%;
   overflow:auto;
 }
 h3 {

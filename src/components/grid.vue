@@ -2,13 +2,8 @@
 <div style="padding-left:0px;">
   <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
   <div>
-<!--     <Toobar class="p-md-4">
-      <template slot="left">
-        <Button label="Adicionar" icon="pi pi-plus" class="p-button-success p-mr-2"/>
-      </template>
-    </Toobar> -->
     <DataTable class="p-datatable-sm"
-        scrollHeight="400px"
+        scrollHeight="50vh"
         :scrollable="true"
         style="font-size:14px;"
         :value="reg"

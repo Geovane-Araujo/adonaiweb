@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <loader  id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
+  <div class="membro">
+    <loader id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
@@ -15,36 +15,16 @@
             @click="imprimir('report/financeiro/receitagrupo.jrxml')">
             <i class="fas fa-print"></i>&nbsp;&nbsp;{{ mobileI }}
           </button>
-          <!-- <SplitButton label="Imprimir" icon="pi pi-plus" :model="items" class="p-sm-2"></SplitButton> -->
-          <!-- <div class="dropdown" style="z-index: 9999;">
-            <button
-              class="btn btn-outline-info dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-print"></i>&nbsp;&nbsp;{{ mobileI }}
-            </button>
-            <div style="height: 20px; z-index: 9999;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div> -->
           <button
             class="btn btn-outline-info float-right" style="margin-right: 10px;"
             @click="openFilter=true">
             <img src="./filter.png">&nbsp;&nbsp;{{ mobileF }}
           </button>
-<!--           <div class="dropdown float-right">
-            <button type="button" id="dropdownMenuButton"  class="btn dropdown-toggle" data-toggle="collapse">
-              Imprimir
-            </button>
-            <div class="dropdown-content">
-              <a class="dropdown-menu-item" style="color: #5e8a75;" @click="teste()">Receitas - Listagem</a>
-            </div>
-          </div> -->
           <hr class="bg-info">
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
-          <adonaigrid :titulos="['id','nome','descricao','valor','dataemissao','datavencimento','datapagamento','status','tipoconta','caixa']"
+          <adonaigrid class="grid" :titulos="['id','nome','descricao','valor','dataemissao','datavencimento','datapagamento','status','tipoconta','caixa']"
           :form="form"
           :getbyId="getbyId"
           :save="save"
@@ -259,74 +239,7 @@
     ref="cmp"/>
   </div>
 </template>
-<script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
 <script src="./receitas.js">
-  $(function () {
-    $('.dropdown-toggle').dropdown();
-  })
 </script>
-<style lang=scss scoped>
-label {
-  background-color: #5e8a75;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  margin: 10px;
-  padding: 6px 20px;
-}
-p {
-  font-size: 30px;
-}
-.table-sm {
-  padding: 2px;
-}
-#loading {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 5000;
-  left: 0;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-.p-splitbutton {
-  margin-right: .1rem;
-}
-button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
-.dropdown {
-  position: relative;
-}
-.dropdown-content {
-  display: none;
-  position: inherit;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 12px 16px;
-  z-index: 1;
-}
-.dropdown:hover .dropdown-content {
-  display: block;
-  text-decoration: none;
-  color: #5e8a75;
-}
-a:link, a:visited {
- text-decoration: none
-}
-.datePivker{
-  margin-left: 2px;
-  padding: 5px;
-  height: 35px;
-  border:solid 1px;
-  border-radius:3px;
-  border-color:#cacdcf;
-  text-align: center;
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>

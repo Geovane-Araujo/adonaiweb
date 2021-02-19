@@ -100,10 +100,6 @@
               </div>
             </div>
           </section>
-          <hr class="bg-info">
-          <section>
-            <h4>Membros</h4>
-          </section>
         </div>
       </div>
     </div>

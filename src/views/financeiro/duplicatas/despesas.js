@@ -20,7 +20,8 @@ export default {
       estornar: false,
       mobileI: 'Imprimir',
       mobileF: 'Filtrar',
-      risize: 50,
+      resize: 50,
+      resizeFilter: 30,
       lancar: false,
       ds: {
         grid: [],
