@@ -92,7 +92,7 @@
                 </div>
               <div class="col-sm-6 p-shadow-1">
                 <b-form-group label="Por Tipos de Receitas" label-align="center">
-                  <dougchart
+                  <dougchart style="height: 200px"
                   :label="cabe_tipos_despesas"
                   :datasets="dataset_tipos_despesas" ref="des">
                   </dougchart>
