@@ -12,7 +12,7 @@
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
-          <adonaigrid :titulos="['id', 'data', 'classe', 'curso']"
+          <adonaigrid class="grid" :titulos="['id', 'data', 'classe', 'curso']"
           :form="form"
           :getbyId="getbyId"
           :save="save"
@@ -163,34 +163,5 @@
 
 <script src="./aula.js">
 </script>
-<style lang="scss" scoped>
-p {
-  font-size: 30px;
-}
-#loading {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 5000;
-  left: 0;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
-.datePivker{
-  margin-left: 2px;
-  padding: 5px;
-  height: 35px;
-  border:solid 1px;
-  border-radius:3px;
-  border-color:#cacdcf;
-  text-align: center;
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>
