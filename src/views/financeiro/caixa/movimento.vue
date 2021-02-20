@@ -12,8 +12,7 @@
           </button>
           <hr class="bg-info">
         </div>
-        <div class="col-sm-12" style="margin-top: -30px;">
-          <!-- table -->
+        <div class="col-sm-12 grid" style="margin-top: -30px;">
           <DataTable
           class="p-datatable-sm"
           scrollHeight="400px"
