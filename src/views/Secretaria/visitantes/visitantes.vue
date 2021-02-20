@@ -19,7 +19,7 @@
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
-          <adonaigrid :titulos="['id','nome','endereco','bairro','numero','telefone']"
+          <adonaigrid class="grid" :titulos="['id','nome','endereco','bairro','numero','telefone']"
           :registros="visitantes"
           :form="form"
           :getbyId="getbyId"

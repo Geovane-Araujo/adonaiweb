@@ -6,7 +6,7 @@
         <div class="col-lg-12">
           <p class="p">Mapa dos Membros</p>
           <hr class="bg-info" />
-          <div style="height:600px">
+          <div class="map">
             <MglMap
               :accessToken="accessToken"
               :mapStyle.sync="mapStyle"
@@ -31,15 +31,5 @@
 </template>
 <script src="./mebrosMaps.js">
 </script>
-<style lang="scss" scoped>
-.p {
-  font-size: 30px;
-}
-#map {
-  width: 60vw;
-  min-width: 360px;
-  text-align: center;
-  margin: 5% auto;
-  background-color: #ccc;
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>

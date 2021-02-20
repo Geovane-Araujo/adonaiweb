@@ -14,7 +14,7 @@
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
-          <adonaigrid :titulos="['id','nome','datavisita']"
+          <adonaigrid class="grid" :titulos="['id','nome','datavisita']"
           :registros="visitantes"
           :form="form"
           :getbyId="getbyId"
