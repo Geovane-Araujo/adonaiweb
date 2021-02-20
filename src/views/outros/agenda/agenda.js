@@ -46,6 +46,7 @@ export default {
       calendarOptions: {
         plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
         initialView: 'dayGridMonth',
+        height: 'auto',
         locale: 'pt-br',
         editable: true,
         themeSystem: 'bootstrap',

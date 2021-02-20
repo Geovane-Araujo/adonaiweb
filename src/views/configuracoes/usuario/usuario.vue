@@ -12,7 +12,7 @@
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
-          <adonaigrid :titulos="['id','nome']"
+          <adonaigrid class="grid" :titulos="['id','nome']"
           :registros="usuarios"
           :form="form"
           :getbyId="getbyId"
@@ -256,57 +256,5 @@
 
 <script src="./usuario.js">
 </script>
-<style lang="scss" scoped>
-.table-overflow {
-    max-height:90vh;
-    overflow-y:auto;
-}
-p {
-  font-size: 30px;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-#loading {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 5000;
-  left: 0;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
-label {
-  background-color: #5e8a75;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  margin: 5px;
-  padding: 6px
-}
-input[type='file'] {
-  display: none
-}
-.label2 {
-  background-color: #a13b3b;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  margin: 5px;
-  padding: 6px
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>

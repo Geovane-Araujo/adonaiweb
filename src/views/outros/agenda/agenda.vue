@@ -86,25 +86,5 @@
 
 <script src="./agenda.js">
 </script>
-<style lang=scss scoped>
-.datePivker{
-  margin-left: 2px;
-  padding: 5px;
-  height: 35px;
-  border:solid 1px;
-  border-radius:3px;
-  border-color:#cacdcf;
-  text-align: center;
-}
-p {
-  font-size: 30px;
-}
-button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>

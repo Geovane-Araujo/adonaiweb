@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="membro">
     <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
-    <div class="container-fluid">
+    <div class="container-fluid dash">
       <div class="row">
         <div class="col-sm-12">
           <p>DashBoard</p>
@@ -75,8 +75,8 @@
           <h4>Financeiro</h4>
           <section>
             <b-form-group label="Comparativo Entradas e Saidas Manual" label-align="center">
-              <div class="col-sm-12 p-shadow-1">
-                <barchart
+              <div  class="col-sm-12 p-shadow-1">
+                <barchart style="height: 300px"
                 :label="cabe_finan"
                 :datasets="dataset_finan" ref="year"></barchart>
               </div>
@@ -84,7 +84,7 @@
             <div class="row">
                 <div  class="col-sm-6 p-shadow-1">
                   <b-form-group label="Por Tipos de Despesas" label-align="center">
-                    <piechart
+                    <piechart style="height: 200px"
                     :label="cabe_tipos_entradas"
                     :datasets="dataset_tipos_entradas" ref="rec">
                     </piechart>
@@ -108,16 +108,5 @@
 
 <script src="./dashboard.js">
 </script>
-<style lang=scss scoped>
-p {
-  font-size: 30px;
-}
-button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>

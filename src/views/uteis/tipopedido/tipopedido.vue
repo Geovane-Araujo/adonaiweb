@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="membro">
     <loader  id="loading" v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
     <div class="container-fluid">
       <div class="row">
@@ -11,8 +11,7 @@
           <hr class="bg-info" >
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
-          <!-- table -->
-          <adonaigrid :titulos="['id','descricao']"
+          <adonaigrid class="grid" :titulos="['id','descricao']"
           :registros="tipopedido"
           :form="form"
           :getbyId="getbyId"
@@ -43,38 +42,5 @@
 
 <script src="./tipopedido.js">
 </script>
-<style lang="scss" scoped>
-.table-overflow {
-    max-height:90vh;
-    overflow-y:auto;
-}
-p {
-  font-size: 30px;
-}
-#loading {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 5000;
-  left: 0;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>
