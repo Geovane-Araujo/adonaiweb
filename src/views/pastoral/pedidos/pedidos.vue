@@ -12,7 +12,7 @@
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
-          <adonaigrid :titulos="['id','data','tipo', 'nome','descricao']"
+          <adonaigrid class="grid" :titulos="['id','data','tipo', 'nome','descricao']"
           :registros="pedidos"
           :form="form"
           :save="save"
@@ -96,55 +96,5 @@
 
 <script src="./pedidos.js">
 </script>
-<style lang="scss" scoped>
-.table-overflow {
-    max-height:90vh;
-    overflow-y:auto;
-}
-p {
-  font-size: 30px;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-#loading {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 5000;
-  left: 0;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
-.button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-.button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
-.datePivker{
-  margin-left: 2px;
-  padding: 5px;
-  height: 35px;
-  border:solid 1px;
-  border-radius:3px;
-  border-color:#cacdcf;
-  text-align: center;
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>
