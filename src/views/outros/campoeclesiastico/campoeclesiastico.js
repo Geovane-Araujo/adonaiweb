@@ -202,6 +202,10 @@ export default {
   },
   methods: {
     getCharts (form) {
+      if (form.ano === 0 && form.mes !== 0) {
+        this.$toastr.info('Por favor selecione um ano diferente de "Todos"', 'AdonaiSoft Diz:', util.toast)
+        return
+      }
       this.show = true
       axios.post(adonai.url + 'dashboardcampoeclesiastico', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
