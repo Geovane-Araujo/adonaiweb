@@ -191,7 +191,7 @@
           </b-tabs>
         </div>
       </div>
-      <Dialog :header="'Resumo Anual da ' + c.nomeIgreja " :visible.sync="openModal" :style="{width: '100vw', height: '100vw'}" :modal="true">
+      <Dialog :header="'Resumo Anual da ' + c.nomeIgreja " :maximizable="true" :visible.sync="openModal" :style="{width: '100vw', height: '100vw'}" :modal="true">
         <b-container>
           <h1>Dados Referente ao Ano {{ this.form.ano }}</h1>
           <hr class="bg-info">
