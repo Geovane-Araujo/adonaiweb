@@ -11,7 +11,7 @@
               <div class="col-sm-12 p-shadow-1" style="background-color: #ffffff;">
                 <div class="row">
                   <div class="col-sm-6">
-                    <i class="fas fa-users fa-3x"
+                    <i class="fas fa-users fa-4x"
                       aria-hidden="true"
                       style="color:#b36a5e; text-align:center;"></i>
                     <hr class="bg-info">
@@ -59,7 +59,7 @@
               <div class="col-sm-12 p-shadow-1" style="background-color: #ffffff;">
                <div class="row">
                   <div class="col-sm-6">
-                    <i class="far fa-address-book fa-3x"
+                    <i class="far fa-address-book fa-4x"
                     aria-hidden="true"
                     style="color:#5a189a; text-align:center;"></i>
                     <hr class="bg-info">
