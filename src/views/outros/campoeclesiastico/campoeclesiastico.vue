@@ -90,7 +90,7 @@
                   </div>
                 </b-container>
               </b-sidebar>
-              <b-container>
+              <div>
                 <div class="row">
                   <div class="col-sm-2">
                     <h5>Membros</h5>
@@ -105,36 +105,20 @@
                 </div>
                 <hr class="bg-info">
                 <div class="row">
-                  <div v-show="false" class="col-sm-4 p-shadow-1">
-                    <b-form-group label="Total Membros por Igreja" label-align="center">
-                      <dougchart class="chartHeight"
-                      :label="chartGeral.labelMembros"
-                      :datasets="chartGeral.membros" ref="membro">
-                      </dougchart>
-                    </b-form-group>
-                  </div>
-                  <div v-show="false" class="col-sm-4 p-shadow-1">
-                    <b-form-group label="Total Membros Ativos por Igreja" label-align="center">
-                      <dougchart class="chartHeight"
-                      :label="chartGeral.labelMembrosAtivos"
-                      :datasets="chartGeral.membrosAtivos" ref="membrosativos">
-                      </dougchart>
-                    </b-form-group>
-                  </div>
-                  <div v-show="false" class="col-sm-4 p-shadow-1">
-                    <b-form-group label="Total Membros Não Batizados por Igreja" label-align="center">
-                      <dougchart class="chartHeight"
-                      :label="chartGeral.labelMembrosAtivos"
-                      :datasets="chartGeral.membrosAtivos" ref="membrosNaoBatizado">
-                      </dougchart>
-                    </b-form-group>
-                  </div>
-                  <div  class="col-sm-12 p-shadow-1">
-                    <b-form-group label="Total Membros Não Batizados por Igreja" label-align="center">
-                      <lines class="chartHeight"
+                  <div  class="col-sm-6 p-shadow-1">
+                    <b-form-group label="Total Membros Por Igreja" label-align="center">
+                      <horizontalbar class="chartHeight"
                       :label="chartGeral.labelMembros"
                       :datasets="chartGeral.membros" ref="memb">
-                      </lines>
+                      </horizontalbar>
+                    </b-form-group>
+                  </div>
+                  <div  class="col-sm-6 p-shadow-1">
+                    <b-form-group label="Total Membros Não Batizados por Igreja" label-align="center">
+                      <horizontalbar class="chartHeight"
+                      :label="chartGeral.labelMembros"
+                      :datasets="chartGeral.membrosNaoBatizados" ref="membrosNaoBatizados">
+                      </horizontalbar>
                     </b-form-group>
                   </div>
                 </div>
@@ -169,7 +153,7 @@
                 <h5 style="margin-top:20px;">Financeiro</h5>
                 <hr class="bg-info">
                 <div class="row">
-                  <div class="col-sm-6 p-shadow-1">
+                  <div v-show="false" class="col-sm-6 p-shadow-1">
                     <b-form-group label="Receitas" label-align="center">
                       <barchart class="chartHeight-300"
                       :label="chartGeral.labelReceitas"
@@ -177,16 +161,16 @@
                       </barchart>
                     </b-form-group>
                   </div>
-                  <div class="col-sm-6 p-shadow-1">
+                  <div class="col-sm-12 p-shadow-1">
                     <b-form-group label="Despesas" label-align="center">
-                      <barchartdoubleData class="chartHeight-300"
+                      <barchart class="chartHeight-300"
                       :label="chartGeral.labelDespesas"
                       :datasets="chartGeral.despesas" ref="despesas">
-                      </barchartdoubleData>
+                      </barchart>
                     </b-form-group>
                   </div>
                 </div>
-              </b-container>
+              </div>
             </b-tab>
           </b-tabs>
         </div>

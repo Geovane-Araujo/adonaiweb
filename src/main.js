@@ -20,6 +20,8 @@ import VueCharts from 'vue-chartjs'
 import loader from 'vue-ui-preloader'
 import vuejquery from 'vue-jquery'
 import barchartdoubleData from '../src/components/graficos/barchartdoubleData'
+import HorizontalBar from './components/graficos/horizontalBar'
+import DuoHorizontalBar from './components/graficos/DuoBarHorizontal'
 import barchart from '../src/components/graficos/barchart'
 import piechart from '../src/components/graficos/pie'
 import lines from '../src/components/graficos/lines'
@@ -75,6 +77,8 @@ Vue.component('dougchart', doughnut)
 Vue.component('polar', polar)
 Vue.component('line', line)
 Vue.component('lines', lines)
+Vue.component('horizontalbar', HorizontalBar)
+Vue.component('duohorizontalbar', DuoHorizontalBar)
 Vue.prototype.$primevue = { ripple: true }
 
 Vue.config.debug = false
