@@ -257,13 +257,14 @@ export default {
           var finalObjectChartDespesas = []
           var cor = ''
           cor = utc.methods.randomColor()
-          finalObjectChartDespesas.push(utc.methods.inserirObjectDuoChart(res.data.Total.receitas, 'Receitas', '#f56c79', 0))
+          // finalObjectChartDespesas.push(utc.methods.inserirObjectDuoChart(res.data.Total.receitas, 'Receitas', '#f56c79', 0))
           finalObjectChartDespesas.push(utc.methods.inserirObjectDuoChart(res.data.Total.DespesasPagas, 'Despesas Pagas', cor, 1))
           finalObjectChartDespesas.push(utc.methods.inserirObjectDuoChart(res.data.Total.DespesasPendentes, 'Despesas Pendentes', utc.methods.LightenDarkenColor(cor, 50), 1))
+          this.chartGeral.labelDespesas = []
 
           insertObjectChartMembers.push(utc.methods.inserirObjectDuoChart(res.data.Total.Membros, 'Membros', cor, 1))
           insertObjectChartMembersNotBatizados.push(utc.methods.inserirObjectDuoChart(res.data.Total.MembrosNaoBatizados, 'Membros Não Batizados', cor, 1))
-          this.chartGeral.labelDespesas = []
+
           utc.methods.inserirNomeArray(res.data.Total.nomeIgreja, this.chartGeral.labelDespesas)
 
           // manda os dados para os gráficos -- Total

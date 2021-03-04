@@ -76,8 +76,8 @@ export default {
         this.openloading = true
         axios.post(adonai.url + 'base64toimage', this.form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           this.openloading = false
-          this.img = adonai.urli + res.data
-          this.form.foto = res.data
+          this.img = adonai.urli + res.data.obj
+          this.form.foto = res.data.obj
         }).catch(err => util.error(err))
       }
     },

@@ -153,7 +153,7 @@
                 <h5 style="margin-top:20px;">Financeiro</h5>
                 <hr class="bg-info">
                 <div class="row">
-                  <div v-show="false" class="col-sm-6 p-shadow-1">
+                  <div v-show="true" class="col-sm-6 p-shadow-1">
                     <b-form-group label="Receitas" label-align="center">
                       <barchart class="chartHeight-300"
                       :label="chartGeral.labelReceitas"
@@ -161,12 +161,12 @@
                       </barchart>
                     </b-form-group>
                   </div>
-                  <div class="col-sm-12 p-shadow-1">
+                  <div v-show="true" class="col-sm-6 p-shadow-1">
                     <b-form-group label="Despesas" label-align="center">
-                      <barchart class="chartHeight-300"
+                      <barchartdoubleData class="chartHeight-300"
                       :label="chartGeral.labelDespesas"
                       :datasets="chartGeral.despesas" ref="despesas">
-                      </barchart>
+                      </barchartdoubleData>
                     </b-form-group>
                   </div>
                 </div>
