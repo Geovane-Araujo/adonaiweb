@@ -54,88 +54,125 @@
                 </div>
                 <div class="col-sm-10">
                   <div class="row">
-                    <div class="col-sm-8">
-                      <input type="text"
-                      class="form-control"
-                      v-model="form.nome"
-                      placeholder="Nome Completo">
+                    <div class="col-sm-6">
+                      <b-form-group label="Nome" label-align-sm="left">
+                        <input type="text"
+                        class="form-control"
+                        v-model="form.nome">
+                      </b-form-group>
                     </div>
                     <div class="col-sm-4">
-                      <datetime  placeholder="Data Nascimento"
-                        class="datePivker"
-                        type="Date"
-                        value-zone="UTC"
-                        format="dd/MM/yyyy"
-                        v-model="form.dataNascimento">
-                      </datetime>
+                      <b-form-group label="Data Nascimento" label-align-sm="left">
+                        <datetime
+                          class="datePivker"
+                          type="Date"
+                          value-zone="UTC"
+                          format="dd/MM/yyyy"
+                          v-model="form.dataNascimento">
+                        </datetime>
+                      </b-form-group>
+                    </div>
+                    <div class="col-sm-2">
+                      <b-form-group label="Ativo" label-align-sm="left">
+                        <b-form-select
+                        :options="[{ text: 'Sim', value: 0 }, { text: 'Não', value: 1 }]"
+                        v-model="form.ativo"
+                        ></b-form-select>
+                      </b-form-group>
+                    </div>
+                    <div class="col-sm-4">
+                      <b-form-group label="CPF" label-align-sm="left">
+                        <the-mask
+                          type="text"
+                          the-mask :mask="['###.###.###-##']"
+                          v-model="form.cpf"
+                          class="form-control"/>
+                        </b-form-group>
+                    </div>
+                    <div class="col-sm-4">
+                      <b-form-group label="RG" label-align-sm="left">
+                        <the-mask
+                          type="text"
+                          the-mask :mask="['#.###.###-##']"
+                          v-model="form.rg"
+                          class="form-control"/>
+                        </b-form-group>
+                    </div>
+                    <div class="col-sm-4">
+                      <b-form-group label="Sexo" label-align-sm="left">
+                        <b-form-select
+                        :options="[{ text: 'Masculino', value: 0 }, { text: 'Feminina', value: 1 }]"
+                        v-model="form.sexo"
+                        ></b-form-select>
+                      </b-form-group>
                     </div>
                     <div class="col-sm-3">
-                      <b-form-select
-                      :options="[{ text: 'Selecione(...)', value: 0 }, { text: 'Solteiro(a)', value: 1 }, { text: 'Casado(a)', value: 2 }, { text: 'União Estável', value: 3 }, { text: 'Divorciado(a)', value: 4 }, { text: 'Viuvo(a)', value: 5 }]"
-                      v-model="form.idEstadoCivil"
-                      ></b-form-select>
+                      <b-form-group label="Estado Civil" label-align-sm="left">
+                        <b-form-select
+                        :options="[{ text: 'Selecione(...)', value: 0 }, { text: 'Solteiro(a)', value: 1 }, { text: 'Casado(a)', value: 2 }, { text: 'União Estável', value: 3 }, { text: 'Divorciado(a)', value: 4 }, { text: 'Viuvo(a)', value: 5 }]"
+                        v-model="form.idEstadoCivil"
+                        ></b-form-select>
+                      </b-form-group>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                       <div class="form-group">
-                        <b-input-group >
-                          <b-form-input placeholder="Cargo" v-model="form.cargo" @click="datasearch(2);"></b-form-input>
-                          <b-input-group-append>
-                            <b-button variant="outline-info" style="margin-right:10px;" class="material-icons" @click="datasearch(2);">search</b-button>
-                          </b-input-group-append>
-                        </b-input-group>
+                        <b-form-group label="Cargo" label-align-sm="left">
+                          <b-input-group >
+                            <b-form-input  v-model="form.cargo" @click="datasearch(2);"></b-form-input>
+                            <b-input-group-append>
+                              <b-button variant="outline-info" class="material-icons" @click="datasearch(2);">search</b-button>
+                            </b-input-group-append>
+                          </b-input-group>
+                        </b-form-group>
                       </div>
                     </div>
                     <div class="col-md-3">
-                      <datetime  placeholder="Data Batismo"
-                        class="datePivker"
-                        type="Date"
-                        editable= "true"
-                        value-zone="UTC"
-                        format="dd/MM/yyyy"
-                        v-model="form.dataBatismo">
+                      <b-form-group label="Data de Batismo" label-align-sm="left">
+                        <datetime
+                          class="datePivker"
+                          type="Date"
+                          editable= "true"
+                          value-zone="UTC"
+                          format="dd/MM/yyyy"
+                          v-model="form.dataBatismo">
                       </datetime>
-                    </div>
-                    <div class="col-md-1">
-                      <b-form-checkbox
-                        id="checkbox-1"
-                        v-model="form.ativo"
-                        value="1"
-                        unchecked-value="0"
-                        >Ativo
-                        </b-form-checkbox>
+                      </b-form-group>
                     </div>
                   </div>
                 </div>
               </b-row>
               <div class="row">
-                <div class="col-md-4">
-                  <input type="text"
-                    class="form-control"
-                    v-mask="'(##)####-#####'"
-                    v-model="form.telefone[0].telefone"
-                    placeholder="Telefone Residencial">
+                <div class="col-md-3">
+                  <b-form-group label="Telefone Residencial" label-align-sm="left">
+                    <input type="text"
+                      class="form-control"
+                      v-mask="'(##)####-#####'"
+                      v-model="form.telefone[0].telefone">
+                    </b-form-group>
                 </div>
-                <div class="col-md-4">
-                  <input type="text"
-                    class="form-control"
-                    v-mask="'(##)####-#####'"
-                    v-model="form.telefone[1].telefone"
-                    placeholder="Telefone Celular">
+                <div class="col-md-3">
+                  <b-form-group label="Telefone Celular" label-align-sm="left">
+                    <input type="text"
+                      class="form-control"
+                      v-mask="'(##)####-#####'"
+                      v-model="form.telefone[1].telefone">
+                    </b-form-group>
                 </div>
-                <div class="col-md-4">
-                  <input type="text"
+                <div v-show="false" class="col-md-4">
+                  <input  type="text"
                     class="form-control"
                     v-mask="'(##)####-#####'"
                     v-model="form.telefone[2].telefone"
                     placeholder="Telefone Comercial">
                 </div>
                 <div class="col-md-6">
-                  <input type="text"
-                    class="form-control"
-                    v-model="form.email[0].email"
-                    placeholder="E-mail">
+                  <b-form-group label="Email" label-align-sm="left">
+                    <input type="text"
+                      class="form-control"
+                      v-model="form.email[0].email">
+                  </b-form-group>
                 </div>
-                <div class="col-md-6">
+                <div v-show="false" class="col-md-6">
                   <input type="text"
                     class="form-control"
                     v-model="form.email[1].email"

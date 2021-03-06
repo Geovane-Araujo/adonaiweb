@@ -45,6 +45,9 @@ export default {
         idEstadoCivil: 0,
         pathimg: '',
         batizado: '',
+        cpf: '',
+        rg: '',
+        sexo: 0,
         endereco: [
           {
             id: '',
