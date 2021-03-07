@@ -3,6 +3,7 @@ import util from '../../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
 import axios from 'axios'
+import { Datetime } from 'vue-datetime'
 import rel from '../../../util/utilClass'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
@@ -37,6 +38,7 @@ export default {
         nome: '',
         idPessoa: '',
         observacoes: '',
+        dataNascimento: '',
         endereco: [
           {
             id: '',
@@ -171,7 +173,8 @@ export default {
   components: {
     Dialog,
     Button,
-    InputText
+    InputText,
+    Datetime
   },
   computed: {
     ...mapState('auth', ['user'])
