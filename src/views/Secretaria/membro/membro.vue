@@ -182,7 +182,7 @@
             </b-container>
           </b-tab>
           <!-- Endereços -->
-          <b-tab title="Enderecos">
+          <b-tab title="Endereços">
             <b-container>
               <div class="row">
                 <div class="col-sm-3">
