@@ -39,6 +39,7 @@ export default {
         idPessoa: '',
         observacoes: '',
         dataNascimento: '',
+        sexo: 0,
         endereco: [
           {
             id: '',

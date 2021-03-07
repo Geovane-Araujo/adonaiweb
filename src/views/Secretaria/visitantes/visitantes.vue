@@ -35,7 +35,7 @@
     <Dialog style="font-size:10px;" header="Cadastro Visitantes" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
       <b-container>
         <div class="row">
-          <div class="col-sm-9">
+          <div class="col-sm-6">
             <b-form-group label="Nome Completo" label-align-sm="left">
               <input type="text"
               v-model="form.nome"
@@ -51,6 +51,14 @@
                 format="dd/MM/yyyy"
                 v-model="form.dataNascimento">
               </datetime>
+            </b-form-group>
+          </div>
+          <div class="col-sm-3">
+            <b-form-group label="Sexo" label-align-sm="left">
+              <b-form-select
+              :options="[{ text: 'Masculino', value: 0 }, { text: 'Feminina', value: 1 }]"
+              v-model="form.sexo"
+              ></b-form-select>
             </b-form-group>
           </div>
           <div class="col-sm-3">
