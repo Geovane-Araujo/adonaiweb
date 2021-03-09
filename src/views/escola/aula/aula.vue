@@ -12,7 +12,8 @@
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
-          <adonaigrid class="grid" :titulos="['id', 'data', 'classe', 'curso']"
+          <adonaigrid class="grid"
+          :flex="[{ tamanho: 10, name: 'id' }, { tamanho: 20, name: 'data' }, { tamanho: 50, name: 'classe' }, { tamanho: 100, name: 'curso' }]"
           :form="form"
           :getbyId="getbyId"
           :save="save"

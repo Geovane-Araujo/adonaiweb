@@ -8,7 +8,8 @@
           <hr class="bg-info" >
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
-          <adonaigrid class="grid" :titulos="['id','login','data','descricao','log']"
+          <adonaigrid class="grid"
+          :flex="[{ tamanho: 10, name: 'id' }, { tamanho: 15, name: 'login' }, { tamanho: 20, name: 'data' }, { tamanho: 20, name: 'descricao' }, { tamanho: 150, name: 'log' }]"
           :registros="tipocontas"
           :form="form"
           :getbyId="getbyId"

@@ -31,9 +31,11 @@ export default {
     }
   },
   props: {
-    titulos: {
-      type: Array,
-      required: true
+    titulos: { // obsoleto
+      type: Array
+    },
+    flex: {
+      type: Object
     },
     registros: {
       type: Array

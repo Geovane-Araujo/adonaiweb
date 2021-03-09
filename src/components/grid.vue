@@ -9,14 +9,13 @@
         :value="reg"
         :paginator="true"
         :rows="15"
-        :selection.sync="select"
         paginatorTemplate=""
         selectionMode="single" dataKey="ID"
         @row-select="onRowSelect"
         :resizableColumns="true"
         columnResizeMode="fit">
-        <Column headerStyle="width:90px;height:10px;" bodyStyle="height:5px;" v-for="title in titulos" :key="title.ID" :field="title" :header="title"></Column>
-        <Column headerStyle="width: 80px;" bodyStyle=""  :exportable="false">
+        <Column :headerStyle="'width:'+title.tamanho+'px'" headerClass="altura" bodyStyle="height:5px;" v-for="title in flex" :key="title.ID" :field="title.name" :header="title.name"></Column>
+        <Column headerStyle="width: 20px;" bodyStyle=""  :exportable="false">
             <template #body="slotProps">
                 <Button style="font-size: 10px;" icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-button-success p-button-sm p-sm-2" @click="getbyId(slotProps.data.id); form.edit=true;form.add=false" />
                 <Button icon="pi pi-trash" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="onDelete(slotProps.data, form)" />
@@ -57,5 +56,8 @@ tr {
   .p-rowgroup-header{
     height: 10px;
   }
+}
+.altura{
+  height: 5px;
 }
 </style>

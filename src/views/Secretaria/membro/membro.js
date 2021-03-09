@@ -120,6 +120,8 @@ export default {
         cargo: '',
         criterio: ''
       },
+      flex: [{ tamanho: 10, name: 'id' }, { tamanho: 100, name: 'nome' }, { tamanho: 30, name: 'endereco' }, { tamanho: 30, name: 'bairro' }, { tamanho: 20, name: 'numero' }, { tamanho: 20, name: 'telefone' }
+      ],
       img: ''
     }
   },

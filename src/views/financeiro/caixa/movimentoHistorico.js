@@ -23,6 +23,7 @@ export default {
     }
   },
   mounted () {
+    expl.pagina = 1
     this.get(expl.explorer)
   },
   methods: {

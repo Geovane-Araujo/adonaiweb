@@ -173,6 +173,7 @@ export default {
       this.openloading = true
       rel.explorer.route = 'menu_movimento'
       rel.explorer.criterios = 'order by id desc'
+      rel.explorer.pagina = 1
       axios.post(adonai.url + 'aexplorer', rel.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           this.caixamovimento = res.data.obj

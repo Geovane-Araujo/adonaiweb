@@ -17,7 +17,6 @@
           :value="caixamovimento"
           :paginator="true"
           :rows="15"
-          :selection.sync="select"
           paginatorTemplate=""
           selectionMode="single" dataKey="ID"
           @row-select="onRowSelect"

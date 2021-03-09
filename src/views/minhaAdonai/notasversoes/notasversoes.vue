@@ -18,32 +18,5 @@
 
 <script src="./notasversoes.js">
 </script>
-<style lang="scss" scoped>
-.p {
-  font-size: 30px;
-}
-.table-sm {
-  padding: 2px;
-}
-.versao {
-  border-radius: 10px;
-  box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
-  background-color: rgba($color: #ffffff, $alpha: 0.9);
-  margin: 5px;
-  overflow: auto;
-}
-tr {
-  line-height: 14px;
-  font-size: 13px;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  right: 0;
-  background-image: url('../../img/fundo.jpg');
-  background-color: rgba($color: #000000, $alpha: 0.7);
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>

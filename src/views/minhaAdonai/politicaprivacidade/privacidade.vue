@@ -113,7 +113,7 @@
 .private {
   border-radius: 10px;
   box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.25);
-  background-color: rgba($color: #ffffff, $alpha: 0.9);
+  background-color: #ffffff;
   margin: 5px;
   overflow: auto;
 }

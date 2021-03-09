@@ -20,7 +20,6 @@
           style="font-size:14px;"
           :value="caixamovimento"
           :paginator="false"
-          :selection.sync="select"
           paginatorTemplate=""
           selectionMode="single" dataKey="ID"
           @row-select="onRowSelect"

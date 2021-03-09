@@ -49,48 +49,5 @@
 
 <script src="./minhasfaturas.js">
 </script>
-<style lang=scss scoped>
-p {
-  font-size: 30px;
-}
-.table-sm {
-  padding: 2px;
-}
-#overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-tr {
-  line-height: 14px;
-  font-size: 13px;
-}
-button {
-  color: #5e8a75;
-  border-color:#5e8a75;
-}
-button:hover {
-  background-color: #5e8a75;
-  border-color:#5e8a75;
-}
-#loading {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 5000;
-  left: 0;
-  right: 0;
-  background: rgba($color: #000000, $alpha: 0.7);
-}
-footer {
-    position: fixed;
-    bottom:10px;
-}
-.footer {
-  box-shadow:2px rgba(0, 0, 0, 0.25);
-}
+<style lang=scss scoped src="../../../assets/scss/adonai.scss">
 </style>
