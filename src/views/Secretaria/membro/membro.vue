@@ -130,23 +130,16 @@
                 </div>
               </div>
               <div class="col-sm-3 adonai-pad">
-                <div class="form-group">
                   <b-form-group label="Membro Desde" label-align-sm="left">
-                    <b-input-group >
-                      <datetime
-                          class="datePivker"
-                          type="Date"
-                          editable= "true"
-                          value-zone="UTC"
-                          format="dd/MM/yyyy"
-                          v-model="form.membroDesde">
-                      </datetime>
-                      <b-input-group-append>
-                        <b-button variant="outline-info" class="material-icons" @click="datasearch(2);">search</b-button>
-                      </b-input-group-append>
-                    </b-input-group>
+                    <datetime
+                      class="datePivker"
+                      type="Date"
+                      editable= "true"
+                      value-zone="UTC"
+                      format="dd/MM/yyyy"
+                      v-model="form.membroDesde">
+                  </datetime>
                   </b-form-group>
-                </div>
               </div>
               <div class="col-md-3 adonai-pad">
                 <b-form-group label="Data de Batismo" label-align-sm="left">
