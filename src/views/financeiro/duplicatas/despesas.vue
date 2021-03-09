@@ -24,7 +24,7 @@
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
           <!-- table -->
-          <adonaigrid class="grid" :titulos="['id','nome','descricao','valor','dataemissao','datavencimento','datapagamento','status','tipoconta','caixa']"
+          <adonaigrid class="grid"
           :flex="[{ tamanho: 10, name: 'id' }, { tamanho: 40, name: 'nome' }, { tamanho: 30, name: 'descricao' }, { tamanho: 15, name: 'valor' }, { tamanho: 20, name: 'dataemissao' }, { tamanho: 20, name: 'datavencimento' }, { tamanho: 20, name: 'datapagamento' }, { tamanho: 20, name: 'status' }, { tamanho: 20, name: 'tipoconta' }, { tamanho: 20, name: 'caixa' }]"
           :form="form"
           :getbyId="getbyId"
@@ -234,26 +234,28 @@
       </template>
     </Dialog>
     <Dialog style="font-size:10px;" header="Assistente de Parcelamento" :visible.sync="assistente" :style="{width: resizeFilter+'vw'}" :modal="true">
-      <div class="row">
-        <div class="col-sm-6">
-          <b-form-group label="Quantidde de Parcelas">
-            <the-mask
-              type="text"
-              the-mask :mask="['#####']"
-              v-model="form.quantidadeParcelas"
-              class="form-control"/>
-          </b-form-group>
+      <b-container>
+        <div class="row">
+          <div class="col-sm-6">
+            <b-form-group label="Quantidde de Parcelas">
+              <the-mask
+                type="text"
+                the-mask :mask="['###']"
+                v-model="form.quantidadeParcelas"
+                class="form-control"/>
+            </b-form-group>
+          </div>
+          <div class="col-sm-6">
+            <b-form-group label="Intervalo de Dias">
+              <the-mask
+                type="text"
+                the-mask :mask="['###']"
+                v-model="form.intervaloDias"
+                class="form-control"/>
+            </b-form-group>
+          </div>
         </div>
-        <div class="col-sm-6">
-          <b-form-group label="Intervalo de Dias">
-            <the-mask
-              type="text"
-              the-mask :mask="['###']"
-              v-model="form.intervaloDias"
-              class="form-control"/>
-          </b-form-group>
-        </div>
-      </div>
+      </b-container>
       <template #footer>
         <Button label="OK"  @click="assistente=false" class="p-button-raised p-button-success p-button-text button" />
       </template>
