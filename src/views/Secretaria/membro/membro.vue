@@ -36,154 +36,170 @@
     </div>
     <!-- modal para cadastro-->
     <Dialog style="font-size:10px;" header="Cadastro Membros" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
-      <form>
+      <b-container>
         <b-tabs content-class="mt-1">
           <b-tab title="Principal" active>
-            <b-container>
-              <b-row class="text-center">
-                <div class="col-sm-2">
-                  <div class="file-loading">
-                    <b-avatar :src="img"
-                    size="5rem"></b-avatar>
-                    <div>
-                      <label for='selecao-arquivo' class="material-icons">perm_media</label>
-                      <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
-                      <label class="material-icons label2" @click="form.foto='';img=''" >delete_forever</label>
-                    </div>
+            <b-row class="text-center">
+              <div class="col-sm-2 adonai-pad">
+                <div class="file-loading">
+                  <b-avatar :src="img"
+                  size="5rem"></b-avatar>
+                  <div>
+                    <label for='selecao-arquivo' class="material-icons">perm_media</label>
+                    <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
+                    <label class="material-icons label2" @click="form.foto='';img=''" >delete_forever</label>
                   </div>
                 </div>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <b-form-group label="Nome" label-align-sm="left">
-                        <input type="text"
-                        class="form-control"
-                        v-model="form.nome">
+              </div>
+              <div class="col-sm-10 adonai-pad">
+                <div class="row">
+                  <div class="col-sm-6 adonai-pad">
+                    <b-form-group label="Nome" label-align-sm="left">
+                      <input type="text"
+                      class="form-control"
+                      v-model="form.nome">
+                    </b-form-group>
+                  </div>
+                  <div class="col-sm-4 adonai-pad">
+                    <b-form-group label="Data Nascimento" label-align-sm="left">
+                      <datetime
+                        class="datePivker"
+                        type="Date"
+                        value-zone="UTC"
+                        format="dd/MM/yyyy"
+                        v-model="form.dataNascimento">
+                      </datetime>
+                    </b-form-group>
+                  </div>
+                  <div class="col-sm-2 adonai-pad">
+                    <b-form-group label="Ativo" label-align-sm="left">
+                      <b-form-select
+                      :options="[{ text: 'Sim', value: 0 }, { text: 'Não', value: 1 }]"
+                      v-model="form.ativo"
+                      ></b-form-select>
+                    </b-form-group>
+                  </div>
+                  <div class="col-sm-4 adonai-pad">
+                    <b-form-group label="CPF" label-align-sm="left">
+                      <the-mask
+                        type="text"
+                        the-mask :mask="['###.###.###-##']"
+                        v-model="form.cpf"
+                        class="form-control"/>
                       </b-form-group>
-                    </div>
-                    <div class="col-sm-4">
-                      <b-form-group label="Data Nascimento" label-align-sm="left">
-                        <datetime
-                          class="datePivker"
-                          type="Date"
-                          value-zone="UTC"
-                          format="dd/MM/yyyy"
-                          v-model="form.dataNascimento">
-                        </datetime>
+                  </div>
+                  <div class="col-sm-4 adonai-pad">
+                    <b-form-group label="RG" label-align-sm="left">
+                      <the-mask
+                        type="text"
+                        the-mask :mask="['#.###.###-##']"
+                        v-model="form.rg"
+                        class="form-control"/>
                       </b-form-group>
-                    </div>
-                    <div class="col-sm-2">
-                      <b-form-group label="Ativo" label-align-sm="left">
-                        <b-form-select
-                        :options="[{ text: 'Sim', value: 0 }, { text: 'Não', value: 1 }]"
-                        v-model="form.ativo"
-                        ></b-form-select>
-                      </b-form-group>
-                    </div>
-                    <div class="col-sm-4">
-                      <b-form-group label="CPF" label-align-sm="left">
-                        <the-mask
-                          type="text"
-                          the-mask :mask="['###.###.###-##']"
-                          v-model="form.cpf"
-                          class="form-control"/>
-                        </b-form-group>
-                    </div>
-                    <div class="col-sm-4">
-                      <b-form-group label="RG" label-align-sm="left">
-                        <the-mask
-                          type="text"
-                          the-mask :mask="['#.###.###-##']"
-                          v-model="form.rg"
-                          class="form-control"/>
-                        </b-form-group>
-                    </div>
-                    <div class="col-sm-4">
-                      <b-form-group label="Sexo" label-align-sm="left">
-                        <b-form-select
-                        :options="[{ text: 'Masculino', value: 0 }, { text: 'Feminina', value: 1 }]"
-                        v-model="form.sexo"
-                        ></b-form-select>
-                      </b-form-group>
-                    </div>
-                    <div class="col-sm-3">
-                      <b-form-group label="Estado Civil" label-align-sm="left">
-                        <b-form-select
-                        :options="[{ text: 'Selecione(...)', value: 0 }, { text: 'Solteiro(a)', value: 1 }, { text: 'Casado(a)', value: 2 }, { text: 'União Estável', value: 3 }, { text: 'Divorciado(a)', value: 4 }, { text: 'Viuvo(a)', value: 5 }]"
-                        v-model="form.idEstadoCivil"
-                        ></b-form-select>
-                      </b-form-group>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <b-form-group label="Cargo" label-align-sm="left">
-                          <b-input-group >
-                            <b-form-input  v-model="form.cargo" @click="datasearch(2);"></b-form-input>
-                            <b-input-group-append>
-                              <b-button variant="outline-info" class="material-icons" @click="datasearch(2);">search</b-button>
-                            </b-input-group-append>
-                          </b-input-group>
-                        </b-form-group>
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                      <b-form-group label="Data de Batismo" label-align-sm="left">
-                        <datetime
+                  </div>
+                  <div class="col-sm-4 adonai-pad">
+                    <b-form-group label="Sexo" label-align-sm="left">
+                      <b-form-select
+                      :options="[{ text: 'Masculino', value: 0 }, { text: 'Feminina', value: 1 }]"
+                      v-model="form.sexo"
+                      ></b-form-select>
+                    </b-form-group>
+                  </div>
+                </div>
+              </div>
+            </b-row>
+            <div class="row">
+              <div class="col-sm-2 adonai-pad">
+                <b-form-group label="Estado Civil" label-align-sm="left">
+                  <b-form-select
+                  :options="[{ text: 'Selecione(...)', value: 0 }, { text: 'Solteiro(a)', value: 1 }, { text: 'Casado(a)', value: 2 }, { text: 'União Estável', value: 3 }, { text: 'Divorciado(a)', value: 4 }, { text: 'Viuvo(a)', value: 5 }]"
+                  v-model="form.idEstadoCivil"
+                  ></b-form-select>
+                </b-form-group>
+              </div>
+              <div class="col-sm-4 adonai-pad">
+                <div class="form-group">
+                  <b-form-group label="Cargo" label-align-sm="left">
+                    <b-input-group >
+                      <b-form-input  v-model="form.cargo" @click="datasearch(2);"></b-form-input>
+                      <b-input-group-append>
+                        <b-button variant="outline-info" class="material-icons" @click="datasearch(2);">search</b-button>
+                      </b-input-group-append>
+                    </b-input-group>
+                  </b-form-group>
+                </div>
+              </div>
+              <div class="col-sm-3 adonai-pad">
+                <div class="form-group">
+                  <b-form-group label="Membro Desde" label-align-sm="left">
+                    <b-input-group >
+                      <datetime
                           class="datePivker"
                           type="Date"
                           editable= "true"
                           value-zone="UTC"
                           format="dd/MM/yyyy"
-                          v-model="form.dataBatismo">
+                          v-model="form.membroDesde">
                       </datetime>
-                      </b-form-group>
-                    </div>
-                  </div>
-                </div>
-              </b-row>
-              <div class="row">
-                <div class="col-md-3">
-                  <b-form-group label="Telefone Residencial" label-align-sm="left">
-                    <input type="text"
-                      class="form-control"
-                      v-mask="'(##)####-#####'"
-                      v-model="form.telefone[0].telefone">
-                    </b-form-group>
-                </div>
-                <div class="col-md-3">
-                  <b-form-group label="Telefone Celular" label-align-sm="left">
-                    <input type="text"
-                      class="form-control"
-                      v-mask="'(##)####-#####'"
-                      v-model="form.telefone[1].telefone">
-                    </b-form-group>
-                </div>
-                <div v-show="false" class="col-md-4">
-                  <input  type="text"
-                    class="form-control"
-                    v-mask="'(##)####-#####'"
-                    v-model="form.telefone[2].telefone"
-                    placeholder="Telefone Comercial">
-                </div>
-                <div class="col-md-6">
-                  <b-form-group label="Email" label-align-sm="left">
-                    <input type="text"
-                      class="form-control"
-                      v-model="form.email[0].email">
+                      <b-input-group-append>
+                        <b-button variant="outline-info" class="material-icons" @click="datasearch(2);">search</b-button>
+                      </b-input-group-append>
+                    </b-input-group>
                   </b-form-group>
                 </div>
-                <div v-show="false" class="col-md-6">
+              </div>
+              <div class="col-md-3 adonai-pad">
+                <b-form-group label="Data de Batismo" label-align-sm="left">
+                  <datetime
+                    class="datePivker"
+                    type="Date"
+                    editable= "true"
+                    value-zone="UTC"
+                    format="dd/MM/yyyy"
+                    v-model="form.dataBatismo">
+                </datetime>
+                </b-form-group>
+              </div>
+              <div class="col-md-3 adonai-pad">
+                <b-form-group label="Telefone Residencial" label-align-sm="left">
                   <input type="text"
                     class="form-control"
-                    v-model="form.email[1].email"
-                    placeholder="E-mail 2">
-                </div>
+                    v-mask="'(##)####-#####'"
+                    v-model="form.telefone[0].telefone">
+                  </b-form-group>
               </div>
-            </b-container>
+              <div class="col-md-3 adonai-pad">
+                <b-form-group label="Telefone Celular" label-align-sm="left">
+                  <input type="text"
+                    class="form-control"
+                    v-mask="'(##)####-#####'"
+                    v-model="form.telefone[1].telefone">
+                  </b-form-group>
+              </div>
+              <div v-show="false" class="col-md-4 adonai-pad">
+                <input  type="text"
+                  class="form-control"
+                  v-mask="'(##)####-#####'"
+                  v-model="form.telefone[2].telefone"
+                  placeholder="Telefone Comercial">
+              </div>
+              <div class="col-md-6 adonai-pad">
+                <b-form-group label="Email" label-align-sm="left">
+                  <input type="text"
+                    class="form-control"
+                    v-model="form.email[0].email">
+                </b-form-group>
+              </div>
+              <div v-show="false" class="col-md-6 adonai-pad">
+                <input type="text"
+                  class="form-control"
+                  v-model="form.email[1].email"
+                  placeholder="E-mail 2">
+              </div>
+            </div>
           </b-tab>
           <!-- Endereços -->
           <b-tab title="Endereços">
-            <b-container>
               <div class="row">
                 <div class="col-sm-3">
                   <div class="form-group">
@@ -291,7 +307,6 @@
                   </div>
                 </div>
               </div>
-            </b-container>
           </b-tab>
           <b-tab title="Observações">
             <b-form-textarea
@@ -303,7 +318,7 @@
             ></b-form-textarea>
           </b-tab>
         </b-tabs>
-      </form>
+      </b-container>
       <template #footer>
         <Button label="Salvar" @click="validar(form)" class="p-button-raised p-button-success p-button-text button" />
         <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>

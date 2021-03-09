@@ -45,6 +45,7 @@ export default {
         idEstadoCivil: 0,
         pathimg: '',
         batizado: '',
+        membroDesde: new Date(),
         cpf: '',
         rg: '',
         sexo: 0,
@@ -188,6 +189,7 @@ export default {
         if (id === -100) {
           this.form = res.data.obj
           this.img = adonai.urli + this.form.foto
+          this.form.membroDesde = new Date()
         } else {
           this.form = res.data.obj
           this.form.add = false

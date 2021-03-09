@@ -35,14 +35,14 @@
     <Dialog style="font-size:10px;" header="Cadastro Visitantes" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
       <b-container>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-6 adonai-pad">
             <b-form-group label="Nome Completo" label-align-sm="left">
               <input type="text"
               v-model="form.nome"
               class="form-control">
             </b-form-group>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3 adonai-pad">
             <b-form-group label="Data Nascimento" label-align-sm="left">
               <datetime
                 class="datePivker"
@@ -53,7 +53,7 @@
               </datetime>
             </b-form-group>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3 adonai-pad">
             <b-form-group label="Sexo" label-align-sm="left">
               <b-form-select
               :options="[{ text: 'Masculino', value: 0 }, { text: 'Feminina', value: 1 }]"
@@ -61,7 +61,7 @@
               ></b-form-select>
             </b-form-group>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3 adonai-pad">
             <b-form-group label="Telefone Residencial" label-align-sm="left">
               <input type="text"
                 class="form-control"
@@ -69,7 +69,7 @@
                 v-model="form.telefone[0].telefone">
             </b-form-group>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3 adonai-pad">
             <b-form-group label="Telefone Celular" label-align-sm="left">
               <input type="text"
                 class="form-control"
@@ -77,14 +77,14 @@
                 v-model="form.telefone[1].telefone">
               </b-form-group>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6 adonai-pad">
             <b-form-group label="Email" label-align-sm="left">
               <input type="text"
                 class="form-control"
                 v-model="form.email[0].email">
             </b-form-group>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3 adonai-pad">
             <b-form-group label="CEP" label-align-sm="left">
               <div class="form-group">
                 <b-input-group>
@@ -99,7 +99,7 @@
               </div>
             </b-form-group>
           </div>
-          <div class="col-sm-7">
+          <div class="col-sm-7 adonai-pad">
             <b-form-group label="Endereço" label-align-sm="left">
               <div class="form-group">
                 <input type="text"
@@ -108,7 +108,7 @@
               </div>
             </b-form-group>
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-2 adonai-pad">
             <b-form-group label="Numero" label-align-sm="left">
               <div class="form-group">
                 <input type="text"
@@ -117,7 +117,7 @@
               </div>
             </b-form-group>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-4 adonai-pad">
             <b-form-group label="Numero" label-align-sm="left">
               <div class="form-group">
                 <input type="text"
@@ -126,7 +126,7 @@
               </div>
             </b-form-group>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-4 adonai-pad">
             <b-form-group label="Complemento" label-align-sm="left">
               <div class="form-group">
                 <input type="text"
@@ -135,7 +135,7 @@
               </div>
             </b-form-group>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-4 adonai-pad">
             <b-form-group label="Cidade" label-align-sm="left">
               <div class="form-group">
                 <b-input-group >
@@ -147,7 +147,7 @@
               </div>
             </b-form-group>
           </div>
-          <div class="col-sm-12">
+          <div class="col-sm-12 adonai-pad">
             <b-form-group label="Observações" label-align-sm="left">
               <b-form-textarea
                 rows="3"
