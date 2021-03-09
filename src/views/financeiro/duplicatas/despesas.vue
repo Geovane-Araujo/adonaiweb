@@ -77,7 +77,7 @@
                     </b-input-group>
                   </b-form-group>
                 </div>
-                <div class="col-sm-7" style="padding:3px;">
+                <div class="col-sm-8" style="padding:3px;">
                   <b-form-group label="Descricao" label-align-sm="left">
                     <input type="text"
                       class="form-control"
@@ -135,6 +135,7 @@
         </b-container>
       </form>
       <template #footer>
+        <Button label="Assistente" v-show="lancar"  @click="assistente=true" class="p-button-raised p-button-success p-button-text button"/>
         <Button label="Estornar" v-show="estornar"  @click="validate(form, 0)" class="p-button-raised p-button-success p-button-text button"/>
         <Button label="Salvar" v-show="estornar"  @click="validate(form, 2)" class="p-button-raised p-button-success p-button-text button"/>
         <Button label="Lançar" v-show="lancar"  @click="validate(form, 0)" class="p-button-raised p-button-success p-button-text button"/>
@@ -229,6 +230,31 @@
       <template #footer>
         <Button label="Filtrar"  @click="filter(filters)" class="p-button-raised p-button-success p-button-text button" />
         <Button label="Cancelar" @click="openFilter=false" class="p-button-raised p-button-success p-button-text button"/>
+      </template>
+    </Dialog>
+    <Dialog style="font-size:10px;" header="Assistente de Parcelamento" :visible.sync="assistente" :style="{width: resizeFilter+'vw'}" :modal="true">
+      <div class="row">
+        <div class="col-sm-6">
+          <b-form-group label="Quantidde de Parcelas">
+            <the-mask
+              type="text"
+              the-mask :mask="['#####']"
+              v-model="form.quantidadeParcelas"
+              class="form-control"/>
+          </b-form-group>
+        </div>
+        <div class="col-sm-6">
+          <b-form-group label="Intervalo de Dias">
+            <the-mask
+              type="text"
+              the-mask :mask="['###']"
+              v-model="form.intervaloDias"
+              class="form-control"/>
+          </b-form-group>
+        </div>
+      </div>
+      <template #footer>
+        <Button label="OK"  @click="assistente=false" class="p-button-raised p-button-success p-button-text button" />
       </template>
     </Dialog>
     <adonaidatasearch

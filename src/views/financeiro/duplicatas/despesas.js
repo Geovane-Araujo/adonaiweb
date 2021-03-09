@@ -8,6 +8,7 @@ import { Datetime } from 'vue-datetime'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
 import 'vue-datetime/dist/vue-datetime.css'
 var moment = require('moment')
 var data = new Date()
@@ -23,6 +24,7 @@ export default {
       resize: 50,
       resizeFilter: 30,
       lancar: false,
+      assistente: false,
       ds: {
         grid: [],
         title: ''
@@ -63,7 +65,9 @@ export default {
         descrconta: '',
         descstatus: '',
         desccaixa: '',
-        idtipo: ''
+        idtipo: '',
+        quantidadeParcelas: 1,
+        intervaloDias: 0
       },
       duplicata: [],
       currency: {
@@ -114,7 +118,10 @@ export default {
           } else {
             this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
           }
-        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+        }).catch(err => {
+          this.$toastr.error(err, 'Falha ao Salvar', util.toast)
+          this.openloading = false
+        })
       }
     },
     validate (form, quitar) {
@@ -147,7 +154,10 @@ export default {
       axios.post(adonai.url + 'imprimir', rel.report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.openloading = false
         window.open(res.data)
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast)
+        this.openloading = false
+      })
     },
     datasearch (route) {
       if (route === 1) {
@@ -212,7 +222,10 @@ export default {
         this.form.edit = true
         this.openModal = true
         this.openloading = false
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast)
+        this.openloading = false
+      })
     },
     destroy (registro, params) {
       if (params === 1) {
@@ -291,7 +304,8 @@ export default {
     datetime: Datetime,
     Dialog,
     Button,
-    InputText
+    InputText,
+    InputNumber
   },
   computed: {
     ...mapState('auth', ['user'])

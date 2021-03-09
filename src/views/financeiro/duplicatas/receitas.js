@@ -26,6 +26,7 @@ export default {
       resize: 50,
       resizeFilter: 30,
       lancar: false,
+      assistente: false,
       items: [
         {
           label: 'Detalhado'
@@ -61,7 +62,9 @@ export default {
         descrconta: '',
         descstatus: '',
         desccaixa: '',
-        idtipo: ''
+        idtipo: '',
+        quantidadeParcelas: 1,
+        intervaloDias: 0
       },
       duplicata: [],
       currency: {
@@ -113,7 +116,7 @@ export default {
         this.openloading = true
         await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
-            this.$toastr.success(this.status, 'AdonaiSoft diz:', util.toast)
+            this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft diz:', util.toast)
             this.cleanForm()
             this.openModal = false
             this.openloading = false
@@ -134,7 +137,10 @@ export default {
       axios.post(adonai.url + 'imprimir', rel.report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.openloading = false
         window.open(res.data)
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast)
+        this.openloading = false
+      })
     },
     validate (form, quitar) {
       if (this.form.descricao === '') {
@@ -199,7 +205,10 @@ export default {
         }
         this.openModal = true
         this.openloading = false
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast)
+        this.openloading = false
+      })
     },
     datasearch (route) {
       if (route === 1) {
