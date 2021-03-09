@@ -218,7 +218,7 @@
         </b-container>
       </form>
       <template #footer>
-          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+          <Button label="Cancelar"  @click="openModalFechamento=false" class="p-button-raised p-button-success p-button-text button"/>
           <Button label="Fechar Caixa" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
       </template>
     </Dialog>
