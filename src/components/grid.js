@@ -10,6 +10,8 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import InputText from 'primevue/inputtext'
 import Paginator from 'primevue/paginator'
+import MultiSelect from 'primevue/multiselect'
+// sortable este atributo para ordenar
 
 export default {
   name: 'adonaigrid',
@@ -17,6 +19,7 @@ export default {
     return {
       openloading: false,
       deleteModal: false,
+      selectedColumns: null,
       ref: '',
       buscar: '',
       pagina: 1,
@@ -106,6 +109,14 @@ export default {
       alert('deu certo')
     }
   },
+  created () {
+    this.columns = [
+      { field: 'name', header: 'Name' },
+      { field: 'category', header: 'Category' },
+      { field: 'quantity', header: 'Quantity' }
+    ]
+    this.selectedColumns = this.columns
+  },
   components: {
     Dialog,
     Button,
@@ -113,7 +124,8 @@ export default {
     Column,
     Toolbar,
     InputText,
-    Paginator
+    Paginator,
+    MultiSelect
   },
   computed: {
     ...mapState('auth', ['user'])

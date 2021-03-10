@@ -25,7 +25,7 @@
           <Paginator @page="onPage($event)" class="p-paginator-success" :rows="15" :totalRecords="totalRows"></Paginator>
         </template>
         <template style="font-size:14px;" #paginatorRight>
-          <InputText style="margin-right:10px;" v-model="buscar" @keyup="getexplorer(buscar)"  placeholder="Pesquisar"/>
+          <InputText style="width: 40vw;margin-right:50px;" v-model="buscar" @keyup="getexplorer(buscar)"  placeholder="Pesquisar"/>
         </template>
     </DataTable>
   </div>
