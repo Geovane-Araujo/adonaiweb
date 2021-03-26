@@ -40,11 +40,11 @@
                 <b-row class="text-center">
                   <div class="col-sm-2">
                     <div class="file-loading" >
-                      <b-avatar :src="img"
+                      <b-avatar :src="form.pathimg"
                       size="5rem"></b-avatar>
                       <div>
                         <label for='selecao-arquivo' class="material-icons">perm_media</label>
-                        <input id='selecao-arquivo'  @change="previewFiles"  accept="image/*" type='file'>
+                        <input id='selecao-arquivo'  @change="getImg"  accept="image/*" type='file'>
                         <label class="material-icons label2" @click="form.foto='';img=''" >delete_forever</label>
                       </div>
                     </div>

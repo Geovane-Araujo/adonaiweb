@@ -29,6 +29,28 @@ export default {
         return false
       }).catch(err => util.error(err))
     },
+    previewFiles (e, pathimg) {
+      var file = e.target.files[0]
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = e => {
+        pathimg = e.target.result
+        return pathimg
+      }
+    },
+    getImg (e) {
+      var file = e.target.files[0]
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = e => {
+        this.form.pathimg = e.target.result
+        /* axios.post(adonai.url + 'base64toimage', this.form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          this.openloading = false
+          this.img = adonai.urli + res.data.obj
+          // this.form.foto = res.data.obj
+        }).catch(err => util.error(err)) */
+      }
+    },
     async onSearchCep (cep, form, local, token) {
       cep = cep.replace('-', '')
       await axios.get(adonai.url + 'cep/' + cep, { headers: { Authorization: 'Bearer ' + token } }).then(res => {
@@ -42,18 +64,6 @@ export default {
           form.endereco[local].idCidade = res.data.obj.idCidade
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
-    },
-    async previewFiles (e, form, token) {
-      var file = e.target.files[0]
-      var reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = e => {
-        form.foto = e.target.result
-        axios.post(adonai.url + 'base64toimage', form, { headers: { Authorization: 'Bearer ' + token } }).then(res => {
-          form.img = adonai.urli + res.data
-          form.foto = res.data
-        }).catch(err => util.error(err))
-      }
     },
     randomColor () {
       var hexadecimais = '0123456789ABCDEF'

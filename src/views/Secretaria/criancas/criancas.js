@@ -72,18 +72,12 @@ export default {
         this.save(form)
       }
     },
-    previewFiles (e) {
+    getImg (e) {
       var file = e.target.files[0]
       var reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = e => {
-        this.form.foto = e.target.result
-        this.openloading = true
-        axios.post(adonai.url + 'base64toimage', this.form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          this.openloading = false
-          this.img = adonai.urli + res.data.obj
-          this.form.foto = res.data.obj
-        }).catch(err => util.error(err))
+        this.form.pathimg = e.target.result
       }
     },
     getbyId (id) {
