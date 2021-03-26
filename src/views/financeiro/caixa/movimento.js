@@ -129,7 +129,7 @@ export default {
             this.get()
             this.openModalFechamento = false
             this.openloading = false
-            window.open(res.data.obj)
+            this.imprimir(res.data.id)
           } else {
             this.openloading = false
             this.$toastr.error(res.data.motivo, 'AdonaiSoft diz:', util.toast)
@@ -152,6 +152,13 @@ export default {
           }
         }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       }
+    },
+    async imprimir (ID) {
+      this.openloading = true
+      rel.report.relatorio = 'report/financeiro/fechamentoCaixa.jrxml'
+      rel.report.simpleObjects = ID
+      await rel.methods.imprimir(rel.report, this.user.token)
+      this.openloading = false
     },
     onSelectRsgister (cabecalho) {
       this.criterio = cabecalho

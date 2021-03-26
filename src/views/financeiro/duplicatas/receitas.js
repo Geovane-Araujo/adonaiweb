@@ -131,16 +131,11 @@ export default {
         }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
       }
     },
-    imprimir (relatorio) {
-      rel.report.relatorio = relatorio
+    async imprimir (relatorio) {
       this.openloading = true
-      axios.post(adonai.url + 'imprimir', rel.report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.openloading = false
-        window.open(res.data)
-      }).catch(err => {
-        this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast)
-        this.openloading = false
-      })
+      rel.report.relatorio = relatorio
+      await rel.methods.imprimir(rel.report, this.user.token)
+      this.openloading = false
     },
     validate (form, quitar) {
       if (this.form.descricao === '') {

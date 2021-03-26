@@ -41,14 +41,12 @@ export default {
         }
       }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
     },
-    imprimir (relatorio, id) {
+    async imprimir (relatorio, id) {
+      this.openloading = true
       expl.report.relatorio = relatorio
       expl.report.simpleObjects = id
-      this.openloading = true
-      axios.post(adonai.url + 'imprimir', expl.report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.openloading = false
-        window.open(res.data)
-      }).catch(err => util.error(err))
+      await expl.methods.imprimir(expl.report, this.user.token)
+      this.openloading = false
     },
     onPage (event) {
       event.page += 1

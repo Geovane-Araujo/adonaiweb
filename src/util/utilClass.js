@@ -24,7 +24,8 @@ export default {
   methods: {
     async imprimir (relatorio, token) {
       await axios.post(adonai.url + 'imprimir', relatorio, { headers: { Authorization: 'Bearer ' + token } }).then(res => {
-        window.open(res.data)
+        var pdfWindow = window.open('')
+        pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64, " + encodeURI(res.data) + "'></iframe>")
         return false
       }).catch(err => util.error(err))
     },

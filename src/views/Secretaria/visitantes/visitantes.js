@@ -142,13 +142,11 @@ export default {
         }
       })
     },
-    imprimir (relatorio) {
-      rel.report.relatorio = relatorio
+    async imprimir (relatorio) {
       this.openloading = true
-      axios.post(adonai.url + 'imprimir', rel.report, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.openloading = false
-        window.open(res.data)
-      }).catch(err => util.error(err))
+      rel.report.relatorio = relatorio
+      await rel.methods.imprimir(rel.report, this.user.token)
+      this.openloading = false
     },
     datasearch (route, params) {
       if (route === 1) {

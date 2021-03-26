@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <p>Dados Campo Eclesiástico</p>
+          <p>Dados Campo Eclesiástico (Beta)</p>
           <hr class="bg-info">
           <b-tabs>
             <b-tab title="Principal">
