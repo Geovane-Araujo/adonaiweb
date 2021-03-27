@@ -37,7 +37,7 @@ export default {
         this.openloading = false
       } catch (err) {
         this.openloading = false
-        this.$toastr.error('Verifique os dados de Autenticação', 'AdonaiSoft - Web', util.toast)
+        this.$toastr.error(err, 'AdonaiSoft - Web', util.toast)
       }
     },
     verificar (doc) {
