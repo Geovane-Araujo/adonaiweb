@@ -12,6 +12,11 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Sidebar from 'primevue/sidebar'
 import RadioButton from 'primevue/radiobutton'
+import FullCalendar from '@fullcalendar/vue'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import 'fullcalendar/dist/locale/pt-br'
 
 export default {
   extends: Bar,
@@ -24,6 +29,29 @@ export default {
       modal: true,
       show: false,
       anoCorrente: '',
+      calendarOptions: {
+        plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
+        initialView: 'dayGridMonth',
+        height: 'auto',
+        locale: 'pt-br',
+        editable: true,
+        themeSystem: 'bootstrap',
+        selectable: true,
+        headerToolbar: {
+          locale: 'pt-br',
+          left: 'prev,next',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: [],
+        buttonText: {
+          today: 'Hoje',
+          month: 'Mês',
+          week: 'Semana',
+          day: 'Hoje',
+          list: 'Lista'
+        }
+      },
       labelAno: ['Janeio', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
       ano: [
         {
@@ -323,6 +351,12 @@ export default {
       }
       this.getAnual(pros.data.idFilial, this.form.ano)
       this.loader = false
+    },
+    handleDateClick: function (arg) {
+    },
+    eventDateClick: function (arg) {
+    },
+    eventDrop: function (arg) {
     }
   },
   components: {
@@ -332,7 +366,8 @@ export default {
     DataTable,
     Column,
     Sidebar,
-    RadioButton
+    RadioButton,
+    FullCalendar
   },
   computed: {
     ...mapState('auth', ['user'])

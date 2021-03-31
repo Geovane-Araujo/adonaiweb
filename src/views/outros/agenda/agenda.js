@@ -2,15 +2,15 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
-import FullCalendar from '@fullcalendar/vue'
 import util from '../../../assets/scss/util'
+import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import utilExpl from '../../../util/utilClass'
-import { Datetime } from 'vue-datetime'
-import 'vue-datetime/dist/vue-datetime.css'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import 'fullcalendar/dist/locale/pt-br'
+import utilExpl from '../../../util/utilClass'
+import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
@@ -60,7 +60,13 @@ export default {
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: [],
+        events: [
+          {
+            id: 'a',
+            title: 'my event',
+            start: '2021-09-01'
+          }
+        ],
         buttonText: {
           today: 'Hoje',
           month: 'Mês',
