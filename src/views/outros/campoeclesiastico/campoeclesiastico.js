@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import { Bar } from 'vue-chartjs'
 import util from '../../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
@@ -17,9 +16,9 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import 'fullcalendar/dist/locale/pt-br'
+import { Datetime } from 'vue-datetime'
 
 export default {
-  extends: Bar,
   data () {
     return {
       openModal: false,
@@ -367,7 +366,8 @@ export default {
     Column,
     Sidebar,
     RadioButton,
-    FullCalendar
+    FullCalendar,
+    datetime: Datetime
   },
   computed: {
     ...mapState('auth', ['user'])

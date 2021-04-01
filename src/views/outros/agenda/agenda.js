@@ -60,13 +60,7 @@ export default {
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: [
-          {
-            id: 'a',
-            title: 'my event',
-            start: '2021-09-01'
-          }
-        ],
+        events: [],
         buttonText: {
           today: 'Hoje',
           month: 'Mês',
@@ -109,16 +103,24 @@ export default {
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
     },
-    getById (id) {
+    async getById (id, tp) {
       this.openloadin = true
       axios.get(adonai.url + 'agenda/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.form = res.data.obj
-        this.form.edit = true
-        this.form.add = false
-        this.form.idmultiigreja = 1
-        this.openModal = true
+        if (tp === 1) {
+          this.form = res.data.obj
+          this.form.edit = true
+          this.form.add = false
+          this.form.idmultiigreja = 1
+          this.openModal = true
+          this.openloadin = false
+        } else {
+          this.form = res.data.obj
+          this.openloadin = false
+        }
+      }).catch(err => {
+        util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast)
         this.openloadin = false
-      }).catch(err => util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      })
     },
     handleDateClick: function (arg) {
       this.openModal = true
@@ -132,14 +134,19 @@ export default {
       this.form.enddate = moment(new Date(date).getTime()).format()
     },
     eventDateClick: function (arg) {
-      this.getById(parseInt(arg.event.id))
+      this.getById(parseInt(arg.event.id), 1)
     },
-    eventDrop: function (arg) {
-      this.form.startdate = arg.event.startStr
-      this.form.enddate = arg.event.endStr
+    async eventDrop (arg) {
+      this.form.startdate = arg.event.start
+      if (arg.event.endStr === '') {
+        this.form.enddate = arg.event.start
+      } else {
+        this.form.enddate = arg.event.endStr
+      }
       this.form.id = parseInt(arg.event.id)
       this.form.descricao = ''
       this.form.add = false
+      this.form.edit = true
       this.save(this.form)
     },
     datasearch (route) {
