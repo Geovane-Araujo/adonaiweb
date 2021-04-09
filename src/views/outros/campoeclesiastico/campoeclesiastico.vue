@@ -173,12 +173,8 @@
               </div>
             </b-tab>
            <b-tab title="Agenda do Campo">
-             <div class="container-fluid">
-               <div class="row">
-                <div class="col-sm-12">
-                  <FullCalendar style="font-size:12px;" :options="calendarOptions"/>
-                </div>
-              </div>
+             <div>
+               <FullCalendar :events="events" :options="calendarOption"/>
              </div>
            </b-tab>
           </b-tabs>

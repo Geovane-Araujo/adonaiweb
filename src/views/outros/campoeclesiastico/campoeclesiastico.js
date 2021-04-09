@@ -1,7 +1,7 @@
 import { mapState } from 'vuex'
 import util from '../../../assets/scss/util'
-import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
+import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import utc from '../../../util/utilClass'
 import Dialog from 'primevue/dialog'
@@ -11,12 +11,12 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Sidebar from 'primevue/sidebar'
 import RadioButton from 'primevue/radiobutton'
-import FullCalendar from '@fullcalendar/vue'
+import FullCalendar from 'primevue/fullcalendar'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import 'fullcalendar/dist/locale/pt-br'
+import interactionPlugin from '@fullcalendar/interaction'
 import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
 
 export default {
   data () {
@@ -28,27 +28,22 @@ export default {
       modal: true,
       show: false,
       anoCorrente: '',
-      calendarOptions: {
+      events: null,
+      calendarOption: {
         plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
-        initialView: 'dayGridMonth',
+        initialDate: new Date(),
         height: 'auto',
         locale: 'pt-br',
         editable: true,
-        themeSystem: 'bootstrap',
-        selectable: true,
         headerToolbar: {
-          locale: 'pt-br',
           left: 'prev,next',
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: [],
         buttonText: {
-          today: 'Hoje',
           month: 'Mês',
           week: 'Semana',
-          day: 'Hoje',
-          list: 'Lista'
+          day: 'Hoje'
         }
       },
       labelAno: ['Janeio', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],

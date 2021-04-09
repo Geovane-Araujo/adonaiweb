@@ -10,15 +10,14 @@
         :paginator="true"
         :rows="15"
         paginatorTemplate=""
-        selectionMode="single" dataKey="ID"
-        @row-select="onRowSelect"
+        :selection.sync="selects" dataKey="id"
         :resizableColumns="true"
         columnResizeMode="fit">
-        <Column :headerStyle="'width:'+title.tamanho+'px'" headerClass="altura" bodyStyle="height:5px;" v-for="title in flex" :key="title.ID" :field="title.name" :header="title.name"></Column>
+        <Column :headerStyle="'width:'+title.tamanho+'px'" headerClass="altura" :bodyStyle="'width:'+title.tamanho+'px'" v-for="title in flex" :key="title.ID" :field="title.name" :header="title.name"></Column>
         <Column headerStyle="width: 20px;" bodyStyle=""  :exportable="false">
             <template #body="slotProps">
-                <Button style="font-size: 10px;" icon="pi pi-pencil" class="p-button-rounded p-button-outlined p-button-success p-button-sm p-sm-2" @click="getbyId(slotProps.data.id); form.edit=true;form.add=false" />
-                <Button icon="pi pi-trash" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="onDelete(slotProps.data, form)" />
+                <Button style="font-size: 10px;" icon="pi pi-pencil" class="p-button-rounded-sm p-button-text" @click="getbyId(slotProps.data.id); form.edit=true;form.add=false" />
+                <Button icon="pi pi-trash" class="p-button-rounded-sm p-button-text" @click="onDelete(slotProps.data, form)" />
             </template>
         </Column>
         <template style="font-size:14px;" #paginatorLeft>
@@ -42,7 +41,128 @@
   </div>
 </template>
 
-<script src="./grid.js">
+<script>
+import { mapState } from 'vuex'
+import adonai from '../http/router'
+import utlexpl from '../util/utilClass'
+import util from '../assets/scss/util'
+import axios from 'axios'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import InputText from 'primevue/inputtext'
+import Paginator from 'primevue/paginator'
+// import CheckBox from 'primevue/checkbox'
+// sortable este atributo para ordenar
+
+export default {
+  name: 'adonaigrid',
+  data () {
+    return {
+      openloading: false,
+      deleteModal: false,
+      selectedColumns: null,
+      ref: '',
+      buscar: '',
+      pagina: 1,
+      criterio: '',
+      reg: [],
+      selects: null,
+      totalRows: 0,
+      explorer: {
+        route: '',
+        pagina: 1,
+        criterios: ''
+      }
+    }
+  },
+  props: {
+    flex: {
+      type: Object
+    },
+    registros: {
+      type: Array
+    },
+    form: {
+      type: Object
+    },
+    getbyId: Function,
+    save: Function,
+    type: {
+      type: Boolean
+    }
+  },
+  mounted () {
+  },
+  methods: {
+    get (explorer, type) {
+      this.openloading = true
+      axios.post(adonai.url + 'aexplorer', explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        this.openloading = false
+        if (res.data.ret === 'success') {
+          this.reg = res.data.obj
+          this.ref = explorer.route
+          this.totalRows = res.data.totalRows
+          this.explorer = explorer
+        } else {
+          this.openloading = false
+          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+        }
+      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+    },
+    getexplorer (crit) {
+      if (this.criterio === '') {
+        this.criterio = this.titulos[1]
+      }
+      if (crit.length > 2 || crit === '') {
+        utlexpl.explorer.route = this.ref
+        utlexpl.explorer.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
+        axios.post(adonai.url + 'aexplorer', utlexpl.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+          if (res.data.ret === 'success') {
+            this.reg = res.data.obj
+          } else {
+            this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+          }
+        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }
+    },
+    onPage (event) {
+      event.page += 1
+      this.explorer.pagina = event.page
+      this.get(this.explorer)
+    },
+    onSelectRsgister (cabecalho) {
+      this.criterio = cabecalho
+      this.$toastr.success(cabecalho + ' selecionado', 'AdonaiSoft Diz:', util.toast)
+    },
+    onDelete (registro, form) {
+      if (this.ref === 'menu_duplicata_receita' || this.ref === 'menu_duplicata_despesa') {
+        form.dataPagamento = registro.datapagamento
+      }
+      form.id = registro.id
+      form.edit = false
+      form.add = false
+      form.del = true
+      this.deleteModal = true
+    },
+    teste () {
+      alert('deu certo')
+    }
+  },
+  components: {
+    Dialog,
+    Button,
+    DataTable,
+    Column,
+    InputText,
+    Paginator
+    // CheckBox
+  },
+  computed: {
+    ...mapState('auth', ['user'])
+  }
+}
 </script>
 <style lang="scss" scoped>
 tr {
