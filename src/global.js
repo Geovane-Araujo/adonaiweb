@@ -12,6 +12,7 @@ import { ColourPicker } from 'vue-colour-picker'
 import adonaigrid from '../src/components/grid.vue'
 import adonaidatasearch from '../src/components/datasearch.vue'
 import VueTippy, { TippyComponent } from 'vue-tippy'
+
 Vue.component('colour-picker', ColourPicker)
 Vue.component('tippy', TippyComponent)
 Vue.component('adonaigrid', adonaigrid)

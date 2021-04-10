@@ -130,9 +130,8 @@ export default {
         eventClick: this.eventDateClick, // clicar evento
         eventDrop: this.eventDrop,
         headerToolbar: {
-          locale: 'pt-br',
-          left: 'prev,next',
-          center: 'title',
+          left: 'prev,next adicionar,editar',
+          center: '',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
         events: [],
@@ -142,6 +141,20 @@ export default {
           week: 'Semana',
           day: 'Hoje',
           list: 'Lista'
+        },
+        customButtons: {
+          adicionar: {
+            text: 'Adicionar',
+            click: function () {
+              alert('deu certo')
+            }
+          },
+          editar: {
+            text: 'Editar',
+            click: function () {
+              alert('deu certo')
+            }
+          }
         }
       }
     }

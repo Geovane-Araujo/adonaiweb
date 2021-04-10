@@ -28,6 +28,7 @@ import 'primeflex/primeflex.css'
 import 'primeicons/primeicons.css'
 import 'vuesax/dist/vuesax.css'
 import 'primevue/resources/themes/bootstrap4-light-blue/theme.css'
+import './assets/styles/custom.scss'
 
 window.toastr = require('toastr')
 
