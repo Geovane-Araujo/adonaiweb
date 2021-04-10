@@ -173,9 +173,9 @@
               </div>
             </b-tab>
            <b-tab title="Agenda do Campo">
-             <div>
-               <FullCalendar :events="events" :options="calendarOption"/>
-             </div>
+              <div style="height: 100px">
+                <FullCalendar style="font-size:12px;" :options="calendarOptions"/>
+              </div>
            </b-tab>
           </b-tabs>
         </div>

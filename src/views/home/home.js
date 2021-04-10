@@ -120,8 +120,16 @@ export default {
         {
           title: 'Campo Eclesiastico',
           icon: 'far fa-chart-bar',
-          href: '/campoEclesiastico',
-          hidden: false
+          child: [
+            {
+              href: '/resumocampo',
+              title: 'Visão Geral'
+            },
+            {
+              href: '/agendacampo',
+              title: 'Agenda Campo'
+            }
+          ]
         },
         {
           title: 'Escola',
