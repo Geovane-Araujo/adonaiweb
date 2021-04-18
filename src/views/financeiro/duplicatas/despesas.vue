@@ -36,34 +36,24 @@
       </div>
     </div>
 
-    <Dialog style="font-size:10px;" header="Lançamento de Despesas" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
+    <Dialog header="Lançamento de Despesas" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
       <form method="POST">
         <b-container>
           <b-row class="text-center">
             <b-col cols="12">
               <div class="row">
-                  <div class="col-sm-4" style="padding:3px;">
+                <div class="col-sm-4" style="padding:3px;">
                   <b-form-group label="Data Emissao" label-align-sm="left">
-                    <datetime
-                      class="datePivker"
-                      v-bind:disabled="(form.status == 0)"
-                      type="Date"
-                      value-zone="UTC"
-                      format="dd/MM/yyyy"
-                      v-model="form.dataemissao">
-                    </datetime>
+                    <b-form-input class="form-control"
+                      type="date"
+                      v-model="form.dataemissao"></b-form-input>
                   </b-form-group>
                 </div>
                 <div class="col-sm-4" style="padding:3px;">
                   <b-form-group label="Data Vencimento" label-align-sm="left">
-                    <datetime
-                      class="datePivker"
-                      v-bind:disabled="(form.status == 0)"
-                      type="Date"
-                      value-zone="UTC"
-                      format="dd/MM/yyyy"
-                      v-model="form.dataVencimento">
-                    </datetime>
+                    <input class="form-control"
+                      type="date"
+                      :value="form.dataVencimento">
                   </b-form-group>
                 </div>
                 <div class="col-sm-4" style="padding:3px;">

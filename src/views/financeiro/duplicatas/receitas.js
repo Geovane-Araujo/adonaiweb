@@ -99,8 +99,8 @@ export default {
   methods: {
     initialize () {
       this.cleanForm()
-      this.form.dataemissao = moment(data).format()
-      this.form.dataVencimento = moment(data).format()
+      this.form.dataemissao = moment(data).format('YYYY-MM-DD')
+      this.form.dataVencimento = moment(data).format('YYYY-MM-DD')
       this.form.del = false
       this.form.add = true
       this.form.edit = false
@@ -147,6 +147,10 @@ export default {
       } else if (this.form.valor === '') {
         this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSoft diz:', util.toast)
       } else {
+        var a = new Date(form.dataemissao)
+        var b = new Date(form.dataVencimento)
+        form.dataemissao = moment(moment(a).add(2, 'days').toDate()).format('YYYY-MM-DD')
+        form.dataVencimento = moment(moment(b).add(2, 'days').toDate()).format('YYYY-MM-DD')
         if (quitar === 1) {
           form.dataPagamento = new Date()
           form.status = 0
