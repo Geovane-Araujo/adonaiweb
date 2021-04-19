@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
 import axios from 'axios'
@@ -48,7 +47,7 @@ export default {
       this.openloading = true
       await axios.post(adonai.url + 'registrovisitante', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          this.$toastr.success('Salvo com Sucesso', 'Cadastro de Membros', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Visita registrada com sucesso', life: 5000 })
           this.openloading = false
           this.openModal = false
           rel.explorerflex.route = 'menu_pessoa_registro_visitante'
@@ -60,13 +59,15 @@ export default {
             this.openloading = false
           }
         } else {
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
     validate (form) {
       if (this.form.nome === '') {
-        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'AdonaiSoft', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
         this.save(form)
       }
@@ -88,9 +89,11 @@ export default {
           this.openModal = true
           this.openloading = false
         } else {
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           this.openloading = false
         }
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
     datasearch (route, params) {
