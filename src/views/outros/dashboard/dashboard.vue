@@ -4,7 +4,14 @@
     <div class="container-fluid dash">
       <div class="row">
         <div class="col-sm-12">
-          <p>DashBoard</p>
+          <div class="p-d-flex p-jc-between">
+            <div>
+              <p>DashBoard</p>
+            </div>
+            <div>
+              <Button icon="pi pi-filter" @click="filters=true" class="p-button-rounded p-button-text p-button-plain"/>
+            </div>
+          </div>
           <hr class="bg-info">
           <div class="row">
             <div class="col-sm-3">
@@ -103,10 +110,14 @@
         </div>
       </div>
     </div>
+    <Sidebar :visible.sync="filters" class="p-sidebar-sm" position="right">
+      Filtros
+    </Sidebar>
   </div>
 </template>
 
 <script src="./dashboard.js">
 </script>
-<style lang=scss scoped src="../../../assets/scss/adonai.scss">
+<style lang=scss scoped>
+@import '../../../assets/scss/adonai.scss';
 </style>

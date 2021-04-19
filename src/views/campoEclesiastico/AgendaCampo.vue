@@ -186,7 +186,7 @@ export default {
           this.calendarOptions.events = res.data.obj
           this.openloadin = false
         } else {
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           this.openloadin = false
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))

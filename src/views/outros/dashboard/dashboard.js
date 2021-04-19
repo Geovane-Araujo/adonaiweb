@@ -1,15 +1,15 @@
 import { mapState } from 'vuex'
-import { Bar } from 'vue-chartjs'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
 import utilClass from '../../../util/utilClass'
 import axios from 'axios'
+import Button from 'primevue/button'
+import Sidebar from 'primevue/sidebar'
 
 export default {
-  extends: Bar,
   data () {
     return {
-      openModal: false,
+      filters: false,
       openloading: false,
       open: false,
       membros: '',
@@ -78,6 +78,10 @@ export default {
       })
       /* this.$refs.expl.explorer('igrejagrid',1,'') */
     }
+  },
+  components: {
+    Button,
+    Sidebar
   },
   computed: {
     ...mapState('auth', ['user'])

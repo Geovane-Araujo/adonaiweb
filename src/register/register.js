@@ -25,7 +25,7 @@ export default {
           this.$router.push('login')
         } else {
           this.openloading = false
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
       }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
     },

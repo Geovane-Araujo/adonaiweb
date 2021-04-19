@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
 import axios from 'axios'
@@ -58,16 +57,18 @@ export default {
           rel.explorer.route = 'menu_criancas'
           rel.explorer.criterios = 'order by id desc'
           this.$refs.grid.get(rel.explorer)
-          this.$toastr.success(this.status, 'AdonaiSoft Diz: ', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
         } else {
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           this.openloading = false
         }
-      }).catch(err => this.$toastr.success(err, 'AdonaiSoft Diz: ', util.toast))
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     validate (form) {
       if (form.nome === '') {
-        this.$toastr.error('Por favor preencha o campo Nome Completo', 'Campos Inválidos', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Por favor preencha o campo Nome Completo', life: 5000 })
       } else {
         this.save(form)
       }

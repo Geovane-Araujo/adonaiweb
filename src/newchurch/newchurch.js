@@ -244,7 +244,7 @@ export default {
       cep = cep.replace('-', '')
       axios.get(adonai.url + 'cep/' + cep, { headers: { Authorization: 'Bearer OTk5OSYwJmFkb25haTA5ODAyNjYzOTQ4' } }).then(res => {
         if (res.data.ret === 'unsuccess') {
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         } else {
           if (local === 1) {
             form.endereco[0].endereco = res.data.obj.logradouro
