@@ -110,13 +110,13 @@ export default {
     },
     async save (form) {
       if (form.del === true && form.dataPagamento !== '') {
-        this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSpft diz:', util.toast)
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: 'Não é possível excluir duplicata Paga', life: 5000 })
         this.openloading = false
       } else {
         this.openloading = true
         await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
-            this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft diz:', util.toast)
+            this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
             this.cleanForm()
             this.openModal = false
             this.openloading = false
@@ -125,10 +125,12 @@ export default {
             rel.explorer.criterios = 'ORDER BY ID DESC'
             this.$refs.grid.get(rel.explorer)
           } else {
-            this.$toastr.error(res.data.motivo, 'AdonaiSoft diz:', util.toast)
+            this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
             this.openloading = false
           }
-        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+        }).catch(err => {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+        })
       }
     },
     async imprimir (relatorio) {
@@ -139,13 +141,7 @@ export default {
     },
     validate (form, quitar) {
       if (this.form.descricao === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSoft diz:', util.toast)
-      } else if (this.form.tipo === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSoft diz:', util.toast)
-      } else if (this.form.desccaixa === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSoft diz:', util.toast)
-      } else if (this.form.valor === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSoft diz:', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', life: 5000 })
       } else {
         var a = new Date(form.dataemissao)
         var b = new Date(form.dataVencimento)

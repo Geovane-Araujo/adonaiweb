@@ -1,9 +1,16 @@
 <template>
   <div id="app">
     <router-view/>
+    <Toast position="top-right" />
   </div>
 </template>
 <script>
+import Toast from 'primevue/toast'
+export default {
+  components: {
+    Toast
+  }
+}
 </script>
 <style lang="scss">
 @import './assets/styles/custom.scss';

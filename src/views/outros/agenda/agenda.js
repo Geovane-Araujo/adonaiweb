@@ -2,7 +2,6 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
-import util from '../../../assets/scss/util'
 import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
@@ -79,15 +78,19 @@ export default {
       this.openloadin = true
       await axios.post(adonai.url + 'agenda', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
           this.cleanForm()
           this.openloadin = false
           this.openModal = false
           this.get()
         } else {
-          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
+          this.openloadin = false
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.openloadin = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     get () {
       this.openloadin = true
@@ -97,10 +100,13 @@ export default {
           this.calendarOptions.events = res.data.obj
           this.openloadin = false
         } else {
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           this.openloadin = false
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
+      }).catch(err => {
+        this.openloadin = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     async getById (id, tp) {
       this.openloadin = true
@@ -117,8 +123,8 @@ export default {
           this.openloadin = false
         }
       }).catch(err => {
-        util.$toastr.error(err, 'AdonaiSoft Diz:', util.toast)
         this.openloadin = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
     handleDateClick: function (arg) {
@@ -174,13 +180,11 @@ export default {
     },
     validate (form) {
       if (form.startdate === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios Data Inicial sem preenchimento', life: 5000 })
       } else if (form.enddate === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios Data Final sem preenchimento', life: 5000 })
       } else if (form.descricaoevento === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
-      } else if (form.descricao === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos ObrigatóriosDescricao Evento sem preenchimento', life: 5000 })
       } else {
         this.save(form)
       }

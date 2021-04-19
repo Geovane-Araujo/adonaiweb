@@ -1,5 +1,4 @@
 import { mapActions } from 'vuex'
-import util from '../../../assets/scss/util'
 
 export default {
   data: () => ({
@@ -29,15 +28,15 @@ export default {
         await this.ActionLogin(this.form)
         var ret = localStorage.getItem('ret')
         if (ret === 'unsuccess') {
-          this.$toastr.error(localStorage.getItem('login'), 'AdonaiSoft - Web', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: localStorage.getItem('login'), life: 5000 })
         } else {
-          this.$toastr.success('Seja Bem Vindo(a)', 'AdonaiSoft - Web', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Seja Bem Vindo(a)', life: 5000 })
           this.$router.push({ name: 'home' })
         }
         this.openloading = false
       } catch (err) {
         this.openloading = false
-        this.$toastr.error(err, 'AdonaiSoft - Web', util.toast)
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       }
     },
     verificar (doc) {

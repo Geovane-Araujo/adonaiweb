@@ -7,8 +7,6 @@ import VueSidebarMenu from '../node_modules/vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
-import VueToastr2 from 'vue-toastr-2'
-import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import VueTheMask from 'vue-the-mask'
@@ -21,6 +19,7 @@ import VSwatches from 'vue-swatches'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Vuesax from 'vuesax'
+import ToastService from 'primevue/toastservice'
 import './global'
 import 'vue-swatches/dist/vue-swatches.css'
 import './assets/scss/app.scss'
@@ -35,12 +34,12 @@ window.toastr = require('toastr')
 Vue.config.productionTip = false
 Vue.use(VueMask)
 Vue.use(router)
+Vue.use(ToastService)
 Vue.use(VueSidebarMenu)
 Vue.use(Button)
 Vue.use(Vuesax)
 Vue.use(PrimeVue)
 Vue.use(InputText)
-Vue.use(VueToastr2)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueTheMask)

@@ -70,8 +70,8 @@
         </b-container>
       </form>
       <template #footer>
-          <Button label="Excluir" v-show="form.edit"  @click="form.edit=false;form.del=true;save(form)" class="p-button-raised p-button-danger p-button-text button"/>
-          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+          <Button label="Excluir" v-show="form.edit"  @click="form.edit=false;form.del=true;save(form)" class="p-button-raised p-button-danger  p-button-text button"/>
+          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger  p-button-text button"/>
           <Button label="Agendar" @click="validate(form)" class="p-button-raised p-button-success p-button-text button" />
       </template>
     </Dialog>
