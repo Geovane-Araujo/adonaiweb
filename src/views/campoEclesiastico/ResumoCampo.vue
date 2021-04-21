@@ -224,7 +224,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import util from '../../assets/scss/util'
 import adonai from '../../http/router'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
@@ -424,7 +423,7 @@ export default {
   methods: {
     getCharts (form) {
       if (form.ano === 0 && form.mes !== 0) {
-        this.$toastr.info('Por favor selecione um ano diferente de "Todos"', 'AdonaiSoft Diz:', util.toast)
+        this.$toast.add({ severity: 'info', summary: 'AdonaiSoft', detail: 'Por favor selecione um ano diferente de "Todos"', life: 5000 })
         return
       }
       this.show = true
@@ -496,9 +495,14 @@ export default {
           this.$refs.receitas.render(this.chartGeral.labelDespesas, finalObjectChartReceitas)
           this.$refs.despesas.render(this.chartGeral.labelDespesas, finalObjectChartDespesas)
           this.$refs.memb.render(this.chartGeral.labelMembros, insertObjectChartMembers)
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
         this.show = false
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.openloadin = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     listaIgrejas () {
       axios.get(adonai.url + 'listaigrejas', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -507,9 +511,12 @@ export default {
           this.a.totalMembros = 0
           this.a.totalIgrejas = this.b.listaIgrejas.length
         } else {
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.openloadin = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
       /* this.$refs.expl.explorer('igrejagrid',1,'') */
     },
     getAnual (id, ano) {
@@ -532,8 +539,8 @@ export default {
           this.c.bairros = res.data.bairros
         }
       }).catch(err => {
-        this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast)
-        this.loader = false
+        this.openloadin = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
     onOpen (pros) {
