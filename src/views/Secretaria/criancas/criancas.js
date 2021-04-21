@@ -63,6 +63,7 @@ export default {
           this.openloading = false
         }
       }).catch(err => {
+        this.openloading = false
         this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
@@ -95,6 +96,9 @@ export default {
         }
         this.openModal = true
         this.openloading = false
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
     datasearch (params) {

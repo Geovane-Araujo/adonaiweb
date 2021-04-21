@@ -162,7 +162,7 @@
       <template #footer>
         <div class=" p-mr-2 p-as-start" style="align: left">
           <Button label="Salvar" @click="validate(form)" class="p-button-raised p-button-success p-button-text button" />
-          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
         </div>
       </template>
     </Dialog>
