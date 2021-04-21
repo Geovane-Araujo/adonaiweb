@@ -2,6 +2,7 @@ import util from '../assets/scss/util'
 import axios from 'axios'
 import adonai from '../http/router'
 var moment = require('moment')
+var pdfWindow
 
 export default {
   report: {
@@ -25,11 +26,9 @@ export default {
   methods: {
     async imprimir (relatorio, token) {
       await axios.post(adonai.url + 'imprimir', relatorio, { headers: { Authorization: 'Bearer ' + token } }).then(res => {
-        var pdfWindow = window.open('')
-        pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64, " + encodeURI(res.data) + "'></iframe>")
+        pdfWindow = window.open('')
+        pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64," + encodeURI(res.data) + "'></iframe>")
         return false
-      }).catch(err => {
-        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
     previewFiles (e, pathimg) {

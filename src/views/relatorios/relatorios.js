@@ -30,7 +30,11 @@ export default {
   methods: {
     async imprimir (relatorio) {
       this.openloading = true
-      await rel.methods.imprimir(relatorio, this.user.token)
+      try {
+        await rel.methods.imprimir(relatorio, this.user.token)
+      } catch (err) {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      }
       this.openloading = false
     },
     clear (report) {
