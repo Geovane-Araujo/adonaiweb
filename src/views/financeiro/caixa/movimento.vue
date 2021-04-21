@@ -29,8 +29,8 @@
             <Column field="Descricao" header="Descricao"></Column>
             <Column headerStyle="width: 200px;" bodyStyle=""  :exportable="false">
               <template #body="slotProps">
-                  <Button icon="pi pi-eye" class="p-button-rounded p-button-outlined p-button-info p-button-sm" @click="getSaldos (slotProps.data.ID, 1)" />
-                  <Button icon="pi pi-lock" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="closeCashier(slotProps.data)" />
+                  <Button icon="pi pi-eye" class="p-button-rounded-sm p-button-text p-button-info" @click="getSaldos (slotProps.data.ID, 1)" />
+                  <Button icon="pi pi-lock" class="p-button-rounded-sm p-button-text p-button-danger p-button-sm" @click="closeCashier(slotProps.data)" />
               </template>
             </Column>
           </DataTable>
@@ -128,8 +128,8 @@
         </b-container>
       </form>
       <template #footer>
-          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
-          <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
       </template>
     </Dialog>
 
@@ -217,8 +217,8 @@
         </b-container>
       </form>
       <template #footer>
-          <Button label="Cancelar"  @click="openModalFechamento=false" class="p-button-raised p-button-success p-button-text button"/>
-          <Button label="Fechar Caixa" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Fechar Caixa" @click="validate(form);" class="p-button-raised p-button-info p-button-text button" />
+        <Button label="Cancelar"  @click="openModalFechamento=false" class="p-button-raised p-button-danger p-button-text button"/>
       </template>
     </Dialog>
 
