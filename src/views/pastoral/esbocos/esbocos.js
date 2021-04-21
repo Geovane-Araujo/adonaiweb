@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import adonai from '../../../http/router'
 import adExpl from '../../../util/utilClass'
 import axios from 'axios'
@@ -49,18 +48,21 @@ export default {
       await axios.post(adonai.url + 'esbocos', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           this.openloading = false
-          this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
           this.openModal = false
           this.$refs.grid.get(this.explorer)
         } else {
           this.openloading = false
-          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     validate (form) {
       if (this.form.descricao === '') {
-        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+        this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
         this.save(form)
       }
@@ -79,13 +81,20 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'esbocos/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.form = res.data.obj
-        if (id !== -100) {
-          this.form.add = false
-          this.form.edit = true
+        if (res.data.ret === 'success') {
+          this.form = res.data.obj
+          if (id !== -100) {
+            this.form.add = false
+            this.form.edit = true
+          }
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
         this.openloading = false
         this.openModal = true
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
     onResize () {

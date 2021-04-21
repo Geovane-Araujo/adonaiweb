@@ -7,7 +7,7 @@
           <p class="p">Notas de Versões</p>
           <hr class="bg-info" />
           <adonaigrid
-          :flex="[{ tamanho: 15, name: 'id' }, { tamanho: 20, name: 'versao' }, { tamanho: 180, name: 'descricao' }]"
+          :flex="[{ tamanho: 15, name: 'versao' }, { tamanho: 200, name: 'descricao' }]"
           :registros="versao"
           :type="false"
           ref="grid"></adonaigrid>

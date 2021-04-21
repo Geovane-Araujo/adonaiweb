@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
 import axios from 'axios'
@@ -92,18 +91,22 @@ export default {
       this.openloading = true
       await axios.post(adonai.url + 'novoconvertido', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          this.$toastr.success('Salvo com Sucesso', 'Cadastro de Membros', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
           this.openloading = false
           this.openModal = false
           this.$refs.grid.get(this.explorer)
         } else {
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.openloading = false
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
     validate (form) {
       if (this.form.nome === '') {
-        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'AdonaiSoft', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
         this.save(form)
       }
@@ -125,7 +128,10 @@ export default {
           this.openloading = false
           this.img = adonai.urli + res.data
           this.form.foto = res.data
-        }).catch(err => util.error(err))
+        }).catch(err => {
+          this.openloading = false
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+        })
       }
     },
     buscarcep (cep, form, local) {
@@ -140,7 +146,10 @@ export default {
           form.endereco[0].uf = res.data.obj.uf
           form.endereco[0].idCidade = res.data.obj.idCidade
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     getbyId (id) {
       this.openloading = true
@@ -158,9 +167,12 @@ export default {
           this.openModal = true
           this.openloading = false
         } else {
-          this.$toastr.error(res.data, 'AdonaiSoft', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           this.openloading = false
         }
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
     datasearch (route, params) {
