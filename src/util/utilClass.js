@@ -1,6 +1,7 @@
 import util from '../assets/scss/util'
 import axios from 'axios'
 import adonai from '../http/router'
+var moment = require('moment')
 
 export default {
   report: {
@@ -36,6 +37,12 @@ export default {
       reader.onload = e => {
         pathimg = e.target.result
         return pathimg
+      }
+    },
+    validateData (form) {
+      if (form !== '') {
+        form = moment(moment(form).add(1, 'days').toDate()).format('YYYY-MM-DD')
+        return form
       }
     },
     getImg (e) {

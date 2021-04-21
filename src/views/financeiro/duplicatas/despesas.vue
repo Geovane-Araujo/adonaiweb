@@ -51,9 +51,9 @@
                 </div>
                 <div class="col-sm-4" style="padding:3px;">
                   <b-form-group label="Data Vencimento" label-align-sm="left">
-                    <input class="form-control"
+                    <b-form-input class="form-control"
                       type="date"
-                      :value="form.dataVencimento">
+                      v-model="form.dataVencimento"></b-form-input>
                   </b-form-group>
                 </div>
                 <div class="col-sm-4" style="padding:3px;">

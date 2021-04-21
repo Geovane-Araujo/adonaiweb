@@ -37,6 +37,8 @@ export default {
         dataNascimento: '',
         ativo: '',
         idCargo: '',
+        naturalidade: '',
+        nacionalidade: '',
         cargo: '',
         foto: '',
         observacoes: '',
@@ -147,6 +149,7 @@ export default {
         }
       }).catch(err => {
         this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+        this.openloading = false
       })
     },
     validar (form) {
@@ -158,6 +161,9 @@ export default {
         if (form.endereco[0].endereco === '' || form.endereco[0].bairro === '' || form.endereco[0].numero === '' || form.endereco[0].cidade === '') {
           this.mapsModal = true
         } else {
+          form.dataBatismo = rel.methods.validateData(form.dataBatismo)
+          form.membroDesde = rel.methods.validateData(form.membroDesde)
+          form.dataNascimento = rel.methods.validateData(form.dataNascimento)
           this.save(form)
         }
       }

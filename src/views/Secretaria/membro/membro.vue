@@ -63,14 +63,10 @@
                   </div>
                   <div class="col-sm-4 adonai-pad">
                     <b-form-group label="Data Nascimento" label-align-sm="left">
-                      <datetime
-                        class="datePivker"
-                        type="Date"
-                        value-zone="UTC"
-                        format="dd/MM/yyyy"
-                        v-model="form.dataNascimento">
-                      </datetime>
-                    </b-form-group>
+                      <b-form-input class="form-control"
+                      type="date"
+                      v-model="form.dataNascimento"></b-form-input>
+                  </b-form-group>
                   </div>
                   <div class="col-sm-2 adonai-pad">
                     <b-form-group label="Ativo" label-align-sm="left">
@@ -101,7 +97,7 @@
                   <div class="col-sm-4 adonai-pad">
                     <b-form-group label="Sexo" label-align-sm="left">
                       <b-form-select
-                      :options="[{ text: 'Masculino', value: 0 }, { text: 'Feminina', value: 1 }]"
+                      :options="[{ text: 'Masculino', value: 0 }, { text: 'Feminino', value: 1 }]"
                       v-model="form.sexo"
                       ></b-form-select>
                     </b-form-group>
@@ -110,7 +106,23 @@
               </div>
             </b-row>
             <div class="row">
-              <div class="col-sm-2 adonai-pad">
+              <div class="col-sm-4 adonai-pad">
+                <b-form-group label="Naturalidade" label-align-sm="left">
+                  <b-form-input
+                    type="text"
+                    v-model="form.naturalidade"
+                    class="form-control"></b-form-input>
+                  </b-form-group>
+              </div>
+              <div class="col-sm-4 adonai-pad">
+                <b-form-group label="Nacionalidade" label-align-sm="left">
+                  <b-form-input
+                    type="text"
+                    v-model="form.nacionalidade"
+                    class="form-control"></b-form-input>
+                  </b-form-group>
+              </div>
+              <div class="col-sm-4 adonai-pad">
                 <b-form-group label="Estado Civil" label-align-sm="left">
                   <b-form-select
                   :options="[{ text: 'Selecione(...)', value: 0 }, { text: 'Solteiro(a)', value: 1 }, { text: 'Casado(a)', value: 2 }, { text: 'União Estável', value: 3 }, { text: 'Divorciado(a)', value: 4 }, { text: 'Viuvo(a)', value: 5 }]"
@@ -118,7 +130,7 @@
                   ></b-form-select>
                 </b-form-group>
               </div>
-              <div class="col-sm-4 adonai-pad">
+              <div class="col-sm-6 adonai-pad">
                 <div class="form-group">
                   <b-form-group label="Cargo" label-align-sm="left">
                     <b-input-group >
@@ -132,43 +144,17 @@
               </div>
               <div class="col-sm-3 adonai-pad">
                   <b-form-group label="Membro Desde" label-align-sm="left">
-                    <datetime
-                      class="datePivker"
-                      type="Date"
-                      editable= "true"
-                      value-zone="UTC"
-                      format="dd/MM/yyyy"
-                      v-model="form.membroDesde">
-                  </datetime>
+                    <b-form-input class="form-control"
+                      type="date"
+                      v-model="form.membroDesde"></b-form-input>
                   </b-form-group>
               </div>
               <div class="col-md-3 adonai-pad">
                 <b-form-group label="Data de Batismo" label-align-sm="left">
-                  <datetime
-                    class="datePivker"
-                    type="Date"
-                    editable= "true"
-                    value-zone="UTC"
-                    format="dd/MM/yyyy"
-                    v-model="form.dataBatismo">
-                </datetime>
+                  <b-form-input class="form-control"
+                    type="date"
+                    v-model="form.dataBatismo"></b-form-input>
                 </b-form-group>
-              </div>
-              <div class="col-md-3 adonai-pad">
-                <b-form-group label="Telefone Residencial" label-align-sm="left">
-                  <input type="text"
-                    class="form-control"
-                    v-mask="'(##)####-#####'"
-                    v-model="form.telefone[0].telefone">
-                  </b-form-group>
-              </div>
-              <div class="col-md-3 adonai-pad">
-                <b-form-group label="Telefone Celular" label-align-sm="left">
-                  <input type="text"
-                    class="form-control"
-                    v-mask="'(##)####-#####'"
-                    v-model="form.telefone[1].telefone">
-                  </b-form-group>
               </div>
               <div v-show="false" class="col-md-4 adonai-pad">
                 <input  type="text"
@@ -176,13 +162,6 @@
                   v-mask="'(##)####-#####'"
                   v-model="form.telefone[2].telefone"
                   placeholder="Telefone Comercial">
-              </div>
-              <div class="col-md-6 adonai-pad">
-                <b-form-group label="Email" label-align-sm="left">
-                  <input type="text"
-                    class="form-control"
-                    v-model="form.email[0].email">
-                </b-form-group>
               </div>
               <div v-show="false" class="col-md-6 adonai-pad">
                 <input type="text"
@@ -193,62 +172,91 @@
             </div>
           </b-tab>
           <!-- Endereços -->
-          <b-tab title="Endereços">
+          <b-tab title="Endereços e Telefones e E-mails">
               <div class="row">
-                <div class="col-sm-3">
-                  <div class="form-group">
-                    <b-input-group>
-                      <b-form-input placeholder="CEP" v-mask="'#####-###'" v-model="form.endereco[0].cep" ></b-form-input>
-                        <b-input-group-append >
-                        <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 0)">search</b-button>
-                      </b-input-group-append>
-                    </b-input-group>
-                  </div>
-                </div>
-                <div class="col-sm-7">
-                  <div class="form-group">
+                <div class="col-md-3 adonai-pad">
+                  <b-form-group label="Telefone Residencial" label-align-sm="left">
                     <input type="text"
                       class="form-control"
-                      v-model="form.endereco[0].endereco"
-                      placeholder="Endereço Principal">
-                  </div>
+                      v-mask="'(##)####-#####'"
+                      v-model="form.telefone[0].telefone">
+                    </b-form-group>
                 </div>
-                <div class="col-sm-2">
-                  <div class="form-group">
+                <div class="col-md-3 adonai-pad">
+                  <b-form-group label="Telefone Celular" label-align-sm="left">
                     <input type="text"
                       class="form-control"
-                      v-model="form.endereco[0].numero"
-                      placeholder="Numero">
-                  </div>
+                      v-mask="'(##)####-#####'"
+                      v-model="form.telefone[1].telefone">
+                    </b-form-group>
                 </div>
-                <div class="col-sm-4">
-                  <div class="form-group">
+                <div class="col-md-6 adonai-pad">
+                  <b-form-group label="Email" label-align-sm="left">
                     <input type="text"
                       class="form-control"
-                      v-model="form.endereco[0].bairro"
-                      placeholder="Bairro Principal">
+                      v-model="form.email[0].email">
+                  </b-form-group>
+                </div>
+                <div class="col-sm-3 adonai-pad">
+                  <div class="form-group">
+                    <b-form-group label="CEP" label-align-sm="left">
+                      <b-input-group>
+                        <b-form-input v-mask="'#####-###'" v-model="form.endereco[0].cep" ></b-form-input>
+                          <b-input-group-append >
+                          <b-button variant="outline-info" class="material-icons" @click="buscarcep (form.endereco[0].cep, form, 0)">search</b-button>
+                        </b-input-group-append>
+                      </b-input-group>
+                    </b-form-group>
                   </div>
                 </div>
-                <div class="col-sm-4">
-                  <div class="form-group">
+                <div class="col-md-7 adonai-pad">
+                  <b-form-group label="Endereço" label-align-sm="left">
                     <input type="text"
                       class="form-control"
-                      v-model="form.endereco[0].complemento"
-                      placeholder="Complemento Principal">
-                  </div>
+                      v-model="form.endereco[0].endereco">
+                  </b-form-group>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-2 adonai-pad">
+                  <b-form-group label="Numero" label-align-sm="left">
+                    <div class="form-group">
+                      <input type="text"
+                        class="form-control"
+                        v-model="form.endereco[0].numero">
+                    </div>
+                  </b-form-group>
+                </div>
+                <div class="col-sm-4 adonai-pad">
+                  <b-form-group label="Numero" label-align-sm="left">
+                    <div class="form-group">
+                      <input type="text"
+                        class="form-control"
+                        v-model="form.endereco[0].bairro">
+                    </div>
+                  </b-form-group>
+                </div>
+                <div class="col-sm-4 adonai-pad">
+                  <b-form-group label="Complemento" label-align-sm="left">
+                    <div class="form-group">
+                      <input type="text"
+                        class="form-control"
+                        v-model="form.endereco[0].complemento">
+                    </div>
+                  </b-form-group>
+                </div>
+                <div class="col-sm-4 adonai-pad">
                   <div class="form-group">
-                    <b-input-group >
-                      <b-form-input placeholder="Cidade" v-model="form.endereco[0].cidade" @click="datasearch(1, 0);"></b-form-input>
-                      <b-input-group-append>
-                        <b-button variant="outline-info" class="material-icons" @click="datasearch(1, 0);">search</b-button>
-                      </b-input-group-append>
-                    </b-input-group>
+                    <b-form-group label="Cidade" label-align-sm="left">
+                      <b-input-group >
+                        <b-form-input v-model="form.endereco[0].cidade" @click="datasearch(1, 0);"></b-form-input>
+                        <b-input-group-append>
+                          <b-button variant="outline-info" class="material-icons" @click="datasearch(1, 0);">search</b-button>
+                        </b-input-group-append>
+                      </b-input-group>
+                    </b-form-group>
                   </div>
                 </div>
               <!-- Endereço Secundário -->
-                <div class="col-sm-3">
+                <div v-show="false" class="col-sm-3">
                   <div class="form-group">
                     <b-input-group>
                       <b-form-input placeholder="CEP" v-mask="'#####-###'" v-model="form.endereco[1].cep"></b-form-input>
@@ -258,7 +266,7 @@
                     </b-input-group>
                   </div>
                 </div>
-                <div class="col-sm-7">
+                <div v-show="false" class="col-sm-7">
                   <div class="form-group">
                     <input type="text"
                       class="form-control"
@@ -266,7 +274,7 @@
                       placeholder="Endereço Outro">
                   </div>
                 </div>
-                <div class="col-sm-2">
+                <div v-show="false" class="col-sm-2">
                   <div class="form-group">
                     <input type="text"
                       class="form-control"
@@ -274,7 +282,7 @@
                       placeholder="Numero">
                   </div>
                 </div>
-                <div class="col-sm-4">
+                <div v-show="false" class="col-sm-4">
                   <div class="form-group">
                     <input type="text"
                       class="form-control"
@@ -282,7 +290,7 @@
                       placeholder="Bairro Outro">
                   </div>
                 </div>
-                <div class="col-sm-4">
+                <div v-show="false" class="col-sm-4">
                   <div class="form-group">
                     <input type="text"
                       class="form-control"
@@ -290,7 +298,7 @@
                       placeholder="Complemento Outro">
                   </div>
                 </div>
-                <div class="col-sm-4">
+                <div v-show="false" class="col-sm-4">
                   <div class="form-group">
                     <b-input-group >
                       <b-form-input placeholder="Cidade Outro" v-model="form.endereco[1].cidade" @click="datasearch(1, 1);"></b-form-input>
