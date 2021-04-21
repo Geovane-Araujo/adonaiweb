@@ -50,13 +50,6 @@ export default {
         this.openloading = true
         await axios.post(adonai.url + 'contabancaria', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
-            if (this.form.add === true) {
-              this.status = 'Salvo com Sucesso'
-            } else if (this.form.edit === true) {
-              this.status = 'Alterado com Sucesso'
-            } else {
-              this.status = 'Excluido com Sucesso'
-            }
             this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
             this.openloading = false
             this.openModal = false

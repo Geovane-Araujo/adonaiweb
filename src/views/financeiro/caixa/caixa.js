@@ -1,11 +1,8 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import adonai from '../../../http/router'
 import rel from '../../../util/utilClass'
-var moment = require('moment')
-var data = new Date()
 
 export default {
   data () {
@@ -43,9 +40,7 @@ export default {
             permissao: '',
             nome: ''
           }
-        ],
-        retorno: '',
-        moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
+        ]
       },
       selected: [
         {
@@ -65,33 +60,28 @@ export default {
     async save (form) {
       this.openloading = true
       if (form.del === true && form.id < 0) {
-        this.$toastr.info('Não é permitido Excluir Registros Padrões do Sistema', 'AdonaiSoft Diz:', util.toast)
+        this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Não é permitido Excluir Registros Padrões do Sistema', life: 5000 })
       } else {
-        form.moment = moment(data).format('YYYY-MM-DD HH:mm:ss')
         await axios.post(adonai.url + 'caixa', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
-            if (this.form.add === true) {
-              this.status = 'Salvo com Sucesso'
-            } else if (this.form.edit === true) {
-              this.status = 'Alterado com Sucesso'
-            } else {
-              this.status = 'Excluido com Sucesso'
-            }
-            this.$toastr.success(this.status, 'Cadastro de Igrejas', util.toast)
+            this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
             this.cleanForm()
             this.openModal = false
             this.openloading = false
             this.$refs.grid.get(this.explorer)
           } else {
             this.openloading = false
-            this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+            this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           }
+        }).catch(err => {
+          this.openloading = false
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
         })
       }
     },
     validate (form, quitar) {
       if (this.form.descricao === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao)', 'AdonaiSoft diz:', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios (Descricao)', life: 5000 })
       } else {
         for (this.selected in form.usuariospermissoes) {
           if (form.usuariospermissoes[this.selected].permissao === false) {
@@ -100,7 +90,6 @@ export default {
             form.usuariospermissoes[this.selected].permissao = 1
           }
         }
-        form.moment = moment(data).format('YYYY-MM-DD HH:mm:ss')
         this.save(form)
       }
     },
@@ -108,7 +97,10 @@ export default {
       axios.get(adonai.url + 'users', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.form.usuariospermissoes = res.data
         this.openloading = false
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     datasearch (route) {
       rel.explorerflex.route = 'exp_contabancaria'
@@ -130,8 +122,6 @@ export default {
       this.form.descricao = ''
       this.form.idusuario = ''
       this.form.usuariospermissoes = []
-      this.form.retorno = ''
-      this.form.moment = ''
     },
     read (form) {
       this.form.add = false
@@ -145,16 +135,17 @@ export default {
       this.form.descricao = form.descricao
       this.form.idusuario = form.idusuario
       this.form.usuariospermissoes = form.usuariospermissoes
-      this.form.retorno = form.retorno
-      this.form.moment = moment(data).format('YYYY-MM-DD HH:mm:ss')
       this.openModal = true
     },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'caixabyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.read(res.data.obj)
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
-      this.openloading = false
+        this.openloading = false
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     destroy (registro, params) {
       this.form.nome = registro.descricao
