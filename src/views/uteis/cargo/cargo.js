@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import adonai from '../../../http/router'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
@@ -41,27 +40,23 @@ export default {
       this.openloading = true
       await axios.post(adonai.url + 'Cargo', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          if (this.form.add === true) {
-            this.status = 'Salvo com Sucesso'
-          } else if (this.form.edit === true) {
-            this.status = 'Alterado com Sucesso'
-          } else {
-            this.status = 'Excluido com Sucesso'
-          }
-          this.$toastr.success(this.status, 'Cadastro de Contas Bancárias', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
           this.openloading = false
           this.openModal = false
           this.cleanForm()
           this.$refs.grid.get(this.explorer)
         } else {
-          this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           this.openloading = false
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     validate (form) {
       if (this.form.descricao === '') {
-        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios (Descricao)', life: 5000 })
       } else {
         this.save(form)
       }
@@ -76,11 +71,19 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'cargo/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.form = res.data.obj
-        this.form.add = false
-        this.form.edit = true
-        this.openModal = true
+        if (res.data.ret === 'success') {
+          this.form = res.data.obj
+          this.form.add = false
+          this.form.edit = true
+          this.openModal = true
+          this.openloading = false
+        } else {
+          this.openloading = false
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
+        }
+      }).catch(err => {
         this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     }
   },

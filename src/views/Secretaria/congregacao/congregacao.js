@@ -98,6 +98,7 @@ export default {
           this.openloading = false
         }
       }).catch(err => {
+        this.openloading = false
         this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
@@ -174,7 +175,7 @@ export default {
     datasearch (route, params) {
       this.explorerflex.route = 'exp_municipio'
       this.explorerflex.criterios = 'ORDER BY ID DESC'
-      this.ds.grid = ['ID', 'nome', 'uf', '']
+      this.ds.grid = ['id', 'nome', 'uf', '']
       this.ds.title = 'Cidades'
       this.$refs.expl.dataSearch(this.explorerflex, 1, 1, params)
       this.open = true

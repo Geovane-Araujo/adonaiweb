@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import adonai from '../../../http/router'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
@@ -7,8 +6,6 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
-var moment = require('moment')
-var data = new Date()
 
 export default {
   data: () => ({
@@ -32,9 +29,7 @@ export default {
       del: false,
       id: '',
       descricao: '',
-      contexto: 0,
-      retorno: '',
-      moment: moment(data).format('YYYY-MM-DD HH:mm:ss')
+      contexto: 0
     },
     tipocontas: []
   }),
@@ -46,23 +41,19 @@ export default {
       this.openloading = true
       await axios.post(adonai.url + 'tipo', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          if (this.form.add === true) {
-            this.status = 'Salvo com Sucesso'
-          } else if (this.form.edit === true) {
-            this.status = 'Alterado com Sucesso'
-          } else {
-            this.status = 'Excluido com Sucesso'
-          }
-          this.openloading = false
-          this.$toastr.success(this.status, 'Cadastro de Contas Bancárias', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
           this.cleanForm()
           this.openModal = false
+          this.openloading = false
           this.$refs.grid.get(this.explorer)
         } else {
           this.openloading = false
-          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     cleanForm () {
       this.form.descricao = ''
@@ -74,7 +65,7 @@ export default {
     },
     validate (form) {
       if (this.form.descricao === '') {
-        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
         this.save(form)
       }
@@ -88,8 +79,16 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'tipo/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data.obj)
+        if (res.data.ret === 'success') {
+          this.read(res.data.obj)
+          this.openloading = false
+        } else {
+          this.openloading = false
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
+        }
+      }).catch(err => {
         this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     }
   },

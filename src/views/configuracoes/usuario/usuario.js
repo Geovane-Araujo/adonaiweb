@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import adonai from '../../../http/router'
 import axios from 'axios'
 import Dialog from 'primevue/dialog'
@@ -57,14 +56,17 @@ export default {
       this.openloading = true
       await axios.post(adonai.url + 'usuario', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          this.$toastr.success('Salvo com Sucesso', 'Cadastro de Igrejas', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
           this.openloading = false
           this.openModal = false
           this.$refs.grid.get(this.explorer)
         } else {
-          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           this.openloading = false
         }
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
     getImg (e) {
@@ -77,7 +79,7 @@ export default {
     },
     validate (form) {
       if (this.form.nome === '') {
-        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
         this.save(form)
       }
@@ -85,18 +87,26 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'usuariobyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (id === -100) {
-          this.form = res.data.obj
-          this.img = adonai.urli + this.form.foto
+        if (res.data.ret === 'success') {
+          if (id === -100) {
+            this.form = res.data.obj
+            this.img = adonai.urli + this.form.foto
+          } else {
+            this.form = res.data.obj
+            this.form.add = false
+            this.form.edit = true
+            this.img = adonai.urli + this.form.foto
+          }
+          this.openModal = true
+          this.openloading = false
         } else {
-          this.form = res.data.obj
-          this.form.add = false
-          this.form.edit = true
-          this.img = adonai.urli + this.form.foto
+          this.openloading = false
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
-        this.openModal = true
+      }).catch(err => {
         this.openloading = false
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     onResize () {
       if (window.innerWidth <= 767) {
