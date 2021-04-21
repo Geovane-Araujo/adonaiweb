@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import adonai from '../../../http/router'
 import axios from 'axios'
 import Dialog from 'primevue/dialog'
@@ -75,20 +74,23 @@ export default {
       this.openloading = true
       await axios.post(adonai.url + 'aula', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
           this.openModal = false
           adExplo.explorer.route = 'menu_registro_chamada'
           this.$refs.grid.get(adExplo.explorer)
           this.openloading = false
         } else {
           this.openloading = false
-          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     validate (form) {
       if (this.form.idprofessor === '' || this.form.tema === '') {
-        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
         this.save(form)
       }
@@ -96,13 +98,21 @@ export default {
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'aula/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.form = res.data.obj
-        if (id !== -100) {
-          this.form.add = false
-          this.form.edit = true
+        if (res.data.ret === 'success') {
+          this.form = res.data.obj
+          if (id !== -100) {
+            this.form.add = false
+            this.form.edit = true
+          }
+          this.openloading = false
+          this.openModal = true
+        } else {
+          this.openloading = false
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
+      }).catch(err => {
         this.openloading = false
-        this.openModal = true
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
     datasearch (route) {

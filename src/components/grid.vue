@@ -34,8 +34,8 @@
       <span >Deseja Realmente Excluir?</span>
     </div>
     <template #footer>
-        <Button label="Não" icon="pi pi-times" class="p-button-text" @click="deleteModal = false"/>
-        <Button label="Sim" icon="pi pi-check" class="p-button-text" @click="save(form);deleteModal = false" />
+      <Button label="Sim" icon="pi pi-check" class="p-button-text" @click="save(form);deleteModal = false" />
+      <Button label="Não" icon="pi pi-times" class="p-button-text" @click="deleteModal = false"/>
     </template>
   </Dialog>
   </div>

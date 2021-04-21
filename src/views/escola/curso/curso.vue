@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <Dialog style="font-size:10px;" header="Cadastro Classes e Cursos" :visible.sync="openModal" :style="{width: '30vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Cadastro Cursos" :visible.sync="openModal" :style="{width: '30vw'}" :modal="true">
       <div class="col-sm-12">
         <b-form-group>
           <input type="text"
@@ -36,8 +36,8 @@
         </b-form-group>
       </div>
       <template #footer>
-          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
-          <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
       </template>
     </Dialog>
   </div>

@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <Dialog style="font-size:10px;" header="Cadastro de Turmas" :visible.sync="openModal" :style="{width: '60vw'}" :modal="true">
+    <Dialog style="font-size:10px;" header="Cadastro de Classes" :visible.sync="openModal" :style="{width: '60vw'}" :modal="true">
       <b-container>
         <div class="row">
           <div class="col-sm-4">
@@ -66,7 +66,7 @@
                 <Column field="descricaoTipo" header="tipo"></Column>
                 <Column headerStyle="width: 80px;" bodyStyle=""  :exportable="false">
                   <template #body="slotProps">
-                      <Button icon="pi pi-trash" class="p-button-rounded p-button-outlined p-button-danger p-button-sm" @click="slotProps.data.del=true;slotProps.data.add=false;del(slotProps.data);" />
+                      <Button icon="pi pi-trash" class="p-button-rounded-sm p-button-text p-button-danger" @click="slotProps.data.del=true;slotProps.data.add=false;del(slotProps.data);" />
                   </template>
                 </Column>
               </DataTable>
@@ -75,8 +75,8 @@
         </div>
       </b-container>
       <template #footer>
-          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
-          <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
       </template>
     </Dialog>
     <Dialog :visible.sync="alunoModal" :style="{width: '450px'}" header="Confirmar" :modal="true">
