@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import adonai from '../../../http/router'
 import axios from 'axios'
 import utc from '../../../util/utilClass'
@@ -185,16 +184,19 @@ export default {
           utc.explorer.pagina = 1
           utc.explorer.criterios = ' order by id desc'
           this.$refs.grid.get(utc.explorer)
-          this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
         } else {
-          this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           this.openloading = true
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+        this.openloading = false
+      })
     },
     validate (doc, tipo, form) {
       if (this.form.nome === '') {
-        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+        this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
         if (r !== undefined) {
           r.forEach(element => {
@@ -221,18 +223,24 @@ export default {
         axios.post(adonai.url + 'configuracoes', this.configuration, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           this.openloading = false
           if (res.data.ret === 'success') {
-            this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
+            this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
             this.openConfiguration = false
           } else {
-            this.$toastr.success(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+            this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           }
-        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+        }).catch(err => {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+          this.openloading = false
+        })
       } else {
         axios.get(adonai.url + 'configuracoes/0', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           this.configuration = res.data.obj
           this.openConfiguration = true
           this.openloading = false
-        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+        }).catch(err => {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+          this.openloading = false
+        })
       }
     },
     buscarcep (cep, form, local) {
@@ -255,7 +263,10 @@ export default {
             form.endereco[1].idCidade = res.data.obj.idCidade
           }
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+        this.openloading = false
+      })
     },
     getbyId (id) {
       this.onResize()
@@ -285,7 +296,10 @@ export default {
         }
         this.openModal = true
         this.openloading = false
-      }).catch(err => util.error(err))
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+        this.openloading = false
+      })
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
     datasearch (route, params) {
       if (route === 1) {

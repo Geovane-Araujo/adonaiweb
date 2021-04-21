@@ -28,7 +28,9 @@ export default {
         var pdfWindow = window.open('')
         pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64, " + encodeURI(res.data) + "'></iframe>")
         return false
-      }).catch(err => util.error(err))
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     previewFiles (e, pathimg) {
       var file = e.target.files[0]

@@ -27,32 +27,30 @@
         </div>
       </div>
     </div>
-    <Dialog style="font-size:10px;" header="Imprimir" :visible.sync="openModal" :style="{width: '30vw'}" :modal="true">
-      <form method="POST">
-        <b-container>
-          <b-row class="text-center">
-          <b-col cols="12">
-            <div class="row">
-            <div class="col-sm-12" style="padding:3px;">
-              <b-form-group label="Nome" label-align-sm="left">
-              <b-input-group>
-                <b-form-input
-                v-model="filters.nome"
-                ></b-form-input>
-                <b-input-group-append >
-                <b-button variant="outline-info" class="material-icons"  @click="datasearch (1);" >search</b-button>
-                </b-input-group-append>
-              </b-input-group>
-              </b-form-group>
-            </div>
-            </div>
-          </b-col>
-          </b-row>
-        </b-container>
-      </form>
+    <Dialog header="Imprimir" :visible.sync="openModal" :style="{width: '30vw'}" :modal="true">
+      <b-container>
+        <b-row class="text-center">
+        <b-col cols="12">
+          <div class="row">
+          <div class="col-sm-12" style="padding:3px;">
+            <b-form-group label="Nome" label-align-sm="left">
+            <b-input-group>
+              <b-form-input
+              v-model="filters.nome"
+              ></b-form-input>
+              <b-input-group-append >
+              <b-button variant="outline-info" class="material-icons"  @click="datasearch (1);" >search</b-button>
+              </b-input-group-append>
+            </b-input-group>
+            </b-form-group>
+          </div>
+          </div>
+        </b-col>
+        </b-row>
+      </b-container>
       <template #footer>
-          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
-          <Button label="Geran" @click="filter(filters)" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Geran" @click="openModal=false;filter(filters)" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
       </template>
     </Dialog>
     <adonaidatasearch

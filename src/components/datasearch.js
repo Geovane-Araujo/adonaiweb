@@ -38,16 +38,23 @@ export default {
       this.onResize()
       this.openloading = true
       axios.post(adonai.url + 'aexplorer', criterios, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.registros = res.data.obj
-        this.expl = criterios
-        this.pagina = criterios.pagina
-        this.params = params
-        this.extraparams = extraparams
+        if (res.data.ret === 'success') {
+          this.registros = res.data.obj
+          this.expl = criterios
+          this.pagina = criterios.pagina
+          this.params = params
+          this.extraparams = extraparams
+          this.openloading = false
+          this.totalRows = res.data.totalRows
+          this.validate(criterios.pagina, this.registros.length)
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
+        }
         this.openloading = false
-        this.totalRows = res.data.totalRows
-        this.validate(criterios.pagina, this.registros.length)
         this.openDatasearch = true
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     getexplorer (crit) {
       if (this.criterio === '') {
