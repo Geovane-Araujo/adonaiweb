@@ -129,6 +129,7 @@ export default {
             this.openloading = false
           }
         }).catch(err => {
+          this.openloading = false
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
         })
       }

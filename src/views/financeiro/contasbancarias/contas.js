@@ -1,10 +1,7 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import adonai from '../../../http/router'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
-var moment = require('moment')
-var data = new Date()
 
 export default {
   data () {
@@ -38,9 +35,7 @@ export default {
         nomeBanco: '',
         agencia: '',
         conta: '',
-        tipo: '',
-        motivo: '',
-        moment: moment(data).format('YYYY-MM-DD h:mm:ss')
+        tipo: ''
       }
     }
   },
@@ -50,7 +45,7 @@ export default {
   methods: {
     async save (form) {
       if (form.del === true && form.id < 0) {
-        this.$toastr.info('Não é permitido Excluir Registros Padrões do Sistema', 'AdonaiSoft Diz:', util.toast)
+        this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Não é permitido Excluir Registros Padrões do Sistema', life: 5000 })
       } else {
         this.openloading = true
         await axios.post(adonai.url + 'contabancaria', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -62,21 +57,24 @@ export default {
             } else {
               this.status = 'Excluido com Sucesso'
             }
-            this.$toastr.success(this.status, 'Cadastro de Contas Bancárias', util.toast)
+            this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
             this.openloading = false
             this.openModal = false
             this.cleanForm()
             this.$refs.grid.get(this.explorer)
           } else {
-            this.$toastr.error(res.data, 'Falha ao Salvar', util.toast)
+            this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
             this.openloading = false
           }
-        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+        }).catch(err => {
+          this.openloading = false
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+        })
       }
     },
     validate (form) {
       if (this.form.nome === '') {
-        this.$toastr.warning('Campos Obrigatórios não preenchidos', 'Falha ao Salvar', util.toast)
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
         this.save(form)
       }
@@ -89,7 +87,6 @@ export default {
       this.form.agencia = ''
       this.form.conta = ''
       this.form.tipo = ''
-      this.form.motivo = ''
     },
     read (form) {
       this.form.id = form.id
@@ -99,15 +96,21 @@ export default {
       this.form.agencia = form.agencia
       this.form.conta = form.conta
       this.form.tipo = 0
-      this.form.motivo = form.motivo
 
       this.openModal = true
     },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'conta/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data.obj)
+        if (res.data.ret === 'success') {
+          this.read(res.data.obj)
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
+        }
         this.openloading = false
+      }).catch(err => {
+        this.openloading = false
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
     datasearch () {
