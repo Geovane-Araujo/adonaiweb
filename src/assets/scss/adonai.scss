@@ -103,4 +103,10 @@ box-shadow:2px rgba(0, 0, 0, 0.25);
   padding-top: 0px;
   padding-bottom: 0px;
 }
-
+.p-dialog .p-dialog-content {
+	overflow-y: visible !important;
+}
+.p-dialog-mask {
+	position: absolute;
+	pointer-events: auto; /* (optional, doesn't cover whole area when scroll presents) */
+}
