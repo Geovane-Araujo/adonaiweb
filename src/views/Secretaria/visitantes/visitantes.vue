@@ -10,7 +10,7 @@
             @click="getbyId(-100)">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
-          <button
+          <button v-show="false"
             class="btn btn-outline-info float-right"
             @click="imprimir('report/pessoas/visitanteslist.jrxml')">
             <i class="fas fa-print"></i>&nbsp;&nbsp;Imprimir

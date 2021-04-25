@@ -214,9 +214,10 @@ export default {
         this.form.pathimg = e.target.result
       }
     },
-    imprimir (relatorio) {
+    async imprimir (relatorio) {
       try {
-        await utc.imprimir(relatorio)
+        utc.report.relatorio = relatorio
+        await utc.imprimir(utc.report)
       } catch (err) {
         this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       }

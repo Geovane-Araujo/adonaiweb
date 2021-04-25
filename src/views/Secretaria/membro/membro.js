@@ -179,7 +179,7 @@ export default {
     async imprimir (relatorio) {
       rel.report.relatorio = relatorio
       try {
-        await rel.methods.imprimir(relatorio, this.user.token)
+        await rel.methods.imprimir(rel.report, this.user.token)
       } catch (err) {
         this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       }

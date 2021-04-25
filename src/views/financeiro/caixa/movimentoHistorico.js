@@ -48,7 +48,7 @@ export default {
       expl.report.relatorio = relatorio
       expl.report.simpleObjects = id
       try {
-        await rel.methods.imprimir(relatorio, this.user.token)
+        await expl.methods.imprimir(expl.report, this.user.token)
       } catch (err) {
         this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       }
