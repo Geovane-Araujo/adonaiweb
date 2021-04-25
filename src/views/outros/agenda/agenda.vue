@@ -21,22 +21,14 @@
             <b-col cols="12">
               <div class="row">
                 <div class="col-sm-6">
-                  <datetime  placeholder="Data Inicio"
-                    class="datePivker"
-                    type="datetime"
-                    id="startDate"
-                    format="dd/MM/yyyy HH:mm"
-                    v-model="form.startdate">
-                  </datetime>
+                  <input class="form-control"
+                  type="datetime-local"
+                  :value="form.startdate">
                 </div>
                 <div class="col-sm-6">
-                  <datetime  placeholder="Data Fim"
-                    class="datePivker"
-                    type="datetime"
-                    id="startDate"
-                    format="dd/MM/yyyy HH:mm"
-                    v-model="form.enddate">
-                  </datetime>
+                  <input class="form-control"
+                  type="datetime-local"
+                  :value="form.enddate">
                 </div>
                 <div class="col-sm-12">
                   <b-input-group>
@@ -70,8 +62,8 @@
         </b-container>
       </form>
       <template #footer>
-          <Button label="Excluir" v-show="form.edit"  @click="form.edit=false;form.del=true;save(form)" class="p-button-raised p-button-danger  p-button-text button"/>
-          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger  p-button-text button"/>
+          <Button label="Excluir" v-show="form.edit"  @click="form.edit=false;form.del=true;save(form)" class="p-button-raised p-button-danger p-button-text button"/>
+          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
           <Button label="Agendar" @click="validate(form)" class="p-button-raised p-button-success p-button-text button" />
       </template>
     </Dialog>

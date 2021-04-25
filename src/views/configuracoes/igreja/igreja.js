@@ -215,7 +215,11 @@ export default {
       }
     },
     imprimir (relatorio) {
-      utc.imprimir(relatorio)
+      try {
+        await utc.imprimir(relatorio)
+      } catch (err) {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      }
     },
     globais (tipo) {
       this.openloading = true

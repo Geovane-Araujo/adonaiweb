@@ -46,8 +46,6 @@ export default {
         initialView: 'dayGridMonth',
         height: 'auto',
         locale: 'pt-br',
-        editable: true,
-        themeSystem: 'bootstrap',
         selectable: true,
         dateClick: this.handleDateClick, // clicar no dia
         eventClick: this.eventDateClick, // clicar evento
@@ -59,6 +57,7 @@ export default {
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
         events: [],
+        eventColor: '#f2fceb',
         buttonText: {
           today: 'Hoje',
           month: 'Mês',
@@ -118,6 +117,8 @@ export default {
           this.form.idmultiigreja = 1
           this.openModal = true
           this.openloadin = false
+          this.form.startdate = moment(this.form.startdate).format('YYYY-MM-DDTHH:mm')
+          this.form.enddate = moment(this.form.enddate).format('YYYY-MM-DDTHH:mm')
         } else {
           this.form = res.data.obj
           this.openloadin = false
@@ -128,15 +129,11 @@ export default {
       })
     },
     handleDateClick: function (arg) {
+      var a = new Date(arg.dateStr)
+      var b = new Date(arg.dateStr)
+      this.form.startdate = moment((moment(a).add(1, 'days').toDate()) + (new Date().getHours())).format('YYYY-MM-DDTHH:mm')
+      this.form.enddate = moment((moment(b).add(1, 'days').toDate()) + (new Date().getHours())).format('YYYY-MM-DDTHH:mm')
       this.openModal = true
-      var data = arg.dateStr.split('-')
-      var date = ''
-      for (let i = 0; i < data.length; i++) {
-        date += data[i] + ','
-      }
-      date = date.replace(/,\s*$/, '')
-      this.form.startdate = moment(new Date(date).getTime()).format()
-      this.form.enddate = moment(new Date(date).getTime()).format()
     },
     eventDateClick: function (arg) {
       this.getById(parseInt(arg.event.id), 1)

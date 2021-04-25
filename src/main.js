@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import VueMask from 'v-mask'
 import VueSidebarMenu from '../node_modules/vue-sidebar-menu'
+import BadgeDirective from 'primevue/badgedirective'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
@@ -41,6 +42,7 @@ Vue.use(InputText)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueTheMask)
+Vue.directive('badge', BadgeDirective)
 Vue.use(money, { precision: 4 })
 Vue.use(require('vue-moment'))
 Vue.use(loader)

@@ -6,6 +6,7 @@ import SplitButton from 'primevue/splitbutton'
 import AutoComplete from 'primevue/autocomplete'
 import Sidebar from 'primevue/sidebar'
 import BlockUI from 'primevue/blockui'
+import OverlayPanel from 'primevue/overlaypanel'
 
 export default {
   name: 'App',
@@ -17,6 +18,14 @@ export default {
       colaps: false,
       sidebar: false,
       blockedDocument: false,
+      alert: {
+        msg: [
+          {
+            title: 'Teste',
+            body: 'teste'
+          }
+        ]
+      },
       permissoes: {
         membro: '',
         despesas: '',
@@ -126,7 +135,7 @@ export default {
               title: 'Visão Geral'
             },
             {
-              hidden: true,
+              hidden: false,
               href: '/agendacampo',
               title: 'Agenda Campo'
             }
@@ -332,6 +341,9 @@ export default {
         this.collapsed = false
         this.colaps = false
       }
+    },
+    onToggle (event) {
+      this.$refs.op.toggle(event)
     }
   },
   components: {
@@ -341,7 +353,8 @@ export default {
     SplitButton,
     AutoComplete,
     Sidebar,
-    BlockUI
+    BlockUI,
+    OverlayPanel
   },
   computed: {
     ...mapState('auth', ['user'])

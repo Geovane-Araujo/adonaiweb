@@ -47,7 +47,11 @@ export default {
       this.openloading = true
       expl.report.relatorio = relatorio
       expl.report.simpleObjects = id
-      await expl.methods.imprimir(expl.report, this.user.token)
+      try {
+        await rel.methods.imprimir(relatorio, this.user.token)
+      } catch (err) {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      }
       this.openloading = false
     },
     onPage (event) {
