@@ -1,14 +1,14 @@
 import home from './Home.vue'
 import cargo from '../uteis/cargo/cargo.vue'
-import usuario from '../configuracoes/usuario/usuario.vue'
+import usuario from '../utilitarios/usuario/usuario.vue'
 import tipoconta from '../uteis/tipoconta/tipoconta.vue'
-import membro from '../Secretaria/membro/membro.vue'
-import igreja from '../configuracoes/igreja/igreja.vue'
+import membro from '../secretaria/membro/membro.vue'
+import igreja from '../minhaigreja/igreja/igreja.vue'
 import contasbancarias from '../financeiro/contasbancarias/contasbancarias.vue'
-import visitantes from '../Secretaria/visitantes/visitantes.vue'
-import aniversariantes from '../Secretaria/aniversariantes/aniversariantes.vue'
+import visitantes from '../secretaria/visitantes/visitantes.vue'
+import aniversariantes from '../secretaria/aniversariantes/aniversariantes.vue'
 import novoconvertido from '../pastoral/novoconvertido/novoconvertido.vue'
-import congregacao from '../Secretaria/congregacao/congregacao.vue'
+import congregacao from '../secretaria/congregacao/congregacao.vue'
 import despesas from '../financeiro/duplicatas/despesas.vue'
 import receitas from '../financeiro/duplicatas/receitas.vue'
 import caixa from '../financeiro/caixa/caixa.vue'
@@ -22,20 +22,21 @@ import privacidade from '../minhaAdonai/politicaprivacidade/privacidade.vue'
 import minhasfaturas from '../minhaAdonai/minhasfaturas/minhasfaturas.vue'
 import relatorios from '../relatorios/relatorios.vue'
 import biblia from '../uteis/biblia/biblia.vue'
-import auditoria from '../uteis/auditoria/auditoria.vue'
+import auditoria from '../utilitarios/auditoria/auditoria.vue'
 import notaversao from '../minhaAdonai/notasversoes/notasversoes.vue'
 import pedidos from '../pastoral/pedidos/pedidos.vue'
 import tipopedidos from '../uteis/tipopedido/tipopedido.vue'
 import esbocos from '../pastoral/esbocos/esbocos.vue'
 import curso from '../escola/curso/curso.vue'
 import classe from '../escola/classe/classe.vue'
-import maps from '../Secretaria/membrosMaps/membrosMaps.vue'
+import maps from '../secretaria/membrosMaps/membrosMaps.vue'
 import tickets from '../uteis/tickets/tickets.vue'
 import aula from '../escola/aula/aula.vue'
-import criancas from '../Secretaria/criancas/criancas.vue'
-import registroVisitantes from '../Secretaria/visitantes/registroVisita.vue'
+import criancas from '../secretaria/criancas/criancas.vue'
+import registroVisitantes from '../secretaria/visitantes/registroVisita.vue'
 import ResumoCampo from '../campoEclesiastico/ResumoCampo.vue'
 import AgendaCampo from '../campoEclesiastico/AgendaCampo.vue'
+import Documentos from '../utilitarios/documentos/Documentos.vue'
 
 export default [
   {
@@ -44,6 +45,11 @@ export default [
     redirect: { name: 'dashboard', params: { name: 'dashboard' } },
     component: home,
     children: [
+      {
+        path: 'documentos',
+        name: 'documentos',
+        component: Documentos
+      },
       {
         path: 'cargo',
         name: 'cargo',

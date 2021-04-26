@@ -221,8 +221,8 @@ export default {
         },
         {
           href: '',
-          title: 'Configurações',
-          icon: 'fab fa-whmcs',
+          title: 'Minha Igreja',
+          icon: 'fas fa-church',
           child: [
             {
               href: '/igreja',
@@ -233,6 +233,18 @@ export default {
               href: '/usuario',
               title: 'Usuários',
               disabled: parseInt(sessionStorage.getItem('usuarios'))
+            }
+          ]
+        },
+        {
+          href: '',
+          title: 'Utilitarios',
+          icon: 'fab fa-whmcs',
+          child: [
+            {
+              href: '/documentos',
+              title: 'Documentos Editaveis',
+              disabled: parseInt(sessionStorage.getItem('auditoria'))
             },
             {
               href: '/auditoria',

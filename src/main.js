@@ -21,6 +21,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Vuesax from 'vuesax'
 import ToastService from 'primevue/toastservice'
+import CKEditor from '@ckeditor/ckeditor5-vue2'
 import './global'
 import 'vue-swatches/dist/vue-swatches.css'
 import './assets/scss/app.scss'
@@ -31,6 +32,7 @@ import 'primevue/resources/themes/saga-green/theme.css'
 import './assets/styles/custom.scss'
 
 Vue.config.productionTip = false
+Vue.use(CKEditor)
 Vue.use(VueMask)
 Vue.use(router)
 Vue.use(ToastService)
