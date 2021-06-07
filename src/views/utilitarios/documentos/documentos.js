@@ -14,7 +14,7 @@ export default {
     open: false,
     resize: 80,
     explorer: {
-      route: 'menu_esbocos',
+      route: 'menu_documentos_editaveis',
       pagina: 1,
       criterios: 'order by id desc'
     },
@@ -33,8 +33,8 @@ export default {
     }
   }),
   mounted () {
-    /* this.onResize()
-    this.$refs.grid.get(this.explorer) */
+    this.onResize()
+    this.$refs.grid.get(this.explorer)
   },
   methods: {
     async save (form) {
@@ -58,11 +58,14 @@ export default {
       if (this.form.descricao === '') {
         this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
+        console.log(this.$refs.editor)
+        form.texto = this.$refs.editor.getContent()
         this.save(form)
       }
     },
     getbyId (id) {
-      this.openloading = false
+      this.openloading = true
+      this.openModal = true
       axios.get(adonai.url + 'documentoseditaveis/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           this.form = res.data.obj
@@ -70,11 +73,11 @@ export default {
             this.form.add = false
             this.form.edit = true
           }
+          this.$refs.editor.setContent(this.form.texto)
         } else {
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
         this.openloading = false
-        this.openModal = true
       }).catch(err => {
         this.openloading = false
         this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
@@ -93,7 +96,8 @@ export default {
     Button,
     InputText,
     Editor,
-    datetime: Datetime
+    datetime: Datetime,
+    'vue-html-editor': require('vue-html-editor')
   },
   computed: {
     ...mapState('auth', ['user'])

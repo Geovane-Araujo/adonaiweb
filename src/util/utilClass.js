@@ -41,7 +41,9 @@ export default {
       }
     },
     validateData (form) {
-      if (form !== '') {
+      if (form === 'Invalid date') {
+        return null
+      } else if (form !== '' && form !== null) {
         form = moment(moment(form).add(1, 'days').toDate()).format('YYYY-MM-DD')
         return form
       }

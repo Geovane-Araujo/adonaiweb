@@ -250,12 +250,7 @@
         <Button label="OK"  @click="assistente=false" class="p-button-raised p-button-success p-button-text button" />
       </template>
     </Dialog>
-    <adonaidatasearch
-    :title="ds.title"
-    :cabecalho="ds.grid"
-    :form="form"
-    :destroy="destroy"
-    ref="cmp"/>
+    <adonaidatasearch :title="ds.title" :cabecalho="ds.grid" :form="form" :destroy="destroy" ref="cmp"/>
   </div>
 </template>
 

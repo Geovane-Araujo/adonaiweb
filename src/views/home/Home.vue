@@ -10,7 +10,7 @@
               <span class="p-input-icon-left">
                   <InputText v-show="false" style="font-size:14px" v-model="busca" type="text" placeholder="Procurar" />
               </span>
-              <Button v-show="mobile" style="margin-left:10px;margin-right:10px" icon="pi pi-bell" @click="onToggle" badge="8" badgeClass="p-badge-danger" class="p-button-rounded button" />
+              <Button v-show="false" style="margin-left:10px;margin-right:10px" icon="pi pi-bell" @click="onToggle" badge="8" badgeClass="p-badge-danger" class="p-button-rounded button" />
               <Button v-show="mobile" style="margin-left:10px;margin-right:10px" icon="fas fa-power-off" @click="reload" class="p-button-rounded button" />
               <OverlayPanel ref="op" :breakpoints="{'960px': '75vw', '640px': '100vw'}" :style="{width: '450px'}">
                 <div>TEste</div>

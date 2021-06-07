@@ -45,6 +45,7 @@
     "vue-colour-picker": "0.0.5",
     "vue-datetime": "^1.0.0-beta.14",
     "vue-full-calendar": "^2.8.1-0",
+    "vue-html-editor": "^0.2.1",
     "vue-jquery": "^1.0.6",
     "vue-loader": "^15.9.6",
     "vue-loading-overlay": "^3.3.2",

@@ -181,7 +181,7 @@ export default {
         rel.explorerflex.criterios = 'ORDER BY ID DESC'
         rel.explorerflex.route = 'exp_caixa'
         rel.explorerflex.pagina = 1
-        this.ds.grid = ['id', 'descricao']
+        this.ds.grid = ['idmovimento', 'descricao']
         this.ds.title = 'Caixa'
         this.$refs.cmp.dataSearch(rel.explorerflex, 3, 3)
       }

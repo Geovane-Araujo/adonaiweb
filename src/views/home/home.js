@@ -135,7 +135,7 @@ export default {
               title: 'Visão Geral'
             },
             {
-              hidden: false,
+              hidden: true,
               href: '/agendacampo',
               title: 'Agenda Campo'
             }

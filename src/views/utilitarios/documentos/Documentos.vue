@@ -25,8 +25,7 @@
       </div>
     </div>
 
-    <Dialog header="Documentos Editveis" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
-      <b-container style="padding:0px;">
+    <Dialog header="Documentos Editveis" :visible.sync="openModal" :style="{width: '70vw'}" :maximizable="true"  :modal="true">
         <div class="row">
           <div class="col-sm-9">
             <b-form-group label="Descricao">
@@ -43,11 +42,12 @@
               </b-form-select>
             </b-form-group>
           </div>
-          <div class="col-sm-12">
-            <Editor v-model="form.texto" editorStyle="height: 320px"/>
+          <div class="sc col-sm-12">
+            <!-- <Editor v-model="form.texto" editorStyle="height: 320px"/> -->
+            <Vueditor style="height: 700px" ref="editor"></Vueditor>
+            <!-- <ckeditor style="height: 400px" :editor="editor" v-model="form.descricao" :config="config"></ckeditor> -->
           </div>
         </div>
-      </b-container>
       <template #footer>
           <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
           <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
@@ -58,5 +58,10 @@
 
 <script src="./documentos.js">
 </script>
-<style lang=scss scoped src="../../../assets/scss/adonai.scss">
+<style lang=scss scoped>
+@import url("../../../assets/scss/adonai.scss");
+.sc {
+  overflow: auto;
+  height: 400px;
+}
 </style>
