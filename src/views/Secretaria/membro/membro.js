@@ -206,7 +206,22 @@ export default {
         this.openModal = true
         this.openloading = false
       })
-    }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
+    },
+    getDocument (id) {
+      this.openloading = true
+      axios.get(adonai.url + 'getdocument/' + parseInt(id) + '/' + this.form.idPessoa, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data.ret === 'success') {
+          console.log(res.data.obj)
+        } else {
+          console.log(res.data.motivo)
+        }
+        this.openloading = false
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+        this.openloading = false
+      })
+    },
+    // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
     datasearch (route, params) {
       if (route === 1) {
         rel.explorerflex.route = 'exp_municipio'
@@ -220,18 +235,26 @@ export default {
         this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Cargos'
         this.$refs.expl.dataSearch(rel.explorerflex, 2, '')
+      } else if (route === 3) {
+        rel.explorerflex.route = 'exp_documentos_editaveis'
+        rel.explorerflex.criterios = 'ORDER BY ID asc'
+        this.ds.grid = ['id', 'descricao']
+        this.ds.title = 'Documentos'
+        this.$refs.expl.dataSearch(rel.explorerflex, 3, '')
       }
     },
     destroy (registro, params, e) {
       if (params === 1) {
         this.form.endereco[e].cidade = registro.nome
         this.form.endereco[e].idCidade = registro.id
-      } else {
+      } else if (params === 2) {
         this.form.cargo = registro.descricao
         this.form.idCargo = registro.id
 
         this.filters.cargo = registro.descricao
         this.filters.idcargo = registro.id
+      } else {
+        this.getDocument(registro.id)
       }
     },
     filter (filters) {
