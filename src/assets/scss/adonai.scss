@@ -110,3 +110,7 @@ box-shadow:2px rgba(0, 0, 0, 0.25);
 	position: absolute;
 	pointer-events: auto; /* (optional, doesn't cover whole area when scroll presents) */
 }
+.sc {
+  overflow: auto;
+  height: 300px;
+}

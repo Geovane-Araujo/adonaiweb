@@ -21,8 +21,6 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Vuesax from 'vuesax'
 import ToastService from 'primevue/toastservice'
-import CKEditor from '@ckeditor/ckeditor5-vue2'
-import Vueditor from 'vueditor'
 import './global'
 import 'vue-swatches/dist/vue-swatches.css'
 import './assets/scss/app.scss'
@@ -32,26 +30,8 @@ import 'vuesax/dist/vuesax.css'
 import 'primevue/resources/themes/saga-green/theme.css'
 
 import './assets/styles/custom.scss'
-import 'vueditor/dist/style/vueditor.min.css'
-
-var config = {
-  toolbar: [
-    'removeFormat', 'undo', 'redo', '|', 'code', 'element', 'fontName', 'fontSize', 'foreColor', 'backColor', 'divider', 'bold', 'italic', 'underline', 'strikeThrough',
-    'link', 'unLink', 'divider', 'subscript', 'superscript', 'divider', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull',
-    '|', 'indent', 'outdent', 'insertOrderedList', 'insertUnorderedList', '|', 'emoji', 'picture', 'table', '|', 'fullscreen', 'sourceCode', 'markdown'
-  ],
-  fontName: [
-    { val: 'arial black' },
-    { val: 'times new roman' },
-    { val: 'Courier New' }
-  ],
-  fontSize: ['12px', '14px', '16px', '18px', '0.8rem', '1.0rem', '1.2rem', '1.5rem', '2.0rem'],
-  uploadUrl: ''
-}
 
 Vue.config.productionTip = false
-Vue.use(CKEditor)
-Vue.use(Vueditor, config)
 Vue.use(VueMask)
 Vue.use(router)
 Vue.use(ToastService)

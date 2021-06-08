@@ -43,9 +43,7 @@
             </b-form-group>
           </div>
           <div class="sc col-sm-12">
-            <!-- <Editor v-model="form.texto" editorStyle="height: 320px"/> -->
-            <Vueditor style="height: 700px" ref="editor"></Vueditor>
-            <!-- <ckeditor style="height: 400px" :editor="editor" v-model="form.descricao" :config="config"></ckeditor> -->
+            <Editor v-model="form.texto"/>
           </div>
         </div>
       <template #footer>
@@ -58,10 +56,6 @@
 
 <script src="./documentos.js">
 </script>
-<style lang=scss scoped>
-@import url("../../../assets/scss/adonai.scss");
-.sc {
-  overflow: auto;
-  height: 400px;
-}
+<style lang="scss" scoped src="../../../assets/scss/adonai.scss">
+// @import url("../../../assets/scss/adonai.scss");
 </style>

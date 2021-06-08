@@ -4,9 +4,8 @@ import axios from 'axios'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import Editor from 'primevue/editor'
 import { Datetime } from 'vue-datetime'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import Editor from '@baoshishu/vue-editor'
 export default {
   data: () => ({
     openModal: false,
@@ -21,7 +20,6 @@ export default {
     config: {
       height: 500
     },
-    editor: ClassicEditor,
     form: {
       add: true,
       edit: false,
@@ -58,14 +56,10 @@ export default {
       if (this.form.descricao === '') {
         this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
-        console.log(this.$refs.editor)
-        form.texto = this.$refs.editor.getContent()
         this.save(form)
       }
     },
     getbyId (id) {
-      this.openloading = true
-      this.openModal = true
       axios.get(adonai.url + 'documentoseditaveis/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           this.form = res.data.obj
@@ -73,11 +67,11 @@ export default {
             this.form.add = false
             this.form.edit = true
           }
-          this.$refs.editor.setContent(this.form.texto)
         } else {
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
         this.openloading = false
+        this.openModal = true
       }).catch(err => {
         this.openloading = false
         this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
@@ -103,3 +97,4 @@ export default {
     ...mapState('auth', ['user'])
   }
 }
+// https://vuejsexamples.com/a-full-fledged-rich-text-editor-for-vue-js/
