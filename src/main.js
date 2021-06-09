@@ -21,6 +21,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Vuesax from 'vuesax'
 import ToastService from 'primevue/toastservice'
+import VueHtml2pdf from 'vue-html2pdf'
 import './global'
 import 'vue-swatches/dist/vue-swatches.css'
 import './assets/scss/app.scss'
@@ -34,6 +35,7 @@ import './assets/styles/custom.scss'
 Vue.config.productionTip = false
 Vue.use(VueMask)
 Vue.use(router)
+Vue.use(VueHtml2pdf)
 Vue.use(ToastService)
 Vue.use(VueSidebarMenu)
 Vue.use(Button)

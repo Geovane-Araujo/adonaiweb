@@ -211,9 +211,9 @@ export default {
       this.openloading = true
       axios.get(adonai.url + 'getdocument/' + parseInt(id) + '/' + this.form.idPessoa, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
-          console.log(res.data.obj)
+          this.openModal = false
+          this.$refs.print.printView(res.data.obj.html)
         } else {
-          console.log(res.data.motivo)
         }
         this.openloading = false
       }).catch(err => {

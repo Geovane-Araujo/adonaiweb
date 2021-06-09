@@ -373,6 +373,7 @@
     :form="form"
     :destroy="destroy"
     ref="expl"/>
+    <printview ref="print"/>
   </div>
 </template>
 <script src="./membro.js">

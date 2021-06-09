@@ -11,6 +11,7 @@ import polar from '../src/components/graficos/polar'
 import { ColourPicker } from 'vue-colour-picker'
 import adonaigrid from '../src/components/grid.vue'
 import adonaidatasearch from '../src/components/datasearch.vue'
+import adonaiPrintViewer from '../src/components/printviewer.vue'
 import VueTippy, { TippyComponent } from 'vue-tippy'
 
 Vue.component('colour-picker', ColourPicker)
@@ -26,4 +27,5 @@ Vue.component('polar', polar)
 Vue.component('lines', lines)
 Vue.component('horizontalbar', HorizontalBar)
 Vue.component('duohorizontalbar', DuoHorizontalBar)
+Vue.component('printview', adonaiPrintViewer)
 Vue.use(VueTippy)
