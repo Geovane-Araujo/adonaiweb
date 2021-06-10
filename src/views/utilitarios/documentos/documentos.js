@@ -10,6 +10,7 @@ export default {
   data: () => ({
     openModal: false,
     openloading: false,
+    openModalVariables: false,
     open: false,
     resize: 80,
     explorer: {

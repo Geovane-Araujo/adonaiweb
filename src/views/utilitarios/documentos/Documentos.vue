@@ -47,9 +47,58 @@
           </div>
         </div>
       <template #footer>
+        <Button label="Variáveis" style="float:left;" @click="openModalVariables=true" class="p-button-raised p-button-danger p-button-text button"/>
           <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
-          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
+          <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
       </template>
+    </Dialog>
+    <Dialog header="Variáveis" :visible.sync="openModalVariables" :style="{width: '40vw'}" :modal="true">
+        <div class="row">
+          <div class="col-sm-6">
+            <h4>Dados Membros</h4>
+            <div>@NomeMembro</div>
+            <div>@EnderecoMembro</div>
+            <div>@NumeroMembro</div>
+            <div>@BairroMembro</div>
+            <div>@ComplementoMembro</div>
+            <div>@CidadeMembro</div>
+            <div>@CepMembro</div>
+            <div>@UFMembro</div>
+            <div>@IdadeMembro</div>
+            <div>@DataNascimento</div>
+            <div>@DataBatismoMembro</div>
+            <div>@MembroDesde</div>
+            <div>@NaturalidadeMembro</div>
+            <div>@NacionalidadeMembro</div>
+            <div>@TelefoneMembroResidencial</div>
+            <div>@TelefoneMembroCelular</div>
+            <div>@EmailMembro</div>
+            <div>@EstadoCivilMembro</div>
+            <div>@ObservacaoMembro</div>
+            <div>@CargoMembro</div>
+          </div>
+
+          <div class="col-sm-6">
+            <h4>Dados Igreja</h4>
+            <div>@NomeIgreja</div>
+            <div>@EnderecoIgreja</div>
+            <div>@NumeroIgreja</div>
+            <div>@BairroIgreja</div>
+            <div>@ComplementoIgreja</div>
+            <div>@CidadeIgreja</div>
+            <div>@CepIgreja</div>
+            <div>@UFIgreja</div>
+            <div>@TelefoneIgrejaResidencial</div>
+            <div>@TelefoneIgrejaCelular</div>
+            <div>@EmailIgreja</div>
+            <div>@NomePastorPresidente</div>
+            <div>@NomePastorLocal</div>
+            <div>@NomeSecretario</div>
+            <div>@Secretario</div>
+            <div>@DataAtual</div>
+          </div>
+        </div>
+        <H6 style="color:red;">As Variaveis deve ser inserida da mesma forma acima descrito<br> Resultado ao gerar documento: @NomeMembro = Geovane Araújo</H6>
     </Dialog>
   </div>
 </template>

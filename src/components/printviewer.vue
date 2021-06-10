@@ -7,8 +7,8 @@
           </div>
         </div>
         <dir>
-          <Button @click="openModal=false" style="margin: 5px; float: right;" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" />
-          <Button style="margin: 5px; float: right;" icon="pi pi-print" class="p-button-rounded p-button-success p-button-outlined" />
+          <Button @click="openModal=false" style="color: #fff; margin: 5px; float: right;" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" />
+          <Button @click="print" style="color: #fff;margin: 5px; float: right;" icon="pi pi-print" class="p-button-rounded p-button-success p-button-outlined" />
         </dir>
       </div>
       <div class="content">
@@ -31,6 +31,12 @@ export default {
     printView (text) {
       this.openModal = true
       this.text = text
+    },
+    print () {
+      var telaimpressao = window.open('about:blank')
+      telaimpressao.document.write(this.text)
+      telaimpressao.window.print()
+      telaimpressao.window.close()
     }
   },
   components: {
@@ -41,7 +47,7 @@ export default {
 
 <style lang="scss" scoped>
 .content{
-  background-color: #89898f;
+  background-color: #eeeef5;
   height: 100%;
   overflow: auto;
 }
@@ -51,7 +57,7 @@ export default {
   margin: 15px 15px 0px 25px;
 }
 .nav{
-  background-color: #1e3b3d;
+  background-color: #5e8a75;
   width: 100%;
   height: 50px;
   -webkit-box-shadow: 0px 2px 5px rgba(50, 50, 50, 0.77);
