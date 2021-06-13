@@ -214,6 +214,7 @@ export default {
           this.openModal = false
           this.$refs.print.printView(res.data.obj.html)
         } else {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
         this.openloading = false
       }).catch(err => {
