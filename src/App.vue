@@ -14,6 +14,9 @@ export default {
 </script>
 <style lang="scss">
 @import './assets/styles/custom.scss';
+html{
+  font-size: 13px;
+}
 body,html {
   width: 100%;
   height: 100%;

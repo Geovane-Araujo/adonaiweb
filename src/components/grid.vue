@@ -13,7 +13,7 @@
         :selection.sync="selects" dataKey="id"
         :resizableColumns="true"
         columnResizeMode="fit">
-        <Column :headerStyle="'width:'+title.tamanho+'px'" headerClass="altura" :bodyStyle="'width:'+title.tamanho+'px'" v-for="title in flex" :key="title.ID" :field="title.name" :header="title.name"></Column>
+        <Column :column-reorder="selected" :headerStyle="'width:'+title.tamanho+'px'" headerClass="altura" :bodyStyle="'width:'+title.tamanho+'px'" v-for="title in flex" :key="title.ID" :field="title.name" :header="title.name"></Column>
         <Column headerStyle="width: 20px;" bodyStyle=""  :exportable="false">
             <template #body="slotProps">
                 <Button style="font-size: 10px;" icon="pi pi-pencil" class="p-button-rounded-sm p-button-text" @click="getbyId(slotProps.data.id); form.edit=true;form.add=false" />
@@ -96,6 +96,10 @@ export default {
   mounted () {
   },
   methods: {
+    selected (cal) {
+      console.log('selecionado')
+      console.log(cal)
+    },
     get (explorer, type) {
       this.openloading = true
       axios.post(adonai.url + 'aexplorer', explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -113,7 +117,7 @@ export default {
     },
     getexplorer (crit) {
       if (this.criterio === '') {
-        this.criterio = this.titulos[1]
+        this.criterio = this.flex[1].name
       }
       if (crit.length > 2 || crit === '') {
         utlexpl.explorer.route = this.ref
