@@ -37,6 +37,7 @@ import registroVisitantes from '../secretaria/visitantes/registroVisita.vue'
 import ResumoCampo from '../campoEclesiastico/ResumoCampo.vue'
 import AgendaCampo from '../campoEclesiastico/AgendaCampo.vue'
 import Documentos from '../utilitarios/documentos/Documentos.vue'
+import Fornecedores from '../secretaria/fornecedores/fornecedores.vue'
 
 export default [
   {
@@ -45,6 +46,11 @@ export default [
     redirect: { name: 'dashboard', params: { name: 'dashboard' } },
     component: home,
     children: [
+      {
+        path: 'fornecedores',
+        name: 'fornecedores',
+        component: Fornecedores
+      },
       {
         path: 'documentos',
         name: 'documentos',

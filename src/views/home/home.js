@@ -99,6 +99,11 @@ export default {
               disabled: parseInt(sessionStorage.getItem('congregacao'))
             },
             {
+              href: '/fornecedores',
+              title: 'Fornecedores'
+              // disabled: parseInt(sessionStorage.getItem(''))
+            },
+            {
               href: '/maps',
               title: 'Maps',
               disabled: parseInt(sessionStorage.getItem('congregacao'))
