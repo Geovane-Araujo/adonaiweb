@@ -7,8 +7,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
-var r
-var a
+
 export default {
   data () {
     return {
@@ -32,28 +31,9 @@ export default {
         id: '',
         nome: '',
         idPessoa: '',
-        observacoes: '',
-        imagem: [],
-        cnpjcpf: '',
+        cpf: '',
         pathimg: '',
-        pastorResponsavel: '',
-        secretario: '',
-        tesoureiro: '',
-        tipo: 0,
-        foto: '',
-        igrejaSede: '',
-        filiais: [],
-        textoRelatorio: '',
-        smtp: '',
-        porta: '',
-        emailmala: '',
-        senha: '',
-        usuario: '',
-        autenticacao: 'Não Requer',
-        fone: '',
-        vice: '',
-        presidente: '',
-        campoEclesiastico: null,
+        idtipo: 80,
         endereco: [
           {
             id: '',
@@ -100,24 +80,6 @@ export default {
             idPessoa: '',
             telefone: '',
             tipo: 2
-          },
-          {
-            id: '',
-            idPessoa: '',
-            telefone: '',
-            tipo: 3
-          },
-          {
-            id: '',
-            idPessoa: '',
-            telefone: '',
-            tipo: 4
-          },
-          {
-            id: '',
-            idPessoa: '',
-            telefone: '',
-            tipo: 5
           }
         ],
         email: [
@@ -146,12 +108,11 @@ export default {
             tipo: 3
           }
         ]
-      },
-      img: ''
+      }
     }
   },
   mounted () {
-    utc.explorer.route = 'menu_pessoas_igreja'
+    utc.explorer.route = 'menu_fornecedores'
     utc.explorer.pagina = 1
     utc.explorer.criterios = ' order by id desc'
     this.$refs.grid.get(utc.explorer)
@@ -159,11 +120,11 @@ export default {
   methods: {
     async save (form) {
       this.openloading = true
-      await axios.post(adonai.url + 'igreja', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      await axios.post(adonai.url + 'pessoafornecedor', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret !== undefined && res.data.ret === 'success') {
           this.openloading = false
           this.openModal = false
-          utc.explorer.route = 'menu_pessoas_igreja'
+          utc.explorer.route = 'menu_fornecedores'
           utc.explorer.pagina = 1
           utc.explorer.criterios = ' order by id desc'
           this.$refs.grid.get(utc.explorer)
@@ -177,24 +138,11 @@ export default {
         this.openloading = false
       })
     },
-    validate (doc, tipo, form) {
+    validate () {
       if (this.form.nome === '') {
         this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
-        if (r !== undefined) {
-          r.forEach(element => {
-            this.form.campoEclesiastico.push(element)
-          })
-        }
-        this.save(form)
-      }
-    },
-    getImg (e) {
-      var file = e.target.files[0]
-      var reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = e => {
-        this.form.pathimg = e.target.result
+        this.save(this.form)
       }
     },
     async imprimir (relatorio) {
@@ -203,32 +151,6 @@ export default {
         await utc.imprimir(utc.report)
       } catch (err) {
         this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
-      }
-    },
-    globais (tipo) {
-      this.openloading = true
-      if (tipo === 1) {
-        axios.post(adonai.url + 'configuracoes', this.configuration, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          this.openloading = false
-          if (res.data.ret === 'success') {
-            this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
-            this.openConfiguration = false
-          } else {
-            this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
-          }
-        }).catch(err => {
-          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
-          this.openloading = false
-        })
-      } else {
-        axios.get(adonai.url + 'configuracoes/0', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          this.configuration = res.data.obj
-          this.openConfiguration = true
-          this.openloading = false
-        }).catch(err => {
-          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
-          this.openloading = false
-        })
       }
     },
     buscarcep (cep, form, local) {
@@ -259,28 +181,13 @@ export default {
     getbyId (id) {
       this.onResize()
       this.openloading = true
-      axios.get(adonai.url + 'igreja/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        var planos = this.form.pessoaIgrejaPlanos
+      axios.get(adonai.url + 'pessoafornecedor/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (id === -100) {
           this.form = res.data.obj
-          this.form.pessoaIgrejaPlanos = planos
-          this.img = adonai.urli + 'avatar.png'
-          a = []
-          r = []
         } else {
-          if (this.user.auth !== '9999') {
-            this.form = res.data.obj
-            this.form.pessoaIgrejaPlanos = planos
-            this.mult = true
-            this.titleMult = ''
-          } else {
-            this.form = res.data.obj
-          }
+          this.form = res.data.obj
           this.form.add = false
           this.form.edit = true
-          this.img = adonai.urli + this.form.foto
-          a = []
-          r = []
         }
         this.openModal = true
         this.openloading = false
@@ -297,39 +204,12 @@ export default {
         this.ds.title = 'Cidades'
         this.$refs.expl.dataSearch(utc.explorerflex, 1, params)
         this.open = true
-      } else if (route === 2) {
-        utc.explorerflex.route = 'exp_campoeclesiastico'
-        utc.explorerflex.criterios = 'ORDER BY ID DESC'
-        utc.explorerflex.pagina = 1
-        this.ds.title = 'Igrejas'
-        this.ds.grid = ['id', 'nome']
-        this.$refs.expl.dataSearch(utc.explorerflex, 2, 2)
-        this.open = true
       }
     },
     destroy (registro, params, e) {
       if (params === 1) {
         this.form.endereco[e].cidade = registro.nome
         this.form.endereco[e].idCidade = registro.id
-      } else if (params === 2) {
-        params = {
-          idsede: this.form.idPessoa,
-          nome: registro.nome,
-          idfilial: registro.id,
-          add: true,
-          del: false
-        }
-        if (this.form.campoEclesiastico === null || this.form.campoEclesiastico === undefined) {
-          if (a === undefined) {
-            a = []
-            a.push(params)
-          } else {
-            a.push(params)
-          }
-          this.form.campoEclesiastico = a
-        } else {
-          this.form.campoEclesiastico.push(params)
-        }
       }
     },
     onResize () {
@@ -340,23 +220,6 @@ export default {
       } else {
         this.resize = 65
       }
-    },
-    del (data) {
-      if (r === undefined) {
-        r = []
-        r.push(data)
-      } else {
-        r.push(data)
-      }
-      var i = 0
-      var indice = 0
-      this.form.campoEclesiastico.forEach(element => {
-        if (element === data) {
-          indice = i
-        }
-        i++
-      })
-      this.form.campoEclesiastico.splice(indice, 1)
     }
   },
   components: {

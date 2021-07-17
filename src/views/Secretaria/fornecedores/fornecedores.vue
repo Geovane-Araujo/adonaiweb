@@ -39,29 +39,15 @@
                           <input type="text"
                           class="form-control"
                           v-model="form.nome"
-                          placeholder="Razão Social">
+                          placeholder="Nome/Razão Social/Fantasia">
                         </div>
                         <div class="col-sm-4">
                           <the-mask
                             type="text"
                             the-mask :mask="['###.###.###-##', '##.###.###/####-##']"
-                            v-model="form.cnpjcpf"
+                            v-model="form.cpf"
                             class="form-control"
                             placeholder="CNPJ/CPF"/>
-                        </div>
-                        <div class="col-sm-6">
-                          <input
-                            type="text"
-                            v-model="form.pastorResponsavel"
-                            class="form-control"
-                            placeholder="Fantasia">
-                        </div>
-                        <div class="col-sm-6">
-                          <input
-                            type="text"
-                            v-model="form.secretario"
-                            class="form-control"
-                            placeholder="Contato Responsável">
                         </div>
                       </div>
                     </div>
