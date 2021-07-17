@@ -4,12 +4,14 @@ import rel from '../../util/utilClass'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-
+var data = new Date()
+var moment = require('moment')
 export default {
   data: () => ({
     openModal: false,
     openloading: false,
     openFilter: false,
+    showdate: false,
     ds: {
       grid: [],
       title: '',
@@ -19,7 +21,7 @@ export default {
     report: {
       relatorio: '',
       simpleObjects: '',
-      simpleObjects1: '',
+      simpleObjects1: moment(data).format('YYYY-MM-DD'),
       simpleObjects2: ''
     },
     filters: {
