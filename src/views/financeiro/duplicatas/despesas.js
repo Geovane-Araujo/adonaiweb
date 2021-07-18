@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import util from '../../../assets/scss/util'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import adonai from '../../../http/router'
@@ -102,12 +101,12 @@ export default {
     async save (form) {
       this.openloading = true
       if (form.del === true && form.dataPagamento !== '') {
-        this.$toastr.info('Para excluir uma duplicata paga é necessário estornar', 'AdonaiSoft diz:', util.toast)
+        this.$toast.add({ severity: 'info', summary: 'AdonaiSoft', detail: 'Para excluir uma duplicata paga é necessário estornar', life: 5000 })
         this.openloading = false
       } else {
         await axios.post(adonai.url + 'duplicata', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
-            this.$toastr.success('Salvo com Sucesso', 'AdonaiSoft Diz:', util.toast)
+            this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
             this.cleanForm()
 
             this.openModal = false
@@ -116,23 +115,23 @@ export default {
             rel.explorer.criterios = 'ORDER BY ID DESC'
             this.$refs.grid.get(rel.explorer)
           } else {
-            this.$toastr.error(res.data.motivo, 'Falha ao Salvar', util.toast)
+            this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           }
         }).catch(err => {
-          this.$toastr.error(err, 'Falha ao Salvar', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
           this.openloading = false
         })
       }
     },
     validate (form, quitar) {
       if (this.form.descricao === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+        this.$toast.add({ severity: 'warning', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', life: 5000 })
       } else if (this.form.tipo === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+        this.$toast.add({ severity: 'warning', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', life: 5000 })
       } else if (this.form.desccaixa === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+        this.$toast.add({ severity: 'warning', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', life: 5000 })
       } else if (this.form.valor === '') {
-        this.$toastr.warning('Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', 'AdonaiSpft diz:', util.toast)
+        this.$toast.add({ severity: 'warning', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios (Descricao,Valor,Caixa e Tipo)', life: 5000 })
       } else {
         var a = new Date(form.dataemissao)
         var b = new Date(form.dataVencimento)
@@ -172,7 +171,7 @@ export default {
         this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
       } else if (route === 2) {
         rel.explorerflex.route = 'exp_tipoconta'
-        rel.explorerflex.criterios = 'AND contexto = 1 ORDER BY ID DESC'
+        rel.explorerflex.criterios = ' AND contexto = 1 ORDER BY ID DESC'
         rel.explorerflex.pagina = 1
         this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Tipo Conta'
@@ -226,7 +225,7 @@ export default {
         this.openModal = true
         this.openloading = false
       }).catch(err => {
-        this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast)
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
         this.openloading = false
       })
     },
