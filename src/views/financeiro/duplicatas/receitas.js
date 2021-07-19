@@ -210,6 +210,9 @@ export default {
         this.openloading = false
       })
     },
+    async getTotais () {
+      this.$refs.Totais.getTeste()
+    },
     datasearch (route) {
       if (route === 1) {
         rel.explorerflex.route = 'exp_pessoa_financeiro'

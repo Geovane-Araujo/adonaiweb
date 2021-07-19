@@ -151,6 +151,9 @@ export default {
         this.save(form)
       }
     },
+    async getTotais () {
+      this.$refs.Totais.getTeste()
+    },
     async imprimir (relatorio) {
       this.openloading = true
       rel.report.relatorio = relatorio

@@ -251,6 +251,7 @@
       </template>
     </Dialog>
     <adonaidatasearch :title="ds.title" :cabecalho="ds.grid" :form="form" :destroy="destroy" ref="cmp"/>
+    <a-totais ref="Totais"/>
   </div>
 </template>
 <script src="./receitas.js">
