@@ -211,7 +211,7 @@ export default {
       })
     },
     async getTotais () {
-      this.$refs.Totais.getTeste()
+      this.$refs.Totais.getTotais(0)
     },
     datasearch (route) {
       if (route === 1) {

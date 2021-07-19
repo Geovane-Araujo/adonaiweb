@@ -152,7 +152,7 @@ export default {
       }
     },
     async getTotais () {
-      this.$refs.Totais.getTeste()
+      this.$refs.Totais.getTotais(1)
     },
     async imprimir (relatorio) {
       this.openloading = true
