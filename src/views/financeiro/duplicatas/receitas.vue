@@ -20,6 +20,11 @@
             @click="openFilter=true">
             <img src="./filter.png">&nbsp;&nbsp;{{ mobileF }}
           </button>
+          <button
+            class="btn btn-outline-info float-right" style="margin-right: 10px;"
+            @click="getTotais()">
+            <img src="../../../assets/icons/search.png">&nbsp;&nbsp;Totais
+          </button>
           <hr class="bg-info">
         </div>
         <div class="col-lg-12" style="margin-top: -30px;">
