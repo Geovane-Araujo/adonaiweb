@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <p>Dados Campo Eclesiástico (Beta)</p>
+          <p>Dados Campo Eclesiástico</p>
           <hr class="bg-info">
           <b-tabs>
             <b-tab title="Principal">
@@ -175,7 +175,15 @@
           </b-tabs>
         </div>
       </div>
-      <Dialog :header="'Resumo Anual da ' + c.nomeIgreja " :maximizable="true" :visible.sync="openModal" :style="{width: '100vw', height: '100vw'}" :modal="true">
+    </div>
+    <template #overlay>
+        <div class="text-center">
+          <b-icon icon="stopwatch" font-scale="3" animation="cylon"></b-icon>
+          <p id="cancel-label">Carregando Dados das Igrejas, por favor Aguarde</p>
+        </div>
+      </template>
+    </b-overlay>
+    <Dialog :header="'Resumo Anual da ' + c.nomeIgreja " :maximizable="true" :visible.sync="openModal" :style="{width: '100vw', height: '100vw'}" :modal="true">
         <b-container>
           <h1>Dados Referente ao Ano {{ this.form.ano }}</h1>
           <hr class="bg-info">
@@ -210,15 +218,7 @@
         <template #footer>
             <Button label="Fechar" class="p-button-raised p-button-success p-button-text button" />
         </template>
-      </Dialog>
-    </div>
-    <template #overlay>
-        <div class="text-center">
-          <b-icon icon="stopwatch" font-scale="3" animation="cylon"></b-icon>
-          <p id="cancel-label">Carregando Dados das Igrejas, por favor Aguarde</p>
-        </div>
-      </template>
-    </b-overlay>
+    </Dialog>
   </div>
 </template>
 

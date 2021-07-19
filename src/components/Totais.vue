@@ -3,7 +3,7 @@
     <Dialog style="font-size:10px;" header="Totais" :visible.sync="open" :style="{width: '50vw'}" :modal="true">
       <b-container>
         <div class="row">
-          <div class="col-sm-2">
+          <div class="col-sm-4">
             <h6 class="text-info">Realizado</h6>
             <money type="text"
               class="form-control text-info"
@@ -11,7 +11,7 @@
               disabled=""
               v-model="realizado"/>
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-4">
             <h6 class="text-danger">Em Aberto</h6>
             <money type="text"
               class="form-control text-danger"
@@ -19,7 +19,7 @@
               disabled=""
               v-model="pendente"/>
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-4">
             <h6 class="text-info">Total</h6>
             <money type="text"
               class="form-control text-info"
@@ -57,7 +57,7 @@ export default {
       })
     },
     getTeste () {
-      alert('s')
+      this.open = true
     }
   },
   computed: {
