@@ -71,9 +71,11 @@ export default {
             this.registros = res.data.obj
             this.totalRows = res.data.totalRows
           } else {
-            this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+            this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           }
-        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+        }).catch(err => {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+        })
       }
     },
     validate (paging, length) {

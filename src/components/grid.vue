@@ -110,10 +110,11 @@ export default {
           this.totalRows = res.data.totalRows
           this.explorer = explorer
         } else {
-          this.openloading = false
-          this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     getexplorer (crit) {
       if (this.criterio === '') {
@@ -126,9 +127,11 @@ export default {
           if (res.data.ret === 'success') {
             this.reg = res.data.obj
           } else {
-            this.$toastr.error(res.data.motivo, 'AdonaiSoft Diz:', util.toast)
+            this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           }
-        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+        }).catch(err => {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+        })
       }
     },
     onPage (event) {

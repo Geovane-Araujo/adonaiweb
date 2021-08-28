@@ -15,12 +15,12 @@ export default {
 <style lang="scss">
 @import './assets/styles/custom.scss';
 html{
-  font-size: 13px;
+  font-size: 11px;
 }
 body,html {
   width: 100%;
   height: 100%;
-  font-size: 14px;
+  font-size: 11px;
   overflow-x: hidden;
 }
 #app {
