@@ -15,6 +15,7 @@ export default {
     return {
       openModal: false,
       deleteModal: false,
+      showDocument: false,
       resize: 50,
       mobileI: 'Imprimir',
       mobileF: 'Filtrar',
@@ -171,6 +172,10 @@ export default {
     getImg (e) {
       var file = e.target.files[0]
       var reader = new FileReader()
+      if (file.size > 500000) {
+        this.$toast.add({ severity: 'info', summary: 'AdonaiSoft', detail: 'Imagem muito grande, tamanho máximo 500kb', life: 5000 })
+        return
+      }
       reader.readAsDataURL(file)
       reader.onload = e => {
         this.form.pathimg = e.target.result
@@ -202,6 +207,7 @@ export default {
           this.form.add = false
           this.form.edit = true
           this.img = adonai.urli + this.form.foto
+          this.showDocument = true
         }
         this.openModal = true
         this.openloading = false

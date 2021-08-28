@@ -226,7 +226,7 @@
                   </b-form-group>
                 </div>
                 <div class="col-sm-4 adonai-pad">
-                  <b-form-group label="Numero" label-align-sm="left">
+                  <b-form-group label="Bairro" label-align-sm="left">
                     <div class="form-group">
                       <input type="text"
                         class="form-control"
@@ -322,7 +322,7 @@
         </b-tabs>
       </b-container>
       <template #footer>
-        <Button label="Documentos" style="float:left;" @click="datasearch (3, 3)" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Documentos" v-show="showDocument" style="float:left;" @click="datasearch (3, 3)" class="p-button-raised p-button-success p-button-text button" />
         <Button label="Salvar" @click="validar(form)" class="p-button-raised p-button-success p-button-text button" />
         <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
       </template>
@@ -363,8 +363,8 @@
           <br> deseja realmente continuar?</span>
       </div>
       <template #footer>
-          <Button label="Não" icon="pi pi-times" class="p-button-text" @click="mapsModal=false"/>
-          <Button label="Sim" icon="pi pi-check" class="p-button-text" @click="mapsModal=false;save(form);deleteModal = false" />
+        <Button label="Sim" icon="pi pi-check" class="p-button-text" @click="mapsModal=false;save(form);deleteModal = false" />
+        <Button label="Não" icon="pi pi-times" class="p-button-text" @click="mapsModal=false"/>
       </template>
     </Dialog>
     <adonaidatasearch
