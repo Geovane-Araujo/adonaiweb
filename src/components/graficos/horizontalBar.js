@@ -10,17 +10,25 @@ export default {
     datasets: {
       type: Array,
       require: true
+    },
+    legenda: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
     render (label, datasets) {
       this.renderChart({
         labels: label,
-        datasets: datasets
+        datasets: datasets,
+        order: 1
       },
       {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        legend: {
+          display: this.legenda
+        }
       })
     }
   }

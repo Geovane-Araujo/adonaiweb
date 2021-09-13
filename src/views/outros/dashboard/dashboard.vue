@@ -91,15 +91,15 @@
             <div class="row">
                 <div  class="col-sm-6 p-shadow-1">
                   <b-form-group label="Por Tipos de Despesas" label-align="center">
-                    <piechart style="height: 200px"
+                    <horizontalbar :legenda="false" style="height: 300px"
                     :label="cabe_tipos_entradas"
                     :datasets="dataset_tipos_entradas" ref="rec">
-                    </piechart>
+                    </horizontalbar>
                   </b-form-group>
                 </div>
               <div class="col-sm-6 p-shadow-1">
                 <b-form-group label="Por Tipos de Receitas" label-align="center">
-                  <dougchart style="height: 200px"
+                  <dougchart style="height: 300px"
                   :label="cabe_tipos_despesas"
                   :datasets="dataset_tipos_despesas" ref="des">
                   </dougchart>

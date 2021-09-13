@@ -26,12 +26,12 @@ export default {
         this.openloading = true
         localStorage.setItem('cnpj', this.form.cnpj)
         await this.ActionLogin(this.form)
-        var ret = localStorage.getItem('ret')
+        var ret = sessionStorage.getItem('ret')
         if (ret === 'unsuccess') {
-          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: localStorage.getItem('login'), life: 5000 })
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: sessionStorage.getItem('login'), life: 5000 })
         } else {
-          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Seja Bem Vindo(a)', life: 5000 })
           this.$router.push({ name: 'home' })
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Seja Bem Vindo(a)', life: 5000 })
         }
         this.openloading = false
       } catch (err) {

@@ -1,6 +1,6 @@
 import home from './Home.vue'
 import cargo from '../uteis/cargo/cargo.vue'
-import usuario from '../utilitarios/usuario/usuario.vue'
+import usuario from '../minhaigreja/usuario/usuario.vue'
 import tipoconta from '../uteis/tipoconta/tipoconta.vue'
 import membro from '../secretaria/membro/membro.vue'
 import igreja from '../minhaigreja/igreja/igreja.vue'

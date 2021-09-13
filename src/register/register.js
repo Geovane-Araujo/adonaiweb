@@ -1,4 +1,3 @@
-import util from '../assets/scss/util'
 import Button from 'primevue/button'
 import adonai from '../http/router'
 import axios from 'axios'
@@ -21,17 +20,17 @@ export default {
       await axios.post(adonai.url + 'newUser', form).then(res => {
         if (res.data.ret === 'success') {
           this.openloading = false
-          this.$toastr.success(res.data.motivo, 'AdonaiSoft Diz: ', util.toast)
+          this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Cadastrado com sucesso', life: 5000 })
           this.$router.push('login')
         } else {
           this.openloading = false
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
+      }).catch(err => this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 }))
     },
     validade (form) {
       if (form.nome === '' || form.login === '' || form.telefone === '' || form.email === '') {
-        this.$toastr.warning('Campos Obrigatórios Requerido', 'AdonaiSoft Diz: ', util.toast)
+        this.$toast.add({ severity: 'info', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios Requerido', life: 5000 })
       } else {
         this.save(form)
       }

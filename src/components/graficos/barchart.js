@@ -10,6 +10,10 @@ export default {
     datasets: {
       type: Array,
       require: true
+    },
+    legenda: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
@@ -20,7 +24,10 @@ export default {
       },
       {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        legend: {
+          display: this.legenda
+        }
       })
     }
   }

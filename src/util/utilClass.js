@@ -1,10 +1,20 @@
-import util from '../assets/scss/util'
 import axios from 'axios'
 import adonai from '../http/router'
 var moment = require('moment')
 var pdfWindow
 
+async function uploadImg (e, iduser, iddb) {
+  var formdata = new FormData()
+  formdata.append('file', e.target.files[0])
+  var ret = ''
+  await axios.post('http://localhost:5000/upload?db=' + iddb.auth + '&iduser=' + iduser, formdata, { headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+    ret = res.data
+  }).catch(err => this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 }))
+  return ret
+}
+
 export default {
+  uploadImg,
   report: {
     relatorio: '',
     ID: 0,
@@ -48,18 +58,12 @@ export default {
         return form
       }
     },
-    getImg (e) {
+    async getImg (e, iduser, iddb) {
       var file = e.target.files[0]
-      var reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = e => {
-        this.form.pathimg = e.target.result
-        /* axios.post(adonai.url + 'base64toimage', this.form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          this.openloading = false
-          this.img = adonai.urli + res.data.obj
-          // this.form.foto = res.data.obj
-        }).catch(err => util.error(err)) */
-      }
+      await axios.post('http://arquivos.adonaisoft.com.br/upload?db=' + iddb + '&iduser=' + iduser, file, { headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+        console.log(res.data)
+        return res.data
+      }).catch(err => this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 }))
     },
     async onSearchCep (cep, form, local, token) {
       cep = cep.replace('-', '')
@@ -73,7 +77,7 @@ export default {
           form.endereco[local].uf = res.data.obj.uf
           form.endereco[local].idCidade = res.data.obj.idCidade
         }
-      }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz: ', util.toast))
+      }).catch(err => this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 }))
     },
     randomColor () {
       var hexadecimais = '0123456789ABCDEF'

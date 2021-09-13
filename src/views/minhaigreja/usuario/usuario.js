@@ -3,6 +3,7 @@ import adonai from '../../../http/router'
 import axios from 'axios'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
+import utils from '../../../util/utilClass'
 
 export default {
   data: () => ({
@@ -21,6 +22,7 @@ export default {
       params: ''
     },
     status: '',
+    urlimg: adonai.arquivos,
     form: {
       add: true,
       edit: false,
@@ -70,17 +72,16 @@ export default {
       })
     },
     getImg (e) {
-      var file = e.target.files[0]
-      var reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = e => {
-        this.form.pathimg = e.target.result
-      }
+      utils.uploadImg(e, this.form.idPessoa, this.user).then(res => {
+        this.form.pathimg = res
+      })
     },
     validate (form) {
       if (this.form.nome === '') {
         this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios não preenchidos', life: 5000 })
       } else {
+        console.log(form)
+        // form.pathimg = JSON.stringify(form.pathimg)
         this.save(form)
       }
     },

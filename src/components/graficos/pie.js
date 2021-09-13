@@ -23,8 +23,10 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
+          display: false,
           position: local
-        }
+        },
+        order: 0
       })
     }
   }
