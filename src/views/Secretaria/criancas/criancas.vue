@@ -32,7 +32,7 @@
           <b-row class="text-center">
             <div class="col-sm-2">
               <div class="file-loading">
-                <b-avatar :src="form.pathimg"
+                <b-avatar :src="urlimg + form.pathimg"
                 size="5rem"></b-avatar>
                 <div>
                   <label for='selecao-arquivo' class="material-icons">perm_media</label>

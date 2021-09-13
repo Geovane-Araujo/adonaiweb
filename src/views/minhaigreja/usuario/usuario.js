@@ -72,8 +72,10 @@ export default {
       })
     },
     getImg (e) {
+      this.openloading = true
       utils.uploadImg(e, this.form.idPessoa, this.user).then(res => {
         this.form.pathimg = res
+        this.openloading = false
       })
     },
     validate (form) {

@@ -23,6 +23,7 @@ export default {
         grid: [],
         title: ''
       },
+      urlimg: adonai.arquivos,
       form: {
         add: true,
         edit: false,
@@ -75,24 +76,31 @@ export default {
       }
     },
     getImg (e) {
+      this.openloading = true
       var file = e.target.files[0]
-      var reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = e => {
-        this.form.pathimg = e.target.result
+      if (file.size > 500000) {
+        this.$toast.add({ severity: 'info', summary: 'AdonaiSoft', detail: 'Imagem muito grande, tamanho máximo 500kb', life: 5000 })
+        this.openloading = false
+        return
       }
+      rel.uploadImg(e, this.form.idPessoa, this.user).then(res => {
+        this.form.pathimg = res
+        this.openloading = false
+      })
     },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'pessoacriancas/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        if (id === -100) {
-          this.form = res.data.obj
-          this.img = adonai.urli + this.form.foto
+        if (res.data.ret === 'success') {
+          if (id === -100) {
+            this.form = res.data.obj
+          } else {
+            this.form = res.data.obj
+            this.form.add = false
+            this.form.edit = true
+          }
         } else {
-          this.form = res.data.obj
-          this.form.add = false
-          this.form.edit = true
-          this.img = adonai.urli + this.form.foto
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
         this.openModal = true
         this.openloading = false

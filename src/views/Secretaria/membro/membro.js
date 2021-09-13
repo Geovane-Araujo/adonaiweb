@@ -26,6 +26,7 @@ export default {
         grid: [],
         title: ''
       },
+      urlimg: adonai.arquivos,
       campocidade: 0,
       status: '',
       form: {
@@ -170,16 +171,17 @@ export default {
       }
     },
     getImg (e) {
+      this.openloading = true
       var file = e.target.files[0]
-      var reader = new FileReader()
       if (file.size > 500000) {
         this.$toast.add({ severity: 'info', summary: 'AdonaiSoft', detail: 'Imagem muito grande, tamanho máximo 500kb', life: 5000 })
+        this.openloading = false
         return
       }
-      reader.readAsDataURL(file)
-      reader.onload = e => {
-        this.form.pathimg = e.target.result
-      }
+      rel.uploadImg(e, this.form.idPessoa, this.user).then(res => {
+        this.form.pathimg = res
+        this.openloading = false
+      })
     },
     async imprimir (relatorio) {
       rel.report.relatorio = relatorio
