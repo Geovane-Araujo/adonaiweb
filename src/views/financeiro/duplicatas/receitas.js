@@ -211,7 +211,7 @@ export default {
       })
     },
     async getTotais () {
-      this.$refs.Totais.getTotais(0)
+      this.$refs.Totais.getTotais(0, this.criterio)
     },
     datasearch (route) {
       if (route === 1) {
@@ -260,6 +260,7 @@ export default {
       this.open = false
     },
     filter (filters) {
+      this.criterio = ''
       if (filters.nome !== '') {
         this.criterio += ' AND duplicata.idmembro = ' + filters.idpessoa
       }
@@ -286,12 +287,11 @@ export default {
         }
       }
       rel.explorer.criterios = this.criterio + ' ORDER BY ID DESC'
-      rel.explorer.route = 'menu_duplicata_despesa'
+      rel.explorer.route = 'menu_duplicata_receita'
       this.openloading = true
       this.$refs.grid.get(rel.explorer)
       this.openFilter = false
       this.openloading = false
-      this.criterio = ''
     },
     cleanFilters (filters) {
       var fil

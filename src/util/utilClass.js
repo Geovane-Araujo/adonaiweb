@@ -7,7 +7,7 @@ async function uploadImg (e, iduser, iddb) {
   var formdata = new FormData()
   formdata.append('file', e.target.files[0])
   var ret = ''
-  await axios.post('http://localhost:5000/upload?db=' + iddb.auth + '&iduser=' + iduser, formdata, { headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
+  await axios.post('https://arquivos.adonaisoft.com.br/upload?db=' + iddb.auth + '&iduser=' + iduser, formdata, { headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
     ret = res.data
   }).catch(err => this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 }))
   return ret

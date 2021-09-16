@@ -7,6 +7,7 @@ import AutoComplete from 'primevue/autocomplete'
 import Sidebar from 'primevue/sidebar'
 import BlockUI from 'primevue/blockui'
 import OverlayPanel from 'primevue/overlaypanel'
+import adonai from '../../http/router'
 
 export default {
   name: 'App',
@@ -41,7 +42,7 @@ export default {
           title: 'AdonaiSoft Web',
           hiddenOnCollapse: true,
           name: sessionStorage.getItem('name'),
-          path: sessionStorage.getItem('path')
+          path: adonai.arquivos + sessionStorage.getItem('path')
         },
         {
           href: '/',

@@ -66,8 +66,12 @@ export default {
     }
   },
   methods: {
-    getTotais (tipo) {
-      axios.get(adonai.url + 'duplicata/totais/' + tipo, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+    getTotais (tipo, filtros) {
+      var a = {
+        tipo: tipo,
+        filtros: filtros
+      }
+      axios.post(adonai.url + 'duplicata/totais', a, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.pendente = res.data.obj.pendentes
         this.realizado = res.data.obj.realizadas
         this.total = res.data.obj.total

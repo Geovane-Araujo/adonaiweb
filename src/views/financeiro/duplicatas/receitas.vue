@@ -146,23 +146,17 @@
             <b-col cols="12">
               <div class="row">
                 <div class="col-sm-6" style="padding:3px;">
-                  <b-form-group label="Data Inicio" label-align-sm="left">
-                    <datetime
-                      class="datePivker"
+                  <b-form-group label="Data Emissao" label-align-sm="left">
+                    <b-form-input class="form-control"
                       type="date"
-                      format="dd/MM/yyyy"
-                      v-model="filters.datainicio">
-                    </datetime>
+                      v-model="filters.datainicio"></b-form-input>
                   </b-form-group>
                 </div>
                 <div class="col-sm-6" style="padding:3px;">
-                  <b-form-group label="Data Fim" label-align-sm="left">
-                    <datetime
-                      class="datePivker"
+                  <b-form-group label="Data Emissao" label-align-sm="left">
+                    <b-form-input class="form-control"
                       type="date"
-                      format="dd/MM/yyyy"
-                      v-model="filters.datafim">
-                    </datetime>
+                      v-model="filters.datafim"></b-form-input>
                   </b-form-group>
                 </div>
                 <div class="col-sm-6" style="padding:3px;">

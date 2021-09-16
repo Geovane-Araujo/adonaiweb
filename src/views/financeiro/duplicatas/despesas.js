@@ -108,7 +108,6 @@ export default {
           if (res.data.ret === 'success') {
             this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
             this.cleanForm()
-
             this.openModal = false
             this.openloading = false
             rel.explorer.route = 'menu_duplicata_despesa'
@@ -152,7 +151,7 @@ export default {
       }
     },
     async getTotais () {
-      this.$refs.Totais.getTotais(1)
+      this.$refs.Totais.getTotais(1, this.criterio)
     },
     async imprimir (relatorio) {
       this.openloading = true
@@ -255,6 +254,7 @@ export default {
       this.open = false
     },
     filter (filters) {
+      this.criterio = ''
       if (filters.nome !== '') {
         this.criterio += ' AND duplicata.idmembro = ' + filters.idpessoa
       }
@@ -286,7 +286,6 @@ export default {
       this.$refs.grid.get(rel.explorer)
       this.openFilter = false
       this.openloading = false
-      this.criterio = ''
     },
     cleanFilters (filters) {
       var fil
