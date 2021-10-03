@@ -17,13 +17,11 @@ export default {
       resize: 50,
       explorer: {
         route: 'menu_pessoas_visitantes',
-        pagina: 1,
-        criterios: 'order by id desc'
+        pagina: 1
       },
       explorerflex: {
         route: '',
-        pagina: 1,
-        criterios: 'order by id desc'
+        pagina: 1
       },
       ds: {
         grid: [],
@@ -160,8 +158,6 @@ export default {
     datasearch (route, params) {
       if (route === 1) {
         this.explorerflex.route = 'exp_municipio'
-        this.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['id', 'nome', 'uf']
         this.ds.title = 'Cidades'
         this.$refs.expl.dataSearch(this.explorerflex, 1, params)
       }

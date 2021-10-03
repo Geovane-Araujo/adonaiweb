@@ -38,7 +38,6 @@ export default {
   mounted () {
     this.onResize()
     rel.explorerflex.route = 'menu_pessoa_registro_visitante'
-    rel.explorerflex.criterios = 'ORDER BY ID DESC'
     rel.explorerflex.pagina = 1
     this.$refs.grid.get(rel.explorerflex)
   },
@@ -51,8 +50,6 @@ export default {
           this.openloading = false
           this.openModal = false
           rel.explorerflex.route = 'menu_pessoa_registro_visitante'
-          rel.explorerflex.criterios = 'ORDER BY ID DESC'
-          rel.explorerflex.pagina = 1
           this.$refs.grid.get(rel.explorerflex)
           if (this.form.edit) {
             this.openModal = false
@@ -99,9 +96,6 @@ export default {
     datasearch (route, params) {
       if (route === 1) {
         rel.explorerflex.route = 'exp_pessoa_visitante'
-        rel.explorerflex.criterios = 'ORDER BY ID DESC'
-        rel.explorerflex.pagina = 1
-        this.ds.grid = ['id', 'nome']
         this.ds.title = 'Visitantes'
         this.$refs.expl.dataSearch(rel.explorerflex, 1, params)
       }

@@ -45,7 +45,6 @@ export default {
   mounted () {
     this.onResize()
     rel.explorer.route = 'menu_criancas'
-    rel.explorer.criterios = 'order by id desc'
     this.$refs.grid.get(rel.explorer)
   },
   methods: {
@@ -56,7 +55,6 @@ export default {
           this.openModal = false
           this.openloading = false
           rel.explorer.route = 'menu_criancas'
-          rel.explorer.criterios = 'order by id desc'
           this.$refs.grid.get(rel.explorer)
           this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
         } else {
@@ -111,9 +109,7 @@ export default {
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
     datasearch (params) {
       rel.explorerflex.route = 'exp_pessoa_financeiro'
-      rel.explorerflex.criterios = 'ORDER BY ID DESC'
       rel.explorerflex.pagina = 1
-      this.ds.grid = ['id', 'nome']
       this.ds.title = 'Pais'
       this.$refs.expl.dataSearch(rel.explorerflex, params, params)
     },

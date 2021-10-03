@@ -12,12 +12,13 @@ export default {
       explorer: {
         route: 'menu_contas_bancarias',
         pagina: 1,
-        criterios: 'order by id desc'
+        criterios: '',
+        order: 'order by id desc'
       },
       explorerflex: {
         route: '',
         pagina: 1,
-        criterios: 'order by id desc'
+        order: 'order by id desc'
       },
       ds: {
         grid: [],

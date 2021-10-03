@@ -93,16 +93,13 @@ export default {
       })
     },
     datasearch (route) {
+      adExplo.explorerflex.pagina = 1
       if (route === 0) {
         adExplo.explorerflex.route = 'menu_curso'
-        adExplo.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Cursos'
         this.$refs.expl.dataSearch(adExplo.explorerflex, route, 0)
       } else if (route === 1 || route === 2) {
         adExplo.explorerflex.route = 'exp_membro'
-        adExplo.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['id', 'nome']
         this.ds.title = 'Membro'
         this.$refs.expl.dataSearch(adExplo.explorerflex, route, 1)
       }

@@ -18,7 +18,8 @@ export default {
     explorer: {
       route: 'menu_pedidos',
       pagina: 1,
-      criterios: 'order by id desc'
+      criterios: '',
+      order: 'order by id desc'
     },
     ds: {
       grid: [],
@@ -105,14 +106,10 @@ export default {
     datasearch (route, params) {
       if (route === 1) {
         adExplorer.explorerflex.route = 'exp_tipo_pedido'
-        adExplorer.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Tipo Solicitações'
         this.$refs.expl.dataSearch(adExplorer.explorerflex, 1, '')
       } else if (route === 2) {
         adExplorer.explorerflex.route = 'exp_membro'
-        adExplorer.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['id', 'nome']
         this.ds.title = 'Membros'
         this.$refs.expl.dataSearch(adExplorer.explorerflex, 2, '')
       }

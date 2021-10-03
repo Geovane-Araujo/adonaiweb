@@ -103,6 +103,7 @@ export default {
     },
     get (explorer, type) {
       this.openloading = true
+      explorer.criterios = ''
       axios.post(adonai.url + 'aexplorer', explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.openloading = false
         if (res.data.ret === 'success') {
@@ -154,9 +155,6 @@ export default {
       form.add = false
       form.del = true
       this.deleteModal = true
-    },
-    teste () {
-      alert('deu certo')
     }
   },
   components: {

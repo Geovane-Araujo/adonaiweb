@@ -16,7 +16,8 @@ export default {
     explorer: {
       route: 'menu_documentos_editaveis',
       pagina: 1,
-      criterios: 'order by id desc'
+      criterios: '',
+      order: 'order by id desc'
     },
     config: {
       height: 500

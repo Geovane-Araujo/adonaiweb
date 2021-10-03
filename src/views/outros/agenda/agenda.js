@@ -154,14 +154,10 @@ export default {
     datasearch (route) {
       if (route === 1) {
         utilExpl.explorerflex.route = 'menu_eventos_tipos'
-        utilExpl.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Agenda Eventos'
         this.$refs.expl.dataSearch(utilExpl.explorerflex, 1, 1)
       } else {
         utilExpl.explorerflex.route = 'exp_agenda_usuarios'
-        utilExpl.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['ID', 'Nome']
         this.ds.title = 'Agenda Eventos'
         this.$refs.expl.dataSearch(utilExpl.explorerflex, 2, 2)
       }

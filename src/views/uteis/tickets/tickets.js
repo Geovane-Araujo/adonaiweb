@@ -18,7 +18,8 @@ export default {
     explorer: {
       route: 'menu_esbocos',
       pagina: 1,
-      criterios: 'order by id desc'
+      criterios: '',
+      order: 'order by id desc'
     },
     ds: {
       grid: [],
@@ -67,8 +68,6 @@ export default {
     },
     datasearch () {
       adExpl.explorerflex.route = 'exp_membro'
-      adExpl.explorerflex.criterios = 'ORDER BY ID DESC'
-      this.ds.grid = ['id', 'nome']
       this.ds.title = 'Membro'
       this.$refs.cmp.dataSearch(adExpl.explorerflex, 1, 1)
     },

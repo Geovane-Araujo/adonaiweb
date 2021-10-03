@@ -131,7 +131,6 @@ export default {
   mounted () {
     this.onResize()
     rel.explorer.route = 'menu_pessoa_membros'
-    rel.explorer.criterios = 'order by id desc'
     this.$refs.grid.get(rel.explorer)
   },
   methods: {
@@ -142,7 +141,6 @@ export default {
           this.openModal = false
           this.openloading = false
           rel.explorer.route = 'menu_pessoa_membros'
-          rel.explorer.criterios = 'order by id desc'
           this.$refs.grid.get(rel.explorer)
           this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
         } else {
@@ -234,20 +232,14 @@ export default {
     datasearch (route, params) {
       if (route === 1) {
         rel.explorerflex.route = 'exp_municipio'
-        rel.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['id', 'nome', 'uf', '']
         this.ds.title = 'Cidades'
         this.$refs.expl.dataSearch(rel.explorerflex, 1, params)
       } else if (route === 2) {
         rel.explorerflex.route = 'exp_cargo'
-        rel.explorerflex.criterios = 'ORDER BY ID asc'
-        this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Cargos'
         this.$refs.expl.dataSearch(rel.explorerflex, 2, '')
       } else if (route === 3) {
         rel.explorerflex.route = 'exp_documentos_editaveis'
-        rel.explorerflex.criterios = 'ORDER BY ID asc'
-        this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Documentos'
         this.$refs.expl.dataSearch(rel.explorerflex, 3, '')
       }
@@ -272,7 +264,7 @@ export default {
       } else {
         filters.criterio = ''
       }
-      rel.explorer.criterios = filters.criterio + ' ORDER BY ID DESC'
+      rel.explorer.criterios = filters.criterio + ' '
       rel.explorer.route = 'menu_pessoa_membros'
       this.openloading = true
       this.$refs.grid.get(rel.explorer)

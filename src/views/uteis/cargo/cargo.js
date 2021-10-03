@@ -15,7 +15,8 @@ export default {
     explorer: {
       route: 'menu_pessoas_cargo',
       pagina: 1,
-      criterios: 'order by id desc'
+      criterios: '',
+      order: 'order by id desc'
     },
     ds: {
       grid: [],

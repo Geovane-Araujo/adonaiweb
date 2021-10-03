@@ -265,8 +265,7 @@ export default {
     datasearch (route, params) {
       if (route === 1) {
         utc.explorerflex.route = 'exp_municipio'
-        utc.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['id', 'nome', 'uf', '']
+        this.explorerflex.pagina = 1
         this.ds.title = 'Cidades'
         this.$refs.expl.dataSearch(utc.explorerflex, params, '')
         this.open = true

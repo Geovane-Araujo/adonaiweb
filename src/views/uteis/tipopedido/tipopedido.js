@@ -13,7 +13,8 @@ export default {
     explorer: {
       route: 'exp_tipo_pedido',
       pagina: 1,
-      criterios: 'order by id desc'
+      criterios: '',
+      order: 'order by id desc'
     },
     ds: {
       grid: [],

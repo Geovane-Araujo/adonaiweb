@@ -118,8 +118,6 @@ export default {
     datasearch (route) {
       if (route === 0) {
         adExplo.explorerflex.route = 'exp_classe'
-        adExplo.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['id', 'descricao']
         this.ds.title = 'Classes'
         this.$refs.expl.dataSearch(adExplo.explorerflex, route, 0)
       }

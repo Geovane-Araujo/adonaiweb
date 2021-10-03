@@ -170,7 +170,6 @@ export default {
   mounted () {
     utc.explorer.route = 'menu_pessoas_igreja'
     utc.explorer.pagina = 1
-    utc.explorer.criterios = ' order by id desc'
     this.$refs.grid.get(utc.explorer)
   },
   methods: {
@@ -182,7 +181,6 @@ export default {
           this.openModal = false
           utc.explorer.route = 'menu_pessoas_igreja'
           utc.explorer.pagina = 1
-          utc.explorer.criterios = ' order by id desc'
           this.$refs.grid.get(utc.explorer)
           this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
         } else {
@@ -309,17 +307,12 @@ export default {
     datasearch (route, params) {
       if (route === 1) {
         utc.explorerflex.route = 'exp_municipio'
-        utc.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['id', 'nome', 'uf']
         this.ds.title = 'Cidades'
         this.$refs.expl.dataSearch(utc.explorerflex, 1, params)
         this.open = true
       } else if (route === 2) {
         utc.explorerflex.route = 'exp_campoeclesiastico'
-        utc.explorerflex.criterios = 'ORDER BY ID DESC'
-        utc.explorerflex.pagina = 1
         this.ds.title = 'Igrejas'
-        this.ds.grid = ['id', 'nome']
         this.$refs.expl.dataSearch(utc.explorerflex, 2, 2)
         this.open = true
       }

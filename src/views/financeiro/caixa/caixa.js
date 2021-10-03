@@ -20,7 +20,8 @@ export default {
       explorer: {
         route: 'menu_pessoas_caixa',
         pagina: 1,
-        criterios: 'order by id desc'
+        criterios: '',
+        order: 'order by id desc'
       },
       form: {
         add: true,
@@ -103,9 +104,8 @@ export default {
       })
     },
     datasearch (route) {
+      rel.explorerflex.pagina = 1
       rel.explorerflex.route = 'exp_contabancaria'
-      rel.explorerflex.criterios = 'ORDER BY ID DESC'
-      this.ds.grid = ['ID', 'descricao']
       this.ds.title = 'Contas Bancárias'
       this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
       this.open = true

@@ -48,8 +48,6 @@ export default {
     datasearch (route) {
       if (route === 1) {
         rel.explorerflex.route = 'exp_membro_carteirinha'
-        rel.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['id', 'nome']
         this.ds.title = 'Membro'
         this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
       }

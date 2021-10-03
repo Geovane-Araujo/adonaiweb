@@ -151,7 +151,7 @@ export default {
       }
       if (crit.length > 2 || crit === '') {
         rel.explorer.route = 'menu_movimento'
-        rel.explorer.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
+        rel.explorer.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') '
         axios.post(adonai.url + 'aexplorer', rel.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
             this.caixamovimento = res.data.obj
@@ -190,7 +190,6 @@ export default {
     get () {
       this.openloading = true
       rel.explorer.route = 'menu_movimento'
-      rel.explorer.criterios = 'order by id desc'
       rel.explorer.pagina = 1
       axios.post(adonai.url + 'aexplorer', rel.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
@@ -238,10 +237,9 @@ export default {
       }
     },
     datasearch (route) {
+      rel.explorerflex.pagina = 1
       if (route === 1) {
         rel.explorerflex.route = 'expl_caixa_abrir'
-        rel.explorerflex.criterios = 'ORDER BY ID DESC'
-        this.ds.grid = ['ID', 'Descricao']
         this.ds.title = 'Caixas'
         this.$refs.teste.dataSearch(rel.explorerflex, 1, 1)
         this.open = true

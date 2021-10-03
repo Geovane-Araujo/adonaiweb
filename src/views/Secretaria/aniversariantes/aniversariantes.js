@@ -20,8 +20,7 @@ export default {
       resize: 50,
       explorer: {
         route: 'menu_aniversariantes',
-        pagina: 1,
-        criterios: 'order by id desc'
+        pagina: 1
       },
       form: {
         nome: '',
