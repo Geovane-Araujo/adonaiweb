@@ -23,6 +23,7 @@ export default {
       criterio: '',
       extraparams: '',
       totalRows: 200,
+      cabecalho: [],
       expl: {
         route: '',
         pagina: 1,
@@ -40,6 +41,7 @@ export default {
       axios.post(adonai.url + 'aexplorer', criterios, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           this.registros = res.data.obj
+          this.cabecalho = Object.keys(res.data.obj[0])
           this.expl = criterios
           this.pagina = criterios.pagina
           this.params = params
@@ -57,26 +59,25 @@ export default {
       })
     },
     getexplorer (crit) {
-      if (this.criterio === '') {
-        this.criterio = this.cabecalho[1]
+      var query = ' AND'
+      this.cabecalho.forEach(e => {
+        query += ' CAST(' + e + ' as varchar) iLike \'%' + crit + '%\' OR'
+      })
+      query = query.substring(0, query.length - 2)
+      if (this.newchurch === '9999') {
+        this.user.token = 'OTk5OSYwJmFkb25haTA5ODAyNjYzOTQ4'
       }
-      if (crit.length > 2 || crit === '') {
-        this.onRoute()
-        if (this.newchurch === '9999') {
-          this.user.token = 'OTk5OSYwJmFkb25haTA5ODAyNjYzOTQ4'
+      this.expl.criterios = query
+      axios.post(adonai.url + 'aexplorer', this.expl, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data.ret === 'success') {
+          this.registros = res.data.obj
+          this.totalRows = res.data.totalRows
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
-        this.expl.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
-        axios.post(adonai.url + 'aexplorer', this.expl, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          if (res.data.ret === 'success') {
-            this.registros = res.data.obj
-            this.totalRows = res.data.totalRows
-          } else {
-            this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
-          }
-        }).catch(err => {
-          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
-        })
-      }
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     validate (paging, length) {
       if (paging === 1) {
@@ -125,10 +126,6 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
-    },
-    cabecalho: {
-      type: Array,
       required: true
     },
     explorerflex: {

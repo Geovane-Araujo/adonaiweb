@@ -74,7 +74,8 @@ export default {
         route: '',
         pagina: 1,
         criterios: ''
-      }
+      },
+      cabecalho: []
     }
   },
   props: {
@@ -109,6 +110,7 @@ export default {
           this.ref = explorer.route
           this.totalRows = res.data.totalRows
           this.explorer = explorer
+          this.cabecalho = Object.keys(res.data.obj[0])
         } else {
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
@@ -117,22 +119,22 @@ export default {
       })
     },
     getexplorer (crit) {
-      if (this.criterio === '') {
-        this.criterio = this.flex[1].name
-      }
-      if (crit.length > 2 || crit === '') {
-        utlexpl.explorer.route = this.ref
-        utlexpl.explorer.criterios = ' AND ' + this.criterio + ' iLike unaccent(\'%' + crit + '%\') ORDER BY ID DESC'
-        axios.post(adonai.url + 'aexplorer', utlexpl.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-          if (res.data.ret === 'success') {
-            this.reg = res.data.obj
-          } else {
-            this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
-          }
-        }).catch(err => {
-          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
-        })
-      }
+      var query = ' AND'
+      this.cabecalho.forEach(e => {
+        query += ' CAST(' + e + ' as varchar) iLike \'%' + crit + '%\' OR'
+      })
+      query = query.substring(0, query.length - 2)
+      utlexpl.explorer.criterios = query
+      utlexpl.explorer.route = this.ref
+      axios.post(adonai.url + 'aexplorer', utlexpl.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data.ret === 'success') {
+          this.reg = res.data.obj
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
+        }
+      }).catch(err => {
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+      })
     },
     onPage (event) {
       event.page += 1

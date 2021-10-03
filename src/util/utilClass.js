@@ -1,7 +1,6 @@
 import axios from 'axios'
 import adonai from '../http/router'
 var moment = require('moment')
-var pdfWindow
 
 async function uploadImg (e, iduser, iddb) {
   var formdata = new FormData()
@@ -26,18 +25,19 @@ export default {
   explorer: {
     route: '',
     pagina: 1,
-    criterios: 'order by id desc'
+    criterios: ' ',
+    order: ' order by id desc'
   },
   explorerflex: {
     route: '',
     pagina: 1,
-    criterios: 'order by id desc'
+    criterios: ' ',
+    order: ' order by id desc'
   },
   methods: {
     async imprimir (relatorio, token) {
       await axios.post(adonai.url + 'imprimir', relatorio, { headers: { Authorization: 'Bearer ' + token } }).then(res => {
-        pdfWindow = window.open('')
-        pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64," + encodeURI(res.data) + "'></iframe>")
+        window.open(adonai.urlArquivo + res.data)
         return false
       })
     },
