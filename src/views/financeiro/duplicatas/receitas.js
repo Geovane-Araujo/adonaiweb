@@ -224,6 +224,7 @@ export default {
         this.$refs.cmp.dataSearch(rel.explorerflex, 2, 2)
       } else if (route === 3) {
         rel.explorerflex.route = 'exp_caixa'
+        rel.explorerflex.order = ''
         this.ds.title = 'Caixa'
         this.$refs.cmp.dataSearch(rel.explorerflex, 3, 3)
       }

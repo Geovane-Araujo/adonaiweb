@@ -175,6 +175,7 @@ export default {
       } else if (route === 3) {
         rel.explorerflex.route = 'exp_caixa'
         rel.explorerflex.pagina = 1
+        rel.explorerflex.order = ''
         this.ds.title = 'Caixa'
         this.$refs.cmp.dataSearch(rel.explorerflex, 3, 3)
       }
