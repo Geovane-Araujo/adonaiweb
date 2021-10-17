@@ -12,7 +12,21 @@ async function uploadImg (e, iduser, iddb) {
   return ret
 }
 
+async function getCoordenadas () {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(exibeGeo)
+  } else {
+    return null
+  }
+}
+
+async function exibeGeo (posicao) {
+  var coordinates = [posicao.coords.longitude, posicao.coords.latitude]
+  sessionStorage.setItem('local', JSON.stringify(coordinates))
+}
+
 export default {
+  getCoordenadas,
   uploadImg,
   report: {
     relatorio: '',

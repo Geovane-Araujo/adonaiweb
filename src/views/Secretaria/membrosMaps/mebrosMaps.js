@@ -17,12 +17,12 @@ export default {
     return {
       accessToken: 'pk.eyJ1IjoiZ2VvdmFuZS1hZG9uYWlzb2Z0IiwiYSI6ImNraHQzdG50dTBxMGcyem95MnRmaXlvcHcifQ.pYRAxlqBLaT-3GGVU4enAA',
       mapStyle: 'mapbox://styles/geovane-adonaisoft/ckht3vcc91rey19ormfkadl4t',
-      coordinates: [-52.695751, -26.208313],
+      coordinates: JSON.parse(sessionStorage.getItem('local')),
       markers: []
     }
   },
   mounted () {
-    this.getMaps()
+    this.getCoordenadas()
   },
   methods: {
     onMapLoaded (event) {

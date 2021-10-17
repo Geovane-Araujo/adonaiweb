@@ -6,9 +6,13 @@
 </template>
 <script>
 import Toast from 'primevue/toast'
+import util from './util/utilClass'
 export default {
   components: {
     Toast
+  },
+  mounted () {
+    util.getCoordenadas()
   }
 }
 </script>
