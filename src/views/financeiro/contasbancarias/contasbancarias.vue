@@ -26,57 +26,46 @@
         </div>
       </div>
     </div>
-
-    <!-- modal para cadastro-->
-    <div id="overlay" v-if=openModal>
-        <div class="modal-dialog modal-dialog-centered modal-md ">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Cadastro de Contas Bancárias</h5>
-              <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
-                <span aria-hidden="true">&times;</span>
-              </button>
+    <Dialog style="font-size:10px;" header="Cadastro de Caixas" :visible.sync="openModal" :style="{width: '50vw'}" :modal="true">
+      <form method="POST">
+        <b-container>
+          <div class="row">
+            <div class="col-sm-12">
+              <input type="text"
+              class="form-control"
+              v-model="form.descricao"
+              placeholder="Descricao">
             </div>
-            <div class="modal-body">
-              <form method="POST">
-                <b-container>
-                  <b-row>
-                      <div class="col-sm-12">
-                        <input type="text"
-                        class="form-control"
-                        v-model="form.descricao"
-                        placeholder="Descricao">
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text"
-                        class="form-control"
-                        v-model="form.agencia"
-                        placeholder="Agencia">
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text"
-                        class="form-control"
-                        v-model="form.conta"
-                        placeholder="Conta">
-                      </div>
-                      <div class="col-sm-12">
-                        <div class="form-group">
-                          <b-input-group >
-                            <b-form-input placeholder="Banco" v-model="form.nomeBanco" @click="datasearch ()"></b-form-input>
-                            <b-input-group-append>
-                              <b-button variant="outline-info" class="material-icons" @click="datasearch ()">search</b-button>
-                            </b-input-group-append>
-                          </b-input-group>
-                        </div>
-                      </div>
-                  </b-row>
-                </b-container>
-              </form>
-              <button type="button" class="btn btn-outline-info float-right" @click="validate(form)">Salvar</button>
+            <div class="col-sm-6">
+              <input type="text"
+              class="form-control"
+              v-model="form.agencia"
+              placeholder="Agencia">
+            </div>
+            <div class="col-sm-6">
+              <input type="text"
+              class="form-control"
+              v-model="form.conta"
+              placeholder="Conta">
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <b-input-group >
+                  <b-form-input placeholder="Banco" v-model="form.nomeBanco" @click="datasearch ()"></b-form-input>
+                  <b-input-group-append>
+                    <b-button variant="outline-info" class="material-icons" @click="datasearch ()">search</b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </div>
             </div>
           </div>
-        </div>
-    </div>
+        </b-container>
+      </form>
+      <template #footer>
+        <Button label="Salvar" @click="validate(form)" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
+      </template>
+    </Dialog>
     <adonaidatasearch
     :title="ds.title"
     :cabecalho="ds.grid"

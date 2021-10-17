@@ -3,6 +3,14 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import adonai from '../../../http/router'
 import rel from '../../../util/utilClass'
+import TabView from 'primevue/tabview'
+import TabPanel from 'primevue/tabpanel'
+import Dialog from 'primevue/dialog'
+import Checkbox from 'primevue/checkbox'
+import Column from 'primevue/column'
+import DataTable from 'primevue/datatable'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
 
 export default {
   data () {
@@ -96,7 +104,9 @@ export default {
     },
     getusers () {
       axios.get(adonai.url + 'users', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.form.usuariospermissoes = res.data
+        this.form.usuariospermissoes = res.data.obj
+        console.log(this.form)
+        this.openModal = true
         this.openloading = false
       }).catch(err => {
         this.openloading = false
@@ -110,37 +120,19 @@ export default {
       this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
       this.open = true
     },
-    cleanForm () {
-      this.form.add = true
-      this.form.edit = false
-      this.form.del = false
-      this.form.id = ''
-      this.form.descricao = ''
-      this.form.nome = ''
-      this.form.codigo = ''
-      this.form.idbanco = ''
-      this.form.descricao = ''
-      this.form.idusuario = ''
-      this.form.usuariospermissoes = []
-    },
-    read (form) {
-      this.form.add = false
-      this.form.edit = true
-      this.form.del = false
-      this.form.id = form.id
-      this.form.descricao = form.descricao
-      this.form.nome = form.nome
-      this.form.codigo = form.codigo
-      this.form.idbanco = form.idbanco
-      this.form.descricao = form.descricao
-      this.form.idusuario = form.idusuario
-      this.form.usuariospermissoes = form.usuariospermissoes
-      this.openModal = true
-    },
     getbyId (id) {
       this.openloading = true
-      axios.get(adonai.url + 'caixabyid/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.read(res.data.obj)
+      axios.get(adonai.url + 'caixa/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+        if (res.data.ret === 'success') {
+          this.form = res.data.obj
+          if (id === -100) {
+            this.getusers()
+          } else {
+            this.openModal = true
+          }
+        } else {
+          this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
+        }
         this.openloading = false
       }).catch(err => {
         this.openloading = false
@@ -155,5 +147,15 @@ export default {
   },
   computed: {
     ...mapState('auth', ['user'])
+  },
+  components: {
+    TabView,
+    TabPanel,
+    Dialog,
+    Checkbox,
+    Column,
+    DataTable,
+    Button,
+    InputText
   }
 }

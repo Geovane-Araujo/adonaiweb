@@ -2,6 +2,8 @@ import { mapState } from 'vuex'
 import adonai from '../../../http/router'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
+import Button from 'primevue/button'
+import Dialog from 'primevue/dialog'
 
 export default {
   data () {
@@ -122,5 +124,9 @@ export default {
   },
   computed: {
     ...mapState('auth', ['user'])
+  },
+  components: {
+    Button,
+    Dialog
   }
 }

@@ -7,7 +7,7 @@
           <p>Cadastro de Caixas</p>
           <button
             class="btn btn-outline-info "
-            @click="getusers();form.del=false;form.add=true;form.edit=false;openModal=true;">
+            @click="getbyId(-100)">
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Adicionar
           </button>
           <hr class="bg-info">
@@ -26,90 +26,58 @@
         </div>
       </div>
     </div>
-    <div id="overlay" v-if=openModal>
-        <div class="modal-dialog modal-dialog-centered modal-md ">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Cadastro de Caixas</h5>
-              <button type="button" class="close"  @click="cleanForm(form); openModal=false;">
-                <span aria-hidden="true">&times;</span>
-              </button>
+    <Dialog style="font-size:10px;" header="Cadastro de Caixas" :visible.sync="openModal" :style="{width: '50vw'}" :modal="true">
+      <b-container>
+        <TabView>
+          <TabPanel header="Principal">
+            <div class="row">
+              <div class="col-sm-12">
+                <input type="text"
+                class="form-control"
+                placeholder="Descricao"
+                v-model="form.descricao">
+              </div>
+              <div class="col-sm-12">
+                <b-input-group>
+                  <b-form-input placeholder="Conta Padrão"
+                  v-model="form.nome"
+                  ></b-form-input>
+                    <b-input-group-append >
+                    <b-button variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </div>
             </div>
-            <div class="modal-body">
-              <form method="POST">
-                <b-container>
-                  <b-tabs class="mt-1">
-                    <b-tab title="Caixa">
-                      <b-row class="text-center">
-                        <b-col cols="12">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <input type="text"
-                              class="form-control"
-                              placeholder="Descricao"
-                              v-model="form.descricao">
-                            </div>
-                            <div class="col-sm-12">
-                              <b-input-group>
-                                <b-form-input placeholder="Conta Padrão"
-                                v-bind:disabled="(form.status == 0)"
-                                v-model="form.nome"
-                                ></b-form-input>
-                                  <b-input-group-append >
-                                  <b-button variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
-                                </b-input-group-append>
-                              </b-input-group>
-                            </div>
-                          </div>
-                        </b-col>
-                      </b-row>
-                    </b-tab>
-                    <b-tab title="Usuarios Permitidos">
-                      <b-row class="text-center">
-                        <b-col cols="12">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <table class="table table-botdered table-striped table-sm table-hover table-responsive-md">
-                                <thead>
-                                  <tr class="text-left text-light" style="background-color: #5e8a75">
-                                    <th>ID</th>
-                                    <th>Usuario</th>
-                                    <th>Permite</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr class="text-left" v-for="users in form.usuariospermissoes" :key="users.id">
-                                    <td>{{ users.idsuario }}</td>
-                                    <td>{{ users.nome }}</td>
-                                    <td class="text-center" >
-                                      <input class="form-check-input"
-                                      type="checkbox"
-                                      checked="1"
-                                      unchecked="0"
-                                      :value="users.permissao"
-                                      :id="user.idusuario"
-                                      v-model="users.permissao">
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </b-col>
-                      </b-row>
-                    </b-tab>
-                  </b-tabs>
-                </b-container>
-              </form>
-              <button type="button" class="btn btn-outline-info float-right" style="margin-left:5px;" @click="validate(form, 0)">Salvar</button>
-            </div>
-          </div>
-        </div>
-    </div>
+          </TabPanel>
+          <TabPanel header="Permissoes de Usuarios">
+            <b-form-group label="Alunos e Professores">
+            <DataTable :value="form.usuariospermissoes" :scrollable="true" scrollHeight="200px">
+              <Column field="idusuario" header="ID"></Column>
+              <Column field="nome" header="Nome"></Column>
+              <Column field="permissao" header="Permissao">
+                <template #body="slotProps">
+                  <input class="form-check-input"
+                        type="checkbox"
+                        checked="1"
+                        unchecked="0"
+                        :value="slotProps.data"
+                        v-model="slotProps.data">
+                </template>
+              </Column>
+            </DataTable>
+          </b-form-group>
+          </TabPanel>
+        </TabView>
+      </b-container>
+      <template #footer>
+        <Button label="Salvar" @click="validate(form, 0)" class="p-button-raised p-button-success p-button-text button" />
+        <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-danger p-button-text button"/>
+      </template>
+    </Dialog>
     <adonaidatasearch
     :title="ds.title"
     :cabecalho="ds.grid"
-    :form="form" v-bind:openDatasearch="open"
+    :form="form"
     :destroy="destroy"
     ref="cmp"/>
   </div>

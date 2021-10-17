@@ -58,7 +58,7 @@ import Paginator from 'primevue/paginator'
 
 export default {
   name: 'adonaigrid',
-  data () {
+  data: function () {
     return {
       openloading: false,
       deleteModal: false,
@@ -97,9 +97,10 @@ export default {
   mounted () {
   },
   methods: {
-    selected (cal) {
-      console.log('selecionado')
-      console.log(cal)
+    onReconfigure () {
+      this.contexto = ''
+      this.expl.criterios = ''
+      this.expl.pagina = 1
     },
     get (explorer, type) {
       this.openloading = true

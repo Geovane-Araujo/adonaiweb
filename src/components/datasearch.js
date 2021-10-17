@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { mapState } from 'vuex'
-import util from '../assets/scss/util'
 import adonai from '../http/router'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
@@ -10,19 +9,16 @@ import Paginator from 'primevue/paginator'
 
 export default {
   name: 'adonaidatasearch',
-  data () {
+  data: function () {
     return {
       openloading: false,
       registros: [],
       resize: 40,
       params: '',
-      r: false,
-      l: false,
       pagina: 1,
       contexto: '',
       criterio: '',
       extraparams: '',
-      totalRows: 200,
       cabecalho: [],
       expl: {
         route: '',
@@ -32,12 +28,16 @@ export default {
     }
   },
   methods: {
+    onReconfigure () {
+      this.contexto = ''
+    },
     dataSearch (criterios, params, extraparams) {
       if (this.newchurch === '9999') {
         this.user.token = 'OTk5OSYwJmFkb25haTA5ODAyNjYzOTQ4'
       }
       this.expl.criterios = ''
       this.onResize()
+      this.onReconfigure()
       this.openloading = true
       axios.post(adonai.url + 'aexplorer', criterios, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
@@ -51,7 +51,6 @@ export default {
           this.extraparams = extraparams
           this.openloading = false
           this.totalRows = res.data.totalRows
-          this.validate(criterios.pagina, this.registros.length)
         } else {
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
@@ -83,27 +82,10 @@ export default {
         this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
       })
     },
-    validate (paging, length) {
-      if (paging === 1) {
-        this.r = true
-      }
-      if (length < 15) {
-        this.l = true
-      }
-    },
-    onRoute () {
-      if (this.expl.route === 'exp_municipio') {
-        this.criterio = 'municipio.nome'
-      }
-    },
     onPage (event) {
       event.page += 1
       this.expl.pagina = event.page
       this.dataSearch(this.expl, this.params, this.extraparams)
-    },
-    onSelectRsgister (cabecalho) {
-      this.criterio = cabecalho
-      this.$toastr.success(cabecalho + ' selecionado', 'AdonaiSoft Diz:', util.toast)
     },
     onRowSelect (event) {
       this.openDatasearch = false
