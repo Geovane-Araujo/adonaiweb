@@ -28,46 +28,47 @@
     </div>
     <Dialog style="font-size:10px;" header="Cadastro de Caixas" :visible.sync="openModal" :style="{width: '50vw'}" :modal="true">
       <b-container>
-        <TabView>
-          <TabPanel header="Principal">
+        <b-tabs>
+          <b-tab title="Principal" active>
             <div class="row">
               <div class="col-sm-12">
-                <input type="text"
-                class="form-control"
-                placeholder="Descricao"
-                v-model="form.descricao">
+                <b-form-group label="Descricao">
+                  <input type="text"
+                  class="form-control"
+                  v-model="form.descricao">
+                </b-form-group>
               </div>
               <div class="col-sm-12">
-                <b-input-group>
-                  <b-form-input placeholder="Conta Padrão"
-                  v-model="form.nome"
-                  ></b-form-input>
-                    <b-input-group-append >
-                    <b-button variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
-                  </b-input-group-append>
-                </b-input-group>
+                <b-form-group label="Conta Padrão">
+                  <b-input-group>
+                    <b-form-input
+                    v-model="form.nome"
+                    ></b-form-input>
+                      <b-input-group-append >
+                      <b-button variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
+                    </b-input-group-append>
+                  </b-input-group>
+                </b-form-group>
               </div>
             </div>
-          </TabPanel>
-          <TabPanel header="Permissoes de Usuarios">
-            <b-form-group label="Alunos e Professores">
-            <DataTable :value="form.usuariospermissoes" :scrollable="true" scrollHeight="200px">
-              <Column field="idusuario" header="ID"></Column>
-              <Column field="nome" header="Nome"></Column>
-              <Column field="permissao" header="Permissao">
+          </b-tab>
+          <b-tab title="Usuários Permitidos">
+            <div class="row justify-content-end">
+              <div class="col-2">
+                <Button label="Adicionar" @click="datasearch(2);" class="p-button-raised p-button-info p-button-text button p-button-sm" />
+              </div>
+            </div>
+            <DataTable class="p-datatable-sm" :value="form.usuariospermissoes" :scrollable="true" scrollHeight="200px">
+              <Column headerStyle="width: 10%;" bodyStyle="width: 10%;"  field="idusuario" header="ID"></Column>
+              <Column headerStyle="width: 80%;" bodyStyle="width: 80%;" field="nome" header="Nome"></Column>
+              <Column headerStyle="width: 10%;" bodyStyle="width: 10%;"  :exportable="false">
                 <template #body="slotProps">
-                  <input class="form-check-input"
-                        type="checkbox"
-                        checked="1"
-                        unchecked="0"
-                        :value="slotProps.data"
-                        v-model="slotProps.data">
+                    <Button icon="pi pi-trash" class="p-button-rounded-sm p-button-text" @click="onRemoveArra(slotProps.data)" />
                 </template>
               </Column>
             </DataTable>
-          </b-form-group>
-          </TabPanel>
-        </TabView>
+          </b-tab>
+        </b-tabs>
       </b-container>
       <template #footer>
         <Button label="Salvar" @click="validate(form, 0)" class="p-button-raised p-button-success p-button-text button" />

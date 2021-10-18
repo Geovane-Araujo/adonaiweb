@@ -28,7 +28,7 @@ import './assets/scss/app.scss'
 import 'primeflex/primeflex.css'
 import 'primeicons/primeicons.css'
 import 'vuesax/dist/vuesax.css'
-import 'primevue/resources/themes/saga-green/theme.css'
+import './assets/styles/saga-green/theme.css'
 
 import './assets/styles/custom.scss'
 

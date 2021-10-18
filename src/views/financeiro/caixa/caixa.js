@@ -31,35 +31,8 @@ export default {
         criterios: '',
         order: 'order by id desc'
       },
-      form: {
-        add: true,
-        edit: false,
-        del: false,
-        id: '',
-        nome: '',
-        codigo: '',
-        idbanco: '',
-        descricao: '',
-        idusuario: '',
-        usuariospermissoes: [
-          {
-            id: '',
-            idusuario: '',
-            idcaixa: '',
-            permissao: '',
-            nome: ''
-          }
-        ]
-      },
-      selected: [
-        {
-          id: '',
-          idUsuario: '',
-          idcaixa: '',
-          permissao: '',
-          nome: ''
-        }
-      ]
+      form: {},
+      removidos: []
     }
   },
   mounted () {
@@ -74,7 +47,6 @@ export default {
         await axios.post(adonai.url + 'caixa', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
           if (res.data.ret === 'success') {
             this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
-            this.cleanForm()
             this.openModal = false
             this.openloading = false
             this.$refs.grid.get(this.explorer)
@@ -92,44 +64,32 @@ export default {
       if (this.form.descricao === '') {
         this.$toast.add({ severity: 'warn', summary: 'AdonaiSoft', detail: 'Campos Obrigatórios (Descricao)', life: 5000 })
       } else {
-        for (this.selected in form.usuariospermissoes) {
-          if (form.usuariospermissoes[this.selected].permissao === false) {
-            form.usuariospermissoes[this.selected].permissao = 0
-          } else if (form.usuariospermissoes[this.selected].permissao === true) {
-            form.usuariospermissoes[this.selected].permissao = 1
-          }
-        }
+        this.removidos.forEach(e => {
+          form.usuariospermissoes.push(e)
+        })
         this.save(form)
       }
     },
-    getusers () {
-      axios.get(adonai.url + 'users', { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
-        this.form.usuariospermissoes = res.data.obj
-        console.log(this.form)
-        this.openModal = true
-        this.openloading = false
-      }).catch(err => {
-        this.openloading = false
-        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
-      })
-    },
     datasearch (route) {
-      rel.explorerflex.pagina = 1
-      rel.explorerflex.route = 'exp_contabancaria'
-      this.ds.title = 'Contas Bancárias'
-      this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
-      this.open = true
+      if (route === 1) {
+        rel.explorerflex.pagina = 1
+        rel.explorerflex.route = 'exp_contabancaria'
+        this.ds.title = 'Contas Bancárias'
+        this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
+      } else if (route === 2) {
+        rel.explorerflex.pagina = 1
+        rel.explorerflex.route = 'exp_caixa_usuarios'
+        this.ds.title = 'Usuario'
+        this.$refs.cmp.dataSearch(rel.explorerflex, 2, '')
+      }
     },
     getbyId (id) {
       this.openloading = true
       axios.get(adonai.url + 'caixa/' + id, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
+          this.removidos = []
           this.form = res.data.obj
-          if (id === -100) {
-            this.getusers()
-          } else {
-            this.openModal = true
-          }
+          this.openModal = true
         } else {
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
         }
@@ -140,9 +100,37 @@ export default {
       })
     },
     destroy (registro, params) {
-      this.form.nome = registro.descricao
-      this.form.idbanco = registro.id
-      this.open = false
+      if (params === 1) {
+        this.form.nome = registro.descricao
+        this.form.idbanco = registro.id
+      } else if (params === 2) {
+        var user = {
+          add: true,
+          del: false,
+          id: '',
+          idusuario: '',
+          idcaixa: '',
+          permissao: '',
+          nome: ''
+        }
+        user.idusuario = registro.id
+        user.nome = registro.nome
+        this.form.usuariospermissoes.push(user)
+      }
+    },
+    onRemoveArra (data) {
+      data.add = false
+      data.del = true
+      this.removidos.push(data)
+      var i = 0
+      this.form.usuariospermissoes.forEach(e => {
+        if (e.idusuario === data.idusuario) {
+          return true
+        } else {
+          i++
+        }
+      })
+      this.form.usuariospermissoes.splice(i, 1)
     }
   },
   computed: {
