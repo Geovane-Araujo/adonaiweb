@@ -95,6 +95,8 @@ export default {
     }
   },
   mounted () {
+    this.expl.criterios = ''
+    this.expl.pagina = 1
   },
   methods: {
     onReconfigure () {
@@ -104,7 +106,6 @@ export default {
     },
     get (explorer, type) {
       this.openloading = true
-      explorer.criterios = ''
       axios.post(adonai.url + 'aexplorer', explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         this.openloading = false
         if (res.data.ret === 'success') {

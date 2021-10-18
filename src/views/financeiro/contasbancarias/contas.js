@@ -114,12 +114,10 @@ export default {
       this.explorerflex.route = 'exp_banco'
       this.ds.title = 'Bancos'
       this.$refs.expl.dataSearch(this.explorerflex, 1, 1)
-      this.open = true
     },
     destroy (registro, params) {
       this.form.nomeBanco = registro.nome
       this.form.idbanco = registro.id
-      this.open = false
     }
   },
   computed: {

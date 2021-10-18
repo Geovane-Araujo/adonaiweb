@@ -69,7 +69,7 @@
     <adonaidatasearch
     :title="ds.title"
     :cabecalho="ds.grid"
-    :form="form" v-bind:openDatasearch="open"
+    :form="form"
     :destroy="destroy"
     ref="expl"/>
   </div>
