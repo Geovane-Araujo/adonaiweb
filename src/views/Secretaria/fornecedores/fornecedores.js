@@ -121,7 +121,6 @@ export default {
       this.openloading = true
       await axios.post(adonai.url + 'pessoafornecedor', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret !== undefined && res.data.ret === 'success') {
-          this.openloading = false
           this.openModal = false
           utc.explorer.route = 'menu_fornecedores'
           utc.explorer.pagina = 1
@@ -129,8 +128,8 @@ export default {
           this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
         } else {
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
-          this.openloading = true
         }
+        this.openloading = false
       }).catch(err => {
         this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
         this.openloading = false
