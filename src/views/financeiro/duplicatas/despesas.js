@@ -249,31 +249,31 @@ export default {
     filter (filters) {
       this.criterio = ''
       if (filters.nome !== '') {
-        this.criterio += ' AND duplicata.idmembro = ' + filters.idpessoa
+        this.criterio += ' AND idmembro = ' + filters.idpessoa
       }
       if (filters.caixa !== '') {
-        this.criterio += ' AND duplicata.idcaixamovimento = ' + filters.idcaixa
+        this.criterio += ' AND idcaixamovimento = ' + filters.idcaixa
       }
       if (filters.tipo !== '') {
-        this.criterio += ' AND duplicata.idtipo = ' + filters.idtipo
+        this.criterio += ' AND idtipo = ' + filters.idtipo
       }
       if (filters.datainicio !== '' && filters.datafim !== '') {
         if (filters.tipodata === 1) {
-          this.criterio += ' AND dataemissao BETWEEN \'' + moment(filters.datainicio).format('YYYY-MM-DD') + '\' AND \'' + moment(filters.datafim).format('YYYY-MM-DD') + '\''
+          this.criterio += ' AND emissao BETWEEN \'' + moment(filters.datainicio).format('YYYY-MM-DD') + '\' AND \'' + moment(filters.datafim).format('YYYY-MM-DD') + '\''
         } else if (filters.tipodata === 2) {
-          this.criterio += ' AND datavencimento BETWEEN \'' + moment(filters.datainicio).format('YYYY-MM-DD') + '\' AND \'' + moment(filters.datafim).format('YYYY-MM-DD') + '\''
+          this.criterio += ' AND vencimento BETWEEN \'' + moment(filters.datainicio).format('YYYY-MM-DD') + '\' AND \'' + moment(filters.datafim).format('YYYY-MM-DD') + '\''
         } else if (filters.tipodata === 3) {
-          this.criterio += ' AND datapagamento BETWEEN \'' + moment(filters.datainicio).format('YYYY-MM-DD') + '\' AND \'' + moment(filters.datafim).format('YYYY-MM-DD') + '\''
+          this.criterio += ' AND pagamento BETWEEN \'' + moment(filters.datainicio).format('YYYY-MM-DD') + '\' AND \'' + moment(filters.datafim).format('YYYY-MM-DD') + '\''
         }
       }
       if (filters.status !== 0) {
         if (filters.status === 1) {
-          this.criterio += ' AND duplicata.status = 1'
+          this.criterio += ' AND statuspag = 1'
         } else if (filters.status === 2) {
-          this.criterio += ' AND duplicata.status = 0'
+          this.criterio += ' AND statuspag = 0'
         }
       }
-      rel.explorer.criterios = this.criterio + ' C'
+      rel.explorer.criterios = this.criterio
       rel.explorer.route = 'menu_duplicata_despesa'
       this.openloading = true
       this.$refs.grid.get(rel.explorer)
