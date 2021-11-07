@@ -60,6 +60,7 @@
     "vue-moment": "^4.1.0",
     "vue-resource": "^1.5.2",
     "vue-router": "^3.2.0",
+    "vue-showdown": "^2.4.1",
     "vue-sidebar-menu": "^4.5.4",
     "vue-simple-spinner": "^1.2.10",
     "vue-swatches": "^2.1.0",

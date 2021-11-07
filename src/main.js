@@ -22,6 +22,7 @@ import InputText from 'primevue/inputtext'
 import Vuesax from 'vuesax'
 import ToastService from 'primevue/toastservice'
 import VueHtml2pdf from 'vue-html2pdf'
+import { VueShowdown } from 'vue-showdown'
 import './global'
 import 'vue-swatches/dist/vue-swatches.css'
 import './assets/scss/app.scss'
@@ -48,6 +49,7 @@ Vue.use(VueTheMask)
 Vue.directive('badge', BadgeDirective)
 Vue.use(money, { precision: 4 })
 Vue.use(require('vue-moment'))
+Vue.component('VueShowdown', VueShowdown)
 Vue.use(loader)
 Vue.use(VueCharts)
 Vue.use(vuejquery)

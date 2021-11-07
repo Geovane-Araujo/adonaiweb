@@ -4,16 +4,32 @@
     <div class="container-fluid">
       <div class="row bg-ligth">
         <div class="col-lg-12">
-          <p class="p">Notas de Versões</p>
+          <div class="linha">
+            <p class="p">Notas de Versões</p>
+            <Button v-show="habilitainclusao" @click="openModal= true" label="Adicionar Nova Versao" class="p-button-outlined" />
+          </div>
           <hr class="bg-info" />
-          <adonaigrid
-          :flex="[{ tamanho: 15, name: 'versao' }, { tamanho: 200, name: 'descricao' }]"
-          :registros="versao"
-          :type="false"
-          ref="grid"></adonaigrid>
+          <div style="margin: 15px">
+            <VueShowdown :markdown="versoes" flavor="github" :options="{ emoji: true }"/>
+          </div>
         </div>
       </div>
     </div>
+    <Dialog  header="Nota de Versão" :visible.sync="openModal" :style="{width: '100vw', height: '100vh'}" :modal="true">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="p-fluid">
+            <Textarea v-model="form.descricao" :autoResize="true" rows="5" cols="30" />
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <VueShowdown :markdown="form.descricao" flavor="github" :options="{ emoji: true }"/>
+        </div>
+      </div>
+      <template #footer>
+        <Button label="OK"  @click="save(form);" class="p-button-raised p-button-success p-button-text button" />
+      </template>
+    </Dialog>
   </div>
 </template>
 

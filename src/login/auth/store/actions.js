@@ -5,7 +5,7 @@ import * as types from './mutation-types'
 export const ActionLogin = ({ dispatch }, payload) => {
   return services.auth.login(payload).then(res => {
     sessionStorage.setItem('ret', res.data.ret)
-    sessionStorage.setItem('login', res.data.login)
+    sessionStorage.setItem('login', JSON.stringify(res.data.login))
     if (res.data.ret === 'success') {
       sessionStorage.setItem('name', res.data.login.nome)
       sessionStorage.setItem('path', res.data.login.pathimg)
