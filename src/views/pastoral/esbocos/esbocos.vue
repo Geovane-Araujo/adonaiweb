@@ -26,17 +26,12 @@
     </div>
 
     <Dialog style="font-size:10px;" header="Estudos, Esboços e Devocionais" :visible.sync="openModal" :style="{width: resize+'vw'}" :modal="true">
-      <b-container>
-        <div class="row">
+        <div class="row" style="padding:5px">
           <div class="col-sm-2">
-            <b-form-group label="Data">
-              <datetime
-                class="datePivker"
-                type="Date"
-                v-model="form.data"
-                value-zone="UTC"
-                format="dd/MM/yyyy">
-              </datetime>
+            <b-form-group label="Data Emissao" label-align-sm="left">
+              <b-form-input class="form-control"
+                type="date"
+                v-model="form.dataemissao"></b-form-input>
             </b-form-group>
           </div>
           <div class="col-sm-4">
@@ -67,10 +62,9 @@
             </b-form-group>
           </div>
           <div class="col-sm-12">
-            <Editor v-model="form.mensagem" editorStyle="height: 320px"/>
+            <Editor v-model="form.mensagem" editorStyle="height: 420px"/>
           </div>
         </div>
-      </b-container>
       <template #footer>
           <Button label="Salvar" @click="validate(form);" class="p-button-raised p-button-success p-button-text button" />
           <Button label="Cancelar"  @click="openModal=false" class="p-button-raised p-button-success p-button-text button"/>
