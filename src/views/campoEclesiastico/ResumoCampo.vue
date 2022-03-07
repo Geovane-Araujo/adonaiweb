@@ -249,78 +249,9 @@ export default {
         {
           text: 'Todos',
           value: 0
-        },
-        {
-          text: '2018',
-          value: 2018
-        },
-        {
-          text: '2019',
-          value: 2019
-        },
-        {
-          text: '2020',
-          value: 2020
-        },
-        {
-          text: '2021',
-          value: 2021
         }
       ],
-      mes: [
-        {
-          text: 'Todos',
-          value: 0
-        },
-        {
-          text: 'Janeiro',
-          value: 1
-        },
-        {
-          text: 'Fevereiro',
-          value: 2
-        },
-        {
-          text: 'Março',
-          value: 3
-        },
-        {
-          text: 'Abril',
-          value: 4
-        },
-        {
-          text: 'Maio',
-          value: 5
-        },
-        {
-          text: 'Junho',
-          value: 6
-        },
-        {
-          text: 'Julho',
-          value: 7
-        },
-        {
-          text: 'Agosto',
-          value: 8
-        },
-        {
-          text: 'Setembro',
-          value: 9
-        },
-        {
-          text: 'Outubro',
-          value: 10
-        },
-        {
-          text: 'Novembro',
-          value: 11
-        },
-        {
-          text: 'Dezembro',
-          value: 12
-        }
-      ],
+      mes: [],
       form: {
         tipo: 1,
         ano: 0,
@@ -417,6 +348,8 @@ export default {
   },
   mounted () {
     this.show = true
+    utc.methods.onYear(this.ano)
+    utc.methods.onMonth(this.mes)
     this.listaIgrejas()
     this.getCharts(this.form)
   },

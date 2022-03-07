@@ -13,14 +13,17 @@ export default {
     }
   },
   methods: {
-    render (label, datasets) {
+    render (label, datasets, tp) {
       this.renderChart({
         labels: label,
-        datasets: datasets
+        datasets: this.onData(datasets, tp)
       },
       {
         responsive: true,
         maintainAspectRatio: false,
+        interaction: {
+          intersect: false
+        },
         scales: {
           xAxes: [{
             stacked: true
@@ -34,6 +37,25 @@ export default {
           intersect: false
         }
       })
+    },
+    onData (datasets, tp) {
+      if (tp === undefined || tp === 1) {
+        return datasets
+      }
+
+      const dataset = []
+
+      datasets.forEach(item => {
+        const data = {
+          label: item.label,
+          data: item.data,
+          backgroundColor: item.backgroundColor,
+          stack: item.slack
+        }
+        dataset.push(JSON.parse(JSON.stringify(data)))
+      })
+
+      return dataset
     }
   }
 }
