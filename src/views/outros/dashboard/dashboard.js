@@ -140,7 +140,7 @@ export default {
     },
     datasearch (route) {
       if (route === 1) {
-        utilClass.explorerflex.route = 'exp_caixa'
+        utilClass.explorerflex.route = 'menu_pessoas_caixa'
         utilClass.explorerflex.pagina = 1
         utilClass.explorerflex.order = ''
         this.ds.title = 'Caixa'
@@ -156,7 +156,7 @@ export default {
     onDestroy (registro, params) {
       if (params === 1) {
         this.models.descriptioncashier = registro.descricao
-        this.filter.idcaixa = registro.idmovimento
+        this.filter.idcaixa = registro.id
       } else if (params === 2) {
         this.models.userName = registro.Nome
         this.filter.idusuario = registro.ID
