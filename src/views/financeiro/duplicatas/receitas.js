@@ -10,6 +10,8 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import 'vue-datetime/dist/vue-datetime.css'
 import SplitButton from 'primevue/splitbutton'
+import { TableModel } from '../../../model/TableModel'
+import { Duplicata } from '../../../model/Duplicata'
 var moment = require('moment')
 var data = new Date()
 
@@ -42,30 +44,7 @@ export default {
       pagina: 1,
       tipo: 0,
       status: 1,
-      form: {
-        add: true,
-        edit: false,
-        del: false,
-        id: '',
-        descricao: '',
-        dataemissao: '',
-        dataVencimento: '',
-        dataPagamento: '',
-        idUsuarioInclusao: '',
-        status: 1,
-        valor: '',
-        observacoes: '',
-        tipo: 0,
-        idCaixaMovimento: '',
-        idMembro: '',
-        nome: '',
-        descrconta: '',
-        descstatus: '',
-        desccaixa: '',
-        idtipo: '',
-        quantidadeParcelas: 1,
-        intervaloDias: 0
-      },
+      form: new Duplicata(),
       duplicata: [],
       currency: {
         decimal: ',',
@@ -92,6 +71,7 @@ export default {
   },
   mounted () {
     this.onResize()
+    rel.explorer = new TableModel()
     rel.explorer.route = 'menu_duplicata_receita'
     this.$refs.grid.get(rel.explorer)
   },

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import adonai from '../http/router'
+import { TableModel } from '../model/TableModel'
 var moment = require('moment')
 
 async function uploadImg (e, iduser, iddb) {
@@ -36,18 +37,8 @@ export default {
     simpleObjects1: '',
     simpleObject2: ''
   },
-  explorer: {
-    route: '',
-    pagina: 1,
-    criterios: ' ',
-    order: ' order by id desc'
-  },
-  explorerflex: {
-    route: '',
-    pagina: 1,
-    criterios: ' ',
-    order: ' order by id desc'
-  },
+  explorer: new TableModel(),
+  explorerflex: new TableModel(),
   methods: {
     async imprimir (relatorio, token) {
       await axios.post(adonai.url + 'imprimir', relatorio, { headers: { Authorization: 'Bearer ' + token } }).then(res => {

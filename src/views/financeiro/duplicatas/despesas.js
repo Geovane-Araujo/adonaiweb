@@ -9,6 +9,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
 import 'vue-datetime/dist/vue-datetime.css'
+import { TableModel } from '../../../model/TableModel'
 var moment = require('moment')
 var data = new Date()
 
@@ -82,6 +83,7 @@ export default {
   },
   mounted () {
     this.onResize()
+    rel.explorer = new TableModel()
     rel.explorer.route = 'menu_duplicata_despesa'
     this.$refs.grid.get(rel.explorer)
   },
