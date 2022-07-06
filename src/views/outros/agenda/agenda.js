@@ -6,13 +6,13 @@ import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import utilExpl from '../../../util/utilClass'
 import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Calendar from 'primevue/calendar'
+import { TableModel } from '../../../model/TableModel'
 
 var moment = require('moment')
 // var data = new Date()
@@ -65,10 +65,16 @@ export default {
           day: 'Hoje',
           list: 'Lista'
         }
+      },
+      utilExpl: {
+        explorer: new TableModel(),
+        explorerflex: new TableModel()
       }
     }
   },
   mounted () {
+    this.utilExpl.explorer = new TableModel()
+    this.utilExpl.explorerflex = new TableModel()
     this.onResize()
     this.get()
   },
@@ -93,8 +99,8 @@ export default {
     },
     get () {
       this.openloadin = true
-      utilExpl.explorer.route = 'menu_agenda'
-      axios.post(adonai.url + 'aexplorer', utilExpl.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
+      this.utilExpl.explorer.route = 'menu_agenda'
+      axios.post(adonai.url + 'aexplorer', this.utilExpl.explorer, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           this.calendarOptions.events = res.data.obj
           this.openloadin = false
@@ -153,13 +159,13 @@ export default {
     },
     datasearch (route) {
       if (route === 1) {
-        utilExpl.explorerflex.route = 'menu_eventos_tipos'
+        this.utilExpl.explorerflex.route = 'menu_eventos_tipos'
         this.ds.title = 'Agenda Eventos'
-        this.$refs.expl.dataSearch(utilExpl.explorerflex, 1, 1)
+        this.$refs.expl.dataSearch(this.utilExpl.explorerflex, 1, 1)
       } else {
-        utilExpl.explorerflex.route = 'exp_agenda_usuarios'
+        this.utilExpl.explorerflex.route = 'exp_agenda_usuarios'
         this.ds.title = 'Agenda Eventos'
-        this.$refs.expl.dataSearch(utilExpl.explorerflex, 2, 2)
+        this.$refs.expl.dataSearch(this.utilExpl.explorerflex, 2, 2)
       }
     },
     destroy (registro, params) {
