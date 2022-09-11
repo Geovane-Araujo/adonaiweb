@@ -9,7 +9,11 @@
               <p>DashBoard</p>
             </div>
             <div>
-              <Button icon="pi pi-filter" @click="filters=true" class="p-button-rounded p-button-text p-button-plain"/>
+              <button
+                class="btn btn-outline-info rounded" style="float:right;"
+                v-b-toggle.sidebar-backdrop>
+                <img src="../../img/filter.png">
+              </button>
             </div>
           </div>
           <hr class="bg-info">
@@ -83,9 +87,9 @@
           <section>
             <b-form-group label="Comparativo Entradas e Saidas Manual" label-align="center">
               <div  class="col-sm-12 p-shadow-1">
-                <barchart style="height: 300px"
+                <barchartdoubleData style="height: 300px"
                 :label="cabe_finan"
-                :datasets="dataset_finan" ref="year"></barchart>
+                :datasets="dataset_finan" ref="year"></barchartdoubleData>
               </div>
             </b-form-group>
             <div class="row">
@@ -110,9 +114,51 @@
         </div>
       </div>
     </div>
-    <Sidebar :visible.sync="filters" class="p-sidebar-sm" position="right">
-      Filtros
-    </Sidebar>
+    <b-sidebar
+      id="sidebar-backdrop"
+      title="Filtros"
+      :backdrop-variant="variant"
+      right
+      shadow>
+      <b-container style="padding:0px;">
+        <div class="filters p-fluid">
+          <div class="ux-margin">
+            <b-form-group label="Ano">
+              <b-form-select
+              :options="ano"
+              v-model="filter.ano"
+              ></b-form-select>
+            </b-form-group>
+          </div>
+          <div>
+            <b-form-group label="Caixa/Conta" label-align-sm="left">
+              <b-input-group>
+                <b-form-input
+                  v-model="models.descriptioncashier"
+                ></b-form-input>
+                  <b-input-group-append >
+                  <b-button variant="outline-info" class="material-icons" @click="datasearch (1);" >search</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </div>
+          <div>
+            <b-form-group label="Usuário" label-align-sm="left">
+              <b-input-group>
+                <b-form-input
+                  v-model="models.userName"
+                ></b-form-input>
+                  <b-input-group-append >
+                  <b-button variant="outline-info" class="material-icons" @click="datasearch (2);" >search</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </div>
+          <Button @click="onFilter()" label="Filtrar" class="p-button-raised p-button-success p-button-text button ux-margin" />
+        </div>
+      </b-container>
+    </b-sidebar>
+    <adonaidatasearch :title="ds.title" :cabecalho="ds.grid" :form="form" :destroy="onDestroy" ref="cmp"/>
   </div>
 </template>
 
@@ -120,4 +166,5 @@
 </script>
 <style lang=scss scoped>
 @import '../../../assets/scss/adonai.scss';
+@import './dashboard.scss';
 </style>

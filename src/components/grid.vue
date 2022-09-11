@@ -2,9 +2,11 @@
 <div style="padding-left:0px;">
   <loader v-show="openloading" object="#5e8a75" color1="#e9e6e1" color2="#c4b5a0" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="84" name="circular"></loader>
   <div>
-    <DataTable class="p-datatable-sm"
-        scrollHeight="50vh"
+    <DataTable
+        class="p-datatable-sm"
+        scrollHeight="flex"
         :scrollable="true"
+        scrollDirection="both"
         style="font-size:14px;"
         :value="reg"
         :paginator="true"

@@ -41,6 +41,7 @@
   background-color: rgba($color: #ffffff, $alpha: 0.9);
   margin: 5px;
   overflow:auto;
+  z-index: 1000;
 }
 #overlay {
   position: fixed;
