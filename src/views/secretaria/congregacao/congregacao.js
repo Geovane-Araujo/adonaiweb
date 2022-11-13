@@ -15,10 +15,6 @@ export default {
       openloading: false,
       open: false,
       resize: 50,
-      explorerflex: {
-        route: '',
-        pagina: 1
-      },
       ds: {
         grid: [],
         title: '',
@@ -76,11 +72,14 @@ export default {
   },
   mounted () {
     this.onResize()
-    var filter = new TableModel()
-    filter.route = 'menu_pessoas_congregacao'
-    this.$refs.grid.get(filter)
+    this.$refs.grid.get(this.onGridInitialize('menu_pessoas_congregacao'))
   },
   methods: {
+    onGridInitialize (route) {
+      var filter = new TableModel()
+      filter.route = route
+      return filter
+    },
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'congregacao', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -89,7 +88,7 @@ export default {
           this.cleanForm()
           this.openModal = false
           this.openloading = false
-          this.$refs.grid.get(this.explorer)
+          this.$refs.grid.get(this.onGridInitialize('menu_pessoas_congregacao'))
         } else {
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           this.openloading = false
@@ -174,9 +173,8 @@ export default {
       })
     },
     datasearch (route, params) {
-      this.explorerflex.route = 'exp_municipio'
       this.ds.title = 'Cidades'
-      this.$refs.expl.dataSearch(this.explorerflex, 1, 1, params)
+      this.$refs.expl.dataSearch(this.onGridInitialize('exp_municipio'), 1, 1, params)
       this.open = true
     },
     destroy (registro, params) {

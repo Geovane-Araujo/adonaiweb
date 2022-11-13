@@ -131,19 +131,21 @@ export default {
   },
   mounted () {
     this.onResize()
-    var filter = new TableModel()
-    filter.route = 'menu_pessoa_membros'
-    this.$refs.grid.get(filter)
+    this.$refs.grid.get(this.onGridInitialize('menu_pessoa_membros'))
   },
   methods: {
+    onGridInitialize (route) {
+      var filter = new TableModel()
+      filter.route = route
+      return filter
+    },
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'membro', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret !== undefined && res.data.ret === 'success') {
           this.openModal = false
           this.openloading = false
-          rel.explorer.route = 'menu_pessoa_membros'
-          this.$refs.grid.get(rel.explorer)
+          this.$refs.grid.get(this.onGridInitialize('menu_pessoa_membros'))
           this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
         } else {
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
@@ -232,32 +234,37 @@ export default {
     },
     // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
     datasearch (route, params) {
-      if (route === 1) {
-        rel.explorerflex.route = 'exp_municipio'
-        this.ds.title = 'Cidades'
-        this.$refs.expl.dataSearch(rel.explorerflex, 1, params)
-      } else if (route === 2) {
-        rel.explorerflex.route = 'exp_cargo'
-        this.ds.title = 'Cargos'
-        this.$refs.expl.dataSearch(rel.explorerflex, 2, '')
-      } else if (route === 3) {
-        rel.explorerflex.route = 'exp_documentos_editaveis'
-        this.ds.title = 'Documentos'
-        this.$refs.expl.dataSearch(rel.explorerflex, 3, '')
+      switch (route) {
+        case 1:
+          this.ds.title = 'Cidades'
+          this.$refs.expl.dataSearch(this.onGridInitialize('exp_municipio'), 1, params)
+          break
+        case 2:
+          this.ds.title = 'Cargos'
+          this.$refs.expl.dataSearch(this.onGridInitialize('exp_cargo'), 2, '')
+          break
+        case 3:
+          this.ds.title = 'Documentos'
+          this.$refs.expl.dataSearch(this.onGridInitialize('exp_documentos_editaveis'), 3, '')
+          break
+        default:
       }
     },
     destroy (registro, params, e) {
-      if (params === 1) {
-        this.form.endereco[e].cidade = registro.nome
-        this.form.endereco[e].idCidade = registro.id
-      } else if (params === 2) {
-        this.form.cargo = registro.descricao
-        this.form.idCargo = registro.id
-
-        this.filters.cargo = registro.descricao
-        this.filters.idcargo = registro.id
-      } else {
-        this.getDocument(registro.id)
+      switch (params) {
+        case 1:
+          this.form.endereco[e].cidade = registro.nome
+          this.form.endereco[e].idCidade = registro.id
+          break
+        case 2:
+          this.form.cargo = registro.descricao
+          this.form.idCargo = registro.id
+          this.filters.cargo = registro.descricao
+          this.filters.idcargo = registro.id
+          break
+        default:
+          this.getDocument(registro.id)
+          break
       }
     },
     filter (filters) {
@@ -266,9 +273,8 @@ export default {
       } else {
         filters.criterio = ''
       }
-      var filter = new TableModel()
+      var filter = this.onGridInitialize('menu_pessoa_membros')
       filter.criterios = filters.criterio + ' '
-      filter.route = 'menu_pessoa_membros'
       this.openloading = true
       this.$refs.grid.get(filter)
       this.openFilter = false

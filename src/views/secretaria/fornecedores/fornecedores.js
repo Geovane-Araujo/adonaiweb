@@ -1,12 +1,13 @@
 import { mapState } from 'vuex'
 import adonai from '../../../http/router'
-import axios from 'axios'
 import utc from '../../../util/utilClass'
+import axios from 'axios'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import { TableModel } from '../../../model/TableModel'
 
 export default {
   data () {
@@ -112,19 +113,20 @@ export default {
     }
   },
   mounted () {
-    utc.explorer.route = 'menu_fornecedores'
-    utc.explorer.pagina = 1
-    this.$refs.grid.get(utc.explorer)
+    this.$refs.grid.get(this.onGridInitialize('menu_fornecedores'))
   },
   methods: {
+    onGridInitialize (route) {
+      var filter = new TableModel()
+      filter.route = route
+      return filter
+    },
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'pessoafornecedor', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret !== undefined && res.data.ret === 'success') {
           this.openModal = false
-          utc.explorer.route = 'menu_fornecedores'
-          utc.explorer.pagina = 1
-          this.$refs.grid.get(utc.explorer)
+          this.$refs.grid.get(this.onGridInitialize('menu_fornecedores'))
           this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
         } else {
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
@@ -195,9 +197,8 @@ export default {
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
     datasearch (route, params) {
       if (route === 1) {
-        utc.explorerflex.route = 'exp_municipio'
         this.ds.title = 'Cidades'
-        this.$refs.expl.dataSearch(utc.explorerflex, 1, params)
+        this.$refs.expl.dataSearch(this.onGridInitialize('exp_municipio'), 1, params)
         this.open = true
       }
     },
