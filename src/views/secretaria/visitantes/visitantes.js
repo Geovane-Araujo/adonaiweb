@@ -7,6 +7,7 @@ import rel from '../../../util/utilClass'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import { TableModel } from '../../../model/TableModel'
 
 export default {
   data () {
@@ -15,10 +16,6 @@ export default {
       deleteModal: false,
       openloading: false,
       resize: 50,
-      explorer: {
-        route: 'menu_pessoas_visitantes',
-        pagina: 1
-      },
       explorerflex: {
         route: '',
         pagina: 1
@@ -79,9 +76,14 @@ export default {
   },
   mounted () {
     this.onResize()
-    this.$refs.grid.get(this.explorer)
+    this.$refs.grid.get(this.onGridInitialize('menu_pessoas_visitantes'))
   },
   methods: {
+    onGridInitialize (route) {
+      var filter = new TableModel()
+      filter.route = route
+      return filter
+    },
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'visitantes', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -89,7 +91,7 @@ export default {
           this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
           this.openloading = false
           this.openModal = false
-          this.$refs.grid.get(this.explorer)
+          this.$refs.grid.get(this.onGridInitialize('menu_pessoas_visitantes'))
           if (this.form.edit) {
             this.openModal = false
             this.openloading = false
@@ -159,7 +161,7 @@ export default {
       if (route === 1) {
         this.explorerflex.route = 'exp_municipio'
         this.ds.title = 'Cidades'
-        this.$refs.expl.dataSearch(this.explorerflex, 1, params)
+        this.$refs.expl.dataSearch(this.onGridInitialize('exp_municipio'), 1, params)
       }
     },
     destroy (registro) {

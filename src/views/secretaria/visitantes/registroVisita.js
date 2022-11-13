@@ -2,12 +2,12 @@ import { mapState } from 'vuex'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import adonai from '../../../http/router'
 import axios from 'axios'
-import rel from '../../../util/utilClass'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Editor from 'primevue/editor'
 import { Datetime } from 'vue-datetime'
+import { TableModel } from '../../../model/TableModel'
 var moment = require('moment')
 var data = new Date()
 
@@ -37,11 +37,14 @@ export default {
   },
   mounted () {
     this.onResize()
-    rel.explorerflex.route = 'menu_pessoa_registro_visitante'
-    rel.explorerflex.pagina = 1
-    this.$refs.grid.get(rel.explorerflex)
+    this.$refs.grid.get(this.onGridInitialize('menu_pessoa_registro_visitante'))
   },
   methods: {
+    onGridInitialize (route) {
+      var filter = new TableModel()
+      filter.route = route
+      return filter
+    },
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'registrovisitante', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
@@ -49,8 +52,7 @@ export default {
           this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Visita registrada com sucesso', life: 5000 })
           this.openloading = false
           this.openModal = false
-          rel.explorerflex.route = 'menu_pessoa_registro_visitante'
-          this.$refs.grid.get(rel.explorerflex)
+          this.$refs.grid.get(this.onGridInitialize('menu_pessoa_registro_visitante'))
           if (this.form.edit) {
             this.openModal = false
             this.openloading = false
@@ -95,9 +97,8 @@ export default {
     },
     datasearch (route, params) {
       if (route === 1) {
-        rel.explorerflex.route = 'exp_pessoa_visitante'
         this.ds.title = 'Visitantes'
-        this.$refs.expl.dataSearch(rel.explorerflex, 1, params)
+        this.$refs.expl.dataSearch(this.onGridInitialize('exp_pessoa_visitante'), 1, params)
       }
     },
     destroy (registro) {

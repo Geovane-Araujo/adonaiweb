@@ -4,12 +4,12 @@ import axios from 'axios'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import adExplo from '../../../util/utilClass'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Editor from 'primevue/editor'
 import { Datetime } from 'vue-datetime'
 import Checkbox from 'primevue/checkbox'
+import { TableModel } from '../../../model/TableModel'
 var moment = require('moment')
 var data = new Date()
 
@@ -63,10 +63,14 @@ export default {
     }
   }),
   mounted () {
-    adExplo.explorer.route = 'menu_registro_chamada'
-    this.$refs.grid.get(adExplo.explorer)
+    this.$refs.grid.get(this.onGridInitialize('menu_registro_chamada'))
   },
   methods: {
+    onGridInitialize (route) {
+      var filter = new TableModel()
+      filter.route = route
+      return filter
+    },
     initialize () {
       this.form.datachamada = moment(data).format()
     },
@@ -76,8 +80,7 @@ export default {
         if (res.data.ret === 'success') {
           this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
           this.openModal = false
-          adExplo.explorer.route = 'menu_registro_chamada'
-          this.$refs.grid.get(adExplo.explorer)
+          this.$refs.grid.get(this.onGridInitialize('menu_registro_chamada'))
           this.openloading = false
         } else {
           this.openloading = false
@@ -117,9 +120,8 @@ export default {
     },
     datasearch (route) {
       if (route === 0) {
-        adExplo.explorerflex.route = 'exp_classe'
         this.ds.title = 'Classes'
-        this.$refs.expl.dataSearch(adExplo.explorerflex, route, 0)
+        this.$refs.expl.dataSearch(this.onGridInitialize('exp_classe'), route, 0)
       }
     },
     destroy (registro, params) {

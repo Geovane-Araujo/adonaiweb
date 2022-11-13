@@ -9,6 +9,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import FileUpload from 'primevue/fileupload'
+import { TableModel } from '../../../model/TableModel'
 
 export default {
   data () {
@@ -44,18 +45,21 @@ export default {
   },
   mounted () {
     this.onResize()
-    rel.explorer.route = 'menu_criancas'
-    this.$refs.grid.get(rel.explorer)
+    this.$refs.grid.get(this.onGridInitialize('menu_criancas'))
   },
   methods: {
+    onGridInitialize (route) {
+      var filter = new TableModel()
+      filter.route = route
+      return filter
+    },
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'pessoacriancas', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret !== undefined && res.data.ret === 'success') {
           this.openModal = false
           this.openloading = false
-          rel.explorer.route = 'menu_criancas'
-          this.$refs.grid.get(rel.explorer)
+          this.$refs.grid.get(this.onGridInitialize('menu_criancas'))
           this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com sucesso', life: 5000 })
         } else {
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
@@ -108,10 +112,8 @@ export default {
       })
     }, // params serve pra qualquer coisa que precisa mandar seja um id ou um critério
     datasearch (params) {
-      rel.explorerflex.route = 'exp_pessoa_financeiro'
-      rel.explorerflex.pagina = 1
       this.ds.title = 'Pais'
-      this.$refs.expl.dataSearch(rel.explorerflex, params, params)
+      this.$refs.expl.dataSearch(this.onGridInitialize('exp_pessoa_financeiro'), params, params)
     },
     destroy (registro, params) {
       if (params === 0) {

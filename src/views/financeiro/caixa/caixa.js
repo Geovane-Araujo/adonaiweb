@@ -2,7 +2,6 @@ import { mapState } from 'vuex'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import adonai from '../../../http/router'
-import rel from '../../../util/utilClass'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import Dialog from 'primevue/dialog'
@@ -11,6 +10,7 @@ import Column from 'primevue/column'
 import DataTable from 'primevue/datatable'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import { TableModel } from '../../../model/TableModel'
 
 export default {
   data () {
@@ -25,20 +25,19 @@ export default {
       },
       tipo: 1,
       status: 1,
-      explorer: {
-        route: 'menu_pessoas_caixa',
-        pagina: 1,
-        criterios: '',
-        order: 'order by id desc'
-      },
       form: {},
       removidos: []
     }
   },
   mounted () {
-    this.$refs.grid.get(this.explorer)
+    this.$refs.grid.get(this.onGridInitialize('menu_pessoas_caixa'))
   },
   methods: {
+    onGridInitialize (route) {
+      var filter = new TableModel()
+      filter.route = route
+      return filter
+    },
     async save (form) {
       this.openloading = true
       if (form.del === true && form.id < 0) {
@@ -49,7 +48,7 @@ export default {
             this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
             this.openModal = false
             this.openloading = false
-            this.$refs.grid.get(this.explorer)
+            this.$refs.grid.get(this.onGridInitialize('menu_pessoas_caixa'))
           } else {
             this.openloading = false
             this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
@@ -71,16 +70,15 @@ export default {
       }
     },
     datasearch (route) {
-      if (route === 1) {
-        rel.explorerflex.pagina = 1
-        rel.explorerflex.route = 'exp_contabancaria'
-        this.ds.title = 'Contas Bancárias'
-        this.$refs.cmp.dataSearch(rel.explorerflex, 1, 1)
-      } else if (route === 2) {
-        rel.explorerflex.pagina = 1
-        rel.explorerflex.route = 'exp_caixa_usuarios'
-        this.ds.title = 'Usuario'
-        this.$refs.cmp.dataSearch(rel.explorerflex, 2, '')
+      switch (route) {
+        case 1:
+          this.ds.title = 'Contas Bancárias'
+          this.$refs.cmp.dataSearch(this.onGridInitialize('exp_contabancaria'), 1, 1)
+          break
+        case 2:
+          this.ds.title = 'Usuario'
+          this.$refs.cmp.dataSearch(this.onGridInitialize('exp_caixa_usuarios'), 2, '')
+          break
       }
     },
     getbyId (id) {
