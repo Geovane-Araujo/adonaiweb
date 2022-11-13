@@ -4,9 +4,9 @@ import axios from 'axios'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import adExplo from '../../../util/utilClass'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import { TableModel } from '../../../model/TableModel'
 var a
 var r
 
@@ -37,18 +37,21 @@ export default {
     }
   }),
   mounted () {
-    adExplo.explorer.route = 'menu_classe'
-    this.$refs.grid.get(adExplo.explorer)
+    this.$refs.grid.get(this.onGridInitialize('menu_classe'))
   },
   methods: {
+    onGridInitialize (route) {
+      var filter = new TableModel()
+      filter.route = route
+      return filter
+    },
     async save (form) {
       this.openloading = true
       await axios.post(adonai.url + 'classe', form, { headers: { Authorization: 'Bearer ' + this.user.token } }).then(res => {
         if (res.data.ret === 'success') {
           this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Salvo com Sucesso', life: 5000 })
           this.openModal = false
-          adExplo.explorer.route = 'menu_classe'
-          this.$refs.grid.get(adExplo.explorer)
+          this.$refs.grid.get(this.onGridInitialize('menu_classe'))
           this.openloading = false
         } else {
           this.openloading = false
@@ -93,15 +96,12 @@ export default {
       })
     },
     datasearch (route) {
-      adExplo.explorerflex.pagina = 1
       if (route === 0) {
-        adExplo.explorerflex.route = 'menu_curso'
         this.ds.title = 'Cursos'
-        this.$refs.expl.dataSearch(adExplo.explorerflex, route, 0)
+        this.$refs.expl.dataSearch(this.onGridInitialize('menu_curso'), route, 0)
       } else if (route === 1 || route === 2) {
-        adExplo.explorerflex.route = 'exp_membro'
         this.ds.title = 'Membro'
-        this.$refs.expl.dataSearch(adExplo.explorerflex, route, 1)
+        this.$refs.expl.dataSearch(this.onGridInitialize('exp_membro'), route, 1)
       }
     },
     destroy (registro, params) {

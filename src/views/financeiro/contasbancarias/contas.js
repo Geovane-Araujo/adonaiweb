@@ -4,6 +4,7 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import axios from 'axios'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
+import { TableModel } from '../../../model/TableModel'
 
 export default {
   data () {
@@ -11,17 +12,6 @@ export default {
       openModal: false,
       openloading: false,
       open: false,
-      explorer: {
-        route: 'menu_contas_bancarias',
-        pagina: 1,
-        criterios: '',
-        order: 'order by id desc'
-      },
-      explorerflex: {
-        route: '',
-        pagina: 1,
-        order: 'order by id desc'
-      },
       ds: {
         grid: [],
         title: '',
@@ -43,9 +33,14 @@ export default {
     }
   },
   mounted () {
-    this.$refs.grid.get(this.explorer)
+    this.$refs.grid.get(this.onGridInitialize('menu_contas_bancarias'))
   },
   methods: {
+    onGridInitialize (route) {
+      var filter = new TableModel()
+      filter.route = route
+      return filter
+    },
     async save (form) {
       if (form.del === true && form.id < 0) {
         this.$toast.add({ severity: 'success', summary: 'AdonaiSoft', detail: 'Não é permitido Excluir Registros Padrões do Sistema', life: 5000 })
@@ -57,7 +52,7 @@ export default {
             this.openloading = false
             this.openModal = false
             this.cleanForm()
-            this.$refs.grid.get(this.explorer)
+            this.$refs.grid.get(this.onGridInitialize('menu_contas_bancarias'))
           } else {
             this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
             this.openloading = false
@@ -111,9 +106,8 @@ export default {
     },
     datasearch () {
       this.ds.grid = ['ID', 'nome', 'Codigo']
-      this.explorerflex.route = 'exp_banco'
       this.ds.title = 'Bancos'
-      this.$refs.expl.dataSearch(this.explorerflex, 1, 1)
+      this.$refs.expl.dataSearch(this.onGridInitialize('exp_banco'), 1, 1)
     },
     destroy (registro, params) {
       this.form.nomeBanco = registro.nome
