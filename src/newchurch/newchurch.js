@@ -1,5 +1,4 @@
 import { mapState } from 'vuex'
-import util from '../assets/scss/util'
 import adonai from '../http/router'
 import axios from 'axios'
 import utc from '../util/utilClass'
@@ -284,9 +283,9 @@ export default {
             this.openloading = false
             this.onPovoar(res.data.obj)
           } else {
-            this.$toastr.error(res.data.obj, 'AdonaiSoft Diz:', util.toast)
+            this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.obj, life: 5000 })
           }
-        }).catch(err => this.$toastr.error(err, 'AdonaiSoft Diz:', util.toast))
+        }).catch(err => this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 }))
       }
     },
     onPovoar (params) {

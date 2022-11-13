@@ -9,6 +9,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import FileUpload from 'primevue/fileupload'
+import { TableModel } from '../../../model/TableModel'
 
 export default {
   data () {
@@ -130,8 +131,9 @@ export default {
   },
   mounted () {
     this.onResize()
-    rel.explorer.route = 'menu_pessoa_membros'
-    this.$refs.grid.get(rel.explorer)
+    var filter = new TableModel()
+    filter.route = 'menu_pessoa_membros'
+    this.$refs.grid.get(filter)
   },
   methods: {
     async save (form) {
@@ -264,10 +266,11 @@ export default {
       } else {
         filters.criterio = ''
       }
-      rel.explorer.criterios = filters.criterio + ' '
-      rel.explorer.route = 'menu_pessoa_membros'
+      var filter = new TableModel()
+      filter.criterios = filters.criterio + ' '
+      filter.route = 'menu_pessoa_membros'
       this.openloading = true
-      this.$refs.grid.get(rel.explorer)
+      this.$refs.grid.get(filter)
       this.openFilter = false
       this.openloading = false
       filters.criterio = ''

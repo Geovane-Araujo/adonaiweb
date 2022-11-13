@@ -96,10 +96,6 @@ export default {
       type: Boolean
     }
   },
-  mounted () {
-    this.expl.criterios = ''
-    this.expl.pagina = 1
-  },
   methods: {
     onReconfigure () {
       this.contexto = ''

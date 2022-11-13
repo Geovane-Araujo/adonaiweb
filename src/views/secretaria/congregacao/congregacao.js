@@ -6,6 +6,7 @@ import rel from '../../../util/utilClass'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import { TableModel } from '../../../model/TableModel'
 
 export default {
   data () {
@@ -14,10 +15,6 @@ export default {
       openloading: false,
       open: false,
       resize: 50,
-      explorer: {
-        route: 'menu_pessoas_congregacao',
-        pagina: 1
-      },
       explorerflex: {
         route: '',
         pagina: 1
@@ -79,7 +76,9 @@ export default {
   },
   mounted () {
     this.onResize()
-    this.$refs.grid.get(this.explorer)
+    var filter = new TableModel()
+    filter.route = 'menu_pessoas_congregacao'
+    this.$refs.grid.get(filter)
   },
   methods: {
     async save (form) {
