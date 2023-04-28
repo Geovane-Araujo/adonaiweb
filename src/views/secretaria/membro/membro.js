@@ -10,6 +10,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import FileUpload from 'primevue/fileupload'
 import { TableModel } from '../../../model/TableModel'
+import { Membro } from '../../../model/Membro'
 
 export default {
   data () {
@@ -30,95 +31,7 @@ export default {
       urlimg: adonai.arquivos,
       campocidade: 0,
       status: '',
-      form: {
-        add: true,
-        edit: false,
-        del: false,
-        id: '',
-        nome: '',
-        idPessoa: '',
-        dataNascimento: '',
-        ativo: '',
-        idCargo: '',
-        naturalidade: '',
-        nacionalidade: '',
-        cargo: '',
-        foto: '',
-        observacoes: '',
-        dataBatismo: '',
-        idEstadoCivil: 0,
-        pathimg: '',
-        batizado: '',
-        membroDesde: new Date(),
-        cpf: '',
-        rg: '',
-        sexo: 0,
-        endereco: [
-          {
-            id: '',
-            idPessoa: '',
-            endereco: '',
-            bairro: '',
-            idCidade: 0,
-            cidade: '',
-            numero: '',
-            uf: '',
-            cep: '',
-            complemento: '',
-            tipo: 0
-          },
-          {
-            id: '',
-            idPessoa: '',
-            endereco: '',
-            bairro: '',
-            idCidade: 0,
-            cidade: '',
-            numero: '',
-            uf: '',
-            cep: '',
-            complemento: '',
-            tipo: 1
-          }
-        ],
-        telefone: [
-          {
-            id: '',
-            idPessoa: '',
-            telefone: '',
-            tipo: 0
-          },
-          {
-            id: '',
-            idPessoa: '',
-            telefone: '',
-            tipo: 1
-          },
-          {
-            id: '',
-            idPessoa: '',
-            telefone: '',
-            tipo: 2
-          }
-        ],
-        email: [
-          {
-            id: '',
-            iPpessoa: '',
-            email: '',
-            tipo: 0
-          },
-          {
-            id: '',
-            iPpessoa: '',
-            email: '',
-            tipo: 1
-          }
-        ],
-        criterios: {
-          criterios: ''
-        }
-      },
+      form: new Membro(),
       filters: {
         idcargo: '',
         cargo: '',
@@ -151,8 +64,9 @@ export default {
           this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: res.data.motivo, life: 5000 })
           this.openloading = false
         }
+        console.log(res)
       }).catch(err => {
-        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err, life: 5000 })
+        this.$toast.add({ severity: 'error', summary: 'AdonaiSoft', detail: err.response.data.motivo, life: 5000 })
         this.openloading = false
       })
     },
